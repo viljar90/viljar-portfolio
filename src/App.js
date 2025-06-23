@@ -495,6 +495,14 @@ function App() {
   const handleNavItemClick = currentChapter === 'main' ? handleMainStepperItemClick : handleDesignStepperItemClick;
   const itemNavRefs = currentChapter === 'main' ? mainItemRefs : designItemRefs;
 
+  // *** FIXED LOGIC: START ***
+  // Conditionally set classes for the bottom navigation bar based on the current chapter.
+  const bottomNavContainerClass = `flex items-center space-x-2 sm:space-x-3 ${
+    currentChapter === 'design' ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl' : 'w-auto'
+  }`;
+  const navItemsFlexClass = currentChapter === 'design' ? 'flex-1' : 'flex-initial';
+  // *** FIXED LOGIC: END ***
+
   return (
     <>
       <style>{animationKeyframes}</style>
@@ -550,7 +558,8 @@ function App() {
 
         {/* --- Responsiveness changes are in this section --- */}
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
-          <div className="flex items-center space-x-2 sm:space-x-3 w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl">
+          {/* *** FIXED LOGIC: Applied conditional class *** */}
+          <div className={bottomNavContainerClass}>
             <button
               onClick={showReplayButton ? handleReplayChapter : togglePlayPause}
               className={playPauseButtonClasses}
@@ -558,7 +567,8 @@ function App() {
             >
               {showReplayButton ? <ReplayIcon className="w-5 h-5 sm:w-6 sm:h-6" /> : (currentPlayPauseButtonState ? <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6" /> : <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />)}
             </button>
-            <div ref={scrollContainerRef} className={`flex-1 bg-gray-50 dark:bg-slate-800 p-1.5 rounded-full flex items-center space-x-1 shadow-lg transition-colors duration-300 border border-gray-300 dark:border-gray-700 overflow-x-auto no-scrollbar ${navFadeClass}`}>
+            {/* *** FIXED LOGIC: Applied conditional class *** */}
+            <div ref={scrollContainerRef} className={`bg-gray-50 dark:bg-slate-800 p-1.5 rounded-full flex items-center space-x-1 shadow-lg transition-colors duration-300 border border-gray-300 dark:border-gray-700 overflow-x-auto no-scrollbar ${navItemsFlexClass} ${navFadeClass}`}>
               {navItemsToDisplay.map((item, index) => (
                   <InteractiveOblongNavItem
                     key={`${currentChapter}-${item.name}`}
