@@ -1,0 +1,7 @@
+/*
+  This file is intentionally left blank.
+  All styles for the application are now handled by Tailwind CSS,
+  which is configured in `tailwind.config.js` and included via `index.css`.
+  The default Create React App styles have been removed to avoid conflicts
+  and keep the project clean.
+*/
