@@ -21,6 +21,13 @@ export const ReplayIcon = ({ className = "w-6 h-6" }) => (
     </svg>
 );
 
+export const SkipIcon = ({ className = "w-6 h-6" }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 18l8.5-6L4 6v12zM13 6v12l8.5-6L13 6z"/>
+    </svg>
+);
+
+
 export const PrevArrowIcon = ({ className = "w-12 h-12" }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -68,3 +75,43 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
   );
 });
 InteractiveOblongNavItem.displayName = 'InteractiveOblongNavItem';
+
+// *** MODIFIED: SegmentedControl component with updated focus ring styling ***
+export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkMode }) => {
+    return (
+        // The container creates the outer shape and holds the buttons together
+        <div className={`flex items-center bg-gray-50 dark:bg-slate-800 p-1 rounded-full shadow-lg border border-gray-300 dark:border-gray-700`}>
+            {options.map((option, index) => {
+                const isActive = activeOption === option;
+                
+                // Determine the rounding for each button based on its position
+                let roundingClass = '';
+                if (index === 0) {
+                    roundingClass = 'rounded-l-full'; // Left side is rounded
+                } else if (index === options.length - 1) {
+                    roundingClass = 'rounded-r-full'; // Right side is rounded
+                }
+                // Any middle buttons would have no rounding, creating flat edges
+
+                // Define the focus ring color to match the bottom navigation
+                const focusRingClass = isDarkMode ? 'focus:ring-gray-500' : 'focus:ring-gray-400';
+
+                return (
+                    <button
+                        key={option}
+                        onClick={() => onOptionClick(option)}
+                        // The button classes now use the conditional rounding and new focus color
+                        className={`font-semibold text-sm sm:text-base py-1.5 px-5 transition-all duration-300 ease-in-out whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-opacity-75 ${focusRingClass} ${roundingClass} ${
+                            isActive
+                                ? 'bg-black text-white dark:bg-slate-600'
+                                : `text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700`
+                        }`}
+                        aria-label={`Select ${option} view`}
+                    >
+                        {option}
+                    </button>
+                );
+            })}
+        </div>
+    );
+};

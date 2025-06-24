@@ -50,7 +50,12 @@ const LandingChapter = ({
                     {mainAnimationPhase === 'home-buttons-appear' && (
                         <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
                             {CONTENT.HOME.BUTTON_OPTIONS.map((btnText) => (
-                                <button key={btnText} onClick={() => { if (btnText === "Design") onNavigateToChapter('design'); else console.log(`${btnText} clicked!`); }}
+                                <button key={btnText} onClick={() => {
+                                    // *** FIXED LOGIC: Updated to handle navigation to 'work' or 'design' ***
+                                    if (btnText === "Design") onNavigateToChapter('design');
+                                    else if (btnText === "My Work") onNavigateToChapter('work');
+                                    else console.log(`${btnText} clicked!`);
+                                }}
                                     className="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2.5 px-7 rounded-full shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full sm:w-auto text-sm md:text-base"
                                 >{btnText}</button>
                             ))}
