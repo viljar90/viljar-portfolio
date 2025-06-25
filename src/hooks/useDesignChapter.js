@@ -5,7 +5,7 @@ import { DESIGN_NAV_ITEMS, DESIGN_CONTENT } from '../content';
 
 const TYPEWRITER_SPEED = 25;
 const BACKSPACE_SPEED = 20;
-const LONG_PAUSE_DURATION = 2600;
+const LONG_PAUSE_DURATION = 2700;
 
 export const useDesignChapter = (currentChapter, navigatedManually) => {
   const [activeDesignStageKey, setActiveDesignStageKey] = useState(DESIGN_NAV_ITEMS[0].name);

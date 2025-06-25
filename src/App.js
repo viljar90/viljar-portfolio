@@ -1,6 +1,8 @@
 // src/App.js
 
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+// ADD THIS IMPORT: The user needs to install this package
+import ConfettiExplosion from 'react-confetti-explosion';
 import {
   MAIN_STAGES,
   MAIN_NAV_ITEMS,
@@ -17,37 +19,39 @@ import {
     InteractiveOblongNavItem,
     SegmentedControl,
     BlinkingCursor,
-    SkipIcon, // Make sure SkipIcon is imported
+    SkipIcon,
 } from './components/uiElements';
 import LandingChapter from './components/LandingChapter';
 import DesignChapter from './components/DesignChapter';
 import { useLandingChapter } from './hooks/useLandingChapter';
 import { useDesignChapter } from './hooks/useDesignChapter';
 
-// --- Quiz data is now defined at the top level for broader access ---
+// --- Quiz data updated with a 'title' property for the nav ---
 const quizzes = [
     {
         id: 'designSystem',
-        question: "Your development teams are struggling with slow implementation and inconsistent user experiences. What's the most effective first step to solve this?",
+        title: 'Design System',
+        question: "Your development teams are struggling with slow implementation and inconsistent user experiences.\nWhat's the most effective first step to solve this?",
         options: [
             { text: 'Hire an agile coach', isCorrect: false },
             { text: 'Create a design system', isCorrect: true },
             { text: 'Reorganize your IT department', isCorrect: false },
             { text: 'Hire a service designer', isCorrect: false },
         ],
-        resultText: 'Correct. A design system is a force multiplier for quality and speed.',
+        resultText: 'A design system is the simplest and most effective way to ensure consistency and speed.',
         projectButtonText: 'View the Design System Project'
     },
     {
         id: 'dataCatalogue',
-        question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented. How do you empower teams to discover and trust your data?",
+        title: 'Data Catalogue',
+        question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented.\nHow do you empower your employees to discover and trust your data?",
         options: [
-            { text: 'Invest in more data scientists', isCorrect: false },
+            { text: 'Invest in more data science', isCorrect: false },
             { text: 'Launch a company-wide data literacy program', isCorrect: false },
-            { text: 'Design and build a user-centric Data Catalogue', isCorrect: true },
+            { text: 'Build a Data Catalogue', isCorrect: true },
             { text: 'Purchase a new BI tool', isCorrect: false },
         ],
-        resultText: "Correct. A data catalogue makes data discoverable and drives a data-driven culture.",
+        resultText: "A data catalogue makes data discoverable and drives a data-driven culture.",
         projectButtonText: "View the Data Catalogue Project"
     }
 ];
@@ -59,7 +63,7 @@ const QuizIntro = ({ onStart }) => {
     const [phase, setPhase] = useState('typing-title'); // typing-title, typing-main, done
 
     const title = "Quiz";
-    const mainText = "Learn about my work through a little game or get an overview of all projects.";
+    const mainText = "I love games.\nGet to know my work through the game \n or go to the projects overview ↗️";
     const TYPEWRITER_SPEED = 35;
 
     useEffect(() => {
@@ -90,17 +94,18 @@ const QuizIntro = ({ onStart }) => {
                 {displayedTitle}
                 {phase === 'typing-title' && <BlinkingCursor sizeClass="h-12 md:h-14" />}
             </h1>
-            <p className="text-2xl md:text-3xl text-slate-200 dark:text-slate-300 min-h-[1.5em]">
-                {displayedMainText}
-                {phase === 'typing-main' && <BlinkingCursor sizeClass="h-8 md:h-9" />}
+            <p className="text-2xl md:text-3xl text-slate-200 dark:text-slate-300 min-h-[1.5em]" style={{ whiteSpace: 'pre-line' }}>
+              {displayedMainText}
+              {phase === 'typing-main' && <BlinkingCursor sizeClass="h-8 md:h-9" />}
             </p>
             {phase === 'done' && (
                 <div className="mt-12 animate-fadeIn">
                     <button
                         onClick={onStart}
-                        className="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg md:text-xl"
+                        className="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg md:text-xl inline-flex items-center space-x-1"
                     >
-                        Start
+                        <PlayIcon className="w-6 h-6" />
+                        <span>Play</span>
                     </button>
                 </div>
             )}
@@ -109,25 +114,65 @@ const QuizIntro = ({ onStart }) => {
 };
 
 
-// --- MODIFIED: WorkChapter now displays a single quiz based on the active index ---
-const WorkChapter = ({ darkMode, quiz, onAnswer, answerState }) => {
-    if (!quiz) return null; // Return null if no quiz is provided
+// --- MODIFIED: WorkChapter now has a confetti explosion on the result card ---
+const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }) => {
+    if (!quiz) return null;
 
     const { question, options, resultText, projectButtonText } = quiz;
     const { selected, correct } = answerState || {};
 
+    const ResultCard = () => (
+        <div className="relative w-full max-w-xl p-6 md:p-8 bg-slate-800 rounded-xl shadow-2xl animate-fadeIn text-left">
+            {/* Confetti will explode from the center of the screen */}
+            <ConfettiExplosion />
+            
+            {/* REPLAY BUTTON */}
+            <button
+                onClick={() => onReplayQuestion(quiz.id)}
+                className="absolute top-3 right-3 p-2 rounded-full text-slate-400 hover:bg-slate-700 hover:text-white transition-all"
+                aria-label="Replay question"
+            >
+                <ReplayIcon className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center">
+                <span role="img" aria-label="party popper" className="text-3xl mr-3">🎉</span>
+                <h3 className="text-3xl font-bold text-white">Correct!</h3>
+            </div>
+            <p className="mt-4 text-lg text-slate-300">
+                {resultText}
+            </p>
+            <button className="mt-6 text-lg font-semibold text-sky-400 hover:text-sky-300 transition-colors duration-200">
+                {projectButtonText}
+            </button>
+        </div>
+    );
+
     return (
         <div className="w-full h-full flex flex-col items-center justify-center">
             <div className="text-center w-full max-w-4xl">
-                <p className="text-2xl md:text-3xl text-slate-200 dark:text-slate-300 mb-8" style={{ whiteSpace: 'pre-line' }}>
-                    {question}
-                </p>
-                <div className="w-full space-y-4 md:space-y-0 md:grid md:grid-cols-2 md:gap-4">
+                {!correct && (
+                    <p className="text-2xl md:text-3xl text-slate-200 dark:text-slate-300 mb-8 animate-fadeIn" style={{ whiteSpace: 'pre-line' }}>
+                        {question}
+                    </p>
+                )}
+
+                <div className={`w-full transition-all duration-300 ${correct ? 'flex justify-center mt-8' : 'space-y-4 md:space-y-0 md:grid md:grid-cols-2 md:gap-4'}`}>
                     {options.map((option) => {
                         const isSelected = selected === option.text;
+                        const isTheCorrectlySelectedOption = correct && isSelected;
+
+                        if (isTheCorrectlySelectedOption) {
+                            return <ResultCard key={option.text} />;
+                        }
+
+                        if (correct) {
+                            return null;
+                        }
+
                         let buttonClass = 'border-2 border-slate-500 hover:border-sky-400 hover:bg-sky-400/10 text-slate-200';
                         if (isSelected) {
-                            buttonClass = option.isCorrect ? 'bg-green-500/20 border-green-500 text-white' : 'bg-red-500/20 border-red-500 text-white animate-[shake_0.5s_ease-in-out]';
+                            buttonClass = option.isCorrect ? '' : 'bg-red-500/20 border-red-500 text-white animate-[shake_0.5s_ease-in-out]';
                         }
 
                         return (
@@ -141,14 +186,6 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState }) => {
                         );
                     })}
                 </div>
-                {correct && (
-                    <div className="mt-8 animate-fadeIn text-center">
-                        <p className="text-xl text-green-400 mb-4">{resultText}</p>
-                        <button className="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2.5 px-7 rounded-full shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105">
-                            {projectButtonText}
-                        </button>
-                    </div>
-                )}
             </div>
         </div>
     );
@@ -316,7 +353,7 @@ function App() {
     };
   }, [currentChapter]);
 
-  const WORK_NAV_ITEMS = useMemo(() => [{ name: 'Start Quiz' }, ...quizzes.map((quiz, index) => ({ name: `Question ${index + 1}` }))], []);
+  const WORK_NAV_ITEMS = useMemo(() => [{ name: 'Start' }, ...quizzes.map((quiz, index) => ({ name: `Question ${index + 1}` }))], []);
 
   // Effect 4: Stepper Auto-scroll for ALL chapters
   useEffect(() => {
@@ -622,10 +659,20 @@ function App() {
     } else if (currentChapter === 'design') {
         handleDesignStepperItemClick(itemName);
     } else if (currentChapter === 'work' && workView === 'Quiz') {
-        const index = WORK_NAV_ITEMS.findIndex(item => item.name === itemName);
-        if (index !== -1) {
-            handleWorkStepperItemClick(index);
+      // Find the index by title or original name
+      const index = WORK_NAV_ITEMS.findIndex(item => {
+        if (item.name.startsWith('Question')) {
+          const quizIndex = parseInt(item.name.split(' ')[1], 10) - 1;
+          if (quizzes[quizIndex]?.title === itemName || item.name === itemName) {
+            return true;
+          }
         }
+        return item.name === itemName;
+      });
+
+      if (index !== -1) {
+        handleWorkStepperItemClick(index);
+      }
     }
   };
 
@@ -634,6 +681,14 @@ function App() {
         ...prev,
         [quizId]: { selected: option.text, correct: option.isCorrect }
     }));
+  };
+
+  const handleReplayQuestion = (quizId) => {
+    setQuizAnswers(prev => {
+        const newAnswers = { ...prev };
+        delete newAnswers[quizId];
+        return newAnswers;
+    });
   };
 
   const handleMainStepperItemClick = useCallback((itemName) => {
@@ -708,9 +763,12 @@ function App() {
   
   const handleCentralButtonClick = () => {
     if (currentChapter === 'work' && workView === 'Quiz') {
-      if (workStepIndex === WORK_NAV_ITEMS.length - 1) { // Last question
+      const allQuizzesAnswered = quizzes.every(quiz => quizAnswers[quiz.id]?.correct);
+      if (workStepIndex === 0) { // On the intro
+        handleNextLine();
+      } else if (allQuizzesAnswered) { // If all are answered, the final button is replay
         handleReplayChapter();
-      } else { // Intro or middle questions
+      } else { // In the middle of questions
         handleNextLine();
       }
     } else {
@@ -759,33 +817,37 @@ function App() {
   let activeNavStepOrStage = '';
   if (currentChapter === 'main') activeNavStepOrStage = landing.activeMainStep;
   else if (currentChapter === 'design') activeNavStepOrStage = design.activeDesignStageKey;
-  else if (currentChapter === 'work' && workView === 'Quiz') activeNavStepOrStage = WORK_NAV_ITEMS[workStepIndex]?.name;
-  
+  else if (currentChapter === 'work' && workView === 'Quiz' && workStepIndex > 0) {
+      const quiz = quizzes[workStepIndex - 1];
+      activeNavStepOrStage = quizAnswers[quiz.id]?.correct ? quiz.title : `Question ${workStepIndex}`;
+  } else if (currentChapter === 'work') {
+      activeNavStepOrStage = 'Start';
+  }
+
   const itemNavRefs = currentChapter === 'main' ? mainItemRefs : (currentChapter === 'design' ? designItemRefs : workItemRefs);
 
-  // *** FIXED: Nav bar now hugs content unless it's the design chapter ***
   const bottomNavContainerClass = `flex items-center space-x-2 sm:space-x-3 ${
     currentChapter === 'design' ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl' : 'w-auto'
   }`;
   const navItemsFlexClass = currentChapter === 'design' ? 'flex-1' : 'flex-initial';
   
-  // *** ADDED: Logic to determine which central button to show ***
   let CentralButton;
+  const allQuizzesAnswered = quizzes.every(quiz => quizAnswers[quiz.id]?.correct);
+
   if (currentChapter === 'work' && workView === 'Quiz') {
-    if (workStepIndex === 0) {
-      CentralButton = <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
-    } else if (workStepIndex === WORK_NAV_ITEMS.length - 1) {
-      CentralButton = <ReplayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
-    } else {
-      CentralButton = <SkipIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
+    if (workStepIndex === 0) { // Quiz intro
+        CentralButton = <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
+    } else if (allQuizzesAnswered) { // All questions are answered correctly
+        CentralButton = <ReplayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
+    } else { // In the middle of the quiz
+        CentralButton = <SkipIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
     }
   } else if (showReplayButtonForChapters) {
-    CentralButton = <ReplayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
+      CentralButton = <ReplayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
   } else {
-    CentralButton = currentPlayPauseButtonState ? <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6" /> : <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
+      CentralButton = currentPlayPauseButtonState ? <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6" /> : <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
   }
 
-  // --- UI State Variables (Restored) ---
   const chapterSectionWrapperStyle = "min-h-screen w-full flex flex-col items-center justify-center p-4 relative";
   const chapterContentWrapperStyle = "flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative group";
   const arrowButtonClass = "absolute top-1/2 -translate-y-1/2 p-2 rounded-full text-slate-500 hover:text-slate-200 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all opacity-40 group-hover:opacity-100";
@@ -806,7 +868,7 @@ function App() {
       <style>{animationKeyframes}</style>
       <div className={`AppContainer bg-slate-900 dark:bg-slate-950 text-slate-100 transition-colors duration-300 min-h-screen overflow-x-hidden`}>
         <div className="absolute bottom-4 left-4 z-40">
-          <button onClick={toggleDarkMode} className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-colors duration-200 ${darkMode ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-300' : 'bg-slate-700 text-white hover:bg-slate-600'}`}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
+          <button onClick={toggleDarkMode} className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-colors duration-200 ${darkMode ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-300' : 'bg-slate-700 text-white hover:bg-slate-600'}`}>{darkMode ? 'Light Mode' : 'Darker Mode'}</button>
         </div>
         <div className="fixed right-4 md:right-6 lg:right-10 top-1/2 transform -translate-y-1/2 z-30 space-y-4">
           {[{ name: 'main', label: 'Main Intro' }, { name: 'design', label: 'Design Insights' }, { name: 'work', label: 'My Work' }].map(dot => (
@@ -818,8 +880,8 @@ function App() {
 
         <div ref={mainChapterRef} className={`${chapterSectionWrapperStyle} ${mainChapterAnimClass}`}>
           <div className={`${chapterContentWrapperStyle} px-16`}>
-            {currentChapter === 'main' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 md:left-9 lg:left-2`}><PrevArrowIcon /></button>}
-            {currentChapter === 'main' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 md:right-9 lg:right-2`}><NextArrowIcon /></button>}
+            {currentChapter === 'main' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
+            {currentChapter === 'main' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
             <LandingChapter
                 darkMode={darkMode}
                 activeMainStep={landing.activeMainStep}
@@ -841,8 +903,8 @@ function App() {
 
         <div ref={designChapterRef} className={`${chapterSectionWrapperStyle} ${designChapterAnimClass}`}>
           <div className={`${chapterContentWrapperStyle} px-16`}>
-            {currentChapter === 'design' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 md:left-8 lg:left-0`}><PrevArrowIcon /></button>}
-            {currentChapter === 'design' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 md:right-8 lg:right-0`}><NextArrowIcon /></button>}
+            {currentChapter === 'design' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
+            {currentChapter === 'design' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
             <DesignChapter
                 darkMode={darkMode}
                 currentDesignStepData={currentDesignStepData}
@@ -866,8 +928,8 @@ function App() {
                 </div>
             )}
             <div className={`${chapterContentWrapperStyle} px-16`}>
-                {currentChapter === 'work' && workView === 'Quiz' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 md:left-8 lg:left-0`}><PrevArrowIcon /></button>}
-                {currentChapter === 'work' && workView === 'Quiz' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 md:right-8 lg:right-0`}><NextArrowIcon /></button>}
+                {currentChapter === 'work' && workView === 'Quiz' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
+                {currentChapter === 'work' && workView === 'Quiz' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
                 
                 {workView === 'Quiz' ? (
                     workStepIndex === 0 ? (
@@ -878,6 +940,7 @@ function App() {
                             quiz={quizzes[workStepIndex - 1]}
                             onAnswer={handleQuizAnswer}
                             answerState={quizAnswers[quizzes[workStepIndex - 1]?.id]}
+                            onReplayQuestion={handleReplayQuestion}
                         />
                     )
                 ) : (
@@ -903,15 +966,35 @@ function App() {
                
                 {navItemsToDisplay.length > 0 && (
                     <div ref={scrollContainerRef} className={`bg-gray-50 dark:bg-slate-800 p-1.5 rounded-full flex items-center space-x-1 shadow-lg transition-colors duration-300 border border-gray-300 dark:border-gray-700 overflow-x-auto no-scrollbar ${navItemsFlexClass} ${navFadeClass}`}>
-                    {navItemsToDisplay.map((item, index) => (
-                        <InteractiveOblongNavItem
-                            key={`${currentChapter}-${item.name}`}
-                            ref={el => itemNavRefs.current[index] = el}
-                            text={(currentChapter === 'design' && DESIGN_CONTENT[item.name]) ? DESIGN_CONTENT[item.name].navText : item.name}
-                            onClick={() => handleNavItemClick(item.name)}
-                            isActive={activeNavStepOrStage === item.name}
-                            isDarkMode={darkMode} />
-                    ))}
+                    {navItemsToDisplay.map((item, index) => {
+                        let navItemText = (currentChapter === 'design' && DESIGN_CONTENT[item.name]) 
+                                            ? DESIGN_CONTENT[item.name].navText 
+                                            : item.name;
+
+                        let navIdentifier = item.name;
+
+                        // Check for completed quiz questions and add a tick
+                        if (currentChapter === 'work' && workView === 'Quiz' && item.name.startsWith('Question')) {
+                            const quizIndex = index - 1; // Account for 'Start' item
+                            if (quizIndex >= 0 && quizIndex < quizzes.length) {
+                                const quiz = quizzes[quizIndex];
+                                if (quizAnswers[quiz.id]?.correct) {
+                                    navItemText = `${quiz.title} ✓`;
+                                    navIdentifier = quiz.title;
+                                }
+                            }
+                        }
+
+                        return (
+                            <InteractiveOblongNavItem
+                                key={`${currentChapter}-${item.name}`}
+                                ref={el => itemNavRefs.current[index] = el}
+                                text={navItemText}
+                                onClick={() => handleNavItemClick(navIdentifier)}
+                                isActive={activeNavStepOrStage === navIdentifier || activeNavStepOrStage === item.name}
+                                isDarkMode={darkMode} />
+                        );
+                    })}
                     </div>
                 )}
             </div>
