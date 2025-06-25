@@ -44,14 +44,14 @@ const quizzes = [
     {
         id: 'dataCatalogue',
         title: 'Data Catalogue',
-        question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented.\nHow do you empower your employees to discover and trust your data?",
+        question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented.\nHow do you help solve this?",
         options: [
             { text: 'Invest in more data science', isCorrect: false },
             { text: 'Launch a company-wide data literacy program', isCorrect: false },
-            { text: 'Build a Data Catalogue', isCorrect: true },
+            { text: 'Build a data catalogue', isCorrect: true },
             { text: 'Purchase a new BI tool', isCorrect: false },
         ],
-        resultText: "A data catalogue makes data discoverable and drives a data-driven culture.",
+        resultText: "Designing a user-centric data catalogue makes data discoverable and drives a data-driven work culture.",
         projectButtonText: "View the Data Catalogue Project"
     }
 ];
@@ -121,6 +121,11 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
     const { question, options, resultText, projectButtonText } = quiz;
     const { selected, correct } = answerState || {};
 
+    // Split the question into the statement (blue part) and the main question
+    const questionParts = question.split('\n');
+    const statement = questionParts[0];
+    const mainQuestion = questionParts[1];
+
     const ResultCard = () => (
         <div className="relative w-full max-w-xl p-6 md:p-8 bg-slate-800 rounded-xl shadow-2xl animate-fadeIn text-left">
             {/* Confetti will explode from the center of the screen */}
@@ -152,9 +157,10 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
         <div className="w-full h-full flex flex-col items-center justify-center">
             <div className="text-center w-full max-w-4xl">
                 {!correct && (
-                    <p className="text-2xl md:text-3xl text-slate-200 dark:text-slate-300 mb-8 animate-fadeIn" style={{ whiteSpace: 'pre-line' }}>
-                        {question}
-                    </p>
+                     <div className="text-2xl md:text-3xl mb-8 animate-fadeIn">
+                        <p className="text-sky-400 dark:text-sky-300 mb-2">{statement}</p>
+                        <p className="text-slate-200 dark:text-slate-300">{mainQuestion}</p>
+                    </div>
                 )}
 
                 <div className={`w-full transition-all duration-300 ${correct ? 'flex justify-center mt-8' : 'space-y-4 md:space-y-0 md:grid md:grid-cols-2 md:gap-4'}`}>

@@ -30,7 +30,7 @@ export const CONTENT = {
         { title: "Design Potato", mainText: "PRODUCT · UX · UI · AI", pause: 1000 },
         { title: "Viljar 🥔 Designer", mainText: "PRODUCT · UX · UI · AI", pause: 1000 },
     ],
-    QUESTION: "get to know about",
+    QUESTION: "get to know",
   },
   HOME: {
     BUTTON_OPTIONS: ["Design", "My Work", "Me"]
