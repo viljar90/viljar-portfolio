@@ -39,20 +39,20 @@ const quizzes = [
             { text: 'Hire a service designer', isCorrect: false },
         ],
         resultText: 'A design system is the simplest and most effective way to ensure consistency and speed.',
-        projectButtonText: 'View the Design System Project'
+        projectButtonText: 'The Design Systemn'
     },
     {
         id: 'dataCatalogue',
         title: 'Data Catalogue',
-        question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented.\nHow do you help solve this?",
+        question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented.\nHow do you empower your employees to discover and trust your data?",
         options: [
             { text: 'Invest in more data science', isCorrect: false },
             { text: 'Launch a company-wide data literacy program', isCorrect: false },
-            { text: 'Build a data catalogue', isCorrect: true },
+            { text: 'Build a Data Catalogue', isCorrect: true },
             { text: 'Purchase a new BI tool', isCorrect: false },
         ],
-        resultText: "Designing a user-centric data catalogue makes data discoverable and drives a data-driven work culture.",
-        projectButtonText: "View the Data Catalogue Project"
+        resultText: "Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.",
+        projectButtonText: "The Data Catalogue"
     }
 ];
 
@@ -147,9 +147,14 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
             <p className="mt-4 text-lg text-slate-300">
                 {resultText}
             </p>
-            <button className="mt-6 text-lg font-semibold text-sky-400 hover:text-sky-300 transition-colors duration-200">
-                {projectButtonText}
-            </button>
+            
+            {/* IMPROVED CTA SECTION */}
+            <div className="mt-6 pt-4 border-t border-slate-700">
+                <p className="text-sm text-slate-400">Check out the one I've worked on</p>
+                <button className="mt-2 text-lg font-semibold text-sky-400 hover:text-sky-300 transition-colors duration-200">
+                    {projectButtonText} ↗
+                </button>
+            </div>
         </div>
     );
 
