@@ -36,15 +36,15 @@ const quizzes = [
             { text: 'Mandate the use of a single AI provider across the company', isCorrect: false },
             { text: 'Build a custom in-house AI model from scratch', isCorrect: false },
             { text: 'Invest in an internal platform that integrates with multiple AI providers', isCorrect: true },
-            { text: 'Wait for the market to mature before adopting any AI tools', isCorrect: false },
+            { text: 'Wait for the market to mature before adopting AI tools', isCorrect: false },
         ],
-        resultText: "An internal platform with a modular architecture that connects to various AI providers offers the most flexibility and avoids vendor lock-in.",
+        resultText: "An internal platform with a modular architecture that connects to various AI providers offers the most flexibility and avoids vendor lock-in. I also keeps your company data secure and under your control.",
         projectButtonText: "The AI Platform"
     },
     {
         id: 'designSystem',
         title: 'Design System',
-        question: "Your development teams are struggling with slow implementation and inconsistent user experiences.\nWhat's the most effective first step to solve this?",
+        question: "Your product teams are struggling with inefficient development and a misaligned product portfolio.\nWhat's the most effective first step to solve this?",
         options: [
             { text: 'Hire an agile coach', isCorrect: false },
             { text: 'Create a design system', isCorrect: true },
@@ -75,8 +75,8 @@ const QuizIntro = ({ onStart }) => {
     const [displayedMainText, setDisplayedMainText] = useState('');
     const [phase, setPhase] = useState('typing-title'); // typing-title, typing-main, done
 
-    const title = "Quiz";
-    const mainText = "I love games.\nGet to know my work through the game \n or go to the projects overview ↗️";
+    const title = "My Work";
+    const mainText = "I love games.\nGet to know my work through the game \n or go to the overview ↗️";
     const TYPEWRITER_SPEED = 35;
 
     useEffect(() => {
