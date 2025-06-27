@@ -28,6 +28,19 @@ import { useDesignChapter } from './hooks/useDesignChapter';
 
 // --- Quiz data updated with a 'title' property for the nav ---
 const quizzes = [
+      {
+        id: 'aiPlatform',
+        title: 'AI Platform',
+        question: "Your company wants to leverage AI but is unsure where to start in a rapidly evolving market.\nWhat is the best approach to secure your data and maintain flexibility?",
+        options: [
+            { text: 'Mandate the use of a single AI provider across the company', isCorrect: false },
+            { text: 'Build a custom in-house AI model from scratch', isCorrect: false },
+            { text: 'Invest in an internal platform that integrates with multiple AI providers', isCorrect: true },
+            { text: 'Wait for the market to mature before adopting any AI tools', isCorrect: false },
+        ],
+        resultText: "An internal platform with a modular architecture that can connect to various AI providers offers the most flexibility and avoids vendor lock-in.",
+        projectButtonText: "The AI Platform"
+    },
     {
         id: 'designSystem',
         title: 'Design System',
@@ -39,7 +52,7 @@ const quizzes = [
             { text: 'Hire a service designer', isCorrect: false },
         ],
         resultText: 'A design system is the simplest and most effective way to ensure consistency and speed.',
-        projectButtonText: 'The Design Systemn'
+        projectButtonText: 'The Design System'
     },
     {
         id: 'dataCatalogue',
@@ -160,9 +173,9 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
 
     return (
         <div className="w-full h-full flex flex-col items-center justify-center">
-            <div className="text-center w-full max-w-4xl">
+            <div className="w-full max-w-4xl">
                 {!correct && (
-                     <div className="text-2xl md:text-3xl mb-8 animate-fadeIn">
+                     <div className="text-left text-1xl md:text-2xl mb-8 animate-fadeIn">
                         <p className="text-sky-400 dark:text-sky-300 mb-2">{statement}</p>
                         <p className="text-slate-200 dark:text-slate-300">{mainQuestion}</p>
                     </div>
