@@ -38,7 +38,7 @@ const quizzes = [
             { text: 'Invest in an internal platform that integrates with multiple AI providers', isCorrect: true },
             { text: 'Wait for the market to mature before adopting any AI tools', isCorrect: false },
         ],
-        resultText: "An internal platform with a modular architecture that can connect to various AI providers offers the most flexibility and avoids vendor lock-in.",
+        resultText: "An internal platform with a modular architecture that connects to various AI providers offers the most flexibility and avoids vendor lock-in.",
         projectButtonText: "The AI Platform"
     },
     {
