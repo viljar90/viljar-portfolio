@@ -152,3 +152,45 @@ export const DESIGN_CONTENT = {
     ]
   },
 };
+
+export const QUIZZES = [
+  {
+    id: 'aiPlatform',
+    title: 'AI Platform',
+    question: "Your company wants to leverage AI but is unsure where to start in a rapidly evolving market.\nWhat is the best approach to secure your data and maintain flexibility?",
+    options: [
+        { text: 'Mandate the use of a single AI provider across the company', isCorrect: false },
+        { text: 'Build a custom in-house AI model from scratch', isCorrect: false },
+        { text: 'Invest in an internal platform that integrates with multiple AI providers', isCorrect: true },
+        { text: 'Wait for the market to mature before adopting AI tools', isCorrect: false },
+    ],
+    resultText: "An internal platform with a modular architecture that connects to various AI providers offers the most flexibility and avoids vendor lock-in. I also keeps your company data secure and under your control.",
+    projectButtonText: "The AI Platform"
+  },
+  {
+    id: 'designSystem',
+    title: 'Design System',
+    question: "Your product teams are struggling with inefficient development and a misaligned product portfolio.\nWhat's the most effective first step to solve this?",
+    options: [
+        { text: 'Hire an agile coach', isCorrect: false },
+        { text: 'Create a design system', isCorrect: true },
+        { text: 'Reorganize your IT department', isCorrect: false },
+        { text: 'Hire a service designer', isCorrect: false },
+    ],
+    resultText: 'A design system is the simplest and most effective way to ensure consistency and speed.',
+    projectButtonText: 'The Design System'
+  },
+  {
+    id: 'dataCatalogue',
+    title: 'Data Catalogue',
+    question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented.\nHow do you empower your employees to discover and trust your data?",
+    options: [
+        { text: 'Invest in more data science', isCorrect: false },
+        { text: 'Launch a company-wide data literacy program', isCorrect: false },
+        { text: 'Build a Data Catalogue', isCorrect: true },
+        { text: 'Purchase a new BI tool', isCorrect: false },
+    ],
+    resultText: "Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.",
+    projectButtonText: "The Data Catalogue"
+  }
+];

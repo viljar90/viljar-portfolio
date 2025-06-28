@@ -1,13 +1,13 @@
 // src/App.js
 
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import ConfettiExplosion from 'react-confetti-explosion';
 import {
   MAIN_STAGES,
   MAIN_NAV_ITEMS,
   CONTENT,
   DESIGN_NAV_ITEMS,
   DESIGN_CONTENT,
+  QUIZZES
 } from './content';
 import {
     PlayIcon,
@@ -16,259 +16,20 @@ import {
     NextArrowIcon,
     InteractiveOblongNavItem,
     SegmentedControl,
-    BlinkingCursor,
     SkipIcon,
     AnimatedBorderButton,
 } from './components/uiElements';
 import LandingChapter from './components/LandingChapter';
 import DesignChapter from './components/DesignChapter';
+import QuizIntro from './components/QuizIntro';
+import WorkChapter from './components/WorkChapter';
 import { useLandingChapter } from './hooks/useLandingChapter';
 import { useDesignChapter } from './hooks/useDesignChapter';
-
-// --- Quiz data updated with a 'title' property for the nav ---
-const quizzes = [
-      {
-        id: 'aiPlatform',
-        title: 'AI Platform',
-        question: "Your company wants to leverage AI but is unsure where to start in a rapidly evolving market.\nWhat is the best approach to secure your data and maintain flexibility?",
-        options: [
-            { text: 'Mandate the use of a single AI provider across the company', isCorrect: false },
-            { text: 'Build a custom in-house AI model from scratch', isCorrect: false },
-            { text: 'Invest in an internal platform that integrates with multiple AI providers', isCorrect: true },
-            { text: 'Wait for the market to mature before adopting AI tools', isCorrect: false },
-        ],
-        resultText: "An internal platform with a modular architecture that connects to various AI providers offers the most flexibility and avoids vendor lock-in. I also keeps your company data secure and under your control.",
-        projectButtonText: "The AI Platform"
-    },
-    {
-        id: 'designSystem',
-        title: 'Design System',
-        question: "Your product teams are struggling with inefficient development and a misaligned product portfolio.\nWhat's the most effective first step to solve this?",
-        options: [
-            { text: 'Hire an agile coach', isCorrect: false },
-            { text: 'Create a design system', isCorrect: true },
-            { text: 'Reorganize your IT department', isCorrect: false },
-            { text: 'Hire a service designer', isCorrect: false },
-        ],
-        resultText: 'A design system is the simplest and most effective way to ensure consistency and speed.',
-        projectButtonText: 'The Design System'
-    },
-    {
-        id: 'dataCatalogue',
-        title: 'Data Catalogue',
-        question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented.\nHow do you empower your employees to discover and trust your data?",
-        options: [
-            { text: 'Invest in more data science', isCorrect: false },
-            { text: 'Launch a company-wide data literacy program', isCorrect: false },
-            { text: 'Build a Data Catalogue', isCorrect: true },
-            { text: 'Purchase a new BI tool', isCorrect: false },
-        ],
-        resultText: "Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.",
-        projectButtonText: "The Data Catalogue"
-    }
-];
-
-// --- NEW: Component for the animated quiz intro ---
-const QuizIntro = ({ onStart }) => {
-    const [displayedTitle, setDisplayedTitle] = useState('');
-    const [displayedMainText, setDisplayedMainText] = useState('');
-    const [phase, setPhase] = useState('typing-title'); // typing-title, typing-main, done
-
-    const title = "My Work";
-    const mainText = "I love games.\nGet to know my work with this game \n or look at the overview ↗️";
-    const TYPEWRITER_SPEED = 35;
-
-    useEffect(() => {
-        let timer;
-        if (phase === 'typing-title') {
-            if (displayedTitle.length < title.length) {
-                timer = setTimeout(() => {
-                    setDisplayedTitle(title.substring(0, displayedTitle.length + 1));
-                }, TYPEWRITER_SPEED);
-            } else {
-                setPhase('typing-main');
-            }
-        } else if (phase === 'typing-main') {
-            if (displayedMainText.length < mainText.length) {
-                timer = setTimeout(() => {
-                    setDisplayedMainText(mainText.substring(0, displayedMainText.length + 1));
-                }, TYPEWRITER_SPEED);
-            } else {
-                setPhase('done');
-            }
-        }
-        return () => clearTimeout(timer);
-    }, [displayedTitle, displayedMainText, phase]);
-
-    return (
-        <div className="text-center">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-sky-400 dark:text-sky-300 mb-4 min-h-[1.2em]">
-                {displayedTitle}
-                {phase === 'typing-title' && <BlinkingCursor sizeClass="h-12 md:h-14" />}
-            </h1>
-            <p className="text-2xl md:text-3xl text-slate-200 dark:text-slate-300 min-h-[1.5em]" style={{ whiteSpace: 'pre-line' }}>
-              {displayedMainText}
-              {phase === 'typing-main' && <BlinkingCursor sizeClass="h-8 md:h-9" />}
-            </p>
-            {phase === 'done' && (
-                <div className="mt-12 animate-fadeIn">
-                    <button
-                        onClick={onStart}
-                        className="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg md:text-xl inline-flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
-                    >
-                        <PlayIcon className="w-6 h-6" />
-                        <span>Play</span>
-                    </button>
-                </div>
-            )}
-        </div>
-    );
-};
-
-
-// --- MODIFIED: WorkChapter now has a confetti explosion on the result card ---
-const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }) => {
-    if (!quiz) return null;
-
-    const { question, options, resultText, projectButtonText } = quiz;
-    const { selected, correct } = answerState || {};
-
-    // Split the question into the statement (blue part) and the main question
-    const questionParts = question.split('\n');
-    const statement = questionParts[0];
-    const mainQuestion = questionParts[1];
-
-    const ResultCard = () => (
-        <div className="relative w-full max-w-xl p-6 md:p-8 bg-slate-800 rounded-xl shadow-2xl animate-fadeIn text-left">
-            {/* Confetti will explode from the center of the screen */}
-            <ConfettiExplosion />
-            
-            {/* REPLAY BUTTON */}
-            <button
-                onClick={() => onReplayQuestion(quiz.id)}
-                className="absolute top-3 right-3 p-2 rounded-full text-slate-400 hover:bg-slate-700 hover:text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
-                aria-label="Replay question"
-            >
-                <ReplayIcon className="w-5 h-5" />
-            </button>
-
-            <div className="flex items-center">
-                <span role="img" aria-label="party popper" className="text-3xl mr-3">🎉</span>
-                <h3 className="text-3xl font-bold text-white">Correct!</h3>
-            </div>
-            <p className="mt-4 text-lg text-slate-300">
-                {resultText}
-            </p>
-            
-            {/* IMPROVED CTA SECTION */}
-            <div className="mt-6 pt-4 border-t border-slate-700">
-                <p className="text-sm text-slate-400">Check out the one I've worked on</p>
-                <button className="mt-2 text-lg font-semibold text-sky-400 hover:text-sky-300 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300">
-                    {projectButtonText} ↗
-                </button>
-            </div>
-        </div>
-    );
-
-    return (
-        <div className="w-full h-full flex flex-col items-center justify-center">
-            <div className="w-full max-w-4xl">
-                {!correct && (
-                     <div className="text-left text-1xl md:text-2xl mb-8 animate-fadeIn">
-                        <p className="text-sky-400 dark:text-sky-300 mb-2">{statement}</p>
-                        <p className="text-slate-200 dark:text-slate-300">{mainQuestion}</p>
-                    </div>
-                )}
-
-                <div className={`w-full transition-all duration-300 ${correct ? 'flex justify-center mt-8' : 'space-y-4 md:space-y-0 md:grid md:grid-cols-2 md:gap-4'}`}>
-                    {options.map((option) => {
-                        const isSelected = selected === option.text;
-                        const isTheCorrectlySelectedOption = correct && isSelected;
-
-                        if (isTheCorrectlySelectedOption) {
-                            return <ResultCard key={option.text} />;
-                        }
-
-                        if (correct) {
-                            return null;
-                        }
-
-                        let buttonClass = 'border-2 border-slate-500 hover:border-sky-400 hover:bg-sky-400/10 text-slate-200';
-                        if (isSelected) {
-                            buttonClass = option.isCorrect ? '' : 'bg-red-500/20 border-red-500 text-white animate-[shake_0.5s_ease-in-out]';
-                        }
-
-                        return (
-                            <button
-                                key={option.text}
-                                onClick={() => onAnswer(quiz.id, option)}
-                                className={`block w-full text-left p-4 rounded-lg transition-all duration-200 md:text-center md:flex md:items-center md:justify-center md:h-40 ${buttonClass} focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300`}
-                            >
-                                {option.text}
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
-        </div>
-    );
-};
+import { useWorkChapter } from './hooks/useWorkChapter';
 
 
 // --- Animation Configuration ---
 const ANIMATION_DURATION_CHAPTER = "0.5s";
-
-// --- Keyframes for CSS Animations ---
-const animationKeyframes = `
-  @keyframes blinker {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-  @keyframes slideOutRightAndFade {
-    from { transform: translateX(0%); opacity: 1; }
-    to { transform: translateX(50%); opacity: 0; }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes slideUpIn {
-    from { transform: translateY(100%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  @keyframes slideDownOut {
-    from { transform: translateY(0); opacity: 1; }
-    to { transform: translateY(100%); opacity: 0; }
-  }
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-    20%, 40%, 60%, 80% { transform: translateX(5px); }
-  }
-
-  /* --- CSS for Nav Fade Effect --- */
-  .fade-right {
-    -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
-    mask-image: linear-gradient(to right, black 90%, transparent 100%);
-  }
-  .fade-left {
-    -webkit-mask-image: linear-gradient(to left, black 90%, transparent 100%);
-    mask-image: linear-gradient(to left, black 90%, transparent 100%);
-  }
-  .fade-both {
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-  }
-  
-  /* --- Hide Scrollbar CSS --- */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-`;
 
 // --- Main App Component ---
 function App() {
@@ -276,9 +37,6 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [currentChapter, setCurrentChapter] = useState('main');
   const [navFadeClass, setNavFadeClass] = useState('');
-  const [workView, setWorkView] = useState('Quiz');
-  const [workStepIndex, setWorkStepIndex] = useState(0);
-  const [quizAnswers, setQuizAnswers] = useState({});
 
   // --- Shared Refs ---
   const mainChapterRef = useRef(null);
@@ -295,6 +53,7 @@ function App() {
   // --- Logic Hooks ---
   const landing = useLandingChapter(currentChapter, navigatedManually);
   const design = useDesignChapter(currentChapter, navigatedManually);
+  const work = useWorkChapter();
 
   // --- Chapter Animation Classes ---
   const [mainChapterAnimClass, setMainChapterAnimClass] = useState(`animate-[slideUpIn_${ANIMATION_DURATION_CHAPTER}_ease-out_forwards]`);
@@ -376,8 +135,6 @@ function App() {
     };
   }, [currentChapter]);
 
-  const WORK_NAV_ITEMS = useMemo(() => [{ name: 'Start' }, ...quizzes.map((quiz, index) => ({ name: `Question ${index + 1}` }))], []);
-
   // Effect 4: Stepper Auto-scroll for ALL chapters
   useEffect(() => {
     let items;
@@ -392,9 +149,9 @@ function App() {
         items = DESIGN_NAV_ITEMS;
         activeIndex = items.findIndex(item => item.name === design.activeDesignStageKey);
         refs = designItemRefs;
-    } else if (currentChapter === 'work' && workView === 'Quiz') {
-        items = WORK_NAV_ITEMS;
-        activeIndex = workStepIndex;
+    } else if (currentChapter === 'work' && work.workView === 'Quiz') {
+        items = work.WORK_NAV_ITEMS;
+        activeIndex = work.workStepIndex;
         refs = workItemRefs;
     } else {
         return; // No stepper for work overview
@@ -412,7 +169,7 @@ function App() {
       observer.observe(activeElement);
       return () => observer.disconnect();
     }
-  }, [landing.activeMainStep, design.activeDesignStageKey, workStepIndex, currentChapter, workView, WORK_NAV_ITEMS]);
+  }, [landing.activeMainStep, design.activeDesignStageKey, work.workStepIndex, currentChapter, work.workView, work.WORK_NAV_ITEMS]);
 
   // Effect 5: Scroll-snapping logic
   useEffect(() => {
@@ -461,9 +218,9 @@ function App() {
   const navItemsToDisplay = useMemo(() => {
     if (currentChapter === 'main') return MAIN_NAV_ITEMS;
     if (currentChapter === 'design') return DESIGN_NAV_ITEMS;
-    if (currentChapter === 'work' && workView === 'Quiz') return WORK_NAV_ITEMS;
+    if (currentChapter === 'work' && work.workView === 'Quiz') return work.WORK_NAV_ITEMS;
     return [];
-  }, [currentChapter, workView, WORK_NAV_ITEMS]);
+  }, [currentChapter, work.workView, work.WORK_NAV_ITEMS]);
 
   const updateNavFade = useCallback(() => {
     const el = scrollContainerRef.current;
@@ -591,8 +348,8 @@ function App() {
         design.setDesignStepAnimationPhase('pausing-after-maintext');
       }
     } else if (currentChapter === 'work') {
-        if (workStepIndex < WORK_NAV_ITEMS.length - 1) {
-            setWorkStepIndex(prev => prev + 1);
+        if (work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) {
+            work.setWorkStepIndex(prev => prev + 1);
         }
     }
   };
@@ -603,8 +360,8 @@ function App() {
     navigatedManually.current = true;
   
     if (currentChapter === 'work') {
-      if (workStepIndex > 0) {
-        setWorkStepIndex(prev => prev - 1);
+      if (work.workStepIndex > 0) {
+        work.setWorkStepIndex(prev => prev - 1);
       } else {
         navigateToChapter('design'); 
       }
@@ -673,7 +430,7 @@ function App() {
   };
 
   const handleWorkStepperItemClick = (index) => {
-    setWorkStepIndex(index);
+    work.setWorkStepIndex(index);
   };
 
   const handleNavItemClick = (itemName) => {
@@ -681,12 +438,12 @@ function App() {
         handleMainStepperItemClick(itemName);
     } else if (currentChapter === 'design') {
         handleDesignStepperItemClick(itemName);
-    } else if (currentChapter === 'work' && workView === 'Quiz') {
+    } else if (currentChapter === 'work' && work.workView === 'Quiz') {
       // Find the index by title or original name
-      const index = WORK_NAV_ITEMS.findIndex(item => {
+      const index = work.WORK_NAV_ITEMS.findIndex(item => {
         if (item.name.startsWith('Question')) {
           const quizIndex = parseInt(item.name.split(' ')[1], 10) - 1;
-          if (quizzes[quizIndex]?.title === itemName || item.name === itemName) {
+          if (QUIZZES[quizIndex]?.title === itemName || item.name === itemName) {
             return true;
           }
         }
@@ -697,21 +454,6 @@ function App() {
         handleWorkStepperItemClick(index);
       }
     }
-  };
-
-  const handleQuizAnswer = (quizId, option) => {
-    setQuizAnswers(prev => ({
-        ...prev,
-        [quizId]: { selected: option.text, correct: option.isCorrect }
-    }));
-  };
-
-  const handleReplayQuestion = (quizId) => {
-    setQuizAnswers(prev => {
-        const newAnswers = { ...prev };
-        delete newAnswers[quizId];
-        return newAnswers;
-    });
   };
 
   const handleMainStepperItemClick = useCallback((itemName) => {
@@ -779,8 +521,7 @@ function App() {
       design.setActiveDesignStageKey(DESIGN_NAV_ITEMS[0].name);
       design.setIsPlayingDesign(true);
     } else if (currentChapter === 'work') {
-        setWorkStepIndex(0);
-        setQuizAnswers({});
+        work.resetWorkChapter();
     }
   };
   
@@ -795,9 +536,9 @@ function App() {
       design.currentDesignStepIndex >= lastDesignStageData.steps.length - 1;
     const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
 
-    if (currentChapter === 'work' && workView === 'Quiz') {
-      const allQuizzesAnswered = quizzes.every(quiz => quizAnswers[quiz.id]?.correct);
-      if (workStepIndex === 0) { // On the intro
+    if (currentChapter === 'work' && work.workView === 'Quiz') {
+      const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
+      if (work.workStepIndex === 0) { // On the intro
         handleNextLine();
       } else if (allQuizzesAnswered) { // If all are answered, the final button is replay
         handleReplayChapter();
@@ -827,16 +568,16 @@ function App() {
   const showPrevArrow = 
     (currentChapter === 'main' && (landing.activeMainStep !== MAIN_STAGES.INSULTS || landing.currentSubLineIndex !== 0)) ||
     (currentChapter === 'design') || 
-    (currentChapter === 'work' && workView === 'Quiz' && workStepIndex > 0);
+    (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0);
   
   const currentPlayPauseButtonState = currentChapter === 'main' ? landing.isPlaying : (currentChapter === 'design' ? design.isPlayingDesign : false);
   
   let activeNavStepOrStage = '';
   if (currentChapter === 'main') activeNavStepOrStage = landing.activeMainStep;
   else if (currentChapter === 'design') activeNavStepOrStage = design.activeDesignStageKey;
-  else if (currentChapter === 'work' && workView === 'Quiz' && workStepIndex > 0) {
-      const quiz = quizzes[workStepIndex - 1];
-      activeNavStepOrStage = quizAnswers[quiz.id]?.correct ? quiz.title : `Question ${workStepIndex}`;
+  else if (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) {
+      const quiz = QUIZZES[work.workStepIndex - 1];
+      activeNavStepOrStage = work.quizAnswers[quiz.id]?.correct ? quiz.title : `Question ${work.workStepIndex}`;
   } else if (currentChapter === 'work') {
       activeNavStepOrStage = 'Start';
   }
@@ -872,13 +613,13 @@ function App() {
       design.activeDesignStageKey === lastDesignStageKey &&
       design.currentDesignStepIndex >= lastDesignStageData.steps.length - 1;
     const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
-    const allQuizzesAnswered = quizzes.every(quiz => quizAnswers[quiz.id]?.correct);
+    const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
     const nonAnimatedButtonClasses = "h-11 w-11 sm:h-14 sm:w-14 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-110 active:scale-95 bg-white text-black hover:bg-gray-100 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800";
   
-    if (currentChapter === 'work' && workView === 'Quiz') {
+    if (currentChapter === 'work' && work.workView === 'Quiz') {
       let icon;
       let label = "Central control button";
-      if (workStepIndex === 0) {
+      if (work.workStepIndex === 0) {
         icon = <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
         label = "Start quiz";
       } else if (allQuizzesAnswered) {
@@ -920,7 +661,7 @@ function App() {
   const showNextArrow = 
     (currentChapter === 'main' && landing.activeMainStep !== MAIN_STAGES.HOME) ||
     (currentChapter === 'design' && !isDesignChapterFinalStateFinal) ||
-    (currentChapter === 'work' && workView === 'Quiz' && workStepIndex < WORK_NAV_ITEMS.length - 1);
+    (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1);
 
 
   // #################################################################
@@ -928,7 +669,6 @@ function App() {
   // #################################################################
   return (
     <>
-      <style>{animationKeyframes}</style>
       <div className={`AppContainer bg-slate-900 dark:bg-slate-950 text-slate-100 transition-colors duration-300 min-h-screen overflow-x-hidden`}>
         <div className="absolute bottom-4 left-4 z-40">
           <button onClick={toggleDarkMode} className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-colors duration-200 ${darkMode ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-300' : 'bg-slate-700 text-white hover:bg-slate-600'} focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500 dark:focus-visible:ring-offset-slate-950`}>{darkMode ? 'Light Mode' : 'Darker Mode'}</button>
@@ -989,25 +729,25 @@ function App() {
                 <div className="absolute top-8 right-8 z-10">
                     <SegmentedControl
                         options={['Quiz', 'Overview']}
-                        activeOption={workView}
-                        onOptionClick={setWorkView}
+                        activeOption={work.workView}
+                        onOptionClick={work.setWorkView}
                         isDarkMode={darkMode}
                     />
                 </div>
                 <div className={`${chapterContentWrapperStyle} px-16`}>
-                  {workView === 'Quiz' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
-                  {workView === 'Quiz' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
+                  {work.workView === 'Quiz' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
+                  {work.workView === 'Quiz' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
                   
-                  {workView === 'Quiz' ? (
-                      workStepIndex === 0 ? (
-                          <QuizIntro onStart={() => setWorkStepIndex(1)} />
+                  {work.workView === 'Quiz' ? (
+                      work.workStepIndex === 0 ? (
+                          <QuizIntro onStart={() => work.setWorkStepIndex(1)} />
                       ) : (
                           <WorkChapter 
                               darkMode={darkMode} 
-                              quiz={quizzes[workStepIndex - 1]}
-                              onAnswer={handleQuizAnswer}
-                              answerState={quizAnswers[quizzes[workStepIndex - 1]?.id]}
-                              onReplayQuestion={handleReplayQuestion}
+                              quiz={QUIZZES[work.workStepIndex - 1]}
+                              onAnswer={work.handleQuizAnswer}
+                              answerState={work.quizAnswers[QUIZZES[work.workStepIndex - 1]?.id]}
+                              onReplayQuestion={work.handleReplayQuestion}
                           />
                       )
                   ) : (
@@ -1037,11 +777,11 @@ function App() {
                         let navIdentifier = item.name;
 
                         // Check for completed quiz questions and add a tick
-                        if (currentChapter === 'work' && workView === 'Quiz' && item.name.startsWith('Question')) {
+                        if (currentChapter === 'work' && work.workView === 'Quiz' && item.name.startsWith('Question')) {
                             const quizIndex = index - 1; // Account for 'Start' item
-                            if (quizIndex >= 0 && quizIndex < quizzes.length) {
-                                const quiz = quizzes[quizIndex];
-                                if (quizAnswers[quiz.id]?.correct) {
+                            if (quizIndex >= 0 && quizIndex < QUIZZES.length) {
+                                const quiz = QUIZZES[quizIndex];
+                                if (work.quizAnswers[quiz.id]?.correct) {
                                     navItemText = `${quiz.title} ✓`;
                                     navIdentifier = quiz.title;
                                 }
