@@ -924,6 +924,9 @@ function App() {
     (currentChapter === 'work' && workView === 'Quiz' && workStepIndex < WORK_NAV_ITEMS.length - 1);
 
 
+  // #################################################################
+  // ### START OF THE REPLACEMENT BLOCK ###
+  // #################################################################
   return (
     <>
       <style>{animationKeyframes}</style>
@@ -940,45 +943,50 @@ function App() {
         </div>
 
         <div ref={mainChapterRef} className={`${chapterSectionWrapperStyle} ${mainChapterAnimClass}`}>
-          <div className={`${chapterContentWrapperStyle} px-16`}>
-            {currentChapter === 'main' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
-            {currentChapter === 'main' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
-            <LandingChapter
-                darkMode={darkMode}
-                activeMainStep={landing.activeMainStep}
-                mainAnimationPhase={landing.mainAnimationPhase}
-                isSliding={landing.isSliding}
-                displayedChars={landing.displayedChars}
-                showCursorInsults={showCursorInsults}
-                showCursorIntroGreeting={showCursorIntroGreeting}
-                displayedNameChars={landing.displayedNameChars}
-                showCursorIntroName={showCursorIntroName}
-                displayedTitleChars={landing.displayedTitleChars}
-                showCursorIntroTitle={showCursorIntroTitle}
-                displayedHomeQuestion={landing.displayedHomeQuestion}
-                showCursorHomeQuestion={showCursorHomeQuestion}
-                onNavigateToChapter={navigateToChapter}
-            />
-          </div>
+          {currentChapter === 'main' && (
+            <div className={`${chapterContentWrapperStyle} px-16`}>
+              {showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
+              {showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
+              <LandingChapter
+                  darkMode={darkMode}
+                  activeMainStep={landing.activeMainStep}
+                  mainAnimationPhase={landing.mainAnimationPhase}
+                  isSliding={landing.isSliding}
+                  displayedChars={landing.displayedChars}
+                  showCursorInsults={showCursorInsults}
+                  showCursorIntroGreeting={showCursorIntroGreeting}
+                  displayedNameChars={landing.displayedNameChars}
+                  showCursorIntroName={showCursorIntroName}
+                  displayedTitleChars={landing.displayedTitleChars}
+                  showCursorIntroTitle={showCursorIntroTitle}
+                  displayedHomeQuestion={landing.displayedHomeQuestion}
+                  showCursorHomeQuestion={showCursorHomeQuestion}
+                  onNavigateToChapter={navigateToChapter}
+              />
+            </div>
+          )}
         </div>
 
         <div ref={designChapterRef} className={`${chapterSectionWrapperStyle} ${designChapterAnimClass}`}>
-          <div className={`${chapterContentWrapperStyle} px-16`}>
-            {currentChapter === 'design' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
-            {currentChapter === 'design' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
-            <DesignChapter
-                darkMode={darkMode}
-                currentDesignStepData={currentDesignStepData}
-                displayedDesignTitleChars={design.displayedDesignTitleChars}
-                showCursorDesignTitle={showCursorDesignTitle}
-                displayedDesignMainTextChars={design.displayedDesignMainTextChars}
-                showCursorDesignMainText={showCursorDesignMainText}
-            />
-          </div>
+          {currentChapter === 'design' && (
+            <div className={`${chapterContentWrapperStyle} px-16`}>
+              {showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
+              {showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
+              <DesignChapter
+                  darkMode={darkMode}
+                  currentDesignStepData={currentDesignStepData}
+                  displayedDesignTitleChars={design.displayedDesignTitleChars}
+                  showCursorDesignTitle={showCursorDesignTitle}
+                  displayedDesignMainTextChars={design.displayedDesignMainTextChars}
+                  showCursorDesignMainText={showCursorDesignMainText}
+              />
+            </div>
+          )}
         </div>
 
         <div ref={workChapterRef} className={`${chapterSectionWrapperStyle} ${workChapterAnimClass}`}>
             {currentChapter === 'work' && (
+              <>
                 <div className="absolute top-8 right-8 z-10">
                     <SegmentedControl
                         options={['Quiz', 'Overview']}
@@ -987,32 +995,33 @@ function App() {
                         isDarkMode={darkMode}
                     />
                 </div>
+                <div className={`${chapterContentWrapperStyle} px-16`}>
+                  {workView === 'Quiz' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
+                  {workView === 'Quiz' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
+                  
+                  {workView === 'Quiz' ? (
+                      workStepIndex === 0 ? (
+                          <QuizIntro onStart={() => setWorkStepIndex(1)} />
+                      ) : (
+                          <WorkChapter 
+                              darkMode={darkMode} 
+                              quiz={quizzes[workStepIndex - 1]}
+                              onAnswer={handleQuizAnswer}
+                              answerState={quizAnswers[quizzes[workStepIndex - 1]?.id]}
+                              onReplayQuestion={handleReplayQuestion}
+                          />
+                      )
+                  ) : (
+                       <div className="text-center">
+                          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-100 dark:text-slate-200">
+                              Project Overview
+                          </h1>
+                          <p className="text-xl mt-4 text-slate-400">Project gallery coming soon!</p>
+                      </div>
+                  )}
+                </div>
+              </>
             )}
-            <div className={`${chapterContentWrapperStyle} px-16`}>
-                {currentChapter === 'work' && workView === 'Quiz' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
-                {currentChapter === 'work' && workView === 'Quiz' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
-                
-                {workView === 'Quiz' ? (
-                    workStepIndex === 0 ? (
-                        <QuizIntro onStart={() => setWorkStepIndex(1)} />
-                    ) : (
-                        <WorkChapter 
-                            darkMode={darkMode} 
-                            quiz={quizzes[workStepIndex - 1]}
-                            onAnswer={handleQuizAnswer}
-                            answerState={quizAnswers[quizzes[workStepIndex - 1]?.id]}
-                            onReplayQuestion={handleReplayQuestion}
-                        />
-                    )
-                ) : (
-                     <div className="text-center">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-100 dark:text-slate-200">
-                            Project Overview
-                        </h1>
-                        <p className="text-xl mt-4 text-slate-400">Project gallery coming soon!</p>
-                    </div>
-                )}
-            </div>
         </div>
 
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
