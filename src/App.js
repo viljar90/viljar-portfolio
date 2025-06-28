@@ -115,7 +115,7 @@ const QuizIntro = ({ onStart }) => {
                 <div className="mt-12 animate-fadeIn">
                     <button
                         onClick={onStart}
-                        className="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg md:text-xl inline-flex items-center space-x-1"
+                        className="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg md:text-xl inline-flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
                     >
                         <PlayIcon className="w-6 h-6" />
                         <span>Play</span>
@@ -147,7 +147,7 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
             {/* REPLAY BUTTON */}
             <button
                 onClick={() => onReplayQuestion(quiz.id)}
-                className="absolute top-3 right-3 p-2 rounded-full text-slate-400 hover:bg-slate-700 hover:text-white transition-all"
+                className="absolute top-3 right-3 p-2 rounded-full text-slate-400 hover:bg-slate-700 hover:text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
                 aria-label="Replay question"
             >
                 <ReplayIcon className="w-5 h-5" />
@@ -164,7 +164,7 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
             {/* IMPROVED CTA SECTION */}
             <div className="mt-6 pt-4 border-t border-slate-700">
                 <p className="text-sm text-slate-400">Check out the one I've worked on</p>
-                <button className="mt-2 text-lg font-semibold text-sky-400 hover:text-sky-300 transition-colors duration-200">
+                <button className="mt-2 text-lg font-semibold text-sky-400 hover:text-sky-300 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300">
                     {projectButtonText} ↗
                 </button>
             </div>
@@ -203,7 +203,7 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
                             <button
                                 key={option.text}
                                 onClick={() => onAnswer(quiz.id, option)}
-                                className={`block w-full text-left p-4 rounded-lg transition-all duration-200 md:text-center md:flex md:items-center md:justify-center md:h-40 ${buttonClass}`}
+                                className={`block w-full text-left p-4 rounded-lg transition-all duration-200 md:text-center md:flex md:items-center md:justify-center md:h-40 ${buttonClass} focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300`}
                             >
                                 {option.text}
                             </button>
@@ -851,7 +851,7 @@ function App() {
   
   const chapterSectionWrapperStyle = "min-h-screen w-full flex flex-col items-center justify-center p-4 relative";
   const chapterContentWrapperStyle = "flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative group";
-  const arrowButtonClass = "absolute top-1/2 -translate-y-1/2 p-2 rounded-full text-slate-500 hover:text-slate-200 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all opacity-40 group-hover:opacity-100";
+  const arrowButtonClass = "absolute top-1/2 -translate-y-1/2 p-2 rounded-full text-slate-500 hover:text-slate-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 transition-all opacity-40 group-hover:opacity-100";
   
   const showCursorInsults = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'typing-insult' && landing.displayedChars.length < CONTENT.INSULTS.LINES[landing.currentSubLineIndex]?.text.length;
   const showCursorIntroGreeting = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'intro-greeting' && landing.introGreetingPhase === 'typing-greeting' && landing.displayedChars.length < CONTENT.INTRO.GREETING.length;
@@ -874,7 +874,7 @@ function App() {
       design.currentDesignStepIndex >= lastDesignStageData.steps.length - 1;
     const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
     const allQuizzesAnswered = quizzes.every(quiz => quizAnswers[quiz.id]?.correct);
-    const nonAnimatedButtonClasses = "h-11 w-11 sm:h-14 sm:w-14 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-110 active:scale-95 bg-white text-black hover:bg-gray-100 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600";
+    const nonAnimatedButtonClasses = "h-11 w-11 sm:h-14 sm:w-14 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-110 active:scale-95 bg-white text-black hover:bg-gray-100 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800";
   
     if (currentChapter === 'work' && workView === 'Quiz') {
       let icon;
@@ -932,12 +932,12 @@ function App() {
       <style>{animationKeyframes}</style>
       <div className={`AppContainer bg-slate-900 dark:bg-slate-950 text-slate-100 transition-colors duration-300 min-h-screen overflow-x-hidden`}>
         <div className="absolute bottom-4 left-4 z-40">
-          <button onClick={toggleDarkMode} className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-colors duration-200 ${darkMode ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-300' : 'bg-slate-700 text-white hover:bg-slate-600'}`}>{darkMode ? 'Light Mode' : 'Darker Mode'}</button>
+          <button onClick={toggleDarkMode} className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-colors duration-200 ${darkMode ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-300' : 'bg-slate-700 text-white hover:bg-slate-600'} focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500 dark:focus-visible:ring-offset-slate-950`}>{darkMode ? 'Light Mode' : 'Darker Mode'}</button>
         </div>
         <div className="fixed right-4 md:right-6 lg:right-10 top-1/2 transform -translate-y-1/2 z-30 space-y-4">
           {[{ name: 'main', label: 'Main Intro' }, { name: 'design', label: 'Design Insights' }, { name: 'work', label: 'My Work' }].map(dot => (
             <button key={dot.name} onClick={() => navigateToChapter(dot.name)} title={`Go to ${dot.label}`}
-              className={`block w-3.5 h-3.5 rounded-full transition-all duration-300 ease-in-out focus:outline-none ${currentChapter === dot.name ? 'bg-sky-500 dark:bg-sky-400 scale-125 shadow-lg' : 'bg-gray-400 hover:bg-gray-500 dark:bg-slate-600 dark:hover:bg-slate-500 scale-100'}`}
+              className={`block w-3.5 h-3.5 rounded-full transition-all duration-300 ease-in-out focus:outline-none ${currentChapter === dot.name ? 'bg-sky-500 dark:bg-sky-400 scale-125 shadow-lg' : 'bg-gray-400 hover:bg-gray-500 dark:bg-slate-600 dark:hover:bg-slate-500 scale-100'} focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-950`}
               aria-label={`Go to ${dot.label} page`} />
           ))}
         </div>

@@ -56,7 +56,7 @@ const LandingChapter = ({
                                     else if (btnText === "My Work") onNavigateToChapter('work');
                                     else console.log(`${btnText} clicked!`);
                                 }}
-                                    className="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2.5 px-7 rounded-full shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full sm:w-auto text-sm md:text-base"
+                                    className="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2.5 px-7 rounded-full shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full sm:w-auto text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-300 dark:focus-visible:ring-offset-slate-900"
                                 >{btnText}</button>
                             ))}
                         </div>

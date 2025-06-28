@@ -51,7 +51,7 @@ export const BlinkingCursor = ({sizeClass = "h-6 md:h-8 lg:h-10"}) => (
 // --- NEW Animated Border Button ---
 export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
   return (
-    <button {...props} className={`relative group ${props.className || ''}`}>
+    <button {...props} className={`relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800 rounded-full ${props.className || ''}`}>
       {/* Animated gradient border. It's hidden when not playing */}
       <div
         className={`absolute -inset-0.5 bg-[conic-gradient(from_var(--rotate),#5ddcff,#3c67e3,#f059eb)] rounded-full transition-opacity duration-300 animate-spin ${
@@ -71,25 +71,25 @@ export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
 // --- InteractiveOblongNavItem Component ---
 export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, className = '', colorScheme = 'black', isActive = false, isDarkMode = false }, ref) => {
   const colorSchemes = {
-    black: { focusRing: 'focus:ring-gray-600' },
-    blue: { focusRing: 'focus:ring-sky-500' }
+    black: { focusRing: 'focus-visible:ring-gray-600' },
+    blue: { focusRing: 'focus-visible:ring-sky-500' }
   };
   const currentSchemeConfig = colorSchemes[colorScheme] || colorSchemes.blue;
   const inactiveTextColor = isDarkMode ? 'text-gray-400 hover:text-white' : 'text-gray-700 hover:text-gray-900';
   const inactiveHoverBg = isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-300';
-  const inactiveFocusRing = isDarkMode ? 'focus:ring-gray-500' : 'focus:ring-gray-400';
+  const inactiveFocusRing = isDarkMode ? 'focus-visible:ring-gray-500' : 'focus-visible:ring-gray-400';
 
   if (isActive) {
     return (
       <button ref={ref} onClick={onClick}
-        className={`bg-black text-white font-semibold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-full cursor-pointer focus:outline-none focus:ring-2 ${currentSchemeConfig.focusRing} focus:ring-opacity-75 transition-all duration-200 ease-in-out scale-105 shadow-lg whitespace-nowrap ${className}`}
+        className={`bg-black text-white font-semibold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-full cursor-pointer focus:outline-none focus-visible:ring-2 ${currentSchemeConfig.focusRing} focus-visible:ring-opacity-75 transition-all duration-200 ease-in-out scale-105 shadow-lg whitespace-nowrap ${className}`}
         aria-label={`Maps to ${text}, currently active`}
       >{text}</button>
     );
   }
   return (
     <button ref={ref} onClick={onClick}
-      className={`bg-transparent ${inactiveHoverBg} ${inactiveTextColor} font-semibold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-full cursor-pointer focus:outline-none focus:ring-2 ${inactiveFocusRing} focus:ring-opacity-75 transition-all duration-200 ease-in-out whitespace-nowrap shadow-none hover:shadow-sm ${className}`}
+      className={`bg-transparent ${inactiveHoverBg} ${inactiveTextColor} font-semibold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-full cursor-pointer focus:outline-none focus-visible:ring-2 ${inactiveFocusRing} focus-visible:ring-opacity-75 transition-all duration-200 ease-in-out whitespace-nowrap shadow-none hover:shadow-sm ${className}`}
       aria-label={`Maps to ${text}`}
     >{text}</button>
   );
@@ -114,14 +114,14 @@ export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkM
                 // Any middle buttons would have no rounding, creating flat edges
 
                 // Define the focus ring color to match the bottom navigation
-                const focusRingClass = isDarkMode ? 'focus:ring-gray-500' : 'focus:ring-gray-400';
+                const focusRingClass = isDarkMode ? 'focus-visible:ring-gray-500' : 'focus-visible:ring-gray-400';
 
                 return (
                     <button
                         key={option}
                         onClick={() => onOptionClick(option)}
                         // The button classes now use the conditional rounding and new focus color
-                        className={`font-semibold text-sm sm:text-base py-1.5 px-5 transition-all duration-300 ease-in-out whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-opacity-75 ${focusRingClass} ${roundingClass} ${
+                        className={`font-semibold text-sm sm:text-base py-1.5 px-5 transition-all duration-300 ease-in-out whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 ${focusRingClass} ${roundingClass} ${
                             isActive
                                 ? 'bg-black text-white dark:bg-slate-600'
                                 : `text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700`
