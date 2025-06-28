@@ -1020,7 +1020,7 @@ function App() {
                 {renderCentralButton()}
                
                 {navItemsToDisplay.length > 0 && (
-                    <div ref={scrollContainerRef} className={`bg-gray-50 dark:bg-slate-800 p-1.5 rounded-full flex items-center space-x-1 shadow-lg transition-colors duration-300 border border-gray-300 dark:border-gray-700 overflow-x-auto no-scrollbar ${navItemsFlexClass} ${navFadeClass}`}>
+                    <div ref={scrollContainerRef} className={`bg-gray-50 dark:bg-slate-800 py-1.5 px-2 rounded-full flex items-center space-x-1 shadow-lg transition-colors duration-300 border border-gray-300 dark:border-gray-700 overflow-x-auto no-scrollbar ${navItemsFlexClass} ${navFadeClass}`}>
                     {navItemsToDisplay.map((item, index) => {
                         let navItemText = (currentChapter === 'design' && DESIGN_CONTENT[item.name]) 
                                             ? DESIGN_CONTENT[item.name].navText 
