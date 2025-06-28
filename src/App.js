@@ -1,7 +1,6 @@
 // src/App.js
 
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-// ADD THIS IMPORT: The user needs to install this package
 import ConfettiExplosion from 'react-confetti-explosion';
 import {
   MAIN_STAGES,
@@ -925,7 +924,7 @@ function App() {
 
 
   // #################################################################
-  // ### START OF THE REPLACEMENT BLOCK ###
+  // ### FINAL RENDER BLOCK ###
   // #################################################################
   return (
     <>
@@ -1056,6 +1055,7 @@ function App() {
                                 text={navItemText}
                                 onClick={() => handleNavItemClick(navIdentifier)}
                                 isActive={activeNavStepOrStage === navIdentifier || activeNavStepOrStage === item.name}
+                                isPlaying={currentPlayPauseButtonState}
                                 isDarkMode={darkMode} />
                         );
                     })}

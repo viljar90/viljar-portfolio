@@ -1,7 +1,7 @@
 {
   "name": "viljar-portfolio",
   "version": "0.1.0",
-  "homepage": "https://your-github-username.github.io/viljar-portfolio",
+  "homepage": "https://viljar90.github.io/viljar-portfolio/",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
@@ -12,7 +12,7 @@
     "react": "^19.1.0",
     "react-confetti-explosion": "^3.0.3",
     "react-dom": "^19.1.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
