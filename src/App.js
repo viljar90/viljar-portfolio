@@ -12,7 +12,6 @@ import {
 } from './content';
 import {
     PlayIcon,
-    PauseIcon,
     ReplayIcon,
     PrevArrowIcon,
     NextArrowIcon,
@@ -20,6 +19,7 @@ import {
     SegmentedControl,
     BlinkingCursor,
     SkipIcon,
+    AnimatedBorderButton,
 } from './components/uiElements';
 import LandingChapter from './components/LandingChapter';
 import DesignChapter from './components/DesignChapter';
@@ -76,7 +76,7 @@ const QuizIntro = ({ onStart }) => {
     const [phase, setPhase] = useState('typing-title'); // typing-title, typing-main, done
 
     const title = "My Work";
-    const mainText = "I love games.\nGet to know my work through the game \n or go to the overview ↗️";
+    const mainText = "I love games.\nGet to know my work with this game \n or look at the overview ↗️";
     const TYPEWRITER_SPEED = 35;
 
     useEffect(() => {
@@ -786,6 +786,16 @@ function App() {
   };
   
   const handleCentralButtonClick = () => {
+    const lastDesignStageKey = DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
+    const lastDesignStageData = DESIGN_CONTENT[lastDesignStageKey];
+    const isMainChapterFinalState = currentChapter === 'main' && landing.activeMainStep === MAIN_STAGES.HOME && !landing.isPlaying;
+    const isDesignChapterFinalState =
+      currentChapter === 'design' &&
+      !design.isPlayingDesign &&
+      design.activeDesignStageKey === lastDesignStageKey &&
+      design.currentDesignStepIndex >= lastDesignStageData.steps.length - 1;
+    const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
+
     if (currentChapter === 'work' && workView === 'Quiz') {
       const allQuizzesAnswered = quizzes.every(quiz => quizAnswers[quiz.id]?.correct);
       if (workStepIndex === 0) { // On the intro
@@ -796,8 +806,7 @@ function App() {
         handleNextLine();
       }
     } else {
-      const isFinalState = (currentChapter === 'main' && isMainChapterFinalState) || (currentChapter === 'design' && isDesignChapterFinalState);
-      if (isFinalState) {
+      if (showReplayButtonForChapters) {
         handleReplayChapter();
       } else {
         togglePlayPause();
@@ -815,28 +824,13 @@ function App() {
   };
 
   // --- Render Logic & Derived State ---
-  const lastDesignStageKey = DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
-  const lastDesignStageData = DESIGN_CONTENT[lastDesignStageKey];
-  const isMainChapterFinalState = currentChapter === 'main' && landing.activeMainStep === MAIN_STAGES.HOME && !landing.isPlaying;
-  const isDesignChapterFinalState =
-    currentChapter === 'design' &&
-    !design.isPlayingDesign &&
-    design.activeDesignStageKey === lastDesignStageKey &&
-    design.currentDesignStepIndex >= lastDesignStageData.steps.length - 1;
-  const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
   
   const showPrevArrow = 
     (currentChapter === 'main' && (landing.activeMainStep !== MAIN_STAGES.INSULTS || landing.currentSubLineIndex !== 0)) ||
     (currentChapter === 'design') || 
     (currentChapter === 'work' && workView === 'Quiz' && workStepIndex > 0);
-
-  const showNextArrow = 
-    (currentChapter === 'main' && landing.activeMainStep !== MAIN_STAGES.HOME) ||
-    (currentChapter === 'design' && !isDesignChapterFinalState) ||
-    (currentChapter === 'work' && workView === 'Quiz' && workStepIndex < WORK_NAV_ITEMS.length - 1);
   
   const currentPlayPauseButtonState = currentChapter === 'main' ? landing.isPlaying : (currentChapter === 'design' ? design.isPlayingDesign : false);
-  const playPauseButtonClasses = `h-11 w-11 sm:h-14 sm:w-14 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-110 active:scale-95 border dark:border-gray-600 focus:ring-2 focus:ring-opacity-75 flex-shrink-0 bg-white text-black hover:bg-gray-100 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 border-gray-700 focus:ring-gray-400`;
   
   let activeNavStepOrStage = '';
   if (currentChapter === 'main') activeNavStepOrStage = landing.activeMainStep;
@@ -855,23 +849,6 @@ function App() {
   }`;
   const navItemsFlexClass = currentChapter === 'design' ? 'flex-1' : 'flex-initial';
   
-  let CentralButton;
-  const allQuizzesAnswered = quizzes.every(quiz => quizAnswers[quiz.id]?.correct);
-
-  if (currentChapter === 'work' && workView === 'Quiz') {
-    if (workStepIndex === 0) { // Quiz intro
-        CentralButton = <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
-    } else if (allQuizzesAnswered) { // All questions are answered correctly
-        CentralButton = <ReplayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
-    } else { // In the middle of the quiz
-        CentralButton = <SkipIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
-    }
-  } else if (showReplayButtonForChapters) {
-      CentralButton = <ReplayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
-  } else {
-      CentralButton = currentPlayPauseButtonState ? <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6" /> : <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
-  }
-
   const chapterSectionWrapperStyle = "min-h-screen w-full flex flex-col items-center justify-center p-4 relative";
   const chapterContentWrapperStyle = "flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative group";
   const arrowButtonClass = "absolute top-1/2 -translate-y-1/2 p-2 rounded-full text-slate-500 hover:text-slate-200 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all opacity-40 group-hover:opacity-100";
@@ -885,6 +862,66 @@ function App() {
   const currentDesignStepData = DESIGN_CONTENT[design.activeDesignStageKey]?.steps[design.currentDesignStepIndex];
   const showCursorDesignTitle = currentChapter === 'design' && design.isPlayingDesign && (design.designStepAnimationPhase === 'typing-title' || design.designStepAnimationPhase === 'backspacing-title');
   const showCursorDesignMainText = currentChapter === 'design' && design.isPlayingDesign && design.designStepAnimationPhase === 'typing-maintext';
+
+  const renderCentralButton = () => {
+    const lastDesignStageKey = DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
+    const lastDesignStageData = DESIGN_CONTENT[lastDesignStageKey];
+    const isMainChapterFinalState = currentChapter === 'main' && landing.activeMainStep === MAIN_STAGES.HOME && !landing.isPlaying;
+    const isDesignChapterFinalState =
+      currentChapter === 'design' &&
+      !design.isPlayingDesign &&
+      design.activeDesignStageKey === lastDesignStageKey &&
+      design.currentDesignStepIndex >= lastDesignStageData.steps.length - 1;
+    const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
+    const allQuizzesAnswered = quizzes.every(quiz => quizAnswers[quiz.id]?.correct);
+    const nonAnimatedButtonClasses = "h-11 w-11 sm:h-14 sm:w-14 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-110 active:scale-95 bg-white text-black hover:bg-gray-100 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600";
+  
+    if (currentChapter === 'work' && workView === 'Quiz') {
+      let icon;
+      let label = "Central control button";
+      if (workStepIndex === 0) {
+        icon = <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
+        label = "Start quiz";
+      } else if (allQuizzesAnswered) {
+        icon = <ReplayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
+        label = "Replay quiz";
+      } else {
+        icon = <SkipIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
+        label = "Skip question";
+      }
+      return <button onClick={handleCentralButtonClick} className={nonAnimatedButtonClasses} aria-label={label}>{icon}</button>;
+    }
+  
+    if (showReplayButtonForChapters) {
+      return (
+        <button onClick={handleCentralButtonClick} className={nonAnimatedButtonClasses} aria-label="Replay chapter">
+          <ReplayIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+      );
+    }
+  
+    return (
+      <AnimatedBorderButton
+        isPlaying={currentPlayPauseButtonState}
+        onClick={handleCentralButtonClick}
+        className="h-11 w-11 sm:h-14 sm:w-14"
+        aria-label={currentPlayPauseButtonState ? 'Pause' : 'Play'}
+      />
+    );
+  };
+
+  const lastDesignStageKeyFinal = DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
+  const lastDesignStageDataFinal = DESIGN_CONTENT[lastDesignStageKeyFinal];
+  const isDesignChapterFinalStateFinal =
+    currentChapter === 'design' &&
+    !design.isPlayingDesign &&
+    design.activeDesignStageKey === lastDesignStageKeyFinal &&
+    design.currentDesignStepIndex >= lastDesignStageDataFinal.steps.length - 1;
+
+  const showNextArrow = 
+    (currentChapter === 'main' && landing.activeMainStep !== MAIN_STAGES.HOME) ||
+    (currentChapter === 'design' && !isDesignChapterFinalStateFinal) ||
+    (currentChapter === 'work' && workView === 'Quiz' && workStepIndex < WORK_NAV_ITEMS.length - 1);
 
 
   return (
@@ -980,13 +1017,7 @@ function App() {
 
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
              <div className={bottomNavContainerClass}>
-                <button
-                    onClick={handleCentralButtonClick}
-                    className={playPauseButtonClasses}
-                    aria-label="Central control button"
-                >
-                    {CentralButton}
-                </button>
+                {renderCentralButton()}
                
                 {navItemsToDisplay.length > 0 && (
                     <div ref={scrollContainerRef} className={`bg-gray-50 dark:bg-slate-800 p-1.5 rounded-full flex items-center space-x-1 shadow-lg transition-colors duration-300 border border-gray-300 dark:border-gray-700 overflow-x-auto no-scrollbar ${navItemsFlexClass} ${navFadeClass}`}>

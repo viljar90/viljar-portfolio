@@ -1,3 +1,10 @@
+/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@property --rotate {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 132deg;
+}

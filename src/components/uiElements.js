@@ -4,41 +4,41 @@ import React from 'react';
 
 // --- SVG Icons ---
 export const PlayIcon = ({ className = "w-6 h-6" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8 5V19L19 12L8 5Z" />
-  </svg>
-);
-
-export const PauseIcon = ({ className = "w-6 h-6" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 19H10V5H6V19ZM14 5V19H18V5H14Z" />
-  </svg>
-);
-
-export const ReplayIcon = ({ className = "w-6 h-6" }) => (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+      <path d="M8 5V19L19 12L8 5Z" />
     </svg>
-);
-
-export const SkipIcon = ({ className = "w-6 h-6" }) => (
+  );
+  
+  export const PauseIcon = ({ className = "w-6 h-6" }) => (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 18l8.5-6L4 6v12zM13 6v12l8.5-6L13 6z"/>
+      <path d="M6 19H10V5H6V19ZM14 5V19H18V5H14Z" />
     </svg>
-);
-
-
-export const PrevArrowIcon = ({ className = "w-12 h-12" }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-  </svg>
-);
-
-export const NextArrowIcon = ({ className = "w-12 h-12" }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-  </svg>
-);
+  );
+  
+  export const ReplayIcon = ({ className = "w-6 h-6" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+      </svg>
+  );
+  
+  export const SkipIcon = ({ className = "w-6 h-6" }) => (
+      <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 18l8.5-6L4 6v12zM13 6v12l8.5-6L13 6z"/>
+      </svg>
+  );
+  
+  
+  export const PrevArrowIcon = ({ className = "w-12 h-12" }) => (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    </svg>
+  );
+  
+  export const NextArrowIcon = ({ className = "w-12 h-12" }) => (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    </svg>
+  );
 
 // --- Blinking Cursor Component ---
 export const BlinkingCursor = ({sizeClass = "h-6 md:h-8 lg:h-10"}) => (
@@ -47,6 +47,26 @@ export const BlinkingCursor = ({sizeClass = "h-6 md:h-8 lg:h-10"}) => (
     style={{ animation: 'blinker 1s infinite' }}
   ></span>
 );
+
+// --- NEW Animated Border Button ---
+export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
+  return (
+    <button {...props} className={`relative group ${props.className || ''}`}>
+      {/* Animated gradient border. It's hidden when not playing */}
+      <div
+        className={`absolute -inset-0.5 bg-[conic-gradient(from_var(--rotate),#5ddcff,#3c67e3,#f059eb)] rounded-full transition-opacity duration-300 animate-spin ${
+          isPlaying ? 'opacity-100' : 'opacity-0'
+        }`}
+        style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
+      />
+      {/* Inner button face - this has the solid background and holds the icon */}
+      <div className="relative z-10 w-full h-full flex items-center justify-center bg-white dark:bg-slate-700 rounded-full text-black dark:text-slate-200">
+        {isPlaying ? <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6" /> : <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />}
+      </div>
+    </button>
+  );
+};
+
 
 // --- InteractiveOblongNavItem Component ---
 export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, className = '', colorScheme = 'black', isActive = false, isDarkMode = false }, ref) => {
