@@ -1,5 +1,3 @@
-// src/App.js
-
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import {
   MAIN_STAGES,
@@ -27,7 +25,6 @@ import { useLandingChapter } from './hooks/useLandingChapter';
 import { useDesignChapter } from './hooks/useDesignChapter';
 import { useWorkChapter } from './hooks/useWorkChapter';
 
-
 // --- Animation Configuration ---
 const ANIMATION_DURATION_CHAPTER = "0.5s";
 
@@ -38,7 +35,6 @@ function App() {
   const [currentChapter, setCurrentChapter] = useState('main');
   const [showLeftFade, setShowLeftFade] = useState(false);
   const [showRightFade, setShowRightFade] = useState(false);
-
 
   // --- Shared Refs ---
   const mainChapterRef = useRef(null);
@@ -54,7 +50,7 @@ function App() {
 
   // --- Logic Hooks ---
   const landing = useLandingChapter(currentChapter, navigatedManually);
-  const design = useDesignChapter(currentChapter, navigatedManually);
+  const design = useDesignChapter(currentChapter);
   const work = useWorkChapter();
 
   // --- Chapter Animation Classes ---
@@ -63,41 +59,25 @@ function App() {
   const [workChapterAnimClass, setWorkChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
 
   // --- useEffect Hooks ---
-
   // Effect 1: Manages chapter slide transitions
   useEffect(() => {
     const duration = ANIMATION_DURATION_CHAPTER;
     const mainAnim = currentChapter === 'main' ? `animate-[slideUpIn_${duration}_ease-out_forwards]` : `animate-[slideDownOut_${duration}_ease-in_forwards] pointer-events-none`;
     const designAnim = currentChapter === 'design' ? `animate-[slideUpIn_${duration}_ease-out_forwards]` : `animate-[slideDownOut_${duration}_ease-in_forwards] pointer-events-none`;
     const workAnim = currentChapter === 'work' ? `animate-[slideUpIn_${duration}_ease-out_forwards]` : `animate-[slideDownOut_${duration}_ease-in_forwards] pointer-events-none`;
-
     setMainChapterAnimClass(mainAnim);
     setDesignChapterAnimClass(designAnim);
     setWorkChapterAnimClass(workAnim);
   }, [currentChapter]);
 
   // Effect 2: Manages pause/resume on chapter scroll
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (currentChapter === 'design' || currentChapter === 'work') {
       landing.setIsPlaying(false);
     }
-    if (currentChapter === 'main' || currentChapter === 'work') {
-      design.setIsPlayingDesign(false);
-    }
-    if (currentChapter === 'design') {
-      const lastDesignStageKey = DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
-      const lastDesignStageData = DESIGN_CONTENT[lastDesignStageKey];
-      const isDesignChapterFinal = design.activeDesignStageKey === lastDesignStageKey && design.currentDesignStepIndex >= lastDesignStageData.steps.length - 1;
-      
-      // Only control playback when switching TO the design chapter, not during step changes
-      if (!isDesignChapterFinal && !design.isFadingOut) {
-        // Only start playing if we just switched to design chapter (not during step navigation)
-        const justSwitchedToDesign = design.activeDesignStageKey === DESIGN_NAV_ITEMS[0].name && design.currentDesignStepIndex === 0;
-        if (justSwitchedToDesign && !navigatedManually.current) {
-          design.setIsPlayingDesign(true);
-        }
-      }
-    } else if (currentChapter === 'main') {
+    // Design chapter is now fully managed by its hook - no interference needed
+    if (currentChapter === 'main') {
       if (landing.activeMainStep !== MAIN_STAGES.HOME) {
         landing.setIsPlaying(true);
       } else {
@@ -105,9 +85,8 @@ function App() {
         landing.setMainAnimationPhase('home-buttons-appear');
       }
     }
-  // Only depend on currentChapter for this effect - let useDesignChapter handle the rest
   }, [currentChapter]);
-
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Effect 3: Intersection Observer for detecting visible chapter
   useEffect(() => {
@@ -119,7 +98,6 @@ function App() {
           if (entry.target === mainChapterRef.current) newChapter = 'main';
           else if (entry.target === designChapterRef.current) newChapter = 'design';
           else if (entry.target === workChapterRef.current) newChapter = 'work';
-
           if (newChapter && currentChapter !== newChapter) {
             setCurrentChapter(newChapter);
           }
@@ -130,11 +108,9 @@ function App() {
     const mainRefCurrent = mainChapterRef.current;
     const designRefCurrent = designChapterRef.current;
     const workRefCurrent = workChapterRef.current;
-
     if (mainRefCurrent) observer.observe(mainRefCurrent);
     if (designRefCurrent) observer.observe(designRefCurrent);
     if (workRefCurrent) observer.observe(workRefCurrent);
-
     return () => {
       if (mainRefCurrent) observer.unobserve(mainRefCurrent);
       if (designRefCurrent) observer.unobserve(designRefCurrent);
@@ -147,7 +123,6 @@ function App() {
     let items;
     let activeIndex;
     let refs;
-
     if (currentChapter === 'main') {
         items = MAIN_NAV_ITEMS;
         activeIndex = items.findIndex(item => item.name === landing.activeMainStep);
@@ -163,7 +138,6 @@ function App() {
     } else {
         return; // No stepper for work overview
     }
-
     if (!Array.isArray(refs.current)) refs.current = [];
     refs.current = refs.current.slice(0, items.length);
     if (activeIndex === -1 || !refs.current[activeIndex] || !scrollContainerRef.current) return;
@@ -182,16 +156,13 @@ function App() {
   useEffect(() => {
     const handleScroll = () => {
         if (isProgrammaticScrollRef.current) return;
-
         if (scrollTimeoutRef.current) {
             clearTimeout(scrollTimeoutRef.current);
         }
-
         scrollTimeoutRef.current = setTimeout(() => {
             const chapterRefs = [mainChapterRef, designChapterRef, workChapterRef];
             let closestRef = null;
             let minDistance = Infinity;
-
             chapterRefs.forEach(ref => {
                 if (ref.current) {
                     const distance = Math.abs(ref.current.getBoundingClientRect().top);
@@ -201,7 +172,6 @@ function App() {
                     }
                 }
             });
-
             if (closestRef) {
                 isProgrammaticScrollRef.current = true;
                 closestRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -211,7 +181,6 @@ function App() {
             }
         }, 150);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => {
         window.removeEventListener('scroll', handleScroll);
@@ -232,23 +201,18 @@ function App() {
   const updateNavFade = useCallback(() => {
     const el = scrollContainerRef.current;
     if (!el) return;
-
     const hasOverflow = el.scrollWidth > el.clientWidth;
     setShowLeftFade(hasOverflow && el.scrollLeft > 10);
     setShowRightFade(hasOverflow && el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
-
   }, []);
 
   useEffect(() => {
       const scrollContainer = scrollContainerRef.current;
       if (!scrollContainer) return;
-
       updateNavFade();
-
       scrollContainer.addEventListener('scroll', updateNavFade);
       const resizeObserver = new ResizeObserver(updateNavFade);
       resizeObserver.observe(scrollContainer);
-
       return () => {
           scrollContainer.removeEventListener('scroll', updateNavFade);
           resizeObserver.disconnect();
@@ -256,20 +220,17 @@ function App() {
   }, [updateNavFade, navItemsToDisplay]);
 
   // --- Event Handlers ---
-
   const navigateToChapter = (chapterName) => {
     isProgrammaticScrollRef.current = true;
     let targetRef;
     if (chapterName === 'main') targetRef = mainChapterRef;
     else if (chapterName === 'design') targetRef = designChapterRef;
     else if (chapterName === 'work') targetRef = workChapterRef;
-
     setTimeout(() => {
       if (targetRef && targetRef.current) {
         targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 50);
-
     setTimeout(() => {
         isProgrammaticScrollRef.current = false;
     }, 1000);
@@ -277,9 +238,8 @@ function App() {
 
   const handleNextLine = () => {
     landing.setIsPlaying(false);
-    design.setIsPlayingDesign(false);
     navigatedManually.current = true;
-
+    
     if (currentChapter === 'main') {
       if (landing.activeMainStep === MAIN_STAGES.INSULTS) {
         if (landing.currentSubLineIndex < CONTENT.INSULTS.LINES.length - 1) {
@@ -317,32 +277,9 @@ function App() {
         navigateToChapter('design');
       }
     } else if (currentChapter === 'design') {
-      const currentStageData = DESIGN_CONTENT[design.activeDesignStageKey];
-      const isLastStepOfStage = design.currentDesignStepIndex >= currentStageData.steps.length - 1;
-      const isLastStage = design.activeDesignStageKey === DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
-
-      if (isLastStepOfStage && isLastStage) {
+      const result = design.nextStep();
+      if (result === 'navigate-to-work') {
         navigateToChapter('work');
-        return;
-      }
-
-      if (!isLastStepOfStage) {
-        const nextIndex = design.currentDesignStepIndex + 1;
-        const nextStep = currentStageData.steps[nextIndex];
-        design.setCurrentDesignStepIndex(nextIndex);
-        design.setDisplayedDesignTitleChars(nextStep.title);
-        design.setDisplayedDesignMainTextChars(nextStep.mainText);
-        design.setDesignStepAnimationPhase('pausing-after-maintext');
-      } else {
-        const currentNavIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === design.activeDesignStageKey);
-        const nextStageKey = DESIGN_NAV_ITEMS[currentNavIndex + 1].name;
-        const nextStageData = DESIGN_CONTENT[nextStageKey];
-
-        design.setActiveDesignStageKey(nextStageKey);
-        design.setCurrentDesignStepIndex(0);
-        design.setDisplayedDesignTitleChars(nextStageData.steps[0].title);
-        design.setDisplayedDesignMainTextChars(nextStageData.steps[0].mainText);
-        design.setDesignStepAnimationPhase('pausing-after-maintext');
       }
     } else if (currentChapter === 'work') {
         if (work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) {
@@ -353,16 +290,15 @@ function App() {
 
   const handlePrevLine = () => {
     landing.setIsPlaying(false);
-    design.setIsPlayingDesign(false);
     navigatedManually.current = true;
+    
     if (currentChapter === 'work') {
       if (work.workStepIndex > 0) {
         work.setWorkStepIndex(prev => prev - 1);
       } else {
         navigateToChapter('design');
       }
-    }
-    else if (currentChapter === 'main') {
+    } else if (currentChapter === 'main') {
       if (landing.activeMainStep === MAIN_STAGES.HOME) {
         landing.setActiveMainStep(MAIN_STAGES.INTRO);
         const lastIntroStepIndex = CONTENT.INTRO.steps.length - 1;
@@ -399,30 +335,10 @@ function App() {
           landing.setMainAnimationPhase('pausing');
         }
       }
-    } else {
-      if (design.currentDesignStepIndex > 0) {
-        const prevIndex = design.currentDesignStepIndex - 1;
-        const prevStep = DESIGN_CONTENT[design.activeDesignStageKey].steps[prevIndex];
-        design.setCurrentDesignStepIndex(prevIndex);
-        design.setDisplayedDesignTitleChars(prevStep.title);
-        design.setDisplayedDesignMainTextChars(prevStep.mainText);
-        design.setDesignStepAnimationPhase('pausing-after-maintext');
-      } else {
-        const currentNavIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === design.activeDesignStageKey);
-        if (currentNavIndex > 0) {
-          const prevStageKey = DESIGN_NAV_ITEMS[currentNavIndex - 1].name;
-          const prevStageData = DESIGN_CONTENT[prevStageKey];
-          const lastStepIndex = prevStageData.steps.length - 1;
-          const lastStep = prevStageData.steps[lastStepIndex];
-          
-          design.setActiveDesignStageKey(prevStageKey);
-          design.setCurrentDesignStepIndex(lastStepIndex);
-          design.setDisplayedDesignTitleChars(lastStep.title);
-          design.setDisplayedDesignMainTextChars(lastStep.mainText);
-          design.setDesignStepAnimationPhase('pausing-after-maintext');
-        } else {
-           navigateToChapter('main');
-        }
+    } else if (currentChapter === 'design') {
+      const result = design.prevStep();
+      if (result === 'navigate-to-main') {
+        navigateToChapter('main');
       }
     }
   };
@@ -447,7 +363,6 @@ function App() {
         }
         return item.name === itemName;
       });
-
       if (index !== -1) {
         handleWorkStepperItemClick(index);
       }
@@ -457,7 +372,6 @@ function App() {
   const handleMainStepperItemClick = useCallback((itemName) => {
     if (currentChapter !== 'main') return;
     navigatedManually.current = false;
-
     if (itemName === MAIN_STAGES.HOME && landing.activeMainStep === MAIN_STAGES.HOME) {
       const lastIntroStep = CONTENT.INTRO.steps[CONTENT.INTRO.steps.length - 1];
       landing.setDisplayedNameChars(lastIntroStep.title);
@@ -467,7 +381,6 @@ function App() {
       landing.setIsPlaying(false);
       return;
     }
-
     if (itemName === landing.activeMainStep) {
       landing.setActiveMainStep('');
       setTimeout(() => {
@@ -482,31 +395,33 @@ function App() {
 
   const handleDesignStepperItemClick = useCallback((stageKey) => {
     if (currentChapter !== 'design') return;
-    navigatedManually.current = false;
-
-    if (stageKey === design.activeDesignStageKey) {
-      design.setActiveDesignStageKey('');
-      setTimeout(() => {
-        design.setActiveDesignStageKey(stageKey)
-        design.setIsPlayingDesign(true);
-      }, 0);
-    } else {
-      design.setActiveDesignStageKey(stageKey);
-    }
+    design.navigateToStage(stageKey);
   }, [currentChapter, design]);
 
   const togglePlayPause = () => {
     if (currentChapter === 'main') {
       if (!landing.isPlaying) {
-        if (landing.activeMainStep === MAIN_STAGES.INSULTS) landing.setMainAnimationPhase('pausing-insult');
-        else if (landing.activeMainStep === MAIN_STAGES.INTRO) landing.setMainAnimationPhase('pausing');
+        if (landing.activeMainStep === MAIN_STAGES.INSULTS) {
+          const currentLineData = CONTENT.INSULTS.LINES[landing.currentSubLineIndex];
+          if (currentLineData && landing.displayedChars.length < currentLineData.text.length) {
+            landing.setMainAnimationPhase('typing-insult');
+          } else {
+            landing.setMainAnimationPhase('pausing-insult');
+          }
+        } else if (landing.activeMainStep === MAIN_STAGES.INTRO) {
+          const currentStepData = CONTENT.INTRO.steps[landing.introStepIndex];
+          if (currentStepData && landing.displayedNameChars.length < currentStepData.title.length) {
+            landing.setMainAnimationPhase('typing-title');
+          } else if (currentStepData && landing.displayedTitleChars.length < currentStepData.mainText.length) {
+            landing.setMainAnimationPhase('typing-maintext');
+          } else {
+            landing.setMainAnimationPhase('pausing');
+          }
+        }
       }
       landing.setIsPlaying(p => !p);
     } else if (currentChapter === 'design') {
-      if (!design.isPlayingDesign) {
-        design.setDesignStepAnimationPhase('pausing-after-maintext');
-      }
-      design.setIsPlayingDesign(p => !p);
+      design.togglePlayPause();
     }
   };
 
@@ -516,8 +431,7 @@ function App() {
       landing.setActiveMainStep(MAIN_STAGES.INSULTS);
       landing.setIsPlaying(true);
     } else if (currentChapter === 'design') {
-      design.setActiveDesignStageKey(DESIGN_NAV_ITEMS[0].name);
-      design.setIsPlayingDesign(true);
+      design.replay();
     } else if (currentChapter === 'work') {
         work.resetWorkChapter();
     }
@@ -533,7 +447,6 @@ function App() {
       design.activeDesignStageKey === lastDesignStageKey &&
       design.currentDesignStepIndex >= lastDesignStageData.steps.length - 1;
     const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
-
     if (currentChapter === 'work' && work.workView === 'Quiz') {
       const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
       if (work.workStepIndex === 0) { // On the intro
@@ -552,8 +465,7 @@ function App() {
     }
   };
 
-
-  const toggleDarkMode = () => {
+    const toggleDarkMode = () => {
     setDarkMode(prevMode => {
       const newMode = !prevMode;
       document.documentElement.classList.toggle('dark', newMode);
@@ -562,7 +474,6 @@ function App() {
   };
 
   // --- Render Logic & Derived State ---
-
   const showPrevArrow =
     (currentChapter === 'main' && (landing.activeMainStep !== MAIN_STAGES.INSULTS || landing.currentSubLineIndex !== 0)) ||
     (currentChapter === 'design') ||
@@ -581,12 +492,10 @@ function App() {
   }
 
   const itemNavRefs = currentChapter === 'main' ? mainItemRefs : (currentChapter === 'design' ? designItemRefs : workItemRefs);
-
   const bottomNavContainerClass = `flex items-center space-x-2 sm:space-x-3 ${
     currentChapter === 'design' ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl' : 'w-auto'
   }`;
   const navItemsFlexClass = currentChapter === 'design' ? 'flex-1 min-w-0' : 'flex-initial';
-
   const chapterSectionWrapperStyle = "min-h-screen w-full flex flex-col items-center justify-center p-4 relative";
   const chapterContentWrapperStyle = "flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative group";
   const arrowButtonClass = "absolute top-1/2 -translate-y-1/2 p-2 rounded-full text-slate-500 hover:text-slate-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 transition-all opacity-40 group-hover:opacity-100";
@@ -613,7 +522,7 @@ function App() {
     const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
     const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
     const nonAnimatedButtonClasses = "h-11 w-11 sm:h-14 sm:w-14 flex-shrink-0 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-110 active:scale-95 bg-white text-black hover:bg-gray-100 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800";
-
+    
     if (currentChapter === 'work' && work.workView === 'Quiz') {
       let icon;
       let label = "Central control button";
@@ -629,7 +538,7 @@ function App() {
       }
       return <button onClick={handleCentralButtonClick} className={nonAnimatedButtonClasses} aria-label={label}>{icon}</button>;
     }
-
+    
     if (showReplayButtonForChapters) {
       return (
         <button onClick={handleCentralButtonClick} className={nonAnimatedButtonClasses} aria-label="Replay chapter">
@@ -637,7 +546,7 @@ function App() {
         </button>
       );
     }
-
+    
     return (
       <AnimatedBorderButton
         isPlaying={currentPlayPauseButtonState}
@@ -677,7 +586,6 @@ function App() {
               aria-label={`Go to ${dot.label} page`} />
           ))}
         </div>
-
         <div ref={mainChapterRef} className={`${chapterSectionWrapperStyle} ${mainChapterAnimClass}`}>
           {currentChapter === 'main' && (
             <div className={`${chapterContentWrapperStyle} px-16`}>
@@ -702,7 +610,6 @@ function App() {
             </div>
           )}
         </div>
-
         <div ref={designChapterRef} className={`${chapterSectionWrapperStyle} ${designChapterAnimClass}`}>
           {currentChapter === 'design' && (
             <div className={`${chapterContentWrapperStyle} px-16`}>
@@ -719,7 +626,6 @@ function App() {
             </div>
           )}
         </div>
-
         <div ref={workChapterRef} className={`${chapterSectionWrapperStyle} ${workChapterAnimClass}`}>
             {currentChapter === 'work' && (
               <>
@@ -734,7 +640,6 @@ function App() {
                 <div className={`${chapterContentWrapperStyle} px-16`}>
                   {work.workView === 'Quiz' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
                   {work.workView === 'Quiz' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
-
                   {work.workView === 'Quiz' ? (
                       work.workStepIndex === 0 ? (
                           <QuizIntro onStart={() => work.setWorkStepIndex(1)} />
@@ -759,11 +664,9 @@ function App() {
               </>
             )}
         </div>
-
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
              <div className={bottomNavContainerClass}>
                 {renderCentralButton()}
-
                 {navItemsToDisplay.length > 0 && (
                   <div className={`relative ${navItemsFlexClass}`}>
                     <div
@@ -774,9 +677,7 @@ function App() {
                             let navItemText = (currentChapter === 'design' && DESIGN_CONTENT[item.name])
                                                 ? DESIGN_CONTENT[item.name].navText
                                                 : item.name;
-
                             let navIdentifier = item.name;
-
                             // Check for completed quiz questions and add a tick
                             if (currentChapter === 'work' && work.workView === 'Quiz' && item.name.startsWith('Question')) {
                                 const quizIndex = index - 1; // Account for 'Start' item
@@ -788,10 +689,7 @@ function App() {
                                     }
                                 }
                             }
-
                             const isFading = (currentChapter === 'main' && landing.isFadingOut) || (currentChapter === 'design' && design.isFadingOut);
-                            const onFadeOutEnd = currentChapter === 'design' ? design.handleFadeOutEnd : () => {};
-
                             return (
                                 <InteractiveOblongNavItem
                                     key={`${currentChapter}-${item.name}`}
@@ -802,7 +700,6 @@ function App() {
                                     isPlaying={activeNavStepOrStage === navIdentifier && currentPlayPauseButtonState && !isFading}
                                     isFadingOut={activeNavStepOrStage === navIdentifier && isFading}
                                     isDarkMode={darkMode}
-                                    onFadeOutEnd={onFadeOutEnd}
                                     />
                             );
                         })}
