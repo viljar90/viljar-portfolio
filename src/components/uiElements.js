@@ -67,7 +67,7 @@ export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
 
 
 // --- InteractiveOblongNavItem Component ---
-export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, className = '', isActive = false, isPlaying = false, isFadingOut = false, isDarkMode = false }, ref) => {
+export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, className = '', isActive = false, isPlaying = false, isFadingOut = false, isDarkMode = false, onFadeOutEnd }, ref) => {
     const baseClasses = 'flex-none font-semibold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-full cursor-pointer focus:outline-none transition-all duration-200 ease-in-out whitespace-nowrap';
     const focusRingClasses = `focus-visible:ring-2 focus-visible:ring-opacity-75 ${isDarkMode ? 'focus-visible:ring-gray-500' : 'focus-visible:ring-gray-400'}`;
 
@@ -79,8 +79,19 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
             animationClass = 'animate-gradient-border';
         }
 
+        const handleAnimationEnd = () => {
+          if (isFadingOut && onFadeOutEnd) {
+            onFadeOutEnd();
+          }
+        };
+
         return (
-            <button ref={ref} onClick={onClick} className={`${baseClasses} relative group overflow-hidden bg-black text-white shadow-lg scale-105 ${className}`}>
+            <button
+                ref={ref}
+                onClick={onClick}
+                className={`${baseClasses} relative group overflow-hidden bg-black text-white shadow-lg scale-105 ${className}`}
+                onAnimationEnd={handleAnimationEnd} // Add the event listener
+            >
                 <div
                     className={`absolute -top-[150%] -left-[150%] w-[400%] h-[400%] bg-[conic-gradient(from_var(--angle),transparent_var(--fill-percentage),var(--border-color)_100%)] ${animationClass}`}
                     style={{ zIndex: 1 }}

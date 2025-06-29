@@ -84,13 +84,18 @@ function App() {
     if (currentChapter === 'main' || currentChapter === 'work') {
       design.setIsPlayingDesign(false);
     }
-
     if (currentChapter === 'design') {
       const lastDesignStageKey = DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
       const lastDesignStageData = DESIGN_CONTENT[lastDesignStageKey];
       const isDesignChapterFinal = design.activeDesignStageKey === lastDesignStageKey && design.currentDesignStepIndex >= lastDesignStageData.steps.length - 1;
-      if (!isDesignChapterFinal) {
-        design.setIsPlayingDesign(true);
+      
+      // Only control playback when switching TO the design chapter, not during step changes
+      if (!isDesignChapterFinal && !design.isFadingOut) {
+        // Only start playing if we just switched to design chapter (not during step navigation)
+        const justSwitchedToDesign = design.activeDesignStageKey === DESIGN_NAV_ITEMS[0].name && design.currentDesignStepIndex === 0;
+        if (justSwitchedToDesign && !navigatedManually.current) {
+          design.setIsPlayingDesign(true);
+        }
       }
     } else if (currentChapter === 'main') {
       if (landing.activeMainStep !== MAIN_STAGES.HOME) {
@@ -100,7 +105,7 @@ function App() {
         landing.setMainAnimationPhase('home-buttons-appear');
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // Only depend on currentChapter for this effect - let useDesignChapter handle the rest
   }, [currentChapter]);
 
 
@@ -350,7 +355,6 @@ function App() {
     landing.setIsPlaying(false);
     design.setIsPlayingDesign(false);
     navigatedManually.current = true;
-
     if (currentChapter === 'work') {
       if (work.workStepIndex > 0) {
         work.setWorkStepIndex(prev => prev - 1);
@@ -409,10 +413,12 @@ function App() {
           const prevStageKey = DESIGN_NAV_ITEMS[currentNavIndex - 1].name;
           const prevStageData = DESIGN_CONTENT[prevStageKey];
           const lastStepIndex = prevStageData.steps.length - 1;
+          const lastStep = prevStageData.steps[lastStepIndex];
+          
           design.setActiveDesignStageKey(prevStageKey);
           design.setCurrentDesignStepIndex(lastStepIndex);
-          design.setDisplayedDesignTitleChars(prevStageData.steps[lastStepIndex].title);
-          design.setDisplayedDesignMainTextChars(prevStageData.steps[lastStepIndex].mainText);
+          design.setDisplayedDesignTitleChars(lastStep.title);
+          design.setDisplayedDesignMainTextChars(lastStep.mainText);
           design.setDesignStepAnimationPhase('pausing-after-maintext');
         } else {
            navigateToChapter('main');
@@ -655,7 +661,6 @@ function App() {
     (currentChapter === 'design' && !isDesignChapterFinalStateFinal) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1);
 
-
   // #################################################################
   // ### FINAL RENDER BLOCK ###
   // #################################################################
@@ -785,6 +790,7 @@ function App() {
                             }
 
                             const isFading = (currentChapter === 'main' && landing.isFadingOut) || (currentChapter === 'design' && design.isFadingOut);
+                            const onFadeOutEnd = currentChapter === 'design' ? design.handleFadeOutEnd : () => {};
 
                             return (
                                 <InteractiveOblongNavItem
@@ -795,7 +801,9 @@ function App() {
                                     isActive={activeNavStepOrStage === navIdentifier || activeNavStepOrStage === item.name}
                                     isPlaying={activeNavStepOrStage === navIdentifier && currentPlayPauseButtonState && !isFading}
                                     isFadingOut={activeNavStepOrStage === navIdentifier && isFading}
-                                    isDarkMode={darkMode} />
+                                    isDarkMode={darkMode}
+                                    onFadeOutEnd={onFadeOutEnd}
+                                    />
                             );
                         })}
                     </div>
