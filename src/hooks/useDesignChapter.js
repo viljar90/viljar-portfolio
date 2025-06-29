@@ -14,8 +14,9 @@ export const useDesignChapter = (currentChapter, navigatedManually) => {
   const [displayedDesignMainTextChars, setDisplayedDesignMainTextChars] = useState('');
   const [designStepAnimationPhase, setDesignStepAnimationPhase] = useState('typing-title');
   const [isPlayingDesign, setIsPlayingDesign] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false); // New state
 
-  // Effect 1: Resets Design Chapter step animations. (No changes here)
+  // Effect 1: Resets Design Chapter step animations.
   useEffect(() => {
     if (navigatedManually.current) {
       navigatedManually.current = false;
@@ -27,6 +28,7 @@ export const useDesignChapter = (currentChapter, navigatedManually) => {
     setDisplayedDesignMainTextChars('');
     setDesignStepAnimationPhase('typing-title');
     setIsPlayingDesign(true);
+    setIsFadingOut(false); // Reset fading state
   }, [activeDesignStageKey, currentChapter, navigatedManually]);
 
   // Effect 2: Typewriter animation for individual steps.
@@ -73,17 +75,11 @@ export const useDesignChapter = (currentChapter, navigatedManually) => {
               setDesignStepAnimationPhase('typing-title');
             }
           } else {
-            // *** FIXED LOGIC: START ***
-            // This is the last step of the current section.
-            // Check if this is also the last section of the entire chapter.
             const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
             if (currentIndex >= DESIGN_NAV_ITEMS.length - 1) {
-              // If so, stop the animation for good. This is the only place this happens now.
               setIsPlayingDesign(false);
             }
-            // Signal that this section's animation is complete.
             setDesignStepAnimationPhase('all-steps-complete');
-            // *** FIXED LOGIC: END ***
           }
         }, currentStepData.pause || LONG_PAUSE_DURATION);
         break;
@@ -106,21 +102,20 @@ export const useDesignChapter = (currentChapter, navigatedManually) => {
     }
 
     const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
-
-    // *** FIXED LOGIC: START ***
-    // The conflicting "stop" command was removed.
-    // Now we just add a guard to prevent this hook from running after the final section.
     if (currentIndex >= DESIGN_NAV_ITEMS.length - 1) {
       return;
     }
-    // *** FIXED LOGIC: END ***
 
     const currentStageConfig = DESIGN_NAV_ITEMS.find(item => item.name === activeDesignStageKey);
     const pauseDuration = currentStageConfig?.pauseAfter !== undefined ? currentStageConfig.pauseAfter : LONG_PAUSE_DURATION;
 
     const timer = setTimeout(() => {
-      const nextIndex = currentIndex + 1;
-      setActiveDesignStageKey(DESIGN_NAV_ITEMS[nextIndex].name);
+      setIsFadingOut(true); // Start fading
+      setTimeout(() => {
+        setIsFadingOut(false); // End fading
+        const nextIndex = currentIndex + 1;
+        setActiveDesignStageKey(DESIGN_NAV_ITEMS[nextIndex].name);
+      }, 1500); // Duration of the fade-out animation
     }, pauseDuration);
 
     return () => clearTimeout(timer);
@@ -134,6 +129,7 @@ export const useDesignChapter = (currentChapter, navigatedManually) => {
     displayedDesignMainTextChars,
     designStepAnimationPhase,
     isPlayingDesign,
+    isFadingOut, // <-- Export the new state
     // State setters
     setActiveDesignStageKey,
     setCurrentDesignStepIndex,

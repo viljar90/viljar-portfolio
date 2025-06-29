@@ -3,8 +3,20 @@
 @tailwind components;
 @tailwind utilities;
 
-@property --rotate {
+@property --angle {
   syntax: '<angle>';
   inherits: false;
-  initial-value: 132deg;
+  initial-value: 0deg;
+}
+
+@property --fill-percentage {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 100%;
+}
+
+@property --border-color {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #5ddcff;
 }

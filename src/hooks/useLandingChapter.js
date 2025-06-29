@@ -20,6 +20,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
   const [introStepIndex, setIntroStepIndex] = useState(0);
   const [introGreetingPhase, setIntroGreetingPhase] = useState('typing-greeting');
   const [isSliding, setIsSliding] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
 
   // Effect 1 (previously Effect 3 in App.js): Resets content when active step changes
   useEffect(() => {
@@ -35,6 +36,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     setDisplayedTitleChars('');
     setDisplayedHomeQuestion('');
     setIntroGreetingPhase('typing-greeting');
+    setIsFadingOut(false); // Reset fading state
 
     if (activeMainStep === MAIN_STAGES.INSULTS) {
       setMainAnimationPhase('typing-insult');
@@ -53,20 +55,26 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
   useEffect(() => {
     if (currentChapter !== 'main' || !isPlaying) return;
     if (mainAnimationPhase === 'insults-done' || mainAnimationPhase === 'intro-done') {
-      navigatedManually.current = false;
-      const transitionToNextStep = () => {
-        setActiveMainStep(prevActiveStep => {
-          const currentIndex = MAIN_NAV_ITEMS.findIndex(item => item.name === prevActiveStep);
-          if (currentIndex >= MAIN_NAV_ITEMS.length - 1) {
-            setIsPlaying(false);
-            return prevActiveStep;
-          }
-          const nextIndex = (currentIndex + 1);
-          return MAIN_NAV_ITEMS[nextIndex].name;
-        });
-      };
       const currentStepConfig = MAIN_NAV_ITEMS.find(item => item.name === activeMainStep);
       const pauseDuration = currentStepConfig?.pauseAfter !== undefined ? currentStepConfig.pauseAfter : LONG_PAUSE_DURATION;
+      
+      const transitionToNextStep = () => {
+        setIsFadingOut(true); // Start fading
+        setTimeout(() => {
+          setIsFadingOut(false); // End fading
+          navigatedManually.current = false;
+          setActiveMainStep(prevActiveStep => {
+            const currentIndex = MAIN_NAV_ITEMS.findIndex(item => item.name === prevActiveStep);
+            if (currentIndex >= MAIN_NAV_ITEMS.length - 1) {
+              setIsPlaying(false);
+              return prevActiveStep;
+            }
+            const nextIndex = (currentIndex + 1);
+            return MAIN_NAV_ITEMS[nextIndex].name;
+          });
+        }, 1500); // Duration of the fade-out animation
+      };
+
       const timer = setTimeout(transitionToNextStep, pauseDuration);
       return () => clearTimeout(timer);
     }
@@ -174,6 +182,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     // State values
     activeMainStep,
     isPlaying,
+    isFadingOut, // <-- Export the new state
     currentSubLineIndex,
     displayedChars,
     mainAnimationPhase,
