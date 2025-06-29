@@ -36,7 +36,7 @@ export const useDesignChapter = (currentChapter, navigatedManually) => {
     setDesignStepAnimationPhase('typing-title');
     setIsPlayingDesign(true);
     setIsFadingOut(false);
-  }, [activeDesignStageKey, currentChapter]);
+  }, [activeDesignStageKey, currentChapter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Effect 2: Typewriter animation for individual steps.
   useEffect(() => {
