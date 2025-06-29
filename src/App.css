@@ -32,20 +32,6 @@
   20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
 
-/* --- CSS for Nav Fade Effect --- */
-.fade-right {
-  -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
-  mask-image: linear-gradient(to right, black 90%, transparent 100%);
-}
-.fade-left {
-  -webkit-mask-image: linear-gradient(to left, black 90%, transparent 100%);
-  mask-image: linear-gradient(to left, black 90%, transparent 100%);
-}
-.fade-both {
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-}
-
 /* --- Hide Scrollbar CSS --- */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

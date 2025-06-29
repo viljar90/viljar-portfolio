@@ -36,7 +36,9 @@ function App() {
   // --- Top-Level State ---
   const [darkMode, setDarkMode] = useState(false);
   const [currentChapter, setCurrentChapter] = useState('main');
-  const [navFadeClass, setNavFadeClass] = useState('');
+  const [showLeftFade, setShowLeftFade] = useState(false);
+  const [showRightFade, setShowRightFade] = useState(false);
+
 
   // --- Shared Refs ---
   const mainChapterRef = useRef(null);
@@ -227,18 +229,8 @@ function App() {
     if (!el) return;
 
     const hasOverflow = el.scrollWidth > el.clientWidth;
-    if (!hasOverflow) {
-        setNavFadeClass('');
-        return;
-    }
-
-    const atStart = el.scrollLeft < 10;
-    const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 10;
-
-    if (atStart && !atEnd) setNavFadeClass('fade-right');
-    else if (!atStart && atEnd) setNavFadeClass('fade-left');
-    else if (!atStart && !atEnd) setNavFadeClass('fade-both');
-    else setNavFadeClass('');
+    setShowLeftFade(hasOverflow && el.scrollLeft > 10);
+    setShowRightFade(hasOverflow && el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
 
   }, []);
 
@@ -587,7 +579,7 @@ function App() {
   const bottomNavContainerClass = `flex items-center space-x-2 sm:space-x-3 ${
     currentChapter === 'design' ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl' : 'w-auto'
   }`;
-  const navItemsFlexClass = currentChapter === 'design' ? 'flex-1' : 'flex-initial';
+  const navItemsFlexClass = currentChapter === 'design' ? 'flex-1 min-w-0' : 'flex-initial';
 
   const chapterSectionWrapperStyle = "min-h-screen w-full flex flex-col items-center justify-center p-4 relative";
   const chapterContentWrapperStyle = "flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative group";
@@ -614,7 +606,7 @@ function App() {
       design.currentDesignStepIndex >= lastDesignStageData.steps.length - 1;
     const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
     const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
-    const nonAnimatedButtonClasses = "h-11 w-11 sm:h-14 sm:w-14 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-110 active:scale-95 bg-white text-black hover:bg-gray-100 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800";
+    const nonAnimatedButtonClasses = "h-11 w-11 sm:h-14 sm:w-14 flex-shrink-0 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-110 active:scale-95 bg-white text-black hover:bg-gray-100 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800";
 
     if (currentChapter === 'work' && work.workView === 'Quiz') {
       let icon;
@@ -644,7 +636,7 @@ function App() {
       <AnimatedBorderButton
         isPlaying={currentPlayPauseButtonState}
         onClick={handleCentralButtonClick}
-        className="h-11 w-11 sm:h-14 sm:w-14"
+        className="h-11 w-11 sm:h-14 sm:w-14 flex-shrink-0"
         aria-label={currentPlayPauseButtonState ? 'Pause' : 'Play'}
       />
     );
@@ -768,41 +760,49 @@ function App() {
                 {renderCentralButton()}
 
                 {navItemsToDisplay.length > 0 && (
-                    <div ref={scrollContainerRef} className={`bg-gray-50 dark:bg-slate-800 py-1.5 px-2 rounded-full flex items-center space-x-1 shadow-lg transition-colors duration-300 border border-gray-300 dark:border-gray-700 overflow-x-auto no-scrollbar ${navItemsFlexClass} ${navFadeClass}`}>
-                    {navItemsToDisplay.map((item, index) => {
-                        let navItemText = (currentChapter === 'design' && DESIGN_CONTENT[item.name])
-                                            ? DESIGN_CONTENT[item.name].navText
-                                            : item.name;
+                  <div className={`relative ${navItemsFlexClass}`}>
+                    <div
+                        ref={scrollContainerRef}
+                        className="bg-gray-50 dark:bg-slate-800 py-1.5 px-2 rounded-full flex items-center space-x-1 shadow-lg transition-colors duration-300 border border-gray-300 dark:border-gray-700 overflow-x-auto no-scrollbar"
+                    >
+                        {navItemsToDisplay.map((item, index) => {
+                            let navItemText = (currentChapter === 'design' && DESIGN_CONTENT[item.name])
+                                                ? DESIGN_CONTENT[item.name].navText
+                                                : item.name;
 
-                        let navIdentifier = item.name;
+                            let navIdentifier = item.name;
 
-                        // Check for completed quiz questions and add a tick
-                        if (currentChapter === 'work' && work.workView === 'Quiz' && item.name.startsWith('Question')) {
-                            const quizIndex = index - 1; // Account for 'Start' item
-                            if (quizIndex >= 0 && quizIndex < QUIZZES.length) {
-                                const quiz = QUIZZES[quizIndex];
-                                if (work.quizAnswers[quiz.id]?.correct) {
-                                    navItemText = `${quiz.title} ✓`;
-                                    navIdentifier = quiz.title;
+                            // Check for completed quiz questions and add a tick
+                            if (currentChapter === 'work' && work.workView === 'Quiz' && item.name.startsWith('Question')) {
+                                const quizIndex = index - 1; // Account for 'Start' item
+                                if (quizIndex >= 0 && quizIndex < QUIZZES.length) {
+                                    const quiz = QUIZZES[quizIndex];
+                                    if (work.quizAnswers[quiz.id]?.correct) {
+                                        navItemText = `${quiz.title} ✓`;
+                                        navIdentifier = quiz.title;
+                                    }
                                 }
                             }
-                        }
 
-                        const isFading = (currentChapter === 'main' && landing.isFadingOut) || (currentChapter === 'design' && design.isFadingOut);
+                            const isFading = (currentChapter === 'main' && landing.isFadingOut) || (currentChapter === 'design' && design.isFadingOut);
 
-                        return (
-                            <InteractiveOblongNavItem
-                                key={`${currentChapter}-${item.name}`}
-                                ref={el => itemNavRefs.current[index] = el}
-                                text={navItemText}
-                                onClick={() => handleNavItemClick(navIdentifier)}
-                                isActive={activeNavStepOrStage === navIdentifier || activeNavStepOrStage === item.name}
-                                isPlaying={activeNavStepOrStage === navIdentifier && currentPlayPauseButtonState && !isFading}
-                                isFadingOut={activeNavStepOrStage === navIdentifier && isFading}
-                                isDarkMode={darkMode} />
-                        );
-                    })}
+                            return (
+                                <InteractiveOblongNavItem
+                                    key={`${currentChapter}-${item.name}`}
+                                    ref={el => itemNavRefs.current[index] = el}
+                                    text={navItemText}
+                                    onClick={() => handleNavItemClick(navIdentifier)}
+                                    isActive={activeNavStepOrStage === navIdentifier || activeNavStepOrStage === item.name}
+                                    isPlaying={activeNavStepOrStage === navIdentifier && currentPlayPauseButtonState && !isFading}
+                                    isFadingOut={activeNavStepOrStage === navIdentifier && isFading}
+                                    isDarkMode={darkMode} />
+                            );
+                        })}
                     </div>
+                    {/* Fade effect overlays */}
+                    <div className={`absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-slate-900 to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} dark:from-slate-950 pointer-events-none`}></div>
+                    <div className={`absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-slate-900 to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} dark:from-slate-950 pointer-events-none`}></div>
+                  </div>
                 )}
             </div>
         </div>
