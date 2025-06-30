@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/viljar-portfolio/static/css/main.4a81b8db.css",
-    "main.js": "/viljar-portfolio/static/js/main.317163b2.js",
+    "main.css": "/viljar-portfolio/static/css/main.81d00c9a.css",
+    "main.js": "/viljar-portfolio/static/js/main.7f26a066.js",
     "static/js/453.473696e7.chunk.js": "/viljar-portfolio/static/js/453.473696e7.chunk.js",
     "index.html": "/viljar-portfolio/index.html",
-    "main.4a81b8db.css.map": "/viljar-portfolio/static/css/main.4a81b8db.css.map",
-    "main.317163b2.js.map": "/viljar-portfolio/static/js/main.317163b2.js.map",
+    "main.81d00c9a.css.map": "/viljar-portfolio/static/css/main.81d00c9a.css.map",
+    "main.7f26a066.js.map": "/viljar-portfolio/static/js/main.7f26a066.js.map",
     "453.473696e7.chunk.js.map": "/viljar-portfolio/static/js/453.473696e7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4a81b8db.css",
-    "static/js/main.317163b2.js"
+    "static/css/main.81d00c9a.css",
+    "static/js/main.7f26a066.js"
   ]
 }
