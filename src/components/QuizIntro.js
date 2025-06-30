@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { BlinkingCursor, PlayIcon } from './uiElements';
+import PropTypes from 'prop-types';
 
 const QuizIntro = ({ onStart }) => {
     const [displayedTitle, setDisplayedTitle] = useState('');
@@ -57,6 +58,10 @@ const QuizIntro = ({ onStart }) => {
             )}
         </div>
     );
+};
+
+QuizIntro.propTypes = {
+  onStart: PropTypes.func.isRequired,
 };
 
 export default QuizIntro;

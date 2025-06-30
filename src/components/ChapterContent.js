@@ -1,6 +1,7 @@
 // src/components/ChapterContent.js
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { PrevArrowIcon, NextArrowIcon } from './uiElements';
 import LandingChapter from './LandingChapter';
 import DesignChapter from './DesignChapter';
@@ -56,10 +57,9 @@ const ChapterContent = ({
       {currentChapter === 'design' && (
         <DesignChapter
           darkMode={darkMode}
+          design={design}
           currentDesignStepData={currentDesignStepData}
-          displayedDesignTitleChars={design.displayedDesignTitleChars}
           showCursorDesignTitle={showCursorDesignTitle}
-          displayedDesignMainTextChars={design.displayedDesignMainTextChars}
           showCursorDesignMainText={showCursorDesignMainText}
         />
       )}
@@ -87,6 +87,28 @@ const ChapterContent = ({
       )}
     </div>
   );
+};
+
+ChapterContent.propTypes = {
+  currentChapter: PropTypes.string.isRequired,
+  showPrevArrow: PropTypes.bool.isRequired,
+  showNextArrow: PropTypes.bool.isRequired,
+  handlePrevLine: PropTypes.func.isRequired,
+  handleNextLine: PropTypes.func.isRequired,
+  darkMode: PropTypes.bool.isRequired,
+  landing: PropTypes.object.isRequired,
+  design: PropTypes.object.isRequired,
+  work: PropTypes.object.isRequired,
+  navigateToChapter: PropTypes.func.isRequired,
+  currentDesignStepData: PropTypes.object,
+  showCursorInsults: PropTypes.bool.isRequired,
+  showCursorIntroGreeting: PropTypes.bool.isRequired,
+  showCursorIntroName: PropTypes.bool.isRequired,
+  showCursorIntroTitle: PropTypes.bool.isRequired,
+  showCursorHomeQuestion: PropTypes.bool.isRequired,
+  showCursorDesignTitle: PropTypes.bool.isRequired,
+  showCursorDesignMainText: PropTypes.bool.isRequired,
+  QUIZZES: PropTypes.array.isRequired,
 };
 
 export default ChapterContent;

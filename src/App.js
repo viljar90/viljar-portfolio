@@ -1,3 +1,5 @@
+// src/App.js
+
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import {
   MAIN_STAGES,
@@ -12,6 +14,7 @@ import { useLandingChapter } from './hooks/useLandingChapter';
 import { useDesignChapter } from './hooks/useDesignChapter';
 import { useWorkChapter } from './hooks/useWorkChapter';
 import BottomNavigation from './components/BottomNavigation';
+import ErrorBoundary from './components/ErrorBoundary'; // <-- 1. This line is new
 
 // --- Animation Configuration ---
 const ANIMATION_DURATION_CHAPTER = "0.5s";
@@ -514,37 +517,44 @@ function App() {
         <div className="fixed right-4 md:right-6 lg:right-10 top-1/2 transform -translate-y-1/2 z-30 space-y-4">
           {[{ name: 'main', label: 'Main Intro' }, { name: 'design', label: 'Design Insights' }, { name: 'work', label: 'My Work' }].map(dot => (
             <button key={dot.name} onClick={() => navigateToChapter(dot.name)} title={`Go to ${dot.label}`}
-              className={`block w-3.5 h-3.5 rounded-full transition-all duration-300 ease-in-out focus:outline-none ${currentChapter === dot.name ? 'bg-sky-500 dark:bg-sky-400 scale-125 shadow-lg' : 'bg-gray-400 hover:bg-gray-500 dark:bg-slate-600 dark:hover:bg-slate-500 scale-100'} focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-950`}
+              className={`block w-3.5 h-3.5 rounded-full transition-all duration-300 ease-in-out focus:outline-none ${currentChapter === dot.name ? 'bg-sky-500 dark:bg-sky-400 scale-125 shadow-lg' : 'bg-gray-400 hover:bg-gray-500 dark:bg-slate-600 dark:hover:bg-slate-500 scale-100'} focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-950`}
               aria-label={`Go to ${dot.label} page`} />
           ))}
         </div>
         
-        <ChapterManager
-          mainChapterRef={mainChapterRef}
-          designChapterRef={designChapterRef}
-          workChapterRef={workChapterRef}
-          mainChapterAnimClass={mainChapterAnimClass}
-          designChapterAnimClass={designChapterAnimClass}
-          workChapterAnimClass={workChapterAnimClass}
-          currentChapter={currentChapter}
-          showPrevArrow={showPrevArrow}
-          showNextArrow={showNextArrow}
-          handlePrevLine={handlePrevLine}
-          handleNextLine={handleNextLine}
-          darkMode={darkMode}
-          landing={landing}
-          design={design}
-          work={work}
-          navigateToChapter={navigateToChapter}
-          currentDesignStepData={currentDesignStepData}
-          showCursorInsults={showCursorInsults}
-          showCursorIntroGreeting={showCursorIntroGreeting}
-          showCursorIntroName={showCursorIntroName}
-          showCursorIntroTitle={showCursorIntroTitle}
-          showCursorHomeQuestion={showCursorHomeQuestion}
-          showCursorDesignTitle={showCursorDesignTitle}
-          showCursorDesignMainText={showCursorDesignMainText}
-        />
+        {/*
+          2. Here we wrap the ChapterManager with the ErrorBoundary.
+          This means if anything inside ChapterManager crashes,
+          the ErrorBoundary will catch it and show a friendly message.
+        */}
+        <ErrorBoundary>
+          <ChapterManager
+            mainChapterRef={mainChapterRef}
+            designChapterRef={designChapterRef}
+            workChapterRef={workChapterRef}
+            mainChapterAnimClass={mainChapterAnimClass}
+            designChapterAnimClass={designChapterAnimClass}
+            workChapterAnimClass={workChapterAnimClass}
+            currentChapter={currentChapter}
+            showPrevArrow={showPrevArrow}
+            showNextArrow={showNextArrow}
+            handlePrevLine={handlePrevLine}
+            handleNextLine={handleNextLine}
+            darkMode={darkMode}
+            landing={landing}
+            design={design}
+            work={work}
+            navigateToChapter={navigateToChapter}
+            currentDesignStepData={currentDesignStepData}
+            showCursorInsults={showCursorInsults}
+            showCursorIntroGreeting={showCursorIntroGreeting}
+            showCursorIntroName={showCursorIntroName}
+            showCursorIntroTitle={showCursorIntroTitle}
+            showCursorHomeQuestion={showCursorHomeQuestion}
+            showCursorDesignTitle={showCursorDesignTitle}
+            showCursorDesignMainText={showCursorDesignMainText}
+          />
+        </ErrorBoundary>
 
         <BottomNavigation
           navItems={navItemsToDisplay}

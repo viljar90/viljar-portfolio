@@ -3,6 +3,7 @@
 import React from 'react';
 import { BlinkingCursor } from './uiElements';
 import { MAIN_STAGES, CONTENT } from '../content';
+import PropTypes from 'prop-types';
 
 const LandingChapter = ({
     darkMode,
@@ -66,6 +67,23 @@ const LandingChapter = ({
         );
     }
     return <div className={`${genMainTextStyle} opacity-0`}>&nbsp;</div>;
+};
+
+LandingChapter.propTypes = {
+  darkMode: PropTypes.bool.isRequired,
+  activeMainStep: PropTypes.string.isRequired,
+  mainAnimationPhase: PropTypes.string.isRequired,
+  isSliding: PropTypes.bool.isRequired,
+  displayedChars: PropTypes.string.isRequired,
+  showCursorInsults: PropTypes.bool.isRequired,
+  showCursorIntroGreeting: PropTypes.bool.isRequired,
+  displayedNameChars: PropTypes.string.isRequired,
+  showCursorIntroName: PropTypes.bool.isRequired,
+  displayedTitleChars: PropTypes.string.isRequired,
+  showCursorIntroTitle: PropTypes.bool.isRequired,
+  displayedHomeQuestion: PropTypes.string.isRequired,
+  showCursorHomeQuestion: PropTypes.bool.isRequired,
+  onNavigateToChapter: PropTypes.func.isRequired,
 };
 
 export default LandingChapter;

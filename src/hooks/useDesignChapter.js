@@ -15,11 +15,19 @@ export const useDesignChapter = (currentChapter) => {
   const [isPlayingDesign, setIsPlayingDesign] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [navigationMode, setNavigationMode] = useState('automatic'); // 'automatic' | 'manual'
+  const [error, setError] = useState(null);
 
   // Internal method to reset for new stage
   const resetForStage = useCallback((stageKey, startPlaying = true) => {
     const stageData = DESIGN_CONTENT[stageKey];
-    const firstStep = stageData?.steps[0];
+    if (!stageData || !stageData.steps || stageData.steps.length === 0) {
+      setError(`Content for stage "${stageKey}" is missing or empty.`);
+      setIsPlayingDesign(false);
+      return;
+    }
+    
+    setError(null); // Clear any previous errors
+    const firstStep = stageData.steps[0];
     
     if (firstStep) {
       setActiveDesignStageKey(stageKey);
@@ -242,6 +250,7 @@ export const useDesignChapter = (currentChapter) => {
   // Public API
   return {
     // State (read-only)
+    error, // <-- Add this line
     activeDesignStageKey,
     currentDesignStepIndex,
     displayedDesignTitleChars,
