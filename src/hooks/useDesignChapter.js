@@ -1,3 +1,5 @@
+// src/hooks/useDesignChapter.js
+
 import { useState, useEffect, useCallback } from 'react';
 import { DESIGN_NAV_ITEMS, DESIGN_CONTENT } from '../content';
 
@@ -16,6 +18,7 @@ export const useDesignChapter = (currentChapter) => {
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [navigationMode, setNavigationMode] = useState('automatic'); // 'automatic' | 'manual'
   const [error, setError] = useState(null);
+  const [isDesignChapterFinished, setIsDesignChapterFinished] = useState(false);
 
   // Internal method to reset for new stage
   const resetForStage = useCallback((stageKey, startPlaying = true) => {
@@ -131,6 +134,7 @@ export const useDesignChapter = (currentChapter) => {
 
   const replay = useCallback(() => {
     setNavigationMode('automatic');
+    setIsDesignChapterFinished(false);
     resetForStage(DESIGN_NAV_ITEMS[0].name, true);
   }, [resetForStage]);
 
@@ -229,6 +233,7 @@ export const useDesignChapter = (currentChapter) => {
     const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
     if (currentIndex >= DESIGN_NAV_ITEMS.length - 1) {
       setIsPlayingDesign(false);
+      setIsDesignChapterFinished(true);
       return;
     }
     
@@ -250,7 +255,7 @@ export const useDesignChapter = (currentChapter) => {
   // Public API
   return {
     // State (read-only)
-    error, // <-- Add this line
+    error,
     activeDesignStageKey,
     currentDesignStepIndex,
     displayedDesignTitleChars,
@@ -258,6 +263,7 @@ export const useDesignChapter = (currentChapter) => {
     designStepAnimationPhase,
     isPlayingDesign,
     isFadingOut,
+    isDesignChapterFinished,
     
     // Methods (actions)
     navigateToStage,

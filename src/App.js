@@ -573,6 +573,7 @@ function App() {
           }`}
           navItemsFlexClass={currentChapter === 'design' ? 'flex-1 min-w-0' : 'flex-initial'}
           currentChapter={currentChapter}
+          design={design}
           work={work}
         />
       </div>

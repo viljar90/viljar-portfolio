@@ -7,7 +7,7 @@ import {
   InteractiveOblongNavItem,
   AnimatedBorderButton,
 } from './uiElements';
-import { DESIGN_CONTENT, QUIZZES } from '../content';
+import { DESIGN_CONTENT, DESIGN_NAV_ITEMS, QUIZZES } from '../content';
 
 const BottomNavigation = ({
     navItems,
@@ -24,19 +24,22 @@ const BottomNavigation = ({
     containerClass,
     navItemsFlexClass,
     currentChapter,
-    work // We need the 'work' object from the useWorkChapter hook
+    design,
+    work
 }) => {
 
     const renderCentralButton = () => {
-        const lastDesignStageKey = work.WORK_NAV_ITEMS[work.WORK_NAV_ITEMS.length - 1]?.name;
+        const lastDesignStageKey = DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
         const lastDesignStageData = DESIGN_CONTENT[lastDesignStageKey];
 
         const isMainChapterFinalState = currentChapter === 'main' && activeNavItem === 'Home' && !isPlaying;
+
         const isDesignChapterFinalState =
             currentChapter === 'design' &&
             !isPlaying &&
-            activeNavItem === lastDesignStageKey &&
-            work.currentDesignStepIndex >= (lastDesignStageData?.steps.length - 1);
+            design &&
+            design.activeDesignStageKey === lastDesignStageKey &&
+            design.currentDesignStepIndex >= (lastDesignStageData.steps.length - 1);
 
         const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
         const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
