@@ -7,19 +7,11 @@ import {
   DESIGN_CONTENT,
   QUIZZES
 } from './content';
-import { // Note: Removed UI elements that are now only in BottomNavigation.js
-    PrevArrowIcon,
-    NextArrowIcon,
-    SegmentedControl, // This needs to be here
-} from './components/uiElements';
-import LandingChapter from './components/LandingChapter';
-import DesignChapter from './components/DesignChapter';
-import QuizIntro from './components/QuizIntro';
-import WorkChapter from './components/WorkChapter';
+import ChapterManager from './components/ChapterManager';
 import { useLandingChapter } from './hooks/useLandingChapter';
 import { useDesignChapter } from './hooks/useDesignChapter';
 import { useWorkChapter } from './hooks/useWorkChapter';
-import BottomNavigation from './components/BottomNavigation'; // Import the new component
+import BottomNavigation from './components/BottomNavigation';
 
 // --- Animation Configuration ---
 const ANIMATION_DURATION_CHAPTER = "0.5s";
@@ -29,8 +21,8 @@ function App() {
   // --- Top-Level State ---
   const [darkMode, setDarkMode] = useState(false);
   const [currentChapter, setCurrentChapter] = useState('main');
-  const [showLeftFade, setShowLeftFade] = useState(false); // This state is now needed here
-  const [showRightFade, setShowRightFade] = useState(false); // This state is now needed here
+  const [showLeftFade, setShowLeftFade] = useState(false);
+  const [showRightFade, setShowRightFade] = useState(false);
 
   // --- Shared Refs ---
   const mainChapterRef = useRef(null);
@@ -486,9 +478,6 @@ function App() {
   }
 
   const itemNavRefs = currentChapter === 'main' ? mainItemRefs : (currentChapter === 'design' ? designItemRefs : workItemRefs);
-  const chapterSectionWrapperStyle = "min-h-screen w-full flex flex-col items-center justify-center p-4 relative";
-  const chapterContentWrapperStyle = "flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative group";
-  const arrowButtonClass = "absolute top-1/2 -translate-y-1/2 p-2 rounded-full text-slate-500 hover:text-slate-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 transition-all opacity-40 group-hover:opacity-100";
 
   const showCursorInsults = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'typing-insult' && landing.displayedChars.length < CONTENT.INSULTS.LINES[landing.currentSubLineIndex]?.text.length;
   const showCursorIntroGreeting = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'intro-greeting' && landing.introGreetingPhase === 'typing-greeting' && landing.displayedChars.length < CONTENT.INTRO.GREETING.length;
@@ -529,84 +518,34 @@ function App() {
               aria-label={`Go to ${dot.label} page`} />
           ))}
         </div>
-        <div ref={mainChapterRef} className={`${chapterSectionWrapperStyle} ${mainChapterAnimClass}`}>
-          {currentChapter === 'main' && (
-            <div className={`${chapterContentWrapperStyle} px-16`}>
-              {showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
-              {showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
-              <LandingChapter
-                  darkMode={darkMode}
-                  activeMainStep={landing.activeMainStep}
-                  mainAnimationPhase={landing.mainAnimationPhase}
-                  isSliding={landing.isSliding}
-                  displayedChars={landing.displayedChars}
-                  showCursorInsults={showCursorInsults}
-                  showCursorIntroGreeting={showCursorIntroGreeting}
-                  displayedNameChars={landing.displayedNameChars}
-                  showCursorIntroName={showCursorIntroName}
-                  displayedTitleChars={landing.displayedTitleChars}
-                  showCursorIntroTitle={showCursorIntroTitle}
-                  displayedHomeQuestion={landing.displayedHomeQuestion}
-                  showCursorHomeQuestion={showCursorHomeQuestion}
-                  onNavigateToChapter={navigateToChapter}
-              />
-            </div>
-          )}
-        </div>
-        <div ref={designChapterRef} className={`${chapterSectionWrapperStyle} ${designChapterAnimClass}`}>
-          {currentChapter === 'design' && (
-            <div className={`${chapterContentWrapperStyle} px-16`}>
-              {showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
-              {showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
-              <DesignChapter
-                  darkMode={darkMode}
-                  currentDesignStepData={currentDesignStepData}
-                  displayedDesignTitleChars={design.displayedDesignTitleChars}
-                  showCursorDesignTitle={showCursorDesignTitle}
-                  displayedDesignMainTextChars={design.displayedDesignMainTextChars}
-                  showCursorDesignMainText={showCursorDesignMainText}
-              />
-            </div>
-          )}
-        </div>
-        <div ref={workChapterRef} className={`${chapterSectionWrapperStyle} ${workChapterAnimClass}`}>
-            {currentChapter === 'work' && (
-              <>
-                <div className="absolute top-8 right-8 z-10">
-                    <SegmentedControl
-                        options={['Quiz', 'Overview']}
-                        activeOption={work.workView}
-                        onOptionClick={work.setWorkView}
-                        isDarkMode={darkMode}
-                    />
-                </div>
-                <div className={`${chapterContentWrapperStyle} px-16`}>
-                  {work.workView === 'Quiz' && showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
-                  {work.workView === 'Quiz' && showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
-                  {work.workView === 'Quiz' ? (
-                      work.workStepIndex === 0 ? (
-                          <QuizIntro onStart={() => work.setWorkStepIndex(1)} />
-                      ) : (
-                          <WorkChapter
-                              darkMode={darkMode}
-                              quiz={QUIZZES[work.workStepIndex - 1]}
-                              onAnswer={work.handleQuizAnswer}
-                              answerState={work.quizAnswers[QUIZZES[work.workStepIndex - 1]?.id]}
-                              onReplayQuestion={work.handleReplayQuestion}
-                          />
-                      )
-                  ) : (
-                       <div className="text-center">
-                          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-100 dark:text-slate-200">
-                              Project Overview
-                          </h1>
-                          <p className="text-xl mt-4 text-slate-400">Project gallery coming soon!</p>
-                      </div>
-                  )}
-                </div>
-              </>
-            )}
-        </div>
+        
+        <ChapterManager
+          mainChapterRef={mainChapterRef}
+          designChapterRef={designChapterRef}
+          workChapterRef={workChapterRef}
+          mainChapterAnimClass={mainChapterAnimClass}
+          designChapterAnimClass={designChapterAnimClass}
+          workChapterAnimClass={workChapterAnimClass}
+          currentChapter={currentChapter}
+          showPrevArrow={showPrevArrow}
+          showNextArrow={showNextArrow}
+          handlePrevLine={handlePrevLine}
+          handleNextLine={handleNextLine}
+          darkMode={darkMode}
+          landing={landing}
+          design={design}
+          work={work}
+          navigateToChapter={navigateToChapter}
+          currentDesignStepData={currentDesignStepData}
+          showCursorInsults={showCursorInsults}
+          showCursorIntroGreeting={showCursorIntroGreeting}
+          showCursorIntroName={showCursorIntroName}
+          showCursorIntroTitle={showCursorIntroTitle}
+          showCursorHomeQuestion={showCursorHomeQuestion}
+          showCursorDesignTitle={showCursorDesignTitle}
+          showCursorDesignMainText={showCursorDesignMainText}
+        />
+
         <BottomNavigation
           navItems={navItemsToDisplay}
           activeNavItem={activeNavStepOrStage}
@@ -624,7 +563,7 @@ function App() {
           }`}
           navItemsFlexClass={currentChapter === 'design' ? 'flex-1 min-w-0' : 'flex-initial'}
           currentChapter={currentChapter}
-          work={work} // Pass the entire 'work' object
+          work={work}
         />
       </div>
     </>

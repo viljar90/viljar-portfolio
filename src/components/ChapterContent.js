@@ -1,4 +1,4 @@
-// src/components/ChapterContent.js file
+// src/components/ChapterContent.js
 
 import React from 'react';
 import { PrevArrowIcon, NextArrowIcon } from './uiElements';
