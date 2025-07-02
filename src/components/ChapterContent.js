@@ -28,11 +28,15 @@ const ChapterContent = ({
   showCursorDesignTitle,
   showCursorDesignMainText,
   QUIZZES,
+  onWorkViewChange,
 }) => {
   const arrowButtonClass = "absolute top-1/2 -translate-y-1/2 p-2 rounded-full text-slate-500 hover:text-slate-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 transition-all opacity-40 group-hover:opacity-100";
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative group px-16">
+      
+      {/* The incorrect ViewSwitcher has been removed from here. */}
+
       {showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
       {showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
 
@@ -109,6 +113,11 @@ ChapterContent.propTypes = {
   showCursorDesignTitle: PropTypes.bool.isRequired,
   showCursorDesignMainText: PropTypes.bool.isRequired,
   QUIZZES: PropTypes.array.isRequired,
+  onWorkViewChange: PropTypes.func,
+};
+
+ChapterContent.defaultProps = {
+  onWorkViewChange: () => {},
 };
 
 export default ChapterContent;

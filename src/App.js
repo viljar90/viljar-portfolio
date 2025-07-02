@@ -15,6 +15,7 @@ import { useDesignChapter } from './hooks/useDesignChapter';
 import { useWorkChapter } from './hooks/useWorkChapter';
 import BottomNavigation from './components/BottomNavigation';
 import ErrorBoundary from './components/ErrorBoundary';
+import ViewSwitcher from './components/ViewSwitcher';
 
 // --- Animation Configuration ---
 const ANIMATION_DURATION_CHAPTER = "0.5s";
@@ -446,6 +447,10 @@ function App() {
     });
   };
 
+  const handleWorkViewChange = (newView) => {
+    work.setWorkView(newView);
+  };
+  
   // --- Render Logic & Derived State ---
   const showPrevArrow =
     (currentChapter === 'main' && (landing.activeMainStep !== MAIN_STAGES.INSULTS || landing.currentSubLineIndex !== 0)) ||
@@ -490,6 +495,15 @@ function App() {
         <div className="absolute bottom-4 left-4 z-40">
           <button onClick={toggleDarkMode} className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-colors duration-200 ${darkMode ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-300' : 'bg-slate-700 text-white hover:bg-slate-600'} focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500 dark:focus-visible:ring-offset-slate-950`}>{darkMode ? 'Light Mode' : 'Darker Mode'}</button>
         </div>
+        
+        {currentChapter === 'work' && (
+          <ViewSwitcher
+            work={work}
+            onWorkViewChange={handleWorkViewChange}
+            isDarkMode={darkMode}
+          />
+        )}
+
         <div className="fixed right-4 md:right-6 lg:right-10 top-1/2 transform -translate-y-1/2 z-30 space-y-4">
           {[{ name: 'main', label: 'Main Intro' }, { name: 'design', label: 'Design Insights' }, { name: 'work', label: 'My Work' }].map(dot => (
             <button key={dot.name} onClick={() => navigateToChapter(dot.name)} title={`Go to ${dot.label}`}
@@ -524,6 +538,7 @@ function App() {
             showCursorHomeQuestion={showCursorHomeQuestion}
             showCursorDesignTitle={showCursorDesignTitle}
             showCursorDesignMainText={showCursorDesignMainText}
+            QUIZZES={QUIZZES}
           />
         </ErrorBoundary>
 

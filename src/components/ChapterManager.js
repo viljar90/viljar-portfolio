@@ -2,7 +2,7 @@
 import React from 'react';
 import Chapter from './Chapter';
 import ChapterContent from './ChapterContent';
-import { QUIZZES } from '../content'; // NOTE: Removed unused MAIN_STAGES and DESIGN_CONTENT
+import { QUIZZES } from '../content';
 
 const ChapterManager = ({
   mainChapterRef,
@@ -29,6 +29,7 @@ const ChapterManager = ({
   showCursorHomeQuestion,
   showCursorDesignTitle,
   showCursorDesignMainText,
+  onWorkViewChange, // Add this prop
 }) => {
   return (
     <>
@@ -88,6 +89,7 @@ const ChapterManager = ({
             work={work}
             navigateToChapter={navigateToChapter}
             QUIZZES={QUIZZES}
+            onWorkViewChange={onWorkViewChange} // Pass it here
           />
         )}
       </Chapter>
