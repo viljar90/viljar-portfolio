@@ -40,6 +40,7 @@ export const useDesignChapter = (currentChapter) => {
       setDesignStepAnimationPhase('typing-title');
       setIsPlayingDesign(startPlaying);
       setIsFadingOut(false);
+      setIsDesignChapterFinished(false);
     }
   }, []);
 
@@ -74,7 +75,8 @@ export const useDesignChapter = (currentChapter) => {
     const isLastStage = activeDesignStageKey === DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
     
     if (isLastStepOfStage && isLastStage) {
-      return 'navigate-to-work'; // Signal to App.js to navigate chapters
+      setIsDesignChapterFinished(true);
+      return;
     }
     
     if (!isLastStepOfStage) {
@@ -94,6 +96,7 @@ export const useDesignChapter = (currentChapter) => {
   const prevStep = useCallback(() => {
     setNavigationMode('manual');
     setIsPlayingDesign(false);
+    setIsDesignChapterFinished(false);
     
     if (currentDesignStepIndex > 0) {
       // Move to previous step in same stage

@@ -14,7 +14,7 @@ import { useLandingChapter } from './hooks/useLandingChapter';
 import { useDesignChapter } from './hooks/useDesignChapter';
 import { useWorkChapter } from './hooks/useWorkChapter';
 import BottomNavigation from './components/BottomNavigation';
-import ErrorBoundary from './components/ErrorBoundary'; // <-- 1. This line is new
+import ErrorBoundary from './components/ErrorBoundary';
 
 // --- Animation Configuration ---
 const ANIMATION_DURATION_CHAPTER = "0.5s";
@@ -267,10 +267,7 @@ function App() {
         navigateToChapter('design');
       }
     } else if (currentChapter === 'design') {
-      const result = design.nextStep();
-      if (result === 'navigate-to-work') {
-        navigateToChapter('work');
-      }
+      design.nextStep();
     } else if (currentChapter === 'work') {
         if (work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) {
             work.setWorkStepIndex(prev => prev + 1);
@@ -427,33 +424,20 @@ function App() {
   };
 
   const handleCentralButtonClick = () => {
-    const lastDesignStageKey = DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
-    const lastDesignStageData = DESIGN_CONTENT[lastDesignStageKey];
     const isMainChapterFinalState = currentChapter === 'main' && landing.activeMainStep === MAIN_STAGES.HOME && !landing.isPlaying;
-    const isDesignChapterFinalState =
-      currentChapter === 'design' &&
-      !design.isPlayingDesign &&
-      design.activeDesignStageKey === lastDesignStageKey &&
-      design.currentDesignStepIndex >= lastDesignStageData.steps.length - 1;
-    const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
-    if (currentChapter === 'work' && work.workView === 'Quiz') {
-      const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
-      if (work.workStepIndex === 0) { // On the intro
-        handleNextLine();
-      } else if (allQuizzesAnswered) { // If all are answered, the final button is replay
+    const isDesignChapterFinalState = currentChapter === 'design' && design.isDesignChapterFinished;
+    const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
+    const isLastQuizQuestion = currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex === QUIZZES.length;
+
+    if (isMainChapterFinalState || isDesignChapterFinalState || allQuizzesAnswered || isLastQuizQuestion) {
         handleReplayChapter();
-      } else { // In the middle of questions
+    } else if (currentChapter === 'work' && work.workView === 'Quiz') {
         handleNextLine();
-      }
     } else {
-      if (showReplayButtonForChapters) {
-        handleReplayChapter();
-      } else {
         togglePlayPause();
-      }
     }
   };
-
+  
     const toggleDarkMode = () => {
     setDarkMode(prevMode => {
       const newMode = !prevMode;
@@ -492,17 +476,9 @@ function App() {
   const showCursorDesignTitle = currentChapter === 'design' && design.isPlayingDesign && (design.designStepAnimationPhase === 'typing-title' || design.designStepAnimationPhase === 'backspacing-title');
   const showCursorDesignMainText = currentChapter === 'design' && design.isPlayingDesign && design.designStepAnimationPhase === 'typing-maintext';
 
-  const lastDesignStageKeyFinal = DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
-  const lastDesignStageDataFinal = DESIGN_CONTENT[lastDesignStageKeyFinal];
-  const isDesignChapterFinalStateFinal =
-    currentChapter === 'design' &&
-    !design.isPlayingDesign &&
-    design.activeDesignStageKey === lastDesignStageKeyFinal &&
-    design.currentDesignStepIndex >= lastDesignStageDataFinal.steps.length - 1;
-
   const showNextArrow =
     (currentChapter === 'main' && landing.activeMainStep !== MAIN_STAGES.HOME) ||
-    (currentChapter === 'design' && !isDesignChapterFinalStateFinal) ||
+    (currentChapter === 'design' && !design.isDesignChapterFinished) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1);
 
   // #################################################################
@@ -522,11 +498,6 @@ function App() {
           ))}
         </div>
         
-        {/*
-          2. Here we wrap the ChapterManager with the ErrorBoundary.
-          This means if anything inside ChapterManager crashes,
-          the ErrorBoundary will catch it and show a friendly message.
-        */}
         <ErrorBoundary>
           <ChapterManager
             mainChapterRef={mainChapterRef}

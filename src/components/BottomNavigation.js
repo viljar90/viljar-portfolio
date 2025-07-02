@@ -7,7 +7,7 @@ import {
   InteractiveOblongNavItem,
   AnimatedBorderButton,
 } from './uiElements';
-import { DESIGN_CONTENT, DESIGN_NAV_ITEMS, QUIZZES } from '../content';
+import { DESIGN_CONTENT, QUIZZES } from '../content';
 
 const BottomNavigation = ({
     navItems,
@@ -29,20 +29,15 @@ const BottomNavigation = ({
 }) => {
 
     const renderCentralButton = () => {
-        const lastDesignStageKey = DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
-        const lastDesignStageData = DESIGN_CONTENT[lastDesignStageKey];
-
         const isMainChapterFinalState = currentChapter === 'main' && activeNavItem === 'Home' && !isPlaying;
-
         const isDesignChapterFinalState =
             currentChapter === 'design' &&
             !isPlaying &&
-            design &&
-            design.activeDesignStageKey === lastDesignStageKey &&
-            design.currentDesignStepIndex >= (lastDesignStageData.steps.length - 1);
+            design?.isDesignChapterFinished;
 
         const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
         const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
+        const isLastQuestion = work.workView === 'Quiz' && work.workStepIndex === QUIZZES.length;
         const nonAnimatedButtonClasses = "h-11 w-11 sm:h-14 sm:w-14 flex-shrink-0 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-110 active:scale-95 bg-white text-black hover:bg-gray-100 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800";
 
         if (currentChapter === 'work' && work.workView === 'Quiz') {
@@ -51,7 +46,7 @@ const BottomNavigation = ({
             if (work.workStepIndex === 0) {
                 icon = <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
                 label = "Start quiz";
-            } else if (allQuizzesAnswered) {
+            } else if (allQuizzesAnswered || isLastQuestion) {
                 icon = <ReplayIcon className="w-5 h-5 sm:w-6 sm:h-6" />;
                 label = "Replay quiz";
             } else {
