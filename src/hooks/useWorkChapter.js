@@ -7,8 +7,16 @@ export const useWorkChapter = () => {
   const [workView, setWorkView] = useState('Quiz');
   const [workStepIndex, setWorkStepIndex] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState({});
+  const [introCompleted, setIntroCompleted] = useState(false);
 
   const WORK_NAV_ITEMS = useMemo(() => [{ name: 'Start' }, ...QUIZZES.map((quiz, index) => ({ name: `Question ${index + 1}` }))], []);
+
+  // New function to be called by the QuizIntro component itself
+  const markIntroAsCompleted = () => {
+    if (!introCompleted) {
+      setIntroCompleted(true);
+    }
+  };
 
   const handleQuizAnswer = (quizId, option) => {
     setQuizAnswers(prev => ({
@@ -28,6 +36,7 @@ export const useWorkChapter = () => {
   const resetWorkChapter = () => {
     setWorkStepIndex(0);
     setQuizAnswers({});
+    setIntroCompleted(false);
   }
 
   return {
@@ -35,6 +44,7 @@ export const useWorkChapter = () => {
     workView,
     workStepIndex,
     quizAnswers,
+    introCompleted,
     WORK_NAV_ITEMS,
 
     // State setters
@@ -46,5 +56,6 @@ export const useWorkChapter = () => {
     handleQuizAnswer,
     handleReplayQuestion,
     resetWorkChapter,
+    markIntroAsCompleted, // Export the new function
   };
 };

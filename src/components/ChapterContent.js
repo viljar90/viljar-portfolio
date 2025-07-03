@@ -7,6 +7,7 @@ import LandingChapter from './LandingChapter';
 import DesignChapter from './DesignChapter';
 import WorkChapter from './WorkChapter';
 import QuizIntro from './QuizIntro';
+import { QUIZZES } from '../content';
 
 const ChapterContent = ({
   currentChapter,
@@ -27,15 +28,11 @@ const ChapterContent = ({
   showCursorHomeQuestion,
   showCursorDesignTitle,
   showCursorDesignMainText,
-  QUIZZES,
-  onWorkViewChange,
 }) => {
   const arrowButtonClass = "absolute top-1/2 -translate-y-1/2 p-2 rounded-full text-slate-500 hover:text-slate-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 transition-all opacity-40 group-hover:opacity-100";
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative group px-16">
-      
-      {/* The incorrect ViewSwitcher has been removed from here. */}
 
       {showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
       {showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
@@ -70,7 +67,11 @@ const ChapterContent = ({
       {currentChapter === 'work' && (
         work.workView === 'Quiz' ? (
             work.workStepIndex === 0 ? (
-                <QuizIntro onStart={() => work.setWorkStepIndex(1)} />
+                <QuizIntro
+                    onStart={() => work.setWorkStepIndex(1)}
+                    isCompleted={work.introCompleted}
+                    onIntroViewed={work.markIntroAsCompleted} // Pass the new function
+                />
             ) : (
                 <WorkChapter
                     darkMode={darkMode}
@@ -93,31 +94,27 @@ const ChapterContent = ({
   );
 };
 
+// (Keep PropTypes the same)
 ChapterContent.propTypes = {
-  currentChapter: PropTypes.string.isRequired,
-  showPrevArrow: PropTypes.bool.isRequired,
-  showNextArrow: PropTypes.bool.isRequired,
-  handlePrevLine: PropTypes.func.isRequired,
-  handleNextLine: PropTypes.func.isRequired,
-  darkMode: PropTypes.bool.isRequired,
-  landing: PropTypes.object.isRequired,
-  design: PropTypes.object.isRequired,
-  work: PropTypes.object.isRequired,
-  navigateToChapter: PropTypes.func.isRequired,
-  currentDesignStepData: PropTypes.object,
-  showCursorInsults: PropTypes.bool.isRequired,
-  showCursorIntroGreeting: PropTypes.bool.isRequired,
-  showCursorIntroName: PropTypes.bool.isRequired,
-  showCursorIntroTitle: PropTypes.bool.isRequired,
-  showCursorHomeQuestion: PropTypes.bool.isRequired,
-  showCursorDesignTitle: PropTypes.bool.isRequired,
-  showCursorDesignMainText: PropTypes.bool.isRequired,
-  QUIZZES: PropTypes.array.isRequired,
-  onWorkViewChange: PropTypes.func,
-};
-
-ChapterContent.defaultProps = {
-  onWorkViewChange: () => {},
-};
+    currentChapter: PropTypes.string.isRequired,
+    showPrevArrow: PropTypes.bool.isRequired,
+    showNextArrow: PropTypes.bool.isRequired,
+    handlePrevLine: PropTypes.func.isRequired,
+    handleNextLine: PropTypes.func.isRequired,
+    darkMode: PropTypes.bool.isRequired,
+    landing: PropTypes.object.isRequired,
+    design: PropTypes.object.isRequired,
+    work: PropTypes.object.isRequired,
+    navigateToChapter: PropTypes.func.isRequired,
+    currentDesignStepData: PropTypes.object,
+    showCursorInsults: PropTypes.bool.isRequired,
+    showCursorIntroGreeting: PropTypes.bool.isRequired,
+    showCursorIntroName: PropTypes.bool.isRequired,
+    showCursorIntroTitle: PropTypes.bool.isRequired,
+    showCursorHomeQuestion: PropTypes.bool.isRequired,
+    showCursorDesignTitle: PropTypes.bool.isRequired,
+    showCursorDesignMainText: PropTypes.bool.isRequired,
+    QUIZZES: PropTypes.array.isRequired
+  };
 
 export default ChapterContent;

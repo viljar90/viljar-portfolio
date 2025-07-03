@@ -133,16 +133,19 @@ export const useDesignChapter = (currentChapter) => {
     resetForStage(DESIGN_NAV_ITEMS[0].name, true);
   }, [resetForStage]);
 
-  useEffect(() => {
+    useEffect(() => {
     if (currentChapter !== 'design') {
       wasPlayingRef.current = isPlayingDesign;
       setIsPlayingDesign(false);
     } else {
-      if (wasPlayingRef.current) {
+      // If we are returning to the design chapter and it's not finished,
+      // always resume playback.
+      if (!isDesignChapterFinished) {
         setIsPlayingDesign(true);
       }
     }
-  }, [currentChapter, isPlayingDesign]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentChapter, isDesignChapterFinished]);
 
   useEffect(() => {
     if (currentChapter === 'design' && navigationMode === 'automatic' && activeDesignStageKey === DESIGN_NAV_ITEMS[0].name && currentDesignStepIndex === 0) {

@@ -4,16 +4,29 @@ import React, { useState, useEffect } from 'react';
 import { BlinkingCursor, PlayIcon } from './uiElements';
 import PropTypes from 'prop-types';
 
-const QuizIntro = ({ onStart }) => {
-    const [displayedTitle, setDisplayedTitle] = useState('');
-    const [displayedMainText, setDisplayedMainText] = useState('');
-    const [phase, setPhase] = useState('typing-title'); // typing-title, typing-main, done
-
+const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
     const title = "My Work";
     const mainText = "I love games.\nGet to know my work with this game \n or look at the overview ↗️";
     const TYPEWRITER_SPEED = 35;
 
+    const [displayedTitle, setDisplayedTitle] = useState(isCompleted ? title : '');
+    const [displayedMainText, setDisplayedMainText] = useState(isCompleted ? mainText : '');
+    const [phase, setPhase] = useState(isCompleted ? 'done' : 'typing-title');
+
+    // This effect runs only once when the component is first displayed
     useEffect(() => {
+        onIntroViewed();
+    }, [onIntroViewed]);
+
+    // This effect handles the animation
+    useEffect(() => {
+        if (isCompleted || phase === 'done') {
+            setDisplayedTitle(title);
+            setDisplayedMainText(mainText);
+            setPhase('done');
+            return;
+        }
+
         let timer;
         if (phase === 'typing-title') {
             if (displayedTitle.length < title.length) {
@@ -32,8 +45,9 @@ const QuizIntro = ({ onStart }) => {
                 setPhase('done');
             }
         }
+
         return () => clearTimeout(timer);
-    }, [displayedTitle, displayedMainText, phase]);
+    }, [isCompleted, phase, displayedTitle, displayedMainText, title, mainText]);
 
     return (
         <div className="text-center">
@@ -62,6 +76,12 @@ const QuizIntro = ({ onStart }) => {
 
 QuizIntro.propTypes = {
   onStart: PropTypes.func.isRequired,
+  isCompleted: PropTypes.bool,
+  onIntroViewed: PropTypes.func.isRequired, // Add this new prop
+};
+
+QuizIntro.defaultProps = {
+    isCompleted: false,
 };
 
 export default QuizIntro;
