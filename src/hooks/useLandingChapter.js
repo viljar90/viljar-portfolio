@@ -1,6 +1,6 @@
 // src/hooks/useLandingChapter.js
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MAIN_STAGES, MAIN_NAV_ITEMS, CONTENT } from '../content';
 
 const TYPEWRITER_SPEED = 25;
@@ -21,6 +21,18 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
   const [introGreetingPhase, setIntroGreetingPhase] = useState('typing-greeting');
   const [isSliding, setIsSliding] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
+  const wasPlayingRef = useRef(true);
+
+  useEffect(() => {
+    if (currentChapter !== 'main') {
+      wasPlayingRef.current = isPlaying;
+      setIsPlaying(false);
+    } else {
+      if (wasPlayingRef.current && activeMainStep !== MAIN_STAGES.HOME) {
+        setIsPlaying(true);
+      }
+    }
+  }, [currentChapter, activeMainStep, isPlaying]);
 
   // Effect 1 (previously Effect 3 in App.js): Resets content when active step changes
   useEffect(() => {
@@ -57,7 +69,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     if (mainAnimationPhase === 'insults-done' || mainAnimationPhase === 'intro-done') {
       const currentStepConfig = MAIN_NAV_ITEMS.find(item => item.name === activeMainStep);
       const pauseDuration = currentStepConfig?.pauseAfter !== undefined ? currentStepConfig.pauseAfter : LONG_PAUSE_DURATION;
-      
+
       const transitionToNextStep = () => {
         setIsFadingOut(true); // Start fading
         setTimeout(() => {
@@ -179,10 +191,9 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
   }, [activeMainStep, mainAnimationPhase, displayedChars, currentSubLineIndex, displayedNameChars, displayedTitleChars, displayedHomeQuestion, isPlaying, currentChapter, introStepIndex, introGreetingPhase]);
 
   return {
-    // State values
     activeMainStep,
     isPlaying,
-    isFadingOut, // <-- Export the new state
+    isFadingOut,
     currentSubLineIndex,
     displayedChars,
     mainAnimationPhase,
@@ -191,7 +202,6 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     displayedHomeQuestion,
     introStepIndex,
     isSliding,
-    // State setters
     setActiveMainStep,
     setIsPlaying,
     setCurrentSubLineIndex,

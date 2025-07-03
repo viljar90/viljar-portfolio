@@ -42,7 +42,7 @@ export const DESIGN_STAGE_KEYS = {
   WHAT: "WHAT_KEY",
   PRODUCT_DESIGNER: "PRODUCT_DESIGNER_KEY",
   UX_RESEARCHER: "UX_RESEARCHER_KEY",
-  SERVICE_DESIGNER: "SERVICE_DESIGNER_KEY",
+  //SERVICE_DESIGNER: "SERVICE_DESIGNER_KEY",
   UX_DESIGNER: "UX_DESIGNER_KEY",
   UI_DESIGNER: "UI_DESIGNER_KEY",
 };
@@ -52,7 +52,7 @@ export const DESIGN_NAV_ITEMS = [
   { name: DESIGN_STAGE_KEYS.WHAT },
   { name: DESIGN_STAGE_KEYS.PRODUCT_DESIGNER },
   { name: DESIGN_STAGE_KEYS.UX_RESEARCHER },
-  { name: DESIGN_STAGE_KEYS.SERVICE_DESIGNER },
+  //{ name: DESIGN_STAGE_KEYS.SERVICE_DESIGNER },
   { name: DESIGN_STAGE_KEYS.UX_DESIGNER },
   { name: DESIGN_STAGE_KEYS.UI_DESIGNER },
 ];
@@ -119,6 +119,7 @@ export const DESIGN_CONTENT = {
       { title: "Product Designer", mainText: "Ensuring the right building, for the right purpose, for the right people gets built." },
     ]
   },
+  
   [DESIGN_STAGE_KEYS.UX_RESEARCHER]: {
     navText: "UX Researcher",
     steps: [
@@ -126,7 +127,7 @@ export const DESIGN_CONTENT = {
       { title: "The UX Researcher", mainText: "The Commercial Market Researcher answers this crucial question." },
       { title: "The UX Researcher", mainText: "Their data on potential tenants and their critical needs makes my design commercially sound." },
     ]
-  },
+  },/*
   [DESIGN_STAGE_KEYS.SERVICE_DESIGNER]: {
     navText: "Service Designer",
     steps: [
@@ -134,7 +135,7 @@ export const DESIGN_CONTENT = {
       { title: "The Service Designer", mainText: "The Supply Chain and Logistics Expert designs this bigger picture." },
       { title: "The Service Designer", mainText: "They map the entire end-to-end customer experience, and my work must fit seamlessly within it." },
     ]
-  },
+  },*/
   [DESIGN_STAGE_KEYS.UX_DESIGNER]: {
     navText: "UX Designer",
     steps: [
