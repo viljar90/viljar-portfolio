@@ -133,26 +133,53 @@ export const useDesignChapter = (currentChapter) => {
     resetForStage(DESIGN_NAV_ITEMS[0].name, true);
   }, [resetForStage]);
 
-    useEffect(() => {
+  // This useEffect now correctly handles returning to the chapter.
+  useEffect(() => {
     if (currentChapter !== 'design') {
+      // Pause when leaving the chapter
       wasPlayingRef.current = isPlayingDesign;
       setIsPlayingDesign(false);
     } else {
-      // If we are returning to the design chapter and it's not finished,
-      // always resume playback.
+      // When returning to the design chapter...
       if (!isDesignChapterFinished) {
+        // ...and it's not finished, restart the animation for the current step.
+        setDisplayedDesignTitleChars('');
+        setDisplayedDesignMainTextChars('');
+        setDesignStepAnimationPhase('typing-title');
         setIsPlayingDesign(true);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentChapter, isDesignChapterFinished]);
+  }, [currentChapter]);
 
+  // This effect is for the automatic progression between stages (e.g. from 'About Design' to 'What I do')
   useEffect(() => {
-    if (currentChapter === 'design' && navigationMode === 'automatic' && activeDesignStageKey === DESIGN_NAV_ITEMS[0].name && currentDesignStepIndex === 0) {
-      setIsPlayingDesign(true);
+    if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete') {
+      return;
     }
-  }, [currentChapter, navigationMode, activeDesignStageKey, currentDesignStepIndex]);
 
+    const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
+    if (currentIndex >= DESIGN_NAV_ITEMS.length - 1) {
+      setIsPlayingDesign(false);
+      setIsDesignChapterFinished(true);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setIsFadingOut(true);
+      setTimeout(() => {
+        setIsFadingOut(false);
+        const nextIndex = currentIndex + 1;
+        const nextStageKey = DESIGN_NAV_ITEMS[nextIndex].name;
+        resetForStage(nextStageKey, true);
+      }, 1500);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentChapter, isPlayingDesign, designStepAnimationPhase, activeDesignStageKey, resetForStage, navigationMode]);
+
+  // This effect handles the typewriter animation logic.
   useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingDesign) return;
 
@@ -225,31 +252,6 @@ export const useDesignChapter = (currentChapter) => {
     return () => clearTimeout(timer);
   }, [currentChapter, isPlayingDesign, activeDesignStageKey, currentDesignStepIndex, designStepAnimationPhase, displayedDesignTitleChars, displayedDesignMainTextChars]);
 
-  useEffect(() => {
-    if (currentChapter !== 'design' || !isPlayingDesign || designStepAnimationPhase !== 'all-steps-complete') {
-      return;
-    }
-
-    const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
-    if (currentIndex >= DESIGN_NAV_ITEMS.length - 1) {
-      setIsPlayingDesign(false);
-      setIsDesignChapterFinished(true);
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      setIsFadingOut(true);
-      setTimeout(() => {
-        setIsFadingOut(false);
-        setNavigationMode('automatic');
-        const nextIndex = currentIndex + 1;
-        const nextStageKey = DESIGN_NAV_ITEMS[nextIndex].name;
-        resetForStage(nextStageKey, true);
-      }, 1500);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, [currentChapter, isPlayingDesign, designStepAnimationPhase, activeDesignStageKey, resetForStage]);
 
   return {
     error,
