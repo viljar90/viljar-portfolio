@@ -1,6 +1,6 @@
 // src/hooks/useLandingChapter.js
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { MAIN_STAGES, MAIN_NAV_ITEMS, CONTENT } from '../content';
 
 const TYPEWRITER_SPEED = 25;
@@ -22,6 +22,10 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
   const [isSliding, setIsSliding] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const wasPlayingRef = useRef(true);
+
+  const togglePlayPause = useCallback(() => {
+    setIsPlaying(p => !p);
+  }, []);
 
   useEffect(() => {
     if (currentChapter !== 'main') {
@@ -212,5 +216,6 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     setDisplayedHomeQuestion,
     setIntroStepIndex,
     setIntroGreetingPhase,
+    togglePlayPause,
   };
 };
