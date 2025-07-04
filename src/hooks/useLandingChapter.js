@@ -36,7 +36,8 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
         setIsPlaying(true);
       }
     }
-  }, [currentChapter, activeMainStep, isPlaying]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentChapter, activeMainStep]);
 
   // Effect 1 (previously Effect 3 in App.js): Resets content when active step changes
   useEffect(() => {
