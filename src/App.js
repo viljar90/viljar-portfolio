@@ -7,7 +7,8 @@ import {
   CONTENT,
   DESIGN_NAV_ITEMS,
   DESIGN_CONTENT,
-  QUIZZES
+  QUIZZES,
+  DESIGN_STAGE_KEYS
 } from './content';
 import ChapterManager from './components/ChapterManager';
 import { useLandingChapter } from './hooks/useLandingChapter';
@@ -454,7 +455,7 @@ function App() {
   // --- Render Logic & Derived State ---
   const showPrevArrow =
     (currentChapter === 'main' && (landing.activeMainStep !== MAIN_STAGES.INSULTS || landing.currentSubLineIndex !== 0)) ||
-    (currentChapter === 'design') ||
+    (currentChapter === 'design' && (design.activeDesignStageKey !== DESIGN_STAGE_KEYS.ABOUT_DESIGN || design.currentDesignStepIndex !== 0)) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0);
 
   const currentPlayPauseButtonState = currentChapter === 'main' ? landing.isPlaying : (currentChapter === 'design' ? design.isPlayingDesign : false);
