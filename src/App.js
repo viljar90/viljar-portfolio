@@ -388,26 +388,7 @@ function App() {
 
   const togglePlayPause = () => {
     if (currentChapter === 'main') {
-      if (!landing.isPlaying) {
-        if (landing.activeMainStep === MAIN_STAGES.INSULTS) {
-          const currentLineData = CONTENT.INSULTS.LINES[landing.currentSubLineIndex];
-          if (currentLineData && landing.displayedChars.length < currentLineData.text.length) {
-            landing.setMainAnimationPhase('typing-insult');
-          } else {
-            landing.setMainAnimationPhase('pausing-insult');
-          }
-        } else if (landing.activeMainStep === MAIN_STAGES.INTRO) {
-          const currentStepData = CONTENT.INTRO.steps[landing.introStepIndex];
-          if (currentStepData && landing.displayedNameChars.length < currentStepData.title.length) {
-            landing.setMainAnimationPhase('typing-title');
-          } else if (currentStepData && landing.displayedTitleChars.length < currentStepData.mainText.length) {
-            landing.setMainAnimationPhase('typing-maintext');
-          } else {
-            landing.setMainAnimationPhase('pausing');
-          }
-        }
-      }
-      landing.setIsPlaying(p => !p);
+      landing.togglePlayPause();
     } else if (currentChapter === 'design') {
       design.togglePlayPause();
     }

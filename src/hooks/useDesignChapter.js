@@ -112,20 +112,8 @@ export const useDesignChapter = (currentChapter) => {
   }, [activeDesignStageKey, currentDesignStepIndex, setStepContent]);
 
   const togglePlayPause = useCallback(() => {
-    if (!isPlayingDesign) {
-      const currentStageData = DESIGN_CONTENT[activeDesignStageKey];
-      const currentStepData = currentStageData?.steps[currentDesignStepIndex];
-
-      if (currentStepData && displayedDesignTitleChars.length < currentStepData.title.length) {
-        setDesignStepAnimationPhase('typing-title');
-      } else if (currentStepData && displayedDesignMainTextChars.length < currentStepData.mainText.length) {
-        setDesignStepAnimationPhase('typing-maintext');
-      } else {
-        setDesignStepAnimationPhase('pausing-after-maintext');
-      }
-    }
     setIsPlayingDesign(prev => !prev);
-  }, [isPlayingDesign, activeDesignStageKey, currentDesignStepIndex, displayedDesignTitleChars, displayedDesignMainTextChars]);
+  }, []);
 
   const replay = useCallback(() => {
     setNavigationMode('automatic');
