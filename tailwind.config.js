@@ -1,3 +1,4 @@
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -46,12 +47,16 @@ module.exports = {
           '80%': { transform: 'scale(1.2)' },
           '100%': { transform: 'scale(1)' },
         },
-        // --- ADD THIS NEW KEYFRAME ---
         'text-bounce': {
           '0%': { transform: 'scale(1)' },
           '40%': { transform: 'scale(0.9)' },
           '80%': { transform: 'scale(1.05)' },
           '100%': { transform: 'scale(1)' },
+        },
+        shake: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-5px)' },
+          '20%, 40%, 60%, 80%': { transform: 'translateX(5px)' },
         }
       },
       animation: {
@@ -62,6 +67,7 @@ module.exports = {
         'scale-out': 'scale-out 0.3s ease-out forwards',
         'click-bounce': 'click-bounce 0.3s ease-out',
         'text-bounce': 'text-bounce 0.3s ease-in-out',
+        shake: 'shake 0.5s ease-in-out',
       }
     },
   },
