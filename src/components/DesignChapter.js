@@ -12,7 +12,7 @@ const DesignChapter = ({
     // Check if there's an error from the hook
     if (design.error) {
         return (
-            <div className="w-full text-center text-red-400">
+            <div className="w-full text-center text-error">
                 <h3 className="text-3xl font-bold mb-4">Error</h3>
                 <p className="text-lg">{design.error}</p>
             </div>
@@ -20,8 +20,8 @@ const DesignChapter = ({
     }
     
     // *** FIXED LOGIC: Added responsive text sizes for consistency ***
-    const designStepTitleStyle = `text-4xl sm:text-5xl lg:text-6xl font-bold ${darkMode ? 'text-sky-300' : 'text-sky-500'} mb-6 min-h-[1.2em] whitespace-pre-line`;
-    const designChapterMainTextStyle = `text-2xl sm:text-3xl lg:text-4xl font-light ${darkMode ? 'text-slate-100' : 'text-slate-200'} mt-2 min-h-[5em]`;
+    const designStepTitleStyle = `text-4xl sm:text-5xl lg:text-6xl font-bold text-primary dark:text-secondary mb-6 min-h-[1.2em] whitespace-pre-line`;
+    const designChapterMainTextStyle = `text-2xl sm:text-3xl lg:text-4xl font-light text-text-base dark:text-text-muted mt-2 min-h-[5em]`;
 
     // Add safety check for undefined currentDesignStepData
     if (!currentDesignStepData) {

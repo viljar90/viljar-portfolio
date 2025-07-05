@@ -43,7 +43,7 @@ export const PlayIcon = ({ className = "w-6 h-6" }) => (
 // --- Blinking Cursor Component ---
 export const BlinkingCursor = ({sizeClass = "h-6 md:h-8 lg:h-10"}) => (
   <span
-    className={`inline-block w-1 ml-1 bg-slate-100 dark:bg-slate-300 align-bottom ${sizeClass}`}
+    className={`inline-block w-1 ml-1 bg-text-base align-bottom ${sizeClass}`}
     style={{ animation: 'blinker 1s infinite' }}
   ></span>
 );
@@ -51,14 +51,14 @@ export const BlinkingCursor = ({sizeClass = "h-6 md:h-8 lg:h-10"}) => (
 // --- Animated Border Button ---
 export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
   return (
-    <button {...props} className={`relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-200 ${props.className || ''}`}>
+    <button {...props} className={`relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary dark:focus-visible:ring-offset-bg-base rounded-full transform hover:scale-105 active:scale-95 transition-all duration-200 ${props.className || ''}`}>
       <div
-        className={`absolute -inset-[1.25px] bg-[conic-gradient(from_var(--rotate),#5ddcff,#3c67e3,#f059eb)] rounded-full transition-opacity duration-300 animate-spin ${
+        className={`absolute -inset-[1.25px] bg-[conic-gradient(from_var(--rotate),var(--color-anim-1),var(--color-anim-2),var(--color-anim-3))] rounded-full transition-opacity duration-300 animate-spin ${
           isPlaying ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
       />
-      <div className={`relative z-10 w-full h-full flex items-center justify-center bg-black dark:bg-black rounded-full text-white dark:text-white ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''}`}>
+      <div className={`relative z-10 w-full h-full flex items-center justify-center bg-black rounded-full text-white ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''}`}>
   {isPlaying ? (
     <div key="pause" className="animate-scale-in">
       <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105" />
@@ -124,7 +124,7 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
         );
     }
 
-    const inactiveClasses = `bg-transparent text-gray-500 hover:text-white dark:text-gray-400 dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
+    const inactiveClasses = `bg-transparent text-text-muted hover:text-white dark:text-text-muted dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
     return (
         <button ref={ref} onClick={handleItemClick} className={`${baseClasses} ${inactiveClasses} ${className}`}>
             <span className={`inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>{text}</span>
@@ -149,12 +149,12 @@ export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkM
     };
 
     return (
-        <div className={`flex items-center bg-slate-900 dark:bg-slate-950 p-1 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
+        <div className={`flex items-center bg-bg-base dark:bg-bg-muted p-1 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
             {options.map((option) => {
                 const isActive = activeOption === option;
                 const isClicked = clickedOption === option;
                 const activeClasses = `bg-black dark:bg-black text-white dark:text-white ring-1 ring-gray-500 dark:ring-gray-700`;
-                const inactiveClasses = `text-gray-500 dark:text-gray-300 hover:text-white dark:hover:text-white`;
+                const inactiveClasses = `text-text-muted dark:text-text-muted hover:text-white dark:hover:text-white`;
 
                 return (
                     <button

@@ -51,11 +51,11 @@ const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
 
     return (
         <div className="text-center">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-sky-400 dark:text-sky-300 mb-4 min-h-[1.2em]">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary dark:text-secondary mb-4 min-h-[1.2em]">
                 {displayedTitle}
                 {phase === 'typing-title' && <BlinkingCursor sizeClass="h-12 md:h-14" />}
             </h1>
-            <p className="text-2xl md:text-3xl text-slate-200 dark:text-slate-300 min-h-[1.5em]" style={{ whiteSpace: 'pre-line' }}>
+            <p className="text-2xl md:text-3xl text-text-base dark:text-text-muted min-h-[1.5em]" style={{ whiteSpace: 'pre-line' }}>
               {displayedMainText}
               {phase === 'typing-main' && <BlinkingCursor sizeClass="h-8 md:h-9" />}
             </p>
@@ -63,7 +63,7 @@ const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
                 <div className="mt-12 animate-fadeIn">
                     <button
                         onClick={onStart}
-                        className="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg md:text-xl inline-flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+                        className="bg-primary hover:bg-secondary text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg md:text-xl inline-flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                     >
                         <PlayIcon className="w-6 h-6" />
                         <span>Play</span>

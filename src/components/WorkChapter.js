@@ -42,7 +42,7 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
 
             <div className="mt-6 pt-4 border-t border-slate-700">
                 <p className="text-sm text-slate-400">Check out the one I've worked on</p>
-                <button className="mt-2 text-lg font-semibold text-sky-400 hover:text-sky-300 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300">
+                <button className="mt-2 text-lg font-semibold text-secondary hover:text-primary transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary">
                     {projectButtonText} ↗
                 </button>
             </div>
@@ -54,8 +54,8 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
             <div className="w-full max-w-4xl">
                 {!correct && (
                      <div className="text-left text-1xl md:text-2xl mb-8 animate-fadeIn">
-                        <p className="text-sky-400 dark:text-sky-300 mb-2">{statement}</p>
-                        <p className="text-slate-200 dark:text-slate-300">{mainQuestion}</p>
+                        <p className="text-secondary dark:text-primary mb-2">{statement}</p>
+                        <p className="text-text-base">{mainQuestion}</p>
                     </div>
                 )}
 
@@ -72,16 +72,16 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
                             return null;
                         }
 
-                        let buttonClass = 'border-2 border-slate-500 hover:border-sky-400 hover:bg-sky-400/10 text-slate-200';
+                        let buttonClass = 'border-2 border-slate-500 hover:border-primary hover:bg-primary/10 text-text-base';
                         if (isSelected) {
-                            buttonClass = option.isCorrect ? '' : 'bg-red-500/20 border-red-500 text-white animate-shake';
+                            buttonClass = option.isCorrect ? '' : 'bg-error/20 border-error text-white animate-shake';
                         }
 
                         return (
                             <button
                                 key={option.text}
                                 onClick={() => onAnswer(quiz.id, option)}
-                                className={`block w-full text-left p-4 rounded-lg transition-all duration-200 md:text-center md:flex md:items-center md:justify-center md:h-40 ${buttonClass} focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300`}
+                                className={`block w-full text-left p-4 rounded-lg transition-all duration-200 md:text-center md:flex md:items-center md:justify-center md:h-40 ${buttonClass} focus:outline-none focus-visible:ring-2 focus-visible:ring-primary`}
                             >
                                 {option.text}
                             </button>

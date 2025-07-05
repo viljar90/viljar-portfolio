@@ -24,7 +24,7 @@ const ANIMATION_DURATION_CHAPTER = "0.5s";
 // --- Main App Component ---
 function App() {
   // --- Top-Level State ---
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true); // Changed to true
   const [currentChapter, setCurrentChapter] = useState('main');
   const [showLeftFade, setShowLeftFade] = useState(false);
   const [showRightFade, setShowRightFade] = useState(false);
@@ -473,9 +473,9 @@ function App() {
   // #################################################################
   return (
     <>
-       <div className={`AppContainer bg-slate-900 dark:bg-slate-950 text-slate-100 transition-colors duration-300 min-h-screen overflow-x-hidden`}>
+       <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen overflow-x-hidden`}>
         <div className="absolute top-4 right-4 z-40">
-          <button onClick={toggleDarkMode} className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-colors duration-200 ${darkMode ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-300' : 'bg-slate-700 text-white hover:bg-slate-600'} focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500 dark:focus-visible:ring-offset-slate-950`}>{darkMode ? 'Light Mode' : 'Darker Mode'}</button>
+          <button onClick={toggleDarkMode} className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-colors duration-200 ${darkMode ? 'bg-yellow-400 text-bg-muted hover:bg-yellow-300' : 'bg-slate-700 text-white hover:bg-slate-600'} focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500 dark:focus-visible:ring-offset-bg-muted`}>{darkMode ? 'Light Mode' : 'Darker Mode'}</button>
         </div>
         
         {currentChapter === 'work' && (
@@ -489,7 +489,7 @@ function App() {
         <div className="fixed right-4 md:right-6 lg:right-10 top-1/2 transform -translate-y-1/2 z-30 space-y-4">
           {[{ name: 'main', label: 'Main Intro' }, { name: 'design', label: 'Design Insights' }, { name: 'work', label: 'My Work' }].map(dot => (
             <button key={dot.name} onClick={() => navigateToChapter(dot.name)} title={`Go to ${dot.label}`}
-              className={`block w-3.5 h-3.5 rounded-full transition-all duration-300 ease-in-out focus:outline-none ${currentChapter === dot.name ? 'bg-sky-500 dark:bg-sky-400 scale-125 shadow-lg' : 'bg-gray-400 hover:bg-gray-500 dark:bg-slate-600 dark:hover:bg-slate-500 scale-100'} focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-950`}
+              className={`block w-3.5 h-3.5 rounded-full transition-all duration-300 ease-in-out focus:outline-none ${currentChapter === dot.name ? 'bg-primary dark:bg-secondary scale-125 shadow-lg' : 'bg-gray-400 hover:bg-gray-500 dark:bg-slate-600 dark:hover:bg-slate-500 scale-100'} focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted`}
               aria-label={`Go to ${dot.label} page`} />
           ))}
         </div>

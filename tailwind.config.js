@@ -1,4 +1,3 @@
-// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -9,11 +8,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        sky: {
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-        }
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        accent: 'var(--color-accent)',
+        error: 'var(--color-error)',
+        'text-base': 'var(--color-text-base)',
+        'text-muted': 'var(--color-text-muted)',
+        'bg-base': 'var(--color-bg-base)',
+        'bg-muted': 'var(--color-bg-muted)',
+        'anim-1': 'var(--color-anim-1)',
+        'anim-2': 'var(--color-anim-2)',
+        'anim-3': 'var(--color-anim-3)',
       },
       keyframes: {
         spin: {
@@ -29,9 +34,9 @@ module.exports = {
           '100%': { opacity: 0 },
         },
         'cycle-colors': {
-          '0%': { '--border-color': '#5ddcff' },
-          '50%': { '--border-color': '#3c67e3' },
-          '100%': { '--border-color': '#f059eb' },
+          '0%': { '--border-color': 'var(--color-anim-1)' },
+          '50%': { '--border-color': 'var(--color-anim-2)' },
+          '100%': { '--border-color': 'var(--color-anim-3)' },
         },
         'lively-scale-in': {
           '0%': { transform: 'scale(0.01)', opacity: '0' },
