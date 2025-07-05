@@ -51,16 +51,24 @@ export const BlinkingCursor = ({sizeClass = "h-6 md:h-8 lg:h-10"}) => (
 // --- Animated Border Button ---
 export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
   return (
-    <button {...props} className={`relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800 rounded-full ${props.className || ''}`}>
+    <button {...props} className={`relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-200 ${props.className || ''}`}>
       <div
         className={`absolute -inset-0.5 bg-[conic-gradient(from_var(--rotate),#5ddcff,#3c67e3,#f059eb)] rounded-full transition-opacity duration-300 animate-spin ${
           isPlaying ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
       />
-      <div className="relative z-10 w-full h-full flex items-center justify-center bg-white dark:bg-slate-700 rounded-full text-black dark:text-slate-200">
-        {isPlaying ? <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6" /> : <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6" />}
-      </div>
+      <div className={`relative z-10 w-full h-full flex items-center justify-center bg-black dark:bg-black rounded-full text-white dark:text-white ${!isPlaying ? 'ring-1 ring-gray-300 dark:ring-gray-700' : ''}`}>
+  {isPlaying ? (
+    <div key="pause" className="animate-scale-in">
+      <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105" />
+    </div>
+  ) : (
+    <div key="play" className="animate-scale-in">
+      <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105" />
+    </div>
+  )}
+</div>
     </button>
   );
 };
@@ -87,10 +95,10 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
 
         return (
             <button
-                ref={ref}
-                onClick={onClick}
-                className={`${baseClasses} relative group overflow-hidden bg-black text-white shadow-lg scale-105 ${className}`}
-                onAnimationEnd={handleAnimationEnd} // Add the event listener
+              ref={ref}
+              onClick={onClick}
+              className={`${baseClasses} relative group overflow-hidden bg-black text-white shadow-lg scale-105 ${!isPlaying ? 'ring-1 ring-gray-300 dark:ring-gray-700' : ''} ${className}`}
+              onAnimationEnd={handleAnimationEnd}
             >
                 <div
                     className={`absolute -top-[150%] -left-[150%] w-[400%] h-[400%] bg-[conic-gradient(from_var(--angle),transparent_var(--fill-percentage),var(--border-color)_100%)] ${animationClass}`}
@@ -102,8 +110,8 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
         );
     }
 
-    const inactiveClasses = `bg-transparent text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-300 dark:hover:bg-gray-700 shadow-none hover:shadow-sm ${focusRingClasses}`;
-    return (
+const inactiveClasses = `bg-transparent text-gray-700 hover:text-white dark:text-gray-400 dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
+return (
         <button ref={ref} onClick={onClick} className={`${baseClasses} ${inactiveClasses} ${className}`}>
             {text}
         </button>
@@ -114,24 +122,19 @@ InteractiveOblongNavItem.displayName = 'InteractiveOblongNavItem';
 // SegmentedControl remains the same
 export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkMode }) => {
     return (
-        <div className={`flex items-center bg-gray-50 dark:bg-slate-800 p-1 rounded-full shadow-lg border border-gray-300 dark:border-gray-700`}>
-            {options.map((option, index) => {
+        <div className={`flex items-center bg-slate-900 dark:bg-slate-950 p-1 rounded-full shadow-lg border border-gray-300 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
+            {options.map((option) => {
                 const isActive = activeOption === option;
-                let roundingClass = '';
-                if (index === 0) {
-                    roundingClass = 'rounded-l-full';
-                } else if (index === options.length - 1) {
-                    roundingClass = 'rounded-r-full';
-                }
-                const focusRingClass = isDarkMode ? 'focus-visible:ring-gray-500' : 'focus-visible:ring-gray-400';
+                // These classes now correctly handle both dark and light modes for all states.
+                const activeClasses = `bg-black dark:bg-black text-white dark:text-white ring-1 ring-gray-300 dark:ring-gray-700`;
+                const inactiveClasses = `text-gray-400 dark:text-gray-300 hover:text-white dark:hover:text-white`;
+
                 return (
                     <button
                         key={option}
                         onClick={() => onOptionClick(option)}
-                        className={`font-semibold text-sm sm:text-base py-1.5 px-5 transition-all duration-300 ease-in-out whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 ${focusRingClass} ${roundingClass} ${
-                            isActive
-                                ? 'bg-black text-white dark:bg-slate-600'
-                                : `text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700`
+                        className={`font-semibold text-sm sm:text-base py-1.5 px-5 first:rounded-l-full last:rounded-r-full transition-all duration-300 ease-in-out whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-gray-400 ${
+                            isActive ? activeClasses : inactiveClasses
                         }`}
                         aria-label={`Select ${option} view`}
                     >

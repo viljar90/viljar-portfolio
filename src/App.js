@@ -536,10 +536,10 @@ function App() {
           onNavItemClick={handleNavItemClick}
           scrollContainerRef={scrollContainerRef}
           itemNavRefs={itemNavRefs}
-          containerClass={`flex items-center space-x-2 sm:space-x-3 ${
+          containerClass={`flex items-center space-x-4 sm:space-x-3 ${
             currentChapter === 'design' ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl' : 'w-auto'
           }`}
-          navItemsFlexClass={currentChapter === 'design' ? 'flex-1 min-w-0' : 'flex-initial'}
+          navItemsFlexClass={'flex-1 min-w-0'}
           currentChapter={currentChapter}
           design={design}
           work={work}
