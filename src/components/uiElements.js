@@ -53,7 +53,7 @@ export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
   return (
     <button {...props} className={`relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-200 ${props.className || ''}`}>
       <div
-        className={`absolute -inset-px bg-[conic-gradient(from_var(--rotate),#5ddcff,#3c67e3,#f059eb)] rounded-full transition-opacity duration-300 animate-spin ${
+        className={`absolute -inset-[1.25px] bg-[conic-gradient(from_var(--rotate),#5ddcff,#3c67e3,#f059eb)] rounded-full transition-opacity duration-300 animate-spin ${
           isPlaying ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
