@@ -189,8 +189,7 @@ export const QUIZZES = [
         "Increased efficiency - faster time to market",
         "Avoids expensive duplicate work",
         "Consistent user experience across your products",
-        "Scalable and maintainable",
-        "Makes rebranding cheap and simple to accomplish"
+        "Scalable and maintainable - making updates cheap and easy"
     ],
     projectButtonText: 'The Design System'
   },
