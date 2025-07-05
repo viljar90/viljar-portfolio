@@ -7,7 +7,7 @@ const ViewSwitcher = ({ work, onWorkViewChange, isDarkMode }) => {
     // Changed to 'fixed' positioning and a high z-index
     <div className="fixed top-8 right-8 z-50"> 
       <SegmentedControl
-        options={['Quiz', 'Project Overview']}
+        options={['Quiz', 'Overview']}
         activeOption={work.workView}
         onOptionClick={onWorkViewChange}
         isDarkMode={isDarkMode}

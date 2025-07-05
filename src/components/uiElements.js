@@ -135,24 +135,39 @@ InteractiveOblongNavItem.displayName = 'InteractiveOblongNavItem';
 
 // SegmentedControl remains the same
 export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkMode }) => {
+    const [clickedOption, setClickedOption] = useState(null);
+
+    useEffect(() => {
+        if (clickedOption === null) return;
+        const timer = setTimeout(() => setClickedOption(null), 300); // Animation duration
+        return () => clearTimeout(timer);
+    }, [clickedOption]);
+
+    const handleOptionClick = (option) => {
+        setClickedOption(option);
+        onOptionClick(option);
+    };
+
     return (
         <div className={`flex items-center bg-slate-900 dark:bg-slate-950 p-1 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
             {options.map((option) => {
                 const isActive = activeOption === option;
-                // These classes now correctly handle both dark and light modes for all states.
+                const isClicked = clickedOption === option;
                 const activeClasses = `bg-black dark:bg-black text-white dark:text-white ring-1 ring-gray-500 dark:ring-gray-700`;
                 const inactiveClasses = `text-gray-500 dark:text-gray-300 hover:text-white dark:hover:text-white`;
 
                 return (
                     <button
                         key={option}
-                        onClick={() => onOptionClick(option)}
+                        onClick={() => handleOptionClick(option)}
                         className={`font-semibold text-sm sm:text-base py-1.5 px-5 first:rounded-l-full last:rounded-r-full transition-all duration-300 ease-in-out whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-gray-400 ${
                             isActive ? activeClasses : inactiveClasses
                         }`}
                         aria-label={`Select ${option} view`}
                     >
-                        {option}
+                        <span className={`inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>
+                            {option}
+                        </span>
                     </button>
                 );
             })}

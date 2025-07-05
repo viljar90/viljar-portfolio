@@ -165,7 +165,13 @@ export const QUIZZES = [
         { text: 'Invest in an internal platform that integrates with multiple AI providers', isCorrect: true },
         { text: 'Wait for the market to mature before adopting AI tools', isCorrect: false },
     ],
-    resultText: "An internal platform with a modular architecture that connects to various AI providers offers the most flexibility and avoids vendor lock-in. I also keeps your company data secure and under your control.",
+    resultText: "When designed correctly an internal platform that connects to different AI providers offers many benefits.",
+    summaryPoints: [
+        "A modular architecture makes it future-proof as technlogies evolve",
+        "Avoids vendor lock-in",
+        "Secures your company data and GDPR compliance",
+        "Provides guidelines and best practices for AI usage"
+    ],
     projectButtonText: "The AI Platform"
   },
   {
@@ -179,6 +185,13 @@ export const QUIZZES = [
         { text: 'Hire a service designer', isCorrect: false },
     ],
     resultText: 'A design system is the simplest and most effective way to ensure consistency and speed.',
+    summaryPoints: [
+        "Increased efficiency - faster time to market",
+        "Avoids expensive duplicate work",
+        "Consistent user experience across your products",
+        "Scalable and maintainable",
+        "Makes rebranding cheap and simple to accomplish"
+    ],
     projectButtonText: 'The Design System'
   },
   {
@@ -192,6 +205,11 @@ export const QUIZZES = [
         { text: 'Purchase a new BI tool', isCorrect: false },
     ],
     resultText: "Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.",
+    summaryPoints: [
+        "Improved data discovery",
+        "Increased trust in data",
+        "Fosters a data-driven culture"
+    ],
     projectButtonText: "The Data Catalogue"
   }
 ];
