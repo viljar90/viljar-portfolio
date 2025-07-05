@@ -110,7 +110,7 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
         );
     }
 
-const inactiveClasses = `bg-transparent text-gray-700 hover:text-white dark:text-gray-400 dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
+const inactiveClasses = `bg-transparent text-gray-500 hover:text-white dark:text-gray-400 dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
 return (
         <button ref={ref} onClick={onClick} className={`${baseClasses} ${inactiveClasses} ${className}`}>
             {text}
@@ -127,7 +127,7 @@ export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkM
                 const isActive = activeOption === option;
                 // These classes now correctly handle both dark and light modes for all states.
                 const activeClasses = `bg-black dark:bg-black text-white dark:text-white ring-1 ring-gray-500 dark:ring-gray-700`;
-                const inactiveClasses = `text-gray-400 dark:text-gray-300 hover:text-white dark:hover:text-white`;
+                const inactiveClasses = `text-gray-500 dark:text-gray-300 hover:text-white dark:hover:text-white`;
 
                 return (
                     <button
