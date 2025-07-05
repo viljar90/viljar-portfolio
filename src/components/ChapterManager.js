@@ -36,8 +36,8 @@ const ChapterManager = ({
 
   return (
     <div>
-      {showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} bottom-20 left-4 md:top-1/2 md:bottom-auto md:left-8 md:-translate-y-1/2`}><PrevArrowIcon /></button>}
-      {showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} bottom-20 right-4 md:top-1/2 md:bottom-auto md:right-8 md:-translate-y-1/2`}><NextArrowIcon /></button>}
+      {showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} bottom-20 left-4 md:top-1/2 md:bottom-auto md:left-12 lg:left-20 xl:left-48 md:-translate-y-1/2`}><PrevArrowIcon /></button>}
+      {showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} bottom-20 right-4 md:top-1/2 md:bottom-auto md:right-12 lg:right-20 xl:right-48 md:-translate-y-1/2`}><NextArrowIcon /></button>}
       <Chapter ref={mainChapterRef} className={mainChapterAnimClass}>
         {currentChapter === 'main' && (
           <ChapterContent
