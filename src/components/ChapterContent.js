@@ -2,7 +2,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PrevArrowIcon, NextArrowIcon } from './uiElements';
 import LandingChapter from './LandingChapter';
 import DesignChapter from './DesignChapter';
 import WorkChapter from './WorkChapter';
@@ -11,10 +10,6 @@ import { QUIZZES } from '../content';
 
 const ChapterContent = ({
   currentChapter,
-  showPrevArrow,
-  showNextArrow,
-  handlePrevLine,
-  handleNextLine,
   darkMode,
   landing,
   design,
@@ -29,14 +24,8 @@ const ChapterContent = ({
   showCursorDesignTitle,
   showCursorDesignMainText,
 }) => {
-  const arrowButtonClass = "absolute top-1/2 -translate-y-1/2 p-2 rounded-full text-slate-500 hover:text-slate-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 transition-all opacity-40 group-hover:opacity-100";
-
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative group px-16">
-
-      {showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} left-8 sm:left-0 md:left-0 lg:left-0`}><PrevArrowIcon /></button>}
-      {showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} right-8 sm:right-0 md:right-0 lg:right-0`}><NextArrowIcon /></button>}
-
+    <div className="flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative px-4 sm:px-16">
       {currentChapter === 'main' && (
         <LandingChapter
           darkMode={darkMode}
@@ -70,7 +59,7 @@ const ChapterContent = ({
                 <QuizIntro
                     onStart={() => work.setWorkStepIndex(1)}
                     isCompleted={work.introCompleted}
-                    onIntroViewed={work.markIntroAsCompleted} // Pass the new function
+                    onIntroViewed={work.markIntroAsCompleted}
                 />
             ) : (
                 <WorkChapter
@@ -94,13 +83,8 @@ const ChapterContent = ({
   );
 };
 
-// (Keep PropTypes the same)
 ChapterContent.propTypes = {
     currentChapter: PropTypes.string.isRequired,
-    showPrevArrow: PropTypes.bool.isRequired,
-    showNextArrow: PropTypes.bool.isRequired,
-    handlePrevLine: PropTypes.func.isRequired,
-    handleNextLine: PropTypes.func.isRequired,
     darkMode: PropTypes.bool.isRequired,
     landing: PropTypes.object.isRequired,
     design: PropTypes.object.isRequired,
