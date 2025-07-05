@@ -46,7 +46,7 @@ const BottomNavigation = ({
         const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
         const isLastQuestion = work.workView === 'Quiz' && work.workStepIndex === QUIZZES.length;
         
-        const nonAnimatedButtonClasses = "group h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex-shrink-0 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-105 active:scale-95 bg-black dark:bg-black text-white dark:text-white ring-1 ring-gray-300 dark:ring-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800";
+        const nonAnimatedButtonClasses = "group h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex-shrink-0 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-105 active:scale-95 bg-black dark:bg-black text-white dark:text-white ring-1 ring-gray-500 dark:ring-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800";
         const iconAnimationClass = isClicked ? 'animate-click-bounce' : '';
 
         if (currentChapter === 'work' && work.workView === 'Quiz' && !showReplayButtonForChapters) {
@@ -90,7 +90,7 @@ const BottomNavigation = ({
                 <div className={`relative ${navItemsFlexClass} transform transition-transform duration-200 hover:scale-[1.02]`}>
                     <div
                         ref={scrollContainerRef}
-                        className="bg-slate-900 dark:bg-slate-950 py-1.5 px-2 rounded-full flex items-center space-x-1 shadow-lg transition-colors duration-300 border border-gray-300 dark:border-gray-700 overflow-x-auto no-scrollbar"
+                        className="bg-slate-900 dark:bg-slate-950 py-1.5 px-2 rounded-full flex items-center space-x-1 shadow-lg transition-colors duration-300 border border-gray-500 dark:border-gray-700 overflow-x-auto no-scrollbar"
                     >
                         {navItems.map((item, index) => {
                             let navItemText = (currentChapter === 'design' && DESIGN_CONTENT[item.name])

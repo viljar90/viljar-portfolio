@@ -58,7 +58,7 @@ export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
         }`}
         style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
       />
-      <div className={`relative z-10 w-full h-full flex items-center justify-center bg-black dark:bg-black rounded-full text-white dark:text-white ${!isPlaying ? 'ring-1 ring-gray-300 dark:ring-gray-700' : ''}`}>
+      <div className={`relative z-10 w-full h-full flex items-center justify-center bg-black dark:bg-black rounded-full text-white dark:text-white ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''}`}>
   {isPlaying ? (
     <div key="pause" className="animate-scale-in">
       <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105" />
@@ -97,7 +97,7 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
             <button
               ref={ref}
               onClick={onClick}
-              className={`${baseClasses} relative group overflow-hidden bg-black text-white shadow-lg scale-105 ${!isPlaying ? 'ring-1 ring-gray-300 dark:ring-gray-700' : ''} ${className}`}
+              className={`${baseClasses} relative group overflow-hidden bg-black text-white shadow-lg scale-105 ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''} ${className}`}
               onAnimationEnd={handleAnimationEnd}
             >
                 <div
@@ -122,11 +122,11 @@ InteractiveOblongNavItem.displayName = 'InteractiveOblongNavItem';
 // SegmentedControl remains the same
 export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkMode }) => {
     return (
-        <div className={`flex items-center bg-slate-900 dark:bg-slate-950 p-1 rounded-full shadow-lg border border-gray-300 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
+        <div className={`flex items-center bg-slate-900 dark:bg-slate-950 p-1 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
             {options.map((option) => {
                 const isActive = activeOption === option;
                 // These classes now correctly handle both dark and light modes for all states.
-                const activeClasses = `bg-black dark:bg-black text-white dark:text-white ring-1 ring-gray-300 dark:ring-gray-700`;
+                const activeClasses = `bg-black dark:bg-black text-white dark:text-white ring-1 ring-gray-500 dark:ring-gray-700`;
                 const inactiveClasses = `text-gray-400 dark:text-gray-300 hover:text-white dark:hover:text-white`;
 
                 return (
