@@ -473,7 +473,7 @@ function App() {
   // #################################################################
   return (
     <>
-      <div className={`AppContainer bg-slate-900 dark:bg-slate-950 text-slate-100 transition-colors duration-300 min-h-screen overflow-x-hidden`}>
+       <div className={`AppContainer bg-slate-900 dark:bg-slate-950 text-slate-100 transition-colors duration-300 min-h-screen overflow-x-hidden`}>
         <div className="absolute bottom-4 left-4 z-40">
           <button onClick={toggleDarkMode} className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-colors duration-200 ${darkMode ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-300' : 'bg-slate-700 text-white hover:bg-slate-600'} focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500 dark:focus-visible:ring-offset-slate-950`}>{darkMode ? 'Light Mode' : 'Darker Mode'}</button>
         </div>
@@ -537,7 +537,9 @@ function App() {
           scrollContainerRef={scrollContainerRef}
           itemNavRefs={itemNavRefs}
           containerClass={`flex items-center space-x-4 sm:space-x-3 ${
-            currentChapter === 'design' ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl' : 'w-auto'
+            currentChapter === 'design' || (currentChapter === 'work' && work.workView === 'Quiz')
+              ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl'
+              : 'w-auto'
           }`}
           navItemsFlexClass={'flex-1 min-w-0'}
           currentChapter={currentChapter}
