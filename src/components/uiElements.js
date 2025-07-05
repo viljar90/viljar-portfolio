@@ -1,6 +1,6 @@
 // src/components/uiElements.js
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // --- SVG Icons ---
 export const PlayIcon = ({ className = "w-6 h-6" }) => (
@@ -53,7 +53,7 @@ export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
   return (
     <button {...props} className={`relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400 dark:focus-visible:ring-offset-slate-800 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-200 ${props.className || ''}`}>
       <div
-        className={`absolute -inset-0.5 bg-[conic-gradient(from_var(--rotate),#5ddcff,#3c67e3,#f059eb)] rounded-full transition-opacity duration-300 animate-spin ${
+        className={`absolute -inset-px bg-[conic-gradient(from_var(--rotate),#5ddcff,#3c67e3,#f059eb)] rounded-full transition-opacity duration-300 animate-spin ${
           isPlaying ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
@@ -76,9 +76,23 @@ export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
 
 // --- InteractiveOblongNavItem Component ---
 export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, className = '', isActive = false, isPlaying = false, isFadingOut = false, isDarkMode = false, onFadeOutEnd }, ref) => {
+    const [isClicked, setIsClicked] = useState(false);
     const baseClasses = 'flex-none font-semibold text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6 rounded-full cursor-pointer focus:outline-none transition-all duration-200 ease-in-out whitespace-nowrap';
     const focusRingClasses = `focus-visible:ring-2 focus-visible:ring-opacity-75 ${isDarkMode ? 'focus-visible:ring-gray-500' : 'focus-visible:ring-gray-400'}`;
 
+    useEffect(() => {
+        if (!isClicked) return;
+        const timer = setTimeout(() => setIsClicked(false), 400); // Reset after animation
+        return () => clearTimeout(timer);
+    }, [isClicked]);
+
+    const handleItemClick = () => {
+        setIsClicked(true);
+        if (onClick) {
+            onClick();
+        }
+    };
+    
     if (isActive) {
         let animationClass = '';
         if (isFadingOut) {
@@ -96,7 +110,7 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
         return (
             <button
               ref={ref}
-              onClick={onClick}
+              onClick={handleItemClick}
               className={`${baseClasses} relative group overflow-hidden bg-black text-white shadow-lg scale-105 ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''} ${className}`}
               onAnimationEnd={handleAnimationEnd}
             >
@@ -104,16 +118,16 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
                     className={`absolute -top-[150%] -left-[150%] w-[400%] h-[400%] bg-[conic-gradient(from_var(--angle),transparent_var(--fill-percentage),var(--border-color)_100%)] ${animationClass}`}
                     style={{ zIndex: 1 }}
                 />
-                <div className="absolute z-[2] inset-[2px] bg-black rounded-full" />
-                <span className="relative z-[3]">{text}</span>
+                <div className="absolute z-[2] inset-[1.25px] bg-black rounded-full" />
+                <span className={`relative z-[3] inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>{text}</span>
             </button>
         );
     }
 
-const inactiveClasses = `bg-transparent text-gray-500 hover:text-white dark:text-gray-400 dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
-return (
-        <button ref={ref} onClick={onClick} className={`${baseClasses} ${inactiveClasses} ${className}`}>
-            {text}
+    const inactiveClasses = `bg-transparent text-gray-500 hover:text-white dark:text-gray-400 dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
+    return (
+        <button ref={ref} onClick={handleItemClick} className={`${baseClasses} ${inactiveClasses} ${className}`}>
+            <span className={`inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>{text}</span>
         </button>
     );
 });

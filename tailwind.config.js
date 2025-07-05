@@ -45,15 +45,23 @@ module.exports = {
           '0%': { transform: 'scale(0.1)' },
           '80%': { transform: 'scale(1.2)' },
           '100%': { transform: 'scale(1)' },
+        },
+        // --- ADD THIS NEW KEYFRAME ---
+        'text-bounce': {
+          '0%': { transform: 'scale(1)' },
+          '40%': { transform: 'scale(0.9)' },
+          '80%': { transform: 'scale(1.05)' },
+          '100%': { transform: 'scale(1)' },
         }
       },
       animation: {
         spin: 'spin 2s ease-in-out infinite',
         'gradient-border': 'spin 2s linear infinite, grow 4s linear forwards, cycle-colors 4s ease-in-out infinite alternate',
         'fade-out': 'fade-out 1.5s ease-out forwards',
-        'scale-in': 'lively-scale-in 0.4s ease-out',
-        'scale-out': 'scale-out 0.4s ease-out forwards',
-        'click-bounce': 'click-bounce 0.4s ease-out',
+        'scale-in': 'lively-scale-in 0.3s ease-out',
+        'scale-out': 'scale-out 0.3s ease-out forwards',
+        'click-bounce': 'click-bounce 0.3s ease-out',
+        'text-bounce': 'text-bounce 0.3s ease-in-out',
       }
     },
   },
