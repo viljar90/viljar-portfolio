@@ -165,7 +165,7 @@ export const QUIZZES = [
         { text: 'Invest in an internal platform that integrates with multiple AI providers', isCorrect: true },
         { text: 'Wait for the market to mature before adopting AI tools', isCorrect: false },
     ],
-    resultText: "When designed correctly an internal platform that connects to different AI providers offers many benefits.",
+    resultText: "A well designed internal platform that connects to multiple AI providers offers many benefits.",
     summaryPoints: [
         "A modular architecture makes it future-proof as technlogies evolve",
         "Avoids vendor lock-in",
