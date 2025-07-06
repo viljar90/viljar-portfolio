@@ -15,12 +15,12 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
     const mainQuestion = questionParts[1];
 
     const ResultCard = () => (
-        <div className="relative w-full max-w-xl p-6 md:p-8 bg-slate-800 rounded-xl shadow-2xl animate-fadeIn text-left">
+        <div className="relative w-full max-w-xl p-6 md:p-8 bg-bg-muted dark:bg-slate-800 rounded-xl shadow-2xl animate-fadeIn text-left">
             <ConfettiExplosion />
 
             <button
                 onClick={() => onReplayQuestion(quiz.id)}
-                className="absolute top-3 right-3 p-2 rounded-full text-slate-400 hover:bg-slate-700 hover:text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
+                className="absolute top-3 right-3 p-2 rounded-full text-text-muted hover:bg-gray-200 dark:hover:bg-slate-700 hover:text-text-base dark:hover:text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 aria-label="Replay question"
             >
                 <ReplayIcon className="w-5 h-5" />
@@ -28,21 +28,21 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
 
             <div className="flex items-center">
                 <span role="img" aria-label="party popper" className="text-3xl mr-3">🎉</span>
-                <h3 className="text-3xl font-bold text-white">Correct!</h3>
+                <h3 className="text-3xl font-bold text-text-base dark:text-white">Correct!</h3>
             </div>
-            <p className="mt-4 text-lg text-slate-300">
+            <p className="mt-4 text-lg text-text-muted dark:text-slate-300">
                 {resultText}
             </p>
 
-            <ul className="mt-4 space-y-2 list-disc list-outside pl-5 text-slate-400">
+            <ul className="mt-4 space-y-2 list-disc list-outside pl-5 text-text-muted dark:text-slate-400">
                 {summaryPoints.map((point, index) => (
                     <li key={index}>{point}</li>
                 ))}
             </ul>
 
-            <div className="mt-6 pt-4 border-t border-slate-700">
-                <p className="text-sm text-slate-400">Check out the one I've worked on</p>
-                <button className="mt-2 text-lg font-semibold text-secondary hover:text-primary transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary">
+            <div className="mt-6 pt-4 border-t border-gray-200 dark:border-slate-700">
+                <p className="text-sm text-text-muted dark:text-slate-400">Check out the one I've worked on</p>
+                <button className="mt-2 text-lg font-semibold text-primary dark:text-sky-400 hover:text-secondary dark:hover:text-sky-300 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                     {projectButtonText} ↗
                 </button>
             </div>
@@ -54,7 +54,7 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
             <div className="w-full max-w-4xl">
                 {!correct && (
                      <div className="text-left text-1xl md:text-2xl mb-8 animate-fadeIn">
-                        <p className="text-secondary dark:text-primary mb-2">{statement}</p>
+                        <p className="text-primary dark:text-secondary mb-2">{statement}</p>
                         <p className="text-text-base">{mainQuestion}</p>
                     </div>
                 )}
@@ -72,9 +72,10 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
                             return null;
                         }
 
-                        let buttonClass = 'border-2 border-slate-500 hover:border-primary hover:bg-primary/10 text-text-base';
+                        let buttonClass = 'border border-text-muted hover:border-primary hover:bg-primary/10 text-text-base';
                         if (isSelected) {
-                            buttonClass = option.isCorrect ? '' : 'bg-error/20 border-error text-white animate-shake';
+                            // This line is updated to include `border-2`
+                            buttonClass = option.isCorrect ? '' : 'bg-error/20 border border-error text-text-base animate-shake';
                         }
 
                         return (

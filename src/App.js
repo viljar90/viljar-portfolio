@@ -8,7 +8,7 @@ import {
   DESIGN_NAV_ITEMS,
   DESIGN_CONTENT,
   QUIZZES,
-  DESIGN_STAGE_KEYS
+  DESIGN_STAGE_KEYS,
 } from './content';
 import ChapterManager from './components/ChapterManager';
 import { useLandingChapter } from './hooks/useLandingChapter';
@@ -17,6 +17,7 @@ import { useWorkChapter } from './hooks/useWorkChapter';
 import BottomNavigation from './components/BottomNavigation';
 import ErrorBoundary from './components/ErrorBoundary';
 import ViewSwitcher from './components/ViewSwitcher';
+import { SunIcon, MoonIcon } from './components/uiElements';
 
 // --- Animation Configuration ---
 const ANIMATION_DURATION_CHAPTER = "0.5s";
@@ -28,6 +29,7 @@ function App() {
   const [currentChapter, setCurrentChapter] = useState('main');
   const [showLeftFade, setShowLeftFade] = useState(false);
   const [showRightFade, setShowRightFade] = useState(false);
+  const [isThemeToggleClicked, setIsThemeToggleClicked] = useState(false);
 
   // --- Shared Refs ---
   const mainChapterRef = useRef(null);
@@ -421,12 +423,14 @@ function App() {
     }
   };
   
-    const toggleDarkMode = () => {
+  const toggleDarkMode = () => {
+    setIsThemeToggleClicked(true);
     setDarkMode(prevMode => {
       const newMode = !prevMode;
       document.documentElement.classList.toggle('dark', newMode);
       return newMode;
     });
+    setTimeout(() => setIsThemeToggleClicked(false), 400); // Reset after animation
   };
 
   const handleWorkViewChange = (newView) => {
@@ -475,7 +479,15 @@ function App() {
     <>
        <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen overflow-x-hidden`}>
         <div className="absolute top-4 right-4 z-40">
-          <button onClick={toggleDarkMode} className={`px-4 py-2 rounded-lg font-semibold shadow-md transition-colors duration-200 ${darkMode ? 'bg-yellow-400 text-bg-muted hover:bg-yellow-300' : 'bg-bg-muted text-text-base hover:bg-gray-200'} focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500 dark:focus-visible:ring-offset-bg-muted`}>{darkMode ? 'Light Mode' : 'Darker Mode'}</button>
+          <button
+            onClick={toggleDarkMode}
+            className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-transparent dark:bg-bg-muted text-text-base dark:text-white transform hover:scale-105 active:scale-95`}
+            aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          >
+            <span className={isThemeToggleClicked ? 'animate-click-bounce' : ''}>
+              {darkMode ? <SunIcon /> : <MoonIcon />}
+            </span>
+          </button>
         </div>
         
         {currentChapter === 'work' && (
