@@ -32,7 +32,7 @@ const ChapterManager = ({
   showCursorDesignMainText,
   onWorkViewChange,
 }) => {
-  const arrowButtonClass = "fixed z-20 p-2 rounded-full text-slate-500 hover:text-slate-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 transition-all opacity-40 hover:opacity-100";
+  const arrowButtonClass = "fixed z-20 p-2 rounded-full text-text-muted hover:text-text-base hover:bg-bg-muted/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-all opacity-40 hover:opacity-100";
 
   return (
     <div>

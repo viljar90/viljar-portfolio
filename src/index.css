@@ -4,32 +4,41 @@
 @tailwind utilities;
 
 @layer base {
+  /* The "Noir" Light Theme */
   :root {
-    --color-primary: #0ea5e9;
-    --color-secondary: #38bdf8;
-    --color-accent: #f059eb;
-    --color-error: #ef4444;
-    --color-text-base: #e2e8f0;
-    --color-text-muted: #94a3b8;
-    --color-bg-base: #0f172a;
-    --color-bg-muted: #020617;
+    --color-primary: #1F2937;      /* A very dark gray for primary actions */
+    --color-secondary: #4B5563;    /* A lighter gray for hovers */
+    --color-accent: #000000;        /* Black for strong accents */
+    --color-error: #DC2626;         /* A clear, accessible red */
+    --color-text-base: #111827;     /* A strong, dark gray for text */
+    --color-text-muted: #6B7280;    /* A medium gray for secondary text */
+    --color-bg-base: #FFFFFF;        /* Pure white for the main background */
+    --color-bg-muted: #F9FAFB;      /* A very light off-white for cards/contrast */
     
-    /* Animation colors */
-    --color-anim-1: #5ddcff;
-    --color-anim-2: #3c67e3;
-    --color-anim-3: #f059eb;
+    /* Animation colors updated for a monochrome feel */
+    --color-anim-1: #ffffff;
+    --color-anim-2: #1F2937;
+    --color-anim-3: #000000;
   }
+  
+  /* The .dark selector remains unchanged. */
   .dark {
     --color-primary: #38bdf8;
     --color-secondary: #7dd3fc;
+    --color-accent: #f059eb;
     --color-error: #f87171;
     --color-text-base: #f8fafc;
     --color-text-muted: #cbd5e1;
     --color-bg-base: #020617;
     --color-bg-muted: #0f172a;
+
+    --color-anim-1: #5ddcff;
+    --color-anim-2: #3c67e3;
+    --color-anim-3: #f059eb;
   }
 }
 
+/* The properties below are for animations and don't need to be changed. */
 @property --angle {
   syntax: '<angle>';
   inherits: false;

@@ -63,7 +63,7 @@ const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
                 <div className="mt-12 animate-fadeIn">
                     <button
                         onClick={onStart}
-                        className="bg-primary hover:bg-secondary text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg md:text-xl inline-flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        className="bg-transparent dark:bg-primary hover:bg-primary dark:hover:bg-secondary text-primary dark:text-white hover:text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg md:text-xl inline-flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary border border-primary dark:border-transparent"
                     >
                         <PlayIcon className="w-6 h-6" />
                         <span>Play</span>
@@ -77,7 +77,7 @@ const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
 QuizIntro.propTypes = {
   onStart: PropTypes.func.isRequired,
   isCompleted: PropTypes.bool,
-  onIntroViewed: PropTypes.func.isRequired, // Add this new prop
+  onIntroViewed: PropTypes.func.isRequired,
 };
 
 QuizIntro.defaultProps = {

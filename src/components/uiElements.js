@@ -58,7 +58,7 @@ export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
         }`}
         style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
       />
-      <div className={`relative z-10 w-full h-full flex items-center justify-center bg-black rounded-full text-white ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''}`}>
+      <div className={`relative z-10 w-full h-full flex items-center justify-center bg-bg-base dark:bg-black rounded-full text-text-base dark:text-white ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''}`}>
   {isPlaying ? (
     <div key="pause" className="animate-scale-in">
       <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105" />
@@ -111,20 +111,20 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
             <button
               ref={ref}
               onClick={handleItemClick}
-              className={`${baseClasses} relative group overflow-hidden bg-black text-white shadow-lg scale-105 ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''} ${className}`}
+              className={`${baseClasses} relative group overflow-hidden bg-transparent dark:bg-black text-text-base dark:text-white shadow-lg scale-105 ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''} ${className}`}
               onAnimationEnd={handleAnimationEnd}
             >
                 <div
                     className={`absolute -top-[150%] -left-[150%] w-[400%] h-[400%] bg-[conic-gradient(from_var(--angle),transparent_var(--fill-percentage),var(--border-color)_100%)] ${animationClass}`}
                     style={{ zIndex: 1 }}
                 />
-                <div className="absolute z-[2] inset-[1.25px] bg-black rounded-full" />
+                <div className="absolute z-[2] inset-[1.25px] bg-bg-base dark:bg-black rounded-full" />
                 <span className={`relative z-[3] inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>{text}</span>
             </button>
         );
     }
 
-    const inactiveClasses = `bg-transparent text-text-muted hover:text-white dark:text-text-muted dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
+    const inactiveClasses = `bg-transparent text-text-muted hover:text-text-base dark:text-text-muted dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
     return (
         <button ref={ref} onClick={handleItemClick} className={`${baseClasses} ${inactiveClasses} ${className}`}>
             <span className={`inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>{text}</span>
@@ -149,18 +149,18 @@ export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkM
     };
 
     return (
-        <div className={`flex items-center bg-bg-base dark:bg-bg-muted p-1 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
+        <div className={`flex items-center bg-bg-muted dark:bg-bg-muted p-1 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
             {options.map((option) => {
                 const isActive = activeOption === option;
                 const isClicked = clickedOption === option;
-                const activeClasses = `bg-black dark:bg-black text-white dark:text-white ring-1 ring-gray-500 dark:ring-gray-700`;
-                const inactiveClasses = `text-text-muted dark:text-text-muted hover:text-white dark:hover:text-white`;
+                const activeClasses = `bg-bg-base dark:bg-black text-text-base dark:text-white ring-1 ring-gray-500 dark:ring-gray-700`;
+                const inactiveClasses = `text-text-muted hover:text-text-base dark:hover:text-white`;
 
                 return (
                     <button
                         key={option}
                         onClick={() => handleOptionClick(option)}
-                        className={`font-semibold text-sm sm:text-base py-1.5 px-5 first:rounded-l-full last:rounded-r-full transition-all duration-300 ease-in-out whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-gray-400 ${
+                        className={`font-semibold text-sm sm:text-base py-1.5 px-5 first:rounded-l-full last:rounded-r-full transition-all duration-300 ease-in-out whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-primary ${
                             isActive ? activeClasses : inactiveClasses
                         }`}
                         aria-label={`Select ${option} view`}
