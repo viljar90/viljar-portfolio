@@ -478,10 +478,17 @@ function App() {
   return (
     <>
        <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen overflow-x-hidden`}>
-        <div className="absolute top-4 right-4 z-40">
+        <div className="fixed top-4 right-4 z-50 flex items-center space-x-4">
+          {currentChapter === 'work' && (
+            <ViewSwitcher
+              work={work}
+              onWorkViewChange={handleWorkViewChange}
+              isDarkMode={darkMode}
+            />
+          )}
           <button
             onClick={toggleDarkMode}
-            className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-transparent dark:bg-bg-muted text-text-base dark:text-white transform hover:scale-105 active:scale-95`}
+            className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-transparent dark:bg-bg-muted text-text-base dark:text-white transform hover:scale-105 active:scale-95 shadow-md`}
             aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
           >
             <span className={isThemeToggleClicked ? 'animate-click-bounce' : ''}>
@@ -489,14 +496,6 @@ function App() {
             </span>
           </button>
         </div>
-        
-        {currentChapter === 'work' && (
-          <ViewSwitcher
-            work={work}
-            onWorkViewChange={handleWorkViewChange}
-            isDarkMode={darkMode}
-          />
-        )}
 
         <div className="fixed right-4 md:right-6 lg:right-10 top-1/2 transform -translate-y-1/2 z-30 space-y-4">
           {[{ name: 'main', label: 'Main Intro' }, { name: 'design', label: 'Design Insights' }, { name: 'work', label: 'My Work' }].map(dot => (

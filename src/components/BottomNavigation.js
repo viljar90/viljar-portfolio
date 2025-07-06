@@ -32,7 +32,7 @@ const BottomNavigation = ({
     const handleStaticButtonClick = () => {
         setIsClicked(true);
         onCentralButtonClick();
-        setTimeout(() => setIsClicked(false), 400); // Duration should match animation
+        setTimeout(() => setIsClicked(false), 400);
     };
 
     const renderCentralButton = () => {
@@ -87,10 +87,11 @@ const BottomNavigation = ({
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
             <div className={containerClass}>
                 {renderCentralButton()}
-                <div className={`relative ${navItemsFlexClass} transform transition-transform duration-200 hover:scale-[1.02]`}>
+                {/* The shadow and background have been moved to this parent container */}
+                <div className={`relative ${navItemsFlexClass} transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
                     <div
                         ref={scrollContainerRef}
-                        className="bg-bg-muted dark:bg-slate-950 py-1.5 px-2 rounded-full flex items-center space-x-1 shadow-lg transition-colors duration-300 border border-gray-500 dark:border-gray-700 overflow-x-auto no-scrollbar"
+                        className="py-1.5 px-2 flex items-center space-x-1 transition-colors duration-300 overflow-x-auto no-scrollbar"
                     >
                         {navItems.map((item, index) => {
                             let navItemText = (currentChapter === 'design' && DESIGN_CONTENT[item.name])
@@ -122,8 +123,8 @@ const BottomNavigation = ({
                             );
                         })}
                     </div>
-                    <div className={`absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-bg-muted to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
-                    <div className={`absolute top-0 bottom-0 right-[-0.1rem] w-20 bg-gradient-to-l from-bg-muted to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
+                    <div className={`absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
+                    <div className={`absolute top-0 bottom-0 right-[-0.1rem] w-24 bg-gradient-to-l from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
                 </div>
             </div>
         </div>
