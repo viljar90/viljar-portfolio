@@ -136,7 +136,7 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
         );
     }
 
-    const inactiveClasses = `bg-transparent text-text-muted hover:text-text-base dark:text-text-muted dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
+    const inactiveClasses = `bg-transparent text-text-interactive-muted hover:text-text-base dark:text-text-muted dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
     return (
         <button ref={ref} onClick={handleItemClick} className={`${baseClasses} ${inactiveClasses} ${className}`}>
             <span className={`inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>{text}</span>
