@@ -11,7 +11,7 @@
     --color-accent: #000000;        /* Black for strong accents */
     --color-error: #DC2626;         /* A clear, accessible red */
     --color-text-base: #111827;     /* A strong, dark gray for text */
-    --color-text-muted: #6B7280;    /* A medium gray for secondary text */
+    --color-text-muted: #353c4b;    /* A medium gray for secondary text */
     --color-text-interactive-muted: #64676d; /* A light gray for interactive text */
     --color-bg-base: #FFFFFF;        /* Pure white for the main background */
     --color-bg-muted: #F9FAFB;      /* A very light off-white for cards/contrast */
