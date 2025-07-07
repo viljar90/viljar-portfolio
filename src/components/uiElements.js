@@ -136,7 +136,7 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
         );
     }
 
-    const inactiveClasses = `bg-transparent text-interactive-muted hover:text-text-base dark:text-text-muted dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
+    const inactiveClasses = `bg-transparent text-interactive-muted hover:text-text-base dark:text-interactive-muted dark:hover:text-white shadow-none hover:shadow-sm ${focusRingClasses}`;    
     return (
         <button ref={ref} onClick={handleItemClick} className={`${baseClasses} ${inactiveClasses} ${className}`}>
             <span className={`inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>{text}</span>
@@ -166,7 +166,7 @@ export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkM
                 const isActive = activeOption === option;
                 const isClicked = clickedOption === option;
                 const activeClasses = `bg-bg-base dark:bg-black text-text-base dark:text-white ring-1 ring-gray-500 dark:ring-gray-700`;
-                const inactiveClasses = `text-text-muted hover:text-text-base dark:hover:text-white`;
+                const inactiveClasses = `text-interactive-muted hover:text-text-base dark:hover:text-white`;
 
                 return (
                     <button
