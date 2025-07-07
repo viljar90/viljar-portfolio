@@ -168,9 +168,10 @@ export const QUIZZES = [
     resultText: "A well designed internal platform that connects to multiple AI providers offers many benefits.",
     summaryPoints: [
         "A modular architecture makes it future-proof as technlogies evolve",
-        "Avoids vendor lock-in",
+        
         "Secures your company data and GDPR compliance",
-        "Provides guidelines and best practices for AI usage"
+        "Provides guidelines and best practices for AI usage",
+        "Avoids vendor lock-in"
     ],
     projectButtonText: "The AI Platform"
   },
@@ -184,7 +185,7 @@ export const QUIZZES = [
         { text: 'Reorganize your IT department', isCorrect: false },
         { text: 'Hire a service designer', isCorrect: false },
     ],
-    resultText: 'A design system is the simplest and most effective way to ensure consistency and speed.',
+    resultText: 'A design system is the most effective way to ensure consistency and speed.',
     summaryPoints: [
         "Increased efficiency - faster time to market",
         "Avoids expensive duplicate work",
