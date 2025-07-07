@@ -14,6 +14,7 @@ module.exports = {
         error: 'var(--color-error)',
         'text-base': 'var(--color-text-base)',
         'text-muted': 'var(--color-text-muted)',
+        'text-interactive-muted': 'var(--color-text-interactive-muted)',
         'bg-base': 'var(--color-bg-base)',
         'bg-muted': 'var(--color-bg-muted)',
         'anim-1': 'var(--color-anim-1)',
