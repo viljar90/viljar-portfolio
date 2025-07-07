@@ -12,7 +12,7 @@
     --color-error: #DC2626;         /* A clear, accessible red */
     --color-text-base: #111827;     /* A strong, dark gray for text */
     --color-text-muted: #6B7280;    /* A medium gray for secondary text */
-    --color-text-interactive-muted: #80858e; /* A light gray for interactive text */
+    --color-text-interactive-muted: #1748a2; /* A light gray for interactive text */
     --color-bg-base: #FFFFFF;        /* Pure white for the main background */
     --color-bg-muted: #F9FAFB;      /* A very light off-white for cards/contrast */
     
@@ -30,7 +30,7 @@
     --color-error: #f87171;
     --color-text-base: #f8fafc;
     --color-text-muted: #cbd5e1;
-    --color-text-interactive-muted: #1d1e1f;
+    --color-text-interactive-muted: #3a3c3e;
     --color-bg-base: #020617;
     --color-bg-muted: #04070c;
 
