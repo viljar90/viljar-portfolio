@@ -167,11 +167,10 @@ export const QUIZZES = [
     ],
     resultText: "A well designed internal platform that connects to multiple AI providers offers many benefits.",
     summaryPoints: [
+        "Reduses risk by avoiding vendor lock-in",
         "A modular architecture makes it future-proof as technlogies evolve",
-        
         "Secures your company data and GDPR compliance",
         "Provides guidelines and best practices for AI usage",
-        "Avoids vendor lock-in"
     ],
     projectButtonText: "The AI Platform"
   },
