@@ -72,10 +72,10 @@ const ChapterContent = ({
             )
         ) : (
              <div className="text-center">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-100 dark:text-slate-200">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-text-base">
                     Project Overview
                 </h1>
-                <p className="text-xl mt-4 text-slate-400">Project gallery coming soon!</p>
+                <p className="text-xl mt-4 text-text-muted">Project gallery coming soon!</p>
             </div>
         )
       )}

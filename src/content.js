@@ -88,7 +88,7 @@ export const DESIGN_CONTENT = {
       { title: "What I do", mainText: "Developers create logical and rational systems in computers." },
       { title: "What I do", mainText: "As a designer I create logical and rational systems in human minds." },
       { title: "What I do", mainText: "Human minds are far more complex than computers." },
-      { title: "What I do", mainText: "But unlike computers, minds are lazy and impatient\n– they reject needless complexity." },
+      { title: "What I do", mainText: "But unlike computers, minds get bored and easily frustrated – they reject needless complexity." },
       { title: "What I do", mainText: "They seek the path of least resistance." },
       { title: "What I do", mainText: "So let me show you what I as a designer do best..." },
       { title: "What I do", mainText: "...by making complex things simple." },

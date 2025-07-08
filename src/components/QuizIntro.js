@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
     const title = "My Work";
-    const mainText = "I love games.\nGet to know my work with this game \n or look at the overview ↗️";
+    const mainText = "I love games.\nGet to know my work with this game \n or check out the overview";
     const TYPEWRITER_SPEED = 35;
 
     const [displayedTitle, setDisplayedTitle] = useState(isCompleted ? title : '');
