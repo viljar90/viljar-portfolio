@@ -111,8 +111,13 @@ function App() {
         items = work.WORK_NAV_ITEMS;
         activeIndex = work.workStepIndex;
         refs = workItemRefs;
-    } else {
-        return; // No stepper for work overview
+    } else if (currentChapter === 'work' && work.workView === 'Overview') { // New logic for Overview
+        items = work.PROJECT_NAV_ITEMS;
+        activeIndex = work.currentProjectIndex;
+        refs = workItemRefs;
+    }
+     else {
+        return; 
     }
     if (!Array.isArray(refs.current)) refs.current = [];
     refs.current = refs.current.slice(0, items.length);
@@ -126,7 +131,7 @@ function App() {
       observer.observe(activeElement);
       return () => observer.disconnect();
     }
-  }, [landing.activeMainStep, design.activeDesignStageKey, work.workStepIndex, currentChapter, work.workView, work.WORK_NAV_ITEMS]);
+  }, [landing.activeMainStep, design.activeDesignStageKey, work.workStepIndex, currentChapter, work.workView, work.WORK_NAV_ITEMS, work.currentProjectIndex, work.PROJECT_NAV_ITEMS]);
 
   // Effect 5: Scroll-snapping logic
   useEffect(() => {
@@ -171,8 +176,9 @@ function App() {
     if (currentChapter === 'main') return MAIN_NAV_ITEMS;
     if (currentChapter === 'design') return DESIGN_NAV_ITEMS;
     if (currentChapter === 'work' && work.workView === 'Quiz') return work.WORK_NAV_ITEMS;
+    if (currentChapter === 'work' && work.workView === 'Overview') return work.PROJECT_NAV_ITEMS;
     return [];
-  }, [currentChapter, work.workView, work.WORK_NAV_ITEMS]);
+  }, [currentChapter, work.workView, work.WORK_NAV_ITEMS, work.PROJECT_NAV_ITEMS]);
 
   const updateNavFade = useCallback(() => {
     const el = scrollContainerRef.current;
@@ -221,16 +227,20 @@ function App() {
     } else if (currentChapter === 'design') {
       design.nextStep();
     } else if (currentChapter === 'work') {
-        if (work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) {
+        if (work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) {
             work.setWorkStepIndex(prev => prev + 1);
+        } else if (work.workView === 'Overview') {
+            work.handleNextProject();
         }
     }
   };
 
   const handlePrevLine = () => {
     if (currentChapter === 'work') {
-      if (work.workStepIndex > 0) {
+      if (work.workView === 'Quiz' && work.workStepIndex > 0) {
         work.setWorkStepIndex(prev => prev - 1);
+      } else if (work.workView === 'Overview') {
+        work.handlePrevProject();
       } else {
         navigateToChapter('design');
       }
@@ -248,27 +258,29 @@ function App() {
     work.setWorkStepIndex(index);
   };
 
-  const handleNavItemClick = (itemName) => {
+  const handleNavItemClick = (itemId) => {
     if (currentChapter === 'main') {
-        handleMainStepperItemClick(itemName);
+        handleMainStepperItemClick(itemId);
     } else if (currentChapter === 'design') {
-        handleDesignStepperItemClick(itemName);
+        handleDesignStepperItemClick(itemId);
     } else if (currentChapter === 'work' && work.workView === 'Quiz') {
       const index = work.WORK_NAV_ITEMS.findIndex(item => {
         if (item.name.startsWith('Question')) {
           const quizIndex = parseInt(item.name.split(' ')[1], 10) - 1;
-          if (QUIZZES[quizIndex]?.title === itemName || item.name === itemName) {
+          if (QUIZZES[quizIndex]?.title === itemId || item.name === itemId) {
             return true;
           }
         }
-        return item.name === itemName;
+        return item.name === itemId;
       });
       if (index !== -1) {
         handleWorkStepperItemClick(index);
       }
+    } else if (currentChapter === 'work' && work.workView === 'Overview') {
+        work.handleProjectNavItemClick(itemId);
     }
   };
-
+  
   const handleMainStepperItemClick = useCallback((itemName) => {
     if (currentChapter !== 'main') return;
     navigatedManually.current = false;
@@ -341,7 +353,8 @@ function App() {
   const showPrevArrow =
     (currentChapter === 'main' && (landing.activeMainStep !== MAIN_STAGES.INSULTS || landing.currentSubLineIndex !== 0)) ||
     (currentChapter === 'design' && (design.activeDesignStageKey !== DESIGN_STAGE_KEYS.ABOUT_DESIGN || design.currentDesignStepIndex !== 0)) ||
-    (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0);
+    (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) ||
+    (currentChapter === 'work' && work.workView === 'Overview');
 
   const currentPlayPauseButtonState = currentChapter === 'main' ? landing.isPlaying : (currentChapter === 'design' ? design.isPlayingDesign : false);
 
@@ -351,7 +364,10 @@ function App() {
   else if (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) {
       const quiz = QUIZZES[work.workStepIndex - 1];
       activeNavStepOrStage = work.quizAnswers[quiz.id]?.correct ? quiz.title : `Question ${work.workStepIndex}`;
-  } else if (currentChapter === 'work') {
+  } else if (currentChapter === 'work' && work.workView === 'Overview') {
+      activeNavStepOrStage = work.PROJECT_NAV_ITEMS[work.currentProjectIndex]?.id;
+  }
+   else if (currentChapter === 'work') {
       activeNavStepOrStage = 'Start';
   }
 
@@ -370,8 +386,9 @@ function App() {
   const showNextArrow =
     (currentChapter === 'main' && landing.activeMainStep !== MAIN_STAGES.HOME) ||
     (currentChapter === 'design' && !design.isDesignChapterFinished) ||
-    (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1);
-
+    (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) ||
+    (currentChapter === 'work' && work.workView === 'Overview');
+    
   // #################################################################
   // ### FINAL RENDER BLOCK ###
   // #################################################################
@@ -459,7 +476,7 @@ function App() {
             currentChapter === 'design'
               ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl'
               : currentChapter === 'work' && work.workView === 'Quiz'
-              ? 'w-full sm:w-auto' // This is the corrected line
+              ? 'w-full sm:w-auto'
               : 'w-auto'
           }`}
           navItemsFlexClass={'flex-1 min-w-0'}
