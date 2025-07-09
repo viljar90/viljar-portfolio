@@ -27,6 +27,91 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     setIsPlaying(p => !p);
   }, []);
 
+  // --- NEW: Encapsulated Navigation Logic ---
+  const handleNextLine = useCallback(() => {
+    navigatedManually.current = true;
+    setIsPlaying(false);
+
+    if (activeMainStep === MAIN_STAGES.INSULTS) {
+      if (currentSubLineIndex < CONTENT.INSULTS.LINES.length - 1) {
+        const nextIndex = currentSubLineIndex + 1;
+        setCurrentSubLineIndex(nextIndex);
+        setDisplayedChars(CONTENT.INSULTS.LINES[nextIndex].text);
+        setMainAnimationPhase('pausing-insult');
+      } else {
+        setActiveMainStep(MAIN_STAGES.INTRO);
+        setMainAnimationPhase('intro-greeting');
+        setDisplayedChars(CONTENT.INTRO.GREETING);
+        setIntroStepIndex(0);
+      }
+    } else if (activeMainStep === MAIN_STAGES.INTRO) {
+      if (mainAnimationPhase === 'intro-greeting') {
+        setMainAnimationPhase('pausing');
+        const firstStep = CONTENT.INTRO.steps[0];
+        setDisplayedNameChars(firstStep.title);
+        setDisplayedTitleChars(firstStep.mainText);
+      } else if (introStepIndex < CONTENT.INTRO.steps.length - 1) {
+        const nextIndex = introStepIndex + 1;
+        const nextStep = CONTENT.INTRO.steps[nextIndex];
+        setIntroStepIndex(nextIndex);
+        setDisplayedNameChars(nextStep.title);
+        setDisplayedTitleChars(nextStep.mainText);
+      } else {
+        setActiveMainStep(MAIN_STAGES.HOME);
+        const lastIntroStep = CONTENT.INTRO.steps[CONTENT.INTRO.steps.length - 1];
+        setDisplayedNameChars(lastIntroStep.title);
+        setDisplayedTitleChars(lastIntroStep.mainText);
+        setDisplayedHomeQuestion(CONTENT.INTRO.QUESTION);
+        setMainAnimationPhase('home-buttons-appear');
+      }
+    } else if (activeMainStep === MAIN_STAGES.HOME) {
+      return 'navigate-to-design';
+    }
+  }, [activeMainStep, currentSubLineIndex, mainAnimationPhase, introStepIndex, navigatedManually]);
+
+  const handlePrevLine = useCallback(() => {
+    navigatedManually.current = true;
+    setIsPlaying(false);
+
+    if (activeMainStep === MAIN_STAGES.HOME) {
+      setActiveMainStep(MAIN_STAGES.INTRO);
+      const lastIntroStepIndex = CONTENT.INTRO.steps.length - 1;
+      const lastIntroStep = CONTENT.INTRO.steps[lastIntroStepIndex];
+      setIntroStepIndex(lastIntroStepIndex);
+      setDisplayedNameChars(lastIntroStep.title);
+      setDisplayedTitleChars(lastIntroStep.mainText);
+      setMainAnimationPhase('pausing');
+    } else if (activeMainStep === MAIN_STAGES.INTRO) {
+      if (introStepIndex === 0 && mainAnimationPhase !== 'intro-greeting') {
+        setMainAnimationPhase('intro-greeting');
+        setDisplayedChars(CONTENT.INTRO.GREETING);
+        setDisplayedNameChars('');
+        setDisplayedTitleChars('');
+      } else if (introStepIndex > 0) {
+        const prevIndex = introStepIndex - 1;
+        const prevStep = CONTENT.INTRO.steps[prevIndex];
+        setIntroStepIndex(prevIndex);
+        setDisplayedNameChars(prevStep.title);
+        setDisplayedTitleChars(prevStep.mainText);
+        setMainAnimationPhase('pausing');
+      } else {
+        setActiveMainStep(MAIN_STAGES.INSULTS);
+        const lastInsultIndex = CONTENT.INSULTS.LINES.length - 1;
+        setCurrentSubLineIndex(lastInsultIndex);
+        setDisplayedChars(CONTENT.INSULTS.LINES[lastInsultIndex].text);
+        setMainAnimationPhase('pausing-insult');
+      }
+    } else if (activeMainStep === MAIN_STAGES.INSULTS) {
+      if (currentSubLineIndex > 0) {
+        const prevIndex = currentSubLineIndex - 1;
+        setCurrentSubLineIndex(prevIndex);
+        setDisplayedChars(CONTENT.INSULTS.LINES[prevIndex].text);
+        setMainAnimationPhase('pausing-insult');
+      }
+    }
+  }, [activeMainStep, mainAnimationPhase, introStepIndex, currentSubLineIndex, navigatedManually]);
+  // --- END: Encapsulated Navigation Logic ---
+
   useEffect(() => {
     if (currentChapter !== 'main') {
       wasPlayingRef.current = isPlaying;
@@ -37,14 +122,12 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChapter, activeMainStep]);
+  }, [currentChapter]);
 
-  // Effect 1 (previously Effect 3 in App.js): Resets content when active step changes
   useEffect(() => {
-    if (currentChapter !== 'main') return;
-    if (navigatedManually.current) {
-      navigatedManually.current = false;
-      return;
+    if (currentChapter !== 'main' || navigatedManually.current) {
+        if(navigatedManually.current) navigatedManually.current = false;
+        return;
     }
     setCurrentSubLineIndex(0);
     setDisplayedChars('');
@@ -53,7 +136,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     setDisplayedTitleChars('');
     setDisplayedHomeQuestion('');
     setIntroGreetingPhase('typing-greeting');
-    setIsFadingOut(false); // Reset fading state
+    setIsFadingOut(false); 
 
     if (activeMainStep === MAIN_STAGES.INSULTS) {
       setMainAnimationPhase('typing-insult');
@@ -68,7 +151,6 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     }
   }, [activeMainStep, currentChapter, navigatedManually]);
 
-  // Effect 2 (previously Effect 4 in App.js): Auto-play for chapter
   useEffect(() => {
     if (currentChapter !== 'main' || !isPlaying) return;
     if (mainAnimationPhase === 'insults-done' || mainAnimationPhase === 'intro-done') {
@@ -76,9 +158,9 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
       const pauseDuration = currentStepConfig?.pauseAfter !== undefined ? currentStepConfig.pauseAfter : LONG_PAUSE_DURATION;
 
       const transitionToNextStep = () => {
-        setIsFadingOut(true); // Start fading
+        setIsFadingOut(true);
         setTimeout(() => {
-          setIsFadingOut(false); // End fading
+          setIsFadingOut(false);
           navigatedManually.current = false;
           setActiveMainStep(prevActiveStep => {
             const currentIndex = MAIN_NAV_ITEMS.findIndex(item => item.name === prevActiveStep);
@@ -89,7 +171,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
             const nextIndex = (currentIndex + 1);
             return MAIN_NAV_ITEMS[nextIndex].name;
           });
-        }, 1500); // Duration of the fade-out animation
+        }, 1500); 
       };
 
       const timer = setTimeout(transitionToNextStep, pauseDuration);
@@ -97,7 +179,6 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     }
   }, [mainAnimationPhase, isPlaying, currentChapter, activeMainStep, navigatedManually]);
 
-  // Effect 3 (previously Effect 5 in App.js): Typewriter and animation logic
   useEffect(() => {
     if (currentChapter !== 'main' || !isPlaying) return () => { };
     let timer;
@@ -207,16 +288,11 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     displayedHomeQuestion,
     introStepIndex,
     isSliding,
-    setActiveMainStep,
-    setIsPlaying,
-    setCurrentSubLineIndex,
-    setDisplayedChars,
-    setMainAnimationPhase,
-    setDisplayedNameChars,
-    setDisplayedTitleChars,
-    setDisplayedHomeQuestion,
-    setIntroStepIndex,
-    setIntroGreetingPhase,
+    // No longer exporting setters, but the handler functions
     togglePlayPause,
+    handleNextLine,
+    handlePrevLine,
+    setActiveMainStep, // Still need this for stepper nav
+    setIsPlaying, // Still need this for stepper nav
   };
 };

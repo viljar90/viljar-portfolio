@@ -71,14 +71,6 @@ function App() {
     if (currentChapter === 'design' || currentChapter === 'work') {
       landing.setIsPlaying(false);
     }
-    if (currentChapter === 'main') {
-      if (landing.activeMainStep !== MAIN_STAGES.HOME) {
-        landing.setIsPlaying(true);
-      } else {
-        landing.setIsPlaying(false);
-        landing.setMainAnimationPhase('home-buttons-appear');
-      }
-    }
   }, [currentChapter]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
@@ -230,44 +222,11 @@ function App() {
     }, 1000);
   };
 
+  // --- MODIFIED: Simplified navigation handlers ---
   const handleNextLine = () => {
-    landing.setIsPlaying(false);
-    navigatedManually.current = true;
-    
     if (currentChapter === 'main') {
-      if (landing.activeMainStep === MAIN_STAGES.INSULTS) {
-        if (landing.currentSubLineIndex < CONTENT.INSULTS.LINES.length - 1) {
-          const nextIndex = landing.currentSubLineIndex + 1;
-          landing.setCurrentSubLineIndex(nextIndex);
-          landing.setDisplayedChars(CONTENT.INSULTS.LINES[nextIndex].text);
-          landing.setMainAnimationPhase('pausing');
-        } else {
-          landing.setActiveMainStep(MAIN_STAGES.INTRO);
-          landing.setMainAnimationPhase('intro-greeting');
-          landing.setDisplayedChars(CONTENT.INTRO.GREETING);
-          landing.setIntroStepIndex(0);
-        }
-      } else if (landing.activeMainStep === MAIN_STAGES.INTRO) {
-        if (landing.mainAnimationPhase === 'intro-greeting') {
-          landing.setMainAnimationPhase('pausing');
-          const firstStep = CONTENT.INTRO.steps[0];
-          landing.setDisplayedNameChars(firstStep.title);
-          landing.setDisplayedTitleChars(firstStep.mainText);
-        } else if (landing.introStepIndex < CONTENT.INTRO.steps.length - 1) {
-          const nextIndex = landing.introStepIndex + 1;
-          const nextStep = CONTENT.INTRO.steps[nextIndex];
-          landing.setIntroStepIndex(nextIndex);
-          landing.setDisplayedNameChars(nextStep.title);
-          landing.setDisplayedTitleChars(nextStep.mainText);
-        } else {
-          landing.setActiveMainStep(MAIN_STAGES.HOME);
-          const lastIntroStep = CONTENT.INTRO.steps[CONTENT.INTRO.steps.length - 1];
-          landing.setDisplayedNameChars(lastIntroStep.title);
-          landing.setDisplayedTitleChars(lastIntroStep.mainText);
-          landing.setDisplayedHomeQuestion(CONTENT.INTRO.QUESTION);
-          landing.setMainAnimationPhase('home-buttons-appear');
-        }
-      } else if (landing.activeMainStep === MAIN_STAGES.HOME) {
+      const result = landing.handleNextLine();
+      if (result === 'navigate-to-design') {
         navigateToChapter('design');
       }
     } else if (currentChapter === 'design') {
@@ -280,9 +239,6 @@ function App() {
   };
 
   const handlePrevLine = () => {
-    landing.setIsPlaying(false);
-    navigatedManually.current = true;
-    
     if (currentChapter === 'work') {
       if (work.workStepIndex > 0) {
         work.setWorkStepIndex(prev => prev - 1);
@@ -290,42 +246,7 @@ function App() {
         navigateToChapter('design');
       }
     } else if (currentChapter === 'main') {
-      if (landing.activeMainStep === MAIN_STAGES.HOME) {
-        landing.setActiveMainStep(MAIN_STAGES.INTRO);
-        const lastIntroStepIndex = CONTENT.INTRO.steps.length - 1;
-        const lastIntroStep = CONTENT.INTRO.steps[lastIntroStepIndex];
-        landing.setIntroStepIndex(lastIntroStepIndex);
-        landing.setDisplayedNameChars(lastIntroStep.title);
-        landing.setDisplayedTitleChars(lastIntroStep.mainText);
-        landing.setMainAnimationPhase('pausing');
-      } else if (landing.activeMainStep === MAIN_STAGES.INTRO) {
-        if (landing.introStepIndex === 0 && landing.mainAnimationPhase !== 'intro-greeting') {
-            landing.setMainAnimationPhase('intro-greeting');
-            landing.setDisplayedChars(CONTENT.INTRO.GREETING);
-            landing.setDisplayedNameChars('');
-            landing.setDisplayedTitleChars('');
-        } else if (landing.introStepIndex > 0) {
-            const prevIndex = landing.introStepIndex - 1;
-            const prevStep = CONTENT.INTRO.steps[prevIndex];
-            landing.setIntroStepIndex(prevIndex);
-            landing.setDisplayedNameChars(prevStep.title);
-            landing.setDisplayedTitleChars(prevStep.mainText);
-            landing.setMainAnimationPhase('pausing');
-        } else {
-            landing.setActiveMainStep(MAIN_STAGES.INSULTS);
-            const lastInsultIndex = CONTENT.INSULTS.LINES.length - 1;
-            landing.setCurrentSubLineIndex(lastInsultIndex);
-            landing.setDisplayedChars(CONTENT.INSULTS.LINES[lastInsultIndex].text);
-            landing.setMainAnimationPhase('pausing');
-        }
-      } else if (landing.activeMainStep === MAIN_STAGES.INSULTS) {
-        if (landing.currentSubLineIndex > 0) {
-          const prevIndex = landing.currentSubLineIndex - 1;
-          landing.setCurrentSubLineIndex(prevIndex);
-          landing.setDisplayedChars(CONTENT.INSULTS.LINES[prevIndex].text);
-          landing.setMainAnimationPhase('pausing');
-        }
-      }
+      landing.handlePrevLine();
     } else if (currentChapter === 'design') {
       const result = design.prevStep();
       if (result === 'navigate-to-main') {
@@ -362,24 +283,14 @@ function App() {
   const handleMainStepperItemClick = useCallback((itemName) => {
     if (currentChapter !== 'main') return;
     navigatedManually.current = false;
-    if (itemName === MAIN_STAGES.HOME && landing.activeMainStep === MAIN_STAGES.HOME) {
-      const lastIntroStep = CONTENT.INTRO.steps[CONTENT.INTRO.steps.length - 1];
-      landing.setDisplayedNameChars(lastIntroStep.title);
-      landing.setDisplayedTitleChars(lastIntroStep.mainText);
-      landing.setDisplayedHomeQuestion(CONTENT.INTRO.QUESTION);
-      landing.setMainAnimationPhase('home-buttons-appear');
-      landing.setIsPlaying(false);
-      return;
-    }
+    landing.setIsPlaying(true);
     if (itemName === landing.activeMainStep) {
       landing.setActiveMainStep('');
       setTimeout(() => {
         landing.setActiveMainStep(itemName);
-        landing.setIsPlaying(true);
       }, 0);
     } else {
       landing.setActiveMainStep(itemName);
-      landing.setIsPlaying(true);
     }
   }, [currentChapter, landing]);
 
