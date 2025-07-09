@@ -16,6 +16,7 @@ module.exports = {
         'text-muted': 'var(--color-text-muted)',
         'text-interactive-muted': 'var(--color-text-interactive-muted)',
         'bg-base': 'var(--color-bg-base)',
+        'bg-overlay': 'var(--color-bg-overlay)',
         'bg-muted': 'var(--color-bg-muted)',
         'anim-1': 'var(--color-anim-1)',
         'anim-2': 'var(--color-anim-2)',
