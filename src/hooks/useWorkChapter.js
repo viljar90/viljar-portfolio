@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import { QUIZZES, PROJECTS } from '../content';
 
 export const useWorkChapter = () => {
-  const [workView, setWorkView] = useState('Overview');
+  const [workView, setWorkView] = useState('Quiz');
   const [workStepIndex, setWorkStepIndex] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [introCompleted, setIntroCompleted] = useState(false);

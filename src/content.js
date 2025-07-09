@@ -1,4 +1,6 @@
 // src/content.js
+import React from 'react';
+import { PuzzleIcon, ChartIcon } from './components/uiElements';
 
 export const MAIN_STAGES = { INSULTS: 'Insults', INTRO: 'Intro', HOME: 'Home' };
 
@@ -223,17 +225,20 @@ export const PROJECTS = [
     title: 'Cohesive Design System',
     description: 'Led the UX strategy and development of a comprehensive design system that streamlined product creation and ensured brand consistency.',
     tags: ['UX Design', 'Design System', 'Figma'],
+    icon: <PuzzleIcon />,
   },
   {
     id: 'aiPlatform',
     title: 'FortelVIA - AI Platform',
     description: 'An internal platform where emplyees can chat with the best AI models on the market in a secure and compliant way.',
     tags: ['Product','UX', 'UI','Strategy'],
+    icon: <PuzzleIcon />,
   },
   {
     id: 'dataCatalogue',
     title: 'Data Catalogue',
     description: 'Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.',
     tags: ['UX Research', 'Data', 'Discovery'],
+    icon: <ChartIcon />,
   }
 ];
