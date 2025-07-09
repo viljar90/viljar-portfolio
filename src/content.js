@@ -68,7 +68,7 @@ export const DESIGN_CONTENT = {
       { title: "Mistake 1", mainText: "Those who don't know design think it is all about what something looks like." },
       { title: "Mistake 2", mainText: "So decision makers often think they can skip it to cut cost." },
       { title: "Mistake 3", mainText: "Or far too often, designers are brought on way too late just to fix the visuals..." },
-      { title: "Mistake 3", mainText: "...too late to let design be the critical driver of the product as it always should be." },
+      { title: "Mistake 3", mainText: "...too late to let design be the critical driver as it always should be." },
       { title: "Back to No. 1", mainText: "Making a nice looking design is just one small part of what designers actually do." },
       { title: "Back to No. 1", mainText: "And we don't do it for the reason you think." },
       { title: "You probably know", mainText: "People often perceive attractive people to be more intelligent, more successful and more trustworthy." },
@@ -91,14 +91,14 @@ export const DESIGN_CONTENT = {
       { title: "What I do", mainText: "As a designer I create logical and rational systems in human minds." },
       { title: "What I do", mainText: "Human minds are far more complex than computers." },
       { title: "What I do", mainText: "But unlike computers, minds get bored and easily frustrated – they reject needless complexity." },
-      { title: "What I do", mainText: "They seek the path of least resistance." },
+      //{ title: "What I do", mainText: "They seek the path of least resistance." },
       { title: "What I do", mainText: "So let me show you what I as a designer do best..." },
       { title: "What I do", mainText: "...by making complex things simple." },
-      { title: "What I do", mainText: "Lets explore the different roles in the difficult world of design a bit differently." },
-      { title: "What I do", mainText: "To make it clear how I can help..." },
-      { title: "What I do", mainText: "...or perhaps you need a different designer." },
-      { title: "What I do", mainText: "I know many good ones." },
-      { title: "What I do", mainText: "The roles marked with a ★ are my specialties." },
+      //{ title: "What I do", mainText: "Explore the different roles in the confusing world of design a bit differently." },
+      //{ title: "What I do", mainText: "To make it clear how I can help..." },
+      //{ title: "What I do", mainText: "...or perhaps you need a different designer." },
+      //{ title: "What I do", mainText: "I know many good ones." },
+      //{ title: "What I do", mainText: "The roles marked with a ★ are my specialties." },
     ]
   },
   [DESIGN_STAGE_KEYS.PRODUCT_DESIGNER]: {
@@ -188,7 +188,7 @@ export const QUIZZES = [
     ],
     resultText: 'A design system is the most effective way to ensure consistency and speed.',
     summaryPoints: [
-        "Increased efficiency - faster time to market",
+        "Core design and code ready - faster time to market",
         "Avoids expensive duplicate work",
         "Consistent user experience across your products",
         "Scalable and maintainable - making updates cheap and easy"
@@ -222,7 +222,7 @@ export const PROJECTS = [
     navText: 'AI Chat Platform',
     cardTitle: 'FortelVIA - AI Platform',
     description: 'An internal platform where emplyees can chat with the best AI models on the market in a secure and compliant way.',
-    tags: ['Product','UX', 'UI','Strategy'],
+    tags: ['Product','UX', 'UI'],
     icon: <MagicIcon />,
   },
   {
@@ -230,7 +230,7 @@ export const PROJECTS = [
     navText: 'Design System',
     cardTitle: 'Cohesive Design System',
     description: 'Led the UX strategy and development of a comprehensive design system that streamlined product creation and ensured brand consistency.',
-    tags: ['UX Design', 'Design System', 'Figma'],
+    tags: ['UX', 'UI', 'Figma'],
     icon: <PuzzleIcon />,
   },
   {
@@ -238,7 +238,7 @@ export const PROJECTS = [
     navText: 'Data Catalogue',
     cardTitle: 'Data Catalogue',
     description: 'Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.',
-    tags: ['UX Research', 'Data', 'Discovery'],
+    tags: ['UX Research', 'UX', 'UI'],
     icon: <ChartIcon />,
   },
   {
@@ -246,7 +246,7 @@ export const PROJECTS = [
     navText: 'AI Dashboard',
     cardTitle: 'AI Insights Dashboard',
     description: 'Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.',
-    tags: ['UX Research', 'Data', 'Discovery'],
+    tags: ['UX', 'UI', 'Data Visualization'],
     icon: <PieChartIcon />,
   }
 ];

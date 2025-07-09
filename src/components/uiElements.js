@@ -199,7 +199,7 @@ export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkM
                 const isActive = activeOption === option;
                 const isClicked = clickedOption === option;
                 const activeClasses = `bg-bg-base dark:bg-black text-text-base dark:text-white ring-1 ring-gray-500 dark:ring-gray-700`;
-                const inactiveClasses = `text-interactive-muted hover:text-text-base dark:hover:text-white`;
+                const inactiveClasses = `text-text-interactive-muted hover:text-text-base dark:hover:text-white`;
 
                 return (
                     <button
