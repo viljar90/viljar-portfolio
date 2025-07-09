@@ -27,106 +27,92 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     setIsPlaying(p => !p);
   }, []);
 
-  // --- NEW: Encapsulated Navigation Logic ---
-  const handleNextLine = useCallback(() => {
+  const setStepContent = useCallback((stage, stepIndex, subLineIndex = 0) => {
     navigatedManually.current = true;
     setIsPlaying(false);
+    setActiveMainStep(stage);
 
+    if (stage === MAIN_STAGES.INSULTS) {
+      setCurrentSubLineIndex(subLineIndex);
+      setDisplayedChars(CONTENT.INSULTS.LINES[subLineIndex].text);
+      setMainAnimationPhase('pausing-insult');
+    } else if (stage === MAIN_STAGES.INTRO) {
+      setIntroStepIndex(stepIndex);
+      if (stepIndex === -1) { // Special case for the initial greeting
+        setDisplayedChars(CONTENT.INTRO.GREETING);
+        setDisplayedNameChars('');
+        setDisplayedTitleChars('');
+        setMainAnimationPhase('intro-greeting');
+      } else {
+        const stepData = CONTENT.INTRO.steps[stepIndex];
+        setDisplayedNameChars(stepData.title);
+        setDisplayedTitleChars(stepData.mainText);
+        setDisplayedChars('');
+        setMainAnimationPhase('pausing');
+      }
+    } else if (stage === MAIN_STAGES.HOME) {
+      const lastIntroStep = CONTENT.INTRO.steps[CONTENT.INTRO.steps.length - 1];
+      setDisplayedNameChars(lastIntroStep.title);
+      setDisplayedTitleChars(lastIntroStep.mainText);
+      setDisplayedHomeQuestion(CONTENT.INTRO.QUESTION);
+      setMainAnimationPhase('home-buttons-appear');
+    }
+  }, [navigatedManually]);
+
+  const handleNextLine = useCallback(() => {
     if (activeMainStep === MAIN_STAGES.INSULTS) {
       if (currentSubLineIndex < CONTENT.INSULTS.LINES.length - 1) {
-        const nextIndex = currentSubLineIndex + 1;
-        setCurrentSubLineIndex(nextIndex);
-        setDisplayedChars(CONTENT.INSULTS.LINES[nextIndex].text);
-        setMainAnimationPhase('pausing-insult');
+        setStepContent(MAIN_STAGES.INSULTS, 0, currentSubLineIndex + 1);
       } else {
-        setActiveMainStep(MAIN_STAGES.INTRO);
-        setMainAnimationPhase('intro-greeting');
-        setDisplayedChars(CONTENT.INTRO.GREETING);
-        setIntroStepIndex(0);
+        setStepContent(MAIN_STAGES.INTRO, -1);
       }
     } else if (activeMainStep === MAIN_STAGES.INTRO) {
-      if (mainAnimationPhase === 'intro-greeting') {
-        setMainAnimationPhase('pausing');
-        const firstStep = CONTENT.INTRO.steps[0];
-        setDisplayedNameChars(firstStep.title);
-        setDisplayedTitleChars(firstStep.mainText);
-      } else if (introStepIndex < CONTENT.INTRO.steps.length - 1) {
-        const nextIndex = introStepIndex + 1;
-        const nextStep = CONTENT.INTRO.steps[nextIndex];
-        setIntroStepIndex(nextIndex);
-        setDisplayedNameChars(nextStep.title);
-        setDisplayedTitleChars(nextStep.mainText);
+      if (introStepIndex < CONTENT.INTRO.steps.length - 1) {
+        setStepContent(MAIN_STAGES.INTRO, introStepIndex + 1);
       } else {
-        setActiveMainStep(MAIN_STAGES.HOME);
-        const lastIntroStep = CONTENT.INTRO.steps[CONTENT.INTRO.steps.length - 1];
-        setDisplayedNameChars(lastIntroStep.title);
-        setDisplayedTitleChars(lastIntroStep.mainText);
-        setDisplayedHomeQuestion(CONTENT.INTRO.QUESTION);
-        setMainAnimationPhase('home-buttons-appear');
+        setStepContent(MAIN_STAGES.HOME, 0);
       }
     } else if (activeMainStep === MAIN_STAGES.HOME) {
       return 'navigate-to-design';
     }
-  }, [activeMainStep, currentSubLineIndex, mainAnimationPhase, introStepIndex, navigatedManually]);
+  }, [activeMainStep, currentSubLineIndex, introStepIndex, setStepContent]);
 
   const handlePrevLine = useCallback(() => {
-    navigatedManually.current = true;
-    setIsPlaying(false);
-
     if (activeMainStep === MAIN_STAGES.HOME) {
-      setActiveMainStep(MAIN_STAGES.INTRO);
-      const lastIntroStepIndex = CONTENT.INTRO.steps.length - 1;
-      const lastIntroStep = CONTENT.INTRO.steps[lastIntroStepIndex];
-      setIntroStepIndex(lastIntroStepIndex);
-      setDisplayedNameChars(lastIntroStep.title);
-      setDisplayedTitleChars(lastIntroStep.mainText);
-      setMainAnimationPhase('pausing');
+      setStepContent(MAIN_STAGES.INTRO, CONTENT.INTRO.steps.length - 1);
     } else if (activeMainStep === MAIN_STAGES.INTRO) {
-      if (introStepIndex === 0 && mainAnimationPhase !== 'intro-greeting') {
-        setMainAnimationPhase('intro-greeting');
-        setDisplayedChars(CONTENT.INTRO.GREETING);
-        setDisplayedNameChars('');
-        setDisplayedTitleChars('');
-      } else if (introStepIndex > 0) {
-        const prevIndex = introStepIndex - 1;
-        const prevStep = CONTENT.INTRO.steps[prevIndex];
-        setIntroStepIndex(prevIndex);
-        setDisplayedNameChars(prevStep.title);
-        setDisplayedTitleChars(prevStep.mainText);
-        setMainAnimationPhase('pausing');
+      if (introStepIndex > 0) {
+        setStepContent(MAIN_STAGES.INTRO, introStepIndex - 1);
       } else {
-        setActiveMainStep(MAIN_STAGES.INSULTS);
-        const lastInsultIndex = CONTENT.INSULTS.LINES.length - 1;
-        setCurrentSubLineIndex(lastInsultIndex);
-        setDisplayedChars(CONTENT.INSULTS.LINES[lastInsultIndex].text);
-        setMainAnimationPhase('pausing-insult');
+        setStepContent(MAIN_STAGES.INSULTS, CONTENT.INSULTS.LINES.length - 1);
       }
     } else if (activeMainStep === MAIN_STAGES.INSULTS) {
       if (currentSubLineIndex > 0) {
-        const prevIndex = currentSubLineIndex - 1;
-        setCurrentSubLineIndex(prevIndex);
-        setDisplayedChars(CONTENT.INSULTS.LINES[prevIndex].text);
-        setMainAnimationPhase('pausing-insult');
+        setStepContent(MAIN_STAGES.INSULTS, 0, currentSubLineIndex - 1);
       }
     }
-  }, [activeMainStep, mainAnimationPhase, introStepIndex, currentSubLineIndex, navigatedManually]);
-  // --- END: Encapsulated Navigation Logic ---
+  }, [activeMainStep, introStepIndex, currentSubLineIndex, setStepContent]);
 
   useEffect(() => {
     if (currentChapter !== 'main') {
       wasPlayingRef.current = isPlaying;
       setIsPlaying(false);
     } else {
-      if (wasPlayingRef.current && activeMainStep !== MAIN_STAGES.HOME) {
+      if (activeMainStep === MAIN_STAGES.HOME) {
+        setMainAnimationPhase('typing-home-question');
+        setDisplayedHomeQuestion('');
+        setIsPlaying(true);
+      } else {
         setIsPlaying(true);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChapter]);
-
+  
+  // Effect 1 (previously Effect 3 in App.js): Resets content when active step changes
   useEffect(() => {
     if (currentChapter !== 'main' || navigatedManually.current) {
-        if(navigatedManually.current) navigatedManually.current = false;
+        if (navigatedManually.current) navigatedManually.current = false;
         return;
     }
     setCurrentSubLineIndex(0);
@@ -151,6 +137,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     }
   }, [activeMainStep, currentChapter, navigatedManually]);
 
+  // Effect 2 (previously Effect 4 in App.js): Auto-play for chapter
   useEffect(() => {
     if (currentChapter !== 'main' || !isPlaying) return;
     if (mainAnimationPhase === 'insults-done' || mainAnimationPhase === 'intro-done') {
@@ -179,6 +166,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     }
   }, [mainAnimationPhase, isPlaying, currentChapter, activeMainStep, navigatedManually]);
 
+  // Effect 3 (previously Effect 5 in App.js): Typewriter and animation logic
   useEffect(() => {
     if (currentChapter !== 'main' || !isPlaying) return () => { };
     let timer;
@@ -288,11 +276,10 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     displayedHomeQuestion,
     introStepIndex,
     isSliding,
-    // No longer exporting setters, but the handler functions
     togglePlayPause,
     handleNextLine,
     handlePrevLine,
-    setActiveMainStep, // Still need this for stepper nav
-    setIsPlaying, // Still need this for stepper nav
+    setActiveMainStep, 
+    setIsPlaying, 
   };
 };

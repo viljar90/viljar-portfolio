@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import {
   MAIN_STAGES,
   MAIN_NAV_ITEMS,
-  CONTENT,
   DESIGN_NAV_ITEMS,
   DESIGN_CONTENT,
   QUIZZES,
@@ -64,15 +63,6 @@ function App() {
     setDesignChapterAnimClass(designAnim);
     setWorkChapterAnimClass(workAnim);
   }, [currentChapter]);
-
-  // Effect 2: Manages pause/resume on chapter scroll
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    if (currentChapter === 'design' || currentChapter === 'work') {
-      landing.setIsPlaying(false);
-    }
-  }, [currentChapter]);
-  /* eslint-enable react-hooks/exhaustive-deps */
 
   // Effect 3: Intersection Observer for detecting visible chapter
   useEffect(() => {
@@ -222,7 +212,6 @@ function App() {
     }, 1000);
   };
 
-  // --- MODIFIED: Simplified navigation handlers ---
   const handleNextLine = () => {
     if (currentChapter === 'main') {
       const result = landing.handleNextLine();
@@ -368,12 +357,12 @@ function App() {
 
   const itemNavRefs = currentChapter === 'main' ? mainItemRefs : (currentChapter === 'design' ? designItemRefs : workItemRefs);
 
-  const showCursorInsults = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'typing-insult' && landing.displayedChars.length < CONTENT.INSULTS.LINES[landing.currentSubLineIndex]?.text.length;
-  const showCursorIntroGreeting = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'intro-greeting' && landing.introGreetingPhase === 'typing-greeting' && landing.displayedChars.length < CONTENT.INTRO.GREETING.length;
+  const showCursorInsults = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'typing-insult';
+  const showCursorIntroGreeting = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'intro-greeting' && landing.introGreetingPhase === 'typing-greeting';
   const showCursorIntroName = currentChapter === 'main' && landing.isPlaying && (landing.mainAnimationPhase === 'typing-title' || landing.mainAnimationPhase === 'backspacing-title');
   const showCursorIntroTitle = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'typing-maintext';
   const showCursorHomeQuestion = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'typing-home-question';
-
+  
   const currentDesignStepData = DESIGN_CONTENT[design.activeDesignStageKey]?.steps[design.currentDesignStepIndex];
   const showCursorDesignTitle = currentChapter === 'design' && design.isPlayingDesign && (design.stepAnimationPhase === 'typing-title' || design.stepAnimationPhase === 'backspacing-title');
   const showCursorDesignMainText = currentChapter === 'design' && design.isPlayingDesign && design.stepAnimationPhase === 'typing-maintext';
