@@ -212,3 +212,28 @@ export const QUIZZES = [
     projectButtonText: "The Data Catalogue"
   }
 ];
+
+// src/content.js
+
+// ... (keep the existing code up to the PROJECTS array)
+
+export const PROJECTS = [
+  {
+    id: 'design-system',
+    title: 'Cohesive Design System',
+    description: 'Led the UX strategy and development of a comprehensive design system that streamlined product creation and ensured brand consistency.',
+    tags: ['UX Design', 'Design System', 'Figma'],
+  },
+  {
+    id: 'aiPlatform',
+    title: 'FortelVIA - AI Platform',
+    description: 'An internal platform where emplyees can chat with the best AI models on the market in a secure and compliant way.',
+    tags: ['Product','UX', 'UI','Strategy'],
+  },
+  {
+    id: 'dataCatalogue',
+    title: 'Data Catalogue',
+    description: 'Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.',
+    tags: ['UX Research', 'Data', 'Discovery'],
+  }
+];

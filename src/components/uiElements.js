@@ -52,6 +52,7 @@ export const PlayIcon = ({ className = "w-6 h-6" }) => (
     </svg>
   );
 
+
 // --- Blinking Cursor Component ---
 export const BlinkingCursor = ({sizeClass = "h-6 md:h-8 lg:h-10"}) => (
   <span

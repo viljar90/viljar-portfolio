@@ -6,7 +6,8 @@ import LandingChapter from './LandingChapter';
 import DesignChapter from './DesignChapter';
 import WorkChapter from './WorkChapter';
 import QuizIntro from './QuizIntro';
-import { QUIZZES } from '../content';
+import ProjectOverview from './ProjectOverview';
+import { QUIZZES, PROJECTS } from '../content';
 
 const ChapterContent = ({
   currentChapter,
@@ -71,12 +72,12 @@ const ChapterContent = ({
                 />
             )
         ) : (
-             <div className="text-center">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-text-base">
-                    Project Overview
-                </h1>
-                <p className="text-xl mt-4 text-text-muted">Project gallery coming soon!</p>
-            </div>
+             <ProjectOverview
+                projects={PROJECTS}
+                currentProjectIndex={work.currentProjectIndex}
+                onNext={work.handleNextProject}
+                onPrev={work.handlePrevProject}
+              />
         )
       )}
     </div>
@@ -98,7 +99,6 @@ ChapterContent.propTypes = {
     showCursorHomeQuestion: PropTypes.bool.isRequired,
     showCursorDesignTitle: PropTypes.bool.isRequired,
     showCursorDesignMainText: PropTypes.bool.isRequired,
-    QUIZZES: PropTypes.array.isRequired
   };
 
 export default ChapterContent;

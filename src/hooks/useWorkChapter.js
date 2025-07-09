@@ -1,13 +1,14 @@
 // src/hooks/useWorkChapter.js
 
 import { useState, useMemo } from 'react';
-import { QUIZZES } from '../content';
+import { QUIZZES, PROJECTS } from '../content';
 
 export const useWorkChapter = () => {
-  const [workView, setWorkView] = useState('Quiz');
+  const [workView, setWorkView] = useState('Overview');
   const [workStepIndex, setWorkStepIndex] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [introCompleted, setIntroCompleted] = useState(false);
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
 
   const WORK_NAV_ITEMS = useMemo(() => [{ name: 'Start' }, ...QUIZZES.map((quiz, index) => ({ name: `Question ${index + 1}` }))], []);
 
@@ -32,11 +33,20 @@ export const useWorkChapter = () => {
         return newAnswers;
     });
   };
+  
+  const handleNextProject = () => {
+    setCurrentProjectIndex(prevIndex => (prevIndex + 1) % PROJECTS.length);
+  };
+
+  const handlePrevProject = () => {
+    setCurrentProjectIndex(prevIndex => (prevIndex - 1 + PROJECTS.length) % PROJECTS.length);
+  };
 
   const resetWorkChapter = () => {
     setWorkStepIndex(0);
     setQuizAnswers({});
     setIntroCompleted(false);
+    setCurrentProjectIndex(0);
   }
 
   return {
@@ -45,6 +55,7 @@ export const useWorkChapter = () => {
     workStepIndex,
     quizAnswers,
     introCompleted,
+    currentProjectIndex,
     WORK_NAV_ITEMS,
 
     // State setters
@@ -56,6 +67,8 @@ export const useWorkChapter = () => {
     handleQuizAnswer,
     handleReplayQuestion,
     resetWorkChapter,
-    markIntroAsCompleted, // Export the new function
+    markIntroAsCompleted,
+    handleNextProject,
+    handlePrevProject,
   };
 };
