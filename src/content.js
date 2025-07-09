@@ -1,6 +1,6 @@
 // src/content.js
 import React from 'react';
-import { PuzzleIcon, ChartIcon, MagicIcon } from './components/uiElements';
+import { PuzzleIcon, ChartIcon, MagicIcon, PieChartIcon } from './components/uiElements';
 
 export const MAIN_STAGES = { INSULTS: 'Insults', INTRO: 'Intro', HOME: 'Home' };
 
@@ -219,7 +219,7 @@ export const PROJECTS = [
   
   {
     id: 'aiPlatform',
-    navText: 'AI Platform',
+    navText: 'AI Chat Platform',
     cardTitle: 'FortelVIA - AI Platform',
     description: 'An internal platform where emplyees can chat with the best AI models on the market in a secure and compliant way.',
     tags: ['Product','UX', 'UI','Strategy'],
@@ -247,6 +247,6 @@ export const PROJECTS = [
     cardTitle: 'AI Insights Dashboard',
     description: 'Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.',
     tags: ['UX Research', 'Data', 'Discovery'],
-    icon: <ChartIcon />,
+    icon: <PieChartIcon />,
   }
 ];
