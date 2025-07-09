@@ -1,6 +1,6 @@
 // src/content.js
 import React from 'react';
-import { PuzzleIcon, ChartIcon } from './components/uiElements';
+import { PuzzleIcon, ChartIcon, MagicIcon } from './components/uiElements';
 
 export const MAIN_STAGES = { INSULTS: 'Insults', INTRO: 'Intro', HOME: 'Home' };
 
@@ -215,10 +215,6 @@ export const QUIZZES = [
   }
 ];
 
-// src/content.js
-
-// ... (keep the existing code up to the PROJECTS array)
-
 export const PROJECTS = [
   {
     id: 'design-system',
@@ -232,7 +228,7 @@ export const PROJECTS = [
     title: 'FortelVIA - AI Platform',
     description: 'An internal platform where emplyees can chat with the best AI models on the market in a secure and compliant way.',
     tags: ['Product','UX', 'UI','Strategy'],
-    icon: <PuzzleIcon />,
+    icon: <MagicIcon />,
   },
   {
     id: 'dataCatalogue',
