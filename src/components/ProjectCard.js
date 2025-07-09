@@ -23,7 +23,7 @@ const ProjectCard = ({ project }) => {
             
             {/* Title */}
             <h2 className="text-xl font-bold text-text-base mb-1">
-              {project.title}
+              {project.cardTitle}
             </h2>
             
             {/* Description */}
@@ -39,7 +39,7 @@ const ProjectCard = ({ project }) => {
 
 ProjectCard.propTypes = {
   project: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    cardTitle: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,
     icon: PropTypes.node.isRequired,

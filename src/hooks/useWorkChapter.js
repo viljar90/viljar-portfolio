@@ -12,8 +12,7 @@ export const useWorkChapter = () => {
 
   const WORK_NAV_ITEMS = useMemo(() => [{ name: 'Start' }, ...QUIZZES.map((quiz, index) => ({ name: `Question ${index + 1}` }))], []);
   
-  // New state for the project navigation items
-  const PROJECT_NAV_ITEMS = useMemo(() => PROJECTS.map(project => ({ name: project.title, id: project.id })), []);
+  const PROJECT_NAV_ITEMS = useMemo(() => PROJECTS.map(project => ({ name: project.navText, id: project.id })), []);
 
   // New function to be called by the QuizIntro component itself
   const markIntroAsCompleted = () => {
@@ -45,7 +44,6 @@ export const useWorkChapter = () => {
     setCurrentProjectIndex(prevIndex => (prevIndex - 1 + PROJECTS.length) % PROJECTS.length);
   };
 
-  // New handler for project navigation
   const handleProjectNavItemClick = (projectId) => {
     const projectIndex = PROJECTS.findIndex(p => p.id === projectId);
     if (projectIndex !== -1) {
@@ -68,7 +66,7 @@ export const useWorkChapter = () => {
     introCompleted,
     currentProjectIndex,
     WORK_NAV_ITEMS,
-    PROJECT_NAV_ITEMS, // Export the new state
+    PROJECT_NAV_ITEMS, 
 
     // State setters
     setWorkView,
@@ -82,6 +80,6 @@ export const useWorkChapter = () => {
     markIntroAsCompleted,
     handleNextProject,
     handlePrevProject,
-    handleProjectNavItemClick, // Export the new handler
+    handleProjectNavItemClick, 
   };
 };

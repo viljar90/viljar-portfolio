@@ -7,7 +7,7 @@ import {
   InteractiveOblongNavItem,
   AnimatedBorderButton,
 } from './uiElements';
-import { DESIGN_CONTENT, QUIZZES, PROJECTS } from '../content';
+import { DESIGN_CONTENT, QUIZZES } from '../content';
 
 const BottomNavigation = ({
     navItems,
@@ -82,23 +82,22 @@ const BottomNavigation = ({
             />
         );
     };
-    // New: Conditional rendering for the entire bottom navigation
+    
     if (currentChapter === 'work' && work.workView === 'Overview') {
-        const activeProjectId = PROJECTS[work.currentProjectIndex]?.id;
         return (
             <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
-                <div className={`relative w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
+                <div className={`relative w-auto px-1 transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
                     <div
                         ref={scrollContainerRef}
-                        className="py-1.5 px-2 flex items-center justify-center space-x-1 transition-colors duration-300 overflow-x-auto no-scrollbar"
+                        className="py-1.5 px-1 flex items-center justify-center space-x-1 transition-colors duration-300 overflow-x-auto no-scrollbar"
                     >
                         {work.PROJECT_NAV_ITEMS.map((item, index) => (
                             <InteractiveOblongNavItem
                                 key={item.id}
                                 ref={el => itemNavRefs.current[index] = el}
                                 text={item.name}
-                                onClick={() => work.handleProjectNavItemClick(item.id)}
-                                isActive={activeProjectId === item.id}
+                                onClick={() => onNavItemClick(item.id)}
+                                isActive={activeNavItem === item.id}
                                 isDarkMode={isDarkMode}
                             />
                         ))}
@@ -113,7 +112,6 @@ const BottomNavigation = ({
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
             <div className={containerClass}>
                 {renderCentralButton()}
-                {/* The shadow and background have been moved to this parent container */}
                 <div className={`relative ${navItemsFlexClass} transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
                     <div
                         ref={scrollContainerRef}

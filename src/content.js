@@ -216,23 +216,35 @@ export const QUIZZES = [
 ];
 
 export const PROJECTS = [
-  {
-    id: 'design-system',
-    title: 'Cohesive Design System',
-    description: 'Led the UX strategy and development of a comprehensive design system that streamlined product creation and ensured brand consistency.',
-    tags: ['UX Design', 'Design System', 'Figma'],
-    icon: <PuzzleIcon />,
-  },
+  
   {
     id: 'aiPlatform',
-    title: 'FortelVIA - AI Platform',
+    navText: 'AI Platform',
+    cardTitle: 'FortelVIA - AI Platform',
     description: 'An internal platform where emplyees can chat with the best AI models on the market in a secure and compliant way.',
     tags: ['Product','UX', 'UI','Strategy'],
     icon: <MagicIcon />,
   },
   {
+    id: 'design-system',
+    navText: 'Design System',
+    cardTitle: 'Cohesive Design System',
+    description: 'Led the UX strategy and development of a comprehensive design system that streamlined product creation and ensured brand consistency.',
+    tags: ['UX Design', 'Design System', 'Figma'],
+    icon: <PuzzleIcon />,
+  },
+  {
     id: 'dataCatalogue',
-    title: 'Data Catalogue',
+    navText: 'Data Catalogue',
+    cardTitle: 'Data Catalogue',
+    description: 'Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.',
+    tags: ['UX Research', 'Data', 'Discovery'],
+    icon: <ChartIcon />,
+  },
+  {
+    id: 'aiDashboard',
+    navText: 'AI Dashboard',
+    cardTitle: 'AI Insights Dashboard',
     description: 'Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.',
     tags: ['UX Research', 'Data', 'Discovery'],
     icon: <ChartIcon />,
