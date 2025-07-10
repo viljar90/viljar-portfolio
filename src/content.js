@@ -170,9 +170,9 @@ export const QUIZZES = [
     resultText: "A well designed internal platform that connects to multiple AI providers offers many benefits.",
     summaryPoints: [
         "Reduses risk by avoiding vendor lock-in",
-        "A modular architecture makes it future-proof as technlogies evolve",
+        "Modular architecture makes it future-proof as technlogies evolve",
         "Secures your company data and GDPR compliance",
-        "Provides guidelines and best practices for AI usage",
+        "Guide in best practices in use of AI",
     ],
     projectButtonText: "The AI Platform"
   },
@@ -220,8 +220,8 @@ export const PROJECTS = [
   {
     id: 'aiPlatform',
     navText: 'AI Chat Platform',
-    cardTitle: 'FortelVIA - AI Platform',
-    description: 'An internal platform where emplyees can chat with the best AI models on the market in a secure and compliant way.',
+    cardTitle: 'AI Chat Platform',
+    description: 'FortelVia is internal platform where emplyees can chat with the best AI models on the market in a secure and compliant way.',
     tags: ['Product','UX', 'UI'],
     icon: <MagicIcon />,
   },
