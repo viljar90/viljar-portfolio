@@ -89,7 +89,7 @@ const BottomNavigation = ({
             <div className={`relative w-auto transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700`}>
                 <div
                     ref={scrollContainerRef}
-                    className="py-1.5 px-2.5 flex items-center justify-center space-x-1 transition-colors duration-300 overflow-x-auto no-scrollbar"
+                    className="py-1.5 px-2.5 flex items-center justify-center space-x-2 transition-colors duration-300 overflow-x-auto no-scrollbar"
                 >
                     {work.PROJECT_NAV_ITEMS.map((item, index) => (
                         <InteractiveOblongNavItem

@@ -112,7 +112,13 @@ export const useDesignChapter = (currentChapter) => {
   }, [activeDesignStageKey, currentDesignStepIndex, setStepContent]);
 
   const togglePlayPause = useCallback(() => {
-    setIsPlayingDesign(prev => !prev);
+    setIsPlayingDesign(prev => {
+      if (!prev) {
+        // When the user presses "play", switch back to automatic mode
+        setNavigationMode('automatic');
+      }
+      return !prev;
+    });
   }, []);
 
   const replay = useCallback(() => {
