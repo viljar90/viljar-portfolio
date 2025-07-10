@@ -86,10 +86,12 @@ const BottomNavigation = ({
     if (currentChapter === 'work' && work.workView === 'Overview') {
     return (
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
-            <div className={`relative w-auto transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700`}>
+            {/* Let this container size itself automatically, but not exceed the screen width */}
+            <div className={`relative w-auto max-w-full transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700`}>
+                {/* This inner div handles the scrolling. Removed conditional justification. */}
                 <div
                     ref={scrollContainerRef}
-                    className="py-1.5 px-2.5 flex items-center justify-center space-x-2 transition-colors duration-300 overflow-x-auto no-scrollbar"
+                    className="py-1.5 px-2.5 flex items-center justify-start space-x-2 transition-colors duration-300 overflow-x-auto no-scrollbar"
                 >
                     {work.PROJECT_NAV_ITEMS.map((item, index) => (
                         <InteractiveOblongNavItem
