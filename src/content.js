@@ -93,7 +93,7 @@ export const DESIGN_CONTENT = {
       { title: "What I do", mainText: "But unlike computers, minds get bored and easily frustrated – they reject needless complexity." },
       //{ title: "What I do", mainText: "They seek the path of least resistance." },
       { title: "What I do", mainText: "So let me show you what I as a designer do best..." },
-      { title: "What I do", mainText: "...by making complex things simple." },
+      { title: "What I do", mainText: "...by making complicated things simple." },
       //{ title: "What I do", mainText: "Explore the different roles in the confusing world of design a bit differently." },
       //{ title: "What I do", mainText: "To make it clear how I can help..." },
       //{ title: "What I do", mainText: "...or perhaps you need a different designer." },

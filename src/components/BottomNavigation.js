@@ -84,28 +84,28 @@ const BottomNavigation = ({
     };
     
     if (currentChapter === 'work' && work.workView === 'Overview') {
-        return (
-            <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
-                <div className={`relative w-auto px-1 transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
-                    <div
-                        ref={scrollContainerRef}
-                        className="py-1.5 px-1 flex items-center justify-center space-x-1 transition-colors duration-300 overflow-x-auto no-scrollbar"
-                    >
-                        {work.PROJECT_NAV_ITEMS.map((item, index) => (
-                            <InteractiveOblongNavItem
-                                key={item.id}
-                                ref={el => itemNavRefs.current[index] = el}
-                                text={item.name}
-                                onClick={() => onNavItemClick(item.id)}
-                                isActive={activeNavItem === item.id}
-                                isDarkMode={isDarkMode}
-                            />
-                        ))}
-                    </div>
+    return (
+        <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
+            <div className={`relative w-auto transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700`}>
+                <div
+                    ref={scrollContainerRef}
+                    className="py-1.5 px-2.25 flex items-center justify-center space-x-1 transition-colors duration-300 overflow-x-auto no-scrollbar"
+                >
+                    {work.PROJECT_NAV_ITEMS.map((item, index) => (
+                        <InteractiveOblongNavItem
+                            key={item.id}
+                            ref={el => itemNavRefs.current[index] = el}
+                            text={item.name}
+                            onClick={() => onNavItemClick(item.id)}
+                            isActive={activeNavItem === item.id}
+                            isDarkMode={isDarkMode}
+                        />
+                    ))}
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
+}
 
 
     return (

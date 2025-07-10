@@ -12,7 +12,7 @@
     --color-error: #DC2626;         /* A clear, accessible red */
     --color-text-base: #111827;     /* A strong, dark gray for text */
     --color-text-muted: #353c4b;    /* A medium gray for secondary text */
-    --color-text-interactive-muted: #64676d; /* A light gray for interactive text */
+    --color-text-interactive-muted: #6a6d73; /* A light gray for interactive text */
     --color-bg-base: #FFFFFF;        /* Pure white for the main background */
     --color-bg-overlay: #eeeff0;   /* White for light mode overlay */
     --color-bg-muted: #F9FAFB;      /* A very light off-white for cards/contrast */
