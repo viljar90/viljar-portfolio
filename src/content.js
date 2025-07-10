@@ -252,5 +252,13 @@ export const PROJECTS = [
     description: 'Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.',
     tags: ['UX', 'UI', 'Data Visualization'],
     icon: <PieChartIcon />,
-  }
+  },
+  {
+    id: 'aiVideoProduction',
+    navText: 'AI Video Production',
+    cardTitle: 'MAI - Smart video production',
+    description: 'Designing a smarter tool for video production.',
+    tags: ['Product','UX', 'UI'],
+    icon: <PieChartIcon />,
+  },
 ];
