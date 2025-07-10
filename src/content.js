@@ -81,7 +81,11 @@ export const DESIGN_CONTENT = {
       { title: "Form serves function", mainText: "It is thousends of tiny decisions that make a product or service great.  " },
       { title: "Invest in design", mainText: "Developing a product or service is expensive..." },
       { title: "Invest in design", mainText: "...but not having someone design your product or service is even more expensive." },
-      { title: "Mistake 4", mainText: "You risk your whole investment by creating something nobody wants." },
+      { title: "Mistake 4", mainText: "You risk your whole investment by developing..." },
+      { title: "Mistake 4", mainText: "something nobody needs..." },
+      { title: "Mistake 4", mainText: "nobody wants..." },
+      { title: "Mistake 4", mainText: "nobody will use..." },
+      { title: "Mistake 4", mainText: "and something that has to be made all over again." },
     ]
   },
   [DESIGN_STAGE_KEYS.WHAT]: {
