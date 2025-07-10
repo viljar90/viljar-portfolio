@@ -1,11 +1,11 @@
-// src/components/ResultCard.js
+// src/components/QuizResultCard.js
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { ReplayIcon } from './uiElements';
 
-const ResultCard = ({ quiz, onReplayQuestion }) => (
+const QuizResultCard = ({ quiz, onReplayQuestion }) => (
   <div className="relative w-full max-w-xl p-6 md:p-8 bg-bg-overlay rounded-xl shadow-2xl animate-fadeIn text-left">
     <ConfettiExplosion />
 
@@ -40,7 +40,7 @@ const ResultCard = ({ quiz, onReplayQuestion }) => (
   </div>
 );
 
-ResultCard.propTypes = {
+QuizResultCard.propTypes = {
   quiz: PropTypes.shape({
     id: PropTypes.string.isRequired,
     resultText: PropTypes.string.isRequired,
@@ -50,4 +50,4 @@ ResultCard.propTypes = {
   onReplayQuestion: PropTypes.func.isRequired,
 };
 
-export default ResultCard;
+export default QuizResultCard;

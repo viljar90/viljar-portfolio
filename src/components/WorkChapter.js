@@ -1,7 +1,7 @@
 // src/components/WorkChapter.js
 
 import React from 'react';
-import ResultCard from './ResultCard';
+import QuizResultCard from './QuizResultCard';
 
 const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }) => {
     if (!quiz) return null;
@@ -29,7 +29,7 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
                         const isTheCorrectlySelectedOption = correct && isSelected;
 
                         if (isTheCorrectlySelectedOption) {
-                            return <ResultCard key={option.text} quiz={quiz} onReplayQuestion={onReplayQuestion} />;
+                            return <QuizResultCard key={option.text} quiz={quiz} onReplayQuestion={onReplayQuestion} />;
                         }
 
                         if (correct) {
