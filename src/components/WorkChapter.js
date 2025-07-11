@@ -2,6 +2,7 @@
 
 import React from 'react';
 import QuizResultCard from './QuizResultCard';
+import QuizOptionCardButton from './QuizOptionCardButton'; // Import the renamed component
 
 const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }) => {
     if (!quiz) return null;
@@ -36,20 +37,13 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion }
                             return null;
                         }
 
-                        let buttonClass = 'border border-text-muted hover:border-primary hover:bg-primary/10 text-text-base';
-                        if (isSelected) {
-                            // This line is updated to include `border-2`
-                            buttonClass = option.isCorrect ? '' : 'bg-error/20 border border-error text-text-base animate-shake';
-                        }
-
                         return (
-                            <button
+                            <QuizOptionCardButton
                                 key={option.text}
-                                onClick={() => onAnswer(quiz.id, option)}
-                                className={`block w-full text-left p-4 rounded-lg transition-all duration-200 md:text-center md:flex md:items-center md:justify-center md:h-40 ${buttonClass} focus:outline-none focus-visible:ring-2 focus-visible:ring-primary`}
-                            >
-                                {option.text}
-                            </button>
+                                option={option}
+                                isSelected={isSelected}
+                                onAnswer={() => onAnswer(quiz.id, option)}
+                            />
                         );
                     })}
                 </div>
