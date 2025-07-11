@@ -57,7 +57,7 @@ function App() {
   useEffect(() => {
     const setInitialTheme = async () => {
       try {
-        const response = await fetch('http://worldtimeapi.org/api/timezone/Europe/Oslo');
+        const response = await fetch('https://worldtimeapi.org/api/timezone/Europe/Oslo');
         if (!response.ok) {
           throw new Error('Failed to fetch time');
         }
