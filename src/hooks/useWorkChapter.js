@@ -9,12 +9,13 @@ export const useWorkChapter = () => {
   const [quizAnswers, setQuizAnswers] = useState({});
   const [introCompleted, setIntroCompleted] = useState(false);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  const [previousProjectIndex, setPreviousProjectIndex] = useState(null);
+  const [animationDirection, setAnimationDirection] = useState('next');
 
   const WORK_NAV_ITEMS = useMemo(() => [{ name: 'Start' }, ...QUIZZES.map((quiz, index) => ({ name: `Question ${index + 1}` }))], []);
   
   const PROJECT_NAV_ITEMS = useMemo(() => PROJECTS.map(project => ({ name: project.navText, id: project.id })), []);
 
-  // New function to be called by the QuizIntro component itself
   const markIntroAsCompleted = () => {
     if (!introCompleted) {
       setIntroCompleted(true);
@@ -37,16 +38,26 @@ export const useWorkChapter = () => {
   };
   
   const handleNextProject = () => {
+    setAnimationDirection('next');
+    setPreviousProjectIndex(currentProjectIndex);
     setCurrentProjectIndex(prevIndex => (prevIndex + 1) % PROJECTS.length);
   };
 
   const handlePrevProject = () => {
+    setAnimationDirection('prev');
+    setPreviousProjectIndex(currentProjectIndex);
     setCurrentProjectIndex(prevIndex => (prevIndex - 1 + PROJECTS.length) % PROJECTS.length);
   };
 
   const handleProjectNavItemClick = (projectId) => {
     const projectIndex = PROJECTS.findIndex(p => p.id === projectId);
-    if (projectIndex !== -1) {
+    if (projectIndex !== -1 && projectIndex !== currentProjectIndex) {
+      if (projectIndex > currentProjectIndex) {
+        setAnimationDirection('next');
+      } else {
+        setAnimationDirection('prev');
+      }
+      setPreviousProjectIndex(currentProjectIndex);
       setCurrentProjectIndex(projectIndex);
     }
   };
@@ -56,6 +67,7 @@ export const useWorkChapter = () => {
     setQuizAnswers({});
     setIntroCompleted(false);
     setCurrentProjectIndex(0);
+    setPreviousProjectIndex(null);
   }
 
   return {
@@ -65,6 +77,8 @@ export const useWorkChapter = () => {
     quizAnswers,
     introCompleted,
     currentProjectIndex,
+    previousProjectIndex,
+    animationDirection,
     WORK_NAV_ITEMS,
     PROJECT_NAV_ITEMS, 
 
@@ -72,6 +86,7 @@ export const useWorkChapter = () => {
     setWorkView,
     setWorkStepIndex,
     setQuizAnswers,
+    setPreviousProjectIndex, // Make sure to export this
 
     // Handlers
     handleQuizAnswer,

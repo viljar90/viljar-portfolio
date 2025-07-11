@@ -64,7 +64,23 @@ module.exports = {
           '0%, 100%': { transform: 'translateX(0)' },
           '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-5px)' },
           '20%, 40%, 60%, 80%': { transform: 'translateX(5px)' },
-        }
+        },
+        'slide-in-from-right': {
+          '0%': { transform: 'translateX(100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        'slide-in-from-left': {
+          '0%': { transform: 'translateX(-100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        'slide-out-to-left': {
+          '0%': { transform: 'translateX(0)', opacity: '1' },
+          '100%': { transform: 'translateX(-100%)', opacity: '0' },
+        },
+        'slide-out-to-right': {
+            '0%': { transform: 'translateX(0)', opacity: '1' },
+            '100%': { transform: 'translateX(100%)', opacity: '0' },
+        },
       },
       animation: {
         spin: 'spin 2s ease-in-out infinite',
@@ -75,6 +91,10 @@ module.exports = {
         'click-bounce': 'click-bounce 0.3s ease-out',
         'text-bounce': 'text-bounce 0.3s ease-in-out',
         shake: 'shake 0.5s ease-in-out',
+        'slide-in-right': 'slide-in-from-right 0.4s ease-out forwards',
+        'slide-in-left': 'slide-in-from-left 0.4s ease-out forwards',
+        'slide-out-left': 'slide-out-to-left 0.4s ease-out forwards',
+        'slide-out-right': 'slide-out-to-right 0.4s ease-out forwards',
       }
     },
   },
