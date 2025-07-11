@@ -8,6 +8,7 @@ import {
   AnimatedBorderButton,
 } from './uiElements';
 import { DESIGN_CONTENT, QUIZZES } from '../content';
+import LiquidGlass from 'liquid-glass-react';
 
 const BottomNavigation = ({
     navItems,
@@ -86,7 +87,9 @@ const BottomNavigation = ({
     if (currentChapter === 'work' && work.workView === 'Overview') {
     return (
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
-            <div className={`relative w-auto max-w-full transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
+            <LiquidGlass
+                className={`relative w-auto max-w-full transform transition-transform duration-200 hover:scale-[1.02] rounded-full shadow-lg overflow-hidden`}
+            >
                 <div
                     ref={scrollContainerRef}
                     className="py-1.5 px-2.5 flex items-center justify-start space-x-2 transition-colors duration-300 overflow-x-auto no-scrollbar"
@@ -105,7 +108,7 @@ const BottomNavigation = ({
                 {/* Fading overlays for scrollable nav */}
                 <div className={`absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-bg-muted to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
                 <div className={`absolute top-0 bottom-0 right-[-0.1rem] w-24 bg-gradient-to-l from-bg-muted to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
-            </div>
+            </LiquidGlass>
         </div>
     );
 }
@@ -115,7 +118,9 @@ const BottomNavigation = ({
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
             <div className={containerClass}>
                 {renderCentralButton()}
-                <div className={`relative ${navItemsFlexClass} transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
+                <LiquidGlass
+                  className={`relative ${navItemsFlexClass} transform transition-transform duration-200 hover:scale-[1.02] rounded-full shadow-lg overflow-hidden`}
+                >
                     <div
                         ref={scrollContainerRef}
                         className="py-1.5 px-2 flex items-center space-x-1 transition-colors duration-300 overflow-x-auto no-scrollbar"
@@ -152,7 +157,7 @@ const BottomNavigation = ({
                     </div>
                     <div className={`absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
                     <div className={`absolute top-0 bottom-0 right-[-0.1rem] w-24 bg-gradient-to-l from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
-                </div>
+                </LiquidGlass>
             </div>
         </div>
     );
