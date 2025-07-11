@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const ProjectCard = ({ project }) => {
   return (
-    <div className="w-full max-w-lg bg-bg-base rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out overflow-hidden hover:scale-105 dark:border dark:border-gray-700">
+    <div className="w-full max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-3xl bg-bg-base rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out overflow-hidden hover:scale-105 dark:border dark:border-gray-700">
       <div className="flex flex-col-reverse md:flex-row">
         {/* Icon Section */}
         <div className="flex-shrink-0 p-6 bg-bg-overlay flex items-center justify-center md:w-24">

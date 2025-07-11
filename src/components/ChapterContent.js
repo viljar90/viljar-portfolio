@@ -81,9 +81,9 @@ const ChapterContent = ({
               setPreviousProjectIndex={work.setPreviousProjectIndex}
             />
             {/* Fading overlay for the left side */}
-            <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-bg-base to-transparent pointer-events-none" />
+            <div className="absolute top-0 bottom-0 left-0 w-16 md:w-24 bg-gradient-to-r from-bg-base to-transparent pointer-events-none hidden md:block" />
             {/* Fading overlay for the right side */}
-            <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-bg-base to-transparent pointer-events-none" />
+            <div className="absolute top-0 bottom-0 right-0 w-16 md:w-24 bg-gradient-to-l from-bg-base to-transparent pointer-events-none hidden md:block" />
           </div>
         ))}
     </div>
