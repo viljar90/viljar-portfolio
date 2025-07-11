@@ -45,7 +45,7 @@ const BottomNavigation = ({
         const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
         const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
         const isLastQuestion = work.workView === 'Quiz' && work.workStepIndex === QUIZZES.length;
-        
+
         const nonAnimatedButtonClasses = "group h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex-shrink-0 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-105 active:scale-95 bg-bg-base dark:bg-black text-text-base dark:text-white ring-1 ring-gray-500 dark:ring-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-slate-800";
         const iconAnimationClass = isClicked ? 'animate-click-bounce' : '';
 
@@ -82,13 +82,11 @@ const BottomNavigation = ({
             />
         );
     };
-    
+
     if (currentChapter === 'work' && work.workView === 'Overview') {
     return (
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
-            {/* Let this container size itself automatically, but not exceed the screen width */}
-            <div className={`relative w-auto max-w-full transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700`}>
-                {/* This inner div handles the scrolling. Removed conditional justification. */}
+            <div className={`relative w-auto max-w-full transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
                 <div
                     ref={scrollContainerRef}
                     className="py-1.5 px-2.5 flex items-center justify-start space-x-2 transition-colors duration-300 overflow-x-auto no-scrollbar"
@@ -104,6 +102,9 @@ const BottomNavigation = ({
                         />
                     ))}
                 </div>
+                {/* Fading overlays for scrollable nav */}
+                <div className={`absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-bg-muted to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
+                <div className={`absolute top-0 bottom-0 right-[-0.1rem] w-24 bg-gradient-to-l from-bg-muted to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
             </div>
         </div>
     );
@@ -149,8 +150,8 @@ const BottomNavigation = ({
                             );
                         })}
                     </div>
-                    <div className={`absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
-                    <div className={`absolute top-0 bottom-0 right-[-0.1rem] w-24 bg-gradient-to-l from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
+                    <div className={`absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-bg-muted to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
+                    <div className={`absolute top-0 bottom-0 right-[-0.1rem] w-24 bg-gradient-to-l from-bg-muted to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
                 </div>
             </div>
         </div>

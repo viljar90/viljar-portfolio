@@ -6,7 +6,7 @@ import ConfettiExplosion from 'react-confetti-explosion';
 import { ReplayIcon } from './uiElements';
 
 const QuizResultCard = ({ quiz, onReplayQuestion }) => (
-  <div className="relative w-full max-w-xl p-6 md:p-8 bg-bg-overlay rounded-xl shadow-2xl animate-fadeIn text-left">
+  <div className="relative w-full max-w-xl p-6 md:p-8 bg-bg-base dark:bg-slate-800 rounded-xl shadow-2xl animate-fadeIn text-left">
     <ConfettiExplosion />
 
     <button
