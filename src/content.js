@@ -1,6 +1,6 @@
 // src/content.js
 import React from 'react';
-import { PuzzleIcon, ChartIcon, MagicIcon, PieChartIcon } from './components/uiElements';
+import { PuzzleIcon, ChartIcon, MagicIcon, PieChartIcon, VideoEditorIcon } from './components/uiElements';
 
 export const MAIN_STAGES = { INSULTS: 'Insults', INTRO: 'Intro', HOME: 'Home' };
 
@@ -94,11 +94,12 @@ export const DESIGN_CONTENT = {
       { title: "What I do", mainText: "Developers create logical and rational systems in computers." },
       { title: "What I do", mainText: "As a designer I create logical and rational systems in human minds." },
       { title: "What I do", mainText: "Human minds are far more complex than computers." },
-      { title: "What I do", mainText: "But unlike computers, minds get bored and easily frustrated – they reject needless complexity." },
+      { title: "What I do", mainText: "But unlike computers, minds get bored and easily frustrated..."},
+      { title: "What I do", mainText: "...they reject needless complexity." },
       //{ title: "What I do", mainText: "They seek the path of least resistance." },
-      { title: "What I do", mainText: "So let me show you what I as a designer do best..." },
-      { title: "What I do", mainText: "...by making complicated things simple." },
-      //{ title: "What I do", mainText: "Explore the different roles in the confusing world of design a bit differently." },
+      { title: "What I do", mainText: "So let me demonstrate what I as a designer do best..." },
+      { title: "What I do", mainText: "...by making complicated things seem simple." },
+      { title: "What I do", mainText: "Explore what I do in an engaging and simple to follow way." }
       //{ title: "What I do", mainText: "To make it clear how I can help..." },
       //{ title: "What I do", mainText: "...or perhaps you need a different designer." },
       //{ title: "What I do", mainText: "I know many good ones." },
@@ -259,6 +260,6 @@ export const PROJECTS = [
     cardTitle: 'MAI - Smart video production',
     description: 'Designing a smarter tool for video production.',
     tags: ['Product','UX', 'UI'],
-    icon: <PieChartIcon />,
+    icon: <VideoEditorIcon />,
   },
 ];
