@@ -53,31 +53,18 @@ function App() {
   const [workChapterAnimClass, setWorkChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
 
   // --- useEffect Hooks ---
-  // Effect to set initial dark mode based on Oslo time
+  // Effect to set initial dark mode based on the user's local time
   useEffect(() => {
-    const setInitialTheme = async () => {
-      try {
-        const response = await fetch('https://worldtimeapi.org/api/timezone/Europe/Oslo');
-        if (!response.ok) {
-          throw new Error('Failed to fetch time');
-        }
-        const data = await response.json();
-        const hour = new Date(data.datetime).getHours();
+    // Get the current hour from the user's own system clock
+    const hour = new Date().getHours();
 
-        // Set dark mode if it's between 6 PM (18) and 6 AM (6)
-        const isNight = hour >= 18 || hour < 6;
-        setDarkMode(isNight);
-        document.documentElement.classList.toggle('dark', isNight);
-      } catch (error) {
-        console.error("Could not fetch time for theme setting, defaulting to dark mode.", error);
-        // Fallback to the default dark mode if the API call fails
-        setDarkMode(true);
-        document.documentElement.classList.toggle('dark', true);
-      }
-    };
-
-    setInitialTheme();
+    // Set dark mode if it's between 6 PM (18) and 6 AM (6) local time
+    const isNight = hour >= 18 || hour < 6;
+    setDarkMode(isNight);
+    document.documentElement.classList.toggle('dark', isNight);
   }, []); // Empty dependency array ensures this runs only once on mount
+
+
 
   // Effect 1: Manages chapter slide transitions
   useEffect(() => {
