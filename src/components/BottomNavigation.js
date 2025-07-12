@@ -6,6 +6,7 @@ import {
   SkipIcon,
   InteractiveOblongNavItem,
   AnimatedBorderButton,
+  ViewSwitcherButton,
 } from './uiElements';
 import { DESIGN_CONTENT, QUIZZES } from '../content';
 
@@ -114,7 +115,9 @@ const BottomNavigation = ({
     return (
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
             <div className={containerClass}>
-                {renderCentralButton()}
+                {/* *** MODIFIED LOGIC: Conditionally render the central button *** */}
+                {!(currentChapter === 'design' && design.designView === 'Document') && renderCentralButton()}
+                
                 <div className={`relative ${navItemsFlexClass} transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
                     <div
                         ref={scrollContainerRef}
@@ -136,6 +139,12 @@ const BottomNavigation = ({
                                 }
                             }
 
+                            // *** MODIFIED LOGIC: Ensure isPlaying is false in Document view ***
+                            const isPlayingForNavItem = (currentChapter === 'design' && design.designView === 'Document')
+                                ? false
+                                : (activeNavItem === navIdentifier && isPlaying && !isFadingOut);
+
+
                             return (
                                 <InteractiveOblongNavItem
                                     key={`${currentChapter}-${item.name}`}
@@ -143,7 +152,7 @@ const BottomNavigation = ({
                                     text={navItemText}
                                     onClick={() => onNavItemClick(navIdentifier)}
                                     isActive={activeNavItem === navIdentifier || activeNavItem === item.name}
-                                    isPlaying={activeNavItem === navIdentifier && isPlaying && !isFadingOut}
+                                    isPlaying={isPlayingForNavItem}
                                     isFadingOut={activeNavItem === navIdentifier && isFadingOut}
                                     isDarkMode={isDarkMode}
                                 />
@@ -153,6 +162,13 @@ const BottomNavigation = ({
                     <div className={`absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
                     <div className={`absolute top-0 bottom-0 right-[-0.1rem] w-24 bg-gradient-to-l from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
                 </div>
+                {currentChapter === 'design' && (
+                    <ViewSwitcherButton
+                        currentView={design.designView}
+                        onClick={design.toggleDesignView}
+                        isDarkMode={isDarkMode}
+                    />
+                )}
             </div>
         </div>
     );

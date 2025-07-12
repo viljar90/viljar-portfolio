@@ -15,10 +15,11 @@ export const useDesignChapter = (currentChapter) => {
   const [designStepAnimationPhase, setDesignStepAnimationPhase] = useState('typing-title');
   const [isPlayingDesign, setIsPlayingDesign] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const [navigationMode, setNavigationMode] = useState('automatic');
+  const [navigationMode, setNavigationMode] = useState('manual');
   const [error, setError] = useState(null);
   const [isDesignChapterFinished, setIsDesignChapterFinished] = useState(false);
   const wasPlayingRef = useRef(false);
+  const [designView, setDesignView] = useState('Slideshow');
 
   const resetForStage = useCallback((stageKey, startPlaying = true) => {
     const stageData = DESIGN_CONTENT[stageKey];
@@ -111,10 +112,26 @@ export const useDesignChapter = (currentChapter) => {
     return 'success';
   }, [activeDesignStageKey, currentDesignStepIndex, setStepContent]);
 
+  // New navigation functions for Document View
+  const nextDesignStage = useCallback(() => {
+    const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
+    if (currentIndex < DESIGN_NAV_ITEMS.length - 1) {
+      const nextStageKey = DESIGN_NAV_ITEMS[currentIndex + 1].name;
+      setActiveDesignStageKey(nextStageKey);
+    }
+  }, [activeDesignStageKey]);
+
+  const prevDesignStage = useCallback(() => {
+    const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
+    if (currentIndex > 0) {
+      const prevStageKey = DESIGN_NAV_ITEMS[currentIndex - 1].name;
+      setActiveDesignStageKey(prevStageKey);
+    }
+  }, [activeDesignStageKey]);
+
   const togglePlayPause = useCallback(() => {
     setIsPlayingDesign(prev => {
       if (!prev) {
-        // When the user presses "play", switch back to automatic mode
         setNavigationMode('automatic');
       }
       return !prev;
@@ -127,16 +144,17 @@ export const useDesignChapter = (currentChapter) => {
     resetForStage(DESIGN_NAV_ITEMS[0].name, true);
   }, [resetForStage]);
 
-  // This useEffect now correctly handles returning to the chapter.
+  const toggleDesignView = useCallback(() => {
+    setDesignView(prevView => (prevView === 'Slideshow' ? 'Document' : 'Slideshow'));
+    setIsPlayingDesign(false);
+  }, []);
+
   useEffect(() => {
     if (currentChapter !== 'design') {
-      // Pause when leaving the chapter
       wasPlayingRef.current = isPlayingDesign;
       setIsPlayingDesign(false);
     } else {
-      // When returning to the design chapter...
-      if (!isDesignChapterFinished) {
-        // ...and it's not finished, restart the animation for the current step.
+      if (!isDesignChapterFinished && designView === 'Slideshow') {
         setDisplayedDesignTitleChars('');
         setDisplayedDesignMainTextChars('');
         setDesignStepAnimationPhase('typing-title');
@@ -144,11 +162,10 @@ export const useDesignChapter = (currentChapter) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChapter]);
+  }, [currentChapter, designView]);
 
-  // This effect is for the automatic progression between stages (e.g. from 'About Design' to 'What I do')
   useEffect(() => {
-    if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete') {
+    if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete' || designView !== 'Slideshow') {
       return;
     }
 
@@ -173,9 +190,8 @@ export const useDesignChapter = (currentChapter) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChapter, isPlayingDesign, designStepAnimationPhase, activeDesignStageKey, resetForStage, navigationMode]);
 
-  // This effect handles the typewriter animation logic.
   useEffect(() => {
-    if (currentChapter !== 'design' || !isPlayingDesign) return;
+    if (currentChapter !== 'design' || !isPlayingDesign || designView !== 'Slideshow') return;
 
     let timer;
     const currentStageData = DESIGN_CONTENT[activeDesignStageKey];
@@ -244,7 +260,7 @@ export const useDesignChapter = (currentChapter) => {
     }
 
     return () => clearTimeout(timer);
-  }, [currentChapter, isPlayingDesign, activeDesignStageKey, currentDesignStepIndex, designStepAnimationPhase, displayedDesignTitleChars, displayedDesignMainTextChars]);
+  }, [currentChapter, isPlayingDesign, activeDesignStageKey, currentDesignStepIndex, designStepAnimationPhase, displayedDesignTitleChars, displayedDesignMainTextChars, designView]);
 
 
   return {
@@ -257,10 +273,14 @@ export const useDesignChapter = (currentChapter) => {
     isPlayingDesign,
     isFadingOut,
     isDesignChapterFinished,
+    designView,
     navigateToStage,
     nextStep,
     prevStep,
     togglePlayPause,
     replay,
+    toggleDesignView,
+    nextDesignStage, // Export new function
+    prevDesignStage, // Export new function
   };
 };

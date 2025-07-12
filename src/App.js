@@ -238,7 +238,12 @@ function App() {
         navigateToChapter('design');
       }
     } else if (currentChapter === 'design') {
-      design.nextStep();
+      // *** ADDED LOGIC: Check for document view ***
+      if (design.designView === 'Document') {
+        design.nextDesignStage();
+      } else {
+        design.nextStep();
+      }
     } else if (currentChapter === 'work') {
         if (work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) {
             work.setWorkStepIndex(prev => prev + 1);
@@ -260,9 +265,17 @@ function App() {
     } else if (currentChapter === 'main') {
       landing.handlePrevLine();
     } else if (currentChapter === 'design') {
-      const result = design.prevStep();
-      if (result === 'navigate-to-main') {
-        navigateToChapter('main');
+       // *** ADDED LOGIC: Check for document view ***
+      if (design.designView === 'Document') {
+        const result = design.prevDesignStage();
+        if (result === 'navigate-to-main') {
+          navigateToChapter('main');
+        }
+      } else {
+        const result = design.prevStep();
+        if (result === 'navigate-to-main') {
+          navigateToChapter('main');
+        }
       }
     }
   };
@@ -496,7 +509,7 @@ function App() {
           }`}
           navItemsFlexClass={'flex-1 min-w-0'}
           currentChapter={currentChapter}
-          design={design}
+          design={design} // Pass the whole design object
           work={work}
         />
       </div>
