@@ -6,6 +6,7 @@ import {
   SkipIcon,
   InteractiveOblongNavItem,
   AnimatedBorderButton,
+  ViewSwitcherButton, // Import the new button
 } from './uiElements';
 import { DESIGN_CONTENT, QUIZZES } from '../content';
 
@@ -153,6 +154,14 @@ const BottomNavigation = ({
                     <div className={`absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
                     <div className={`absolute top-0 bottom-0 right-[-0.1rem] w-24 bg-gradient-to-l from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
                 </div>
+                {/* Add the new view switcher button for the design chapter */}
+                {currentChapter === 'design' && (
+                    <ViewSwitcherButton
+                        currentView={design.designView}
+                        onClick={design.toggleDesignView}
+                        isDarkMode={isDarkMode}
+                    />
+                )}
             </div>
         </div>
     );

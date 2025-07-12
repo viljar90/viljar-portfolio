@@ -15,10 +15,11 @@ export const useDesignChapter = (currentChapter) => {
   const [designStepAnimationPhase, setDesignStepAnimationPhase] = useState('typing-title');
   const [isPlayingDesign, setIsPlayingDesign] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const [navigationMode, setNavigationMode] = useState('automatic');
+  const [navigationMode, setNavigationMode] = useState('manual');
   const [error, setError] = useState(null);
   const [isDesignChapterFinished, setIsDesignChapterFinished] = useState(false);
   const wasPlayingRef = useRef(false);
+  const [designView, setDesignView] = useState('Slideshow'); // New state for view mode
 
   const resetForStage = useCallback((stageKey, startPlaying = true) => {
     const stageData = DESIGN_CONTENT[stageKey];
@@ -127,6 +128,12 @@ export const useDesignChapter = (currentChapter) => {
     resetForStage(DESIGN_NAV_ITEMS[0].name, true);
   }, [resetForStage]);
 
+  // New function to toggle the view
+  const toggleDesignView = useCallback(() => {
+    setDesignView(prevView => (prevView === 'Slideshow' ? 'Document' : 'Slideshow'));
+    setIsPlayingDesign(false); // Pause animations when switching view
+  }, []);
+
   // This useEffect now correctly handles returning to the chapter.
   useEffect(() => {
     if (currentChapter !== 'design') {
@@ -135,7 +142,7 @@ export const useDesignChapter = (currentChapter) => {
       setIsPlayingDesign(false);
     } else {
       // When returning to the design chapter...
-      if (!isDesignChapterFinished) {
+      if (!isDesignChapterFinished && designView === 'Slideshow') {
         // ...and it's not finished, restart the animation for the current step.
         setDisplayedDesignTitleChars('');
         setDisplayedDesignMainTextChars('');
@@ -144,11 +151,11 @@ export const useDesignChapter = (currentChapter) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChapter]);
+  }, [currentChapter, designView]);
 
   // This effect is for the automatic progression between stages (e.g. from 'About Design' to 'What I do')
   useEffect(() => {
-    if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete') {
+    if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete' || designView !== 'Slideshow') {
       return;
     }
 
@@ -175,7 +182,7 @@ export const useDesignChapter = (currentChapter) => {
 
   // This effect handles the typewriter animation logic.
   useEffect(() => {
-    if (currentChapter !== 'design' || !isPlayingDesign) return;
+    if (currentChapter !== 'design' || !isPlayingDesign || designView !== 'Slideshow') return;
 
     let timer;
     const currentStageData = DESIGN_CONTENT[activeDesignStageKey];
@@ -244,7 +251,7 @@ export const useDesignChapter = (currentChapter) => {
     }
 
     return () => clearTimeout(timer);
-  }, [currentChapter, isPlayingDesign, activeDesignStageKey, currentDesignStepIndex, designStepAnimationPhase, displayedDesignTitleChars, displayedDesignMainTextChars]);
+  }, [currentChapter, isPlayingDesign, activeDesignStageKey, currentDesignStepIndex, designStepAnimationPhase, displayedDesignTitleChars, displayedDesignMainTextChars, designView]);
 
 
   return {
@@ -257,10 +264,12 @@ export const useDesignChapter = (currentChapter) => {
     isPlayingDesign,
     isFadingOut,
     isDesignChapterFinished,
+    designView, // Export new state
     navigateToStage,
     nextStep,
     prevStep,
     togglePlayPause,
     replay,
+    toggleDesignView, // Export new function
   };
 };

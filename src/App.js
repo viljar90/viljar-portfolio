@@ -496,7 +496,7 @@ function App() {
           }`}
           navItemsFlexClass={'flex-1 min-w-0'}
           currentChapter={currentChapter}
-          design={design}
+          design={design} // Pass the whole design object
           work={work}
         />
       </div>
