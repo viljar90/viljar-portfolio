@@ -6,7 +6,7 @@ export const MAIN_STAGES = { INSULTS: 'Insults', INTRO: 'Intro', HOME: 'Home' };
 
 export const MAIN_NAV_ITEMS = [
   { name: MAIN_STAGES.INSULTS, colorScheme: 'black', pauseAfter: 200 },
-  { name: MAIN_STAGES.INTRO, colorScheme: 'black', pauseAfter: 400 },
+  { name: MAIN_STAGES.INTRO, colorScheme: 'black', pauseAfter: 200 },
   { name: MAIN_STAGES.HOME, colorScheme: 'black' },
 ];
 
@@ -30,7 +30,7 @@ export const CONTENT = {
         { title: "Professional Problemsolver", mainText: "PRODUCT · UX · UI · AI", pause: 1000 },
         { title: "aka", mainText: "PRODUCT · UX · UI · AI", pause: 500 },
         { title: "Design Potato", mainText: "PRODUCT · UX · UI · AI", pause: 1000 },
-        { title: "Viljar 🥔 Designer", mainText: "PRODUCT · UX · UI · AI", pause: 1000 },
+        { title: "Viljar 🥔 Designer", mainText: "PRODUCT · UX · UI · AI", pause: 500 },
     ],
     QUESTION: "get to know",
   },
@@ -97,9 +97,9 @@ export const DESIGN_CONTENT = {
       { title: "What I do", mainText: "But unlike computers, minds get bored and easily frustrated..."},
       { title: "What I do", mainText: "...they reject needless complexity." },
       //{ title: "What I do", mainText: "They seek the path of least resistance." },
-      { title: "What I do", mainText: "So let me demonstrate what I as a designer do best..." },
+      { title: "What I do", mainText: "So let me demonstrate the most important skill of a designer..." },
       { title: "What I do", mainText: "...by making complicated things seem simple." },
-      { title: "What I do", mainText: "Explore what I do in an engaging and simple to follow way." }
+      { title: "What I do", mainText: "Understand what I do in an engaging and simple to follow way." }
       //{ title: "What I do", mainText: "To make it clear how I can help..." },
       //{ title: "What I do", mainText: "...or perhaps you need a different designer." },
       //{ title: "What I do", mainText: "I know many good ones." },
@@ -107,7 +107,7 @@ export const DESIGN_CONTENT = {
     ]
   },
   [DESIGN_STAGE_KEYS.PRODUCT_DESIGNER]: {
-    navText: "★ Product Designer",
+    navText: "Product Designer",
     steps: [
       { title: "Product Designer", mainText: "is kind of like the the visionary architect of a product." },
       { title: "Product Designer", mainText: "Imagine a company has a prime plot of land and a new business opportunity or challange." },

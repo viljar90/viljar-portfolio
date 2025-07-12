@@ -1,12 +1,21 @@
 // src/components/DesignChapter.js
-import React from 'react';
+import React, { useRef, useEffect } from 'react'; // Import useRef and useEffect
 import PropTypes from 'prop-types';
 import { BlinkingCursor } from './uiElements';
 import { DESIGN_NAV_ITEMS, DESIGN_CONTENT } from '../content';
 
-// New component for the static "Document" view
+// Updated component for the static "Document" view
 const DesignDocumentView = ({ activeDesignStageKey }) => {
     const stageContent = DESIGN_CONTENT[activeDesignStageKey];
+    const scrollContainerRef = useRef(null); // Create a ref for the scrolling container
+
+    // Effect to scroll to top when the active stage changes
+    useEffect(() => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTop = 0;
+        }
+    }, [activeDesignStageKey]);
+
 
     if (!stageContent) {
         return <div className="text-error">Content not found for this stage.</div>;
@@ -20,7 +29,7 @@ const DesignDocumentView = ({ activeDesignStageKey }) => {
             {/* Fading overlay for the top */}
             <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-bg-base to-transparent z-10 pointer-events-none" />
             
-            <div className="text-left overflow-y-auto h-full p-4 pt-16 no-scrollbar">
+            <div ref={scrollContainerRef} className="text-left overflow-y-auto h-full p-4 pt-16 no-scrollbar">
                 <div className="space-y-10 pb-16">
                     {stageContent.steps.map((step, index) => {
                         const showTitle = step.title !== lastTitle;
