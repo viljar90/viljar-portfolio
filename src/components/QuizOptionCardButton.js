@@ -14,16 +14,20 @@ const QuizOptionCardButton = ({ option, isSelected, onAnswer }) => {
 
   // Use the new Tailwind class for the border
   let buttonStateClasses = 'border border-interactive hover:border-primary hover:bg-primary/10 text-text-base';
-  if (isSelected) {
-    buttonStateClasses = option.isCorrect ? '' : 'bg-error/20 border border-error text-text-base animate-shake';
+  let displayText = option.text;
+
+  if (isSelected && !option.isCorrect) {
+    buttonStateClasses = 'bg-error/20 border border-error text-text-base animate-shake';
+    displayText = option.feedback || option.text;
   }
 
   return (
     <button
       onClick={() => onAnswer(option)}
       className={`${baseButtonClasses} ${buttonStateClasses}`}
+      disabled={isSelected && !option.isCorrect}
     >
-      {option.text}
+      {displayText}
     </button>
   );
 };
@@ -32,6 +36,7 @@ QuizOptionCardButton.propTypes = {
   option: PropTypes.shape({
     text: PropTypes.string.isRequired,
     isCorrect: PropTypes.bool.isRequired,
+    feedback: PropTypes.string, // Added feedback to propTypes
   }).isRequired,
   isSelected: PropTypes.bool.isRequired,
   onAnswer: PropTypes.func.isRequired,

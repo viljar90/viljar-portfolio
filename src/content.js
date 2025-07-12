@@ -167,14 +167,14 @@ export const QUIZZES = [
     title: 'AI Platform',
     question: "Your company wants to leverage AI but is unsure where to start in a rapidly evolving market.\nWhat is the best approach to secure your data and maintain flexibility?",
     options: [
-        { text: 'Mandate the use of a single AI provider across the company', isCorrect: false },
-        { text: 'Build a custom in-house AI model from scratch', isCorrect: false },
+        { text: 'Mandate the use of a single AI provider across the company', isCorrect: false, feedback: 'This can lead to vendor lock-in and limits your ability to use the best tool for the job.' },
+        { text: 'Build a custom in-house AI model from scratch', isCorrect: false, feedback: 'This is extremely resource-intensive and may not be necessary when powerful models are already available.' },
         { text: 'Invest in an internal platform that integrates with multiple AI providers', isCorrect: true },
-        { text: 'Wait for the market to mature before adopting AI tools', isCorrect: false },
+        { text: 'Wait for the market to mature before adopting AI tools', isCorrect: false, feedback: 'Delaying adoption means missing out on significant efficiency gains and falling behind competitors.' },
     ],
     resultText: "A well designed internal platform that connects to multiple AI providers offers many benefits.",
     summaryPoints: [
-        "Reduses risk by avoiding vendor lock-in",
+        "Reduces risk by avoiding vendor lock-in",
         "Modular architecture makes it future-proof as technlogies evolve",
         "Secures your company data and GDPR compliance",
         "Guide in best practices in use of AI",
@@ -186,10 +186,10 @@ export const QUIZZES = [
     title: 'Design System',
     question: "Your product teams are struggling with inefficient development and a misaligned product portfolio.\nWhat's the most effective first step to solve this?",
     options: [
-        { text: 'Hire an agile coach', isCorrect: false },
+        { text: 'Hire an agile coach', isCorrect: false, feedback: "While helpful, an agile coach addresses process, not the core issues of design and development inconsistency." },
         { text: 'Create a design system', isCorrect: true },
-        { text: 'Reorganize your IT department', isCorrect: false },
-        { text: 'Hire a service designer', isCorrect: false },
+        { text: 'Reorganize your IT department', isCorrect: false, feedback: "Reorgs are disruptive and don't solve the underlying problem of inconsistent UI and duplicated effort." },
+        { text: 'Hire a service designer', isCorrect: false, feedback: "A service designer looks at the entire customer journey, but a design system provides the foundational tools for product consistency." },
     ],
     resultText: 'A design system is the most effective way to ensure consistency and speed.',
     summaryPoints: [
@@ -205,10 +205,10 @@ export const QUIZZES = [
     title: 'Data Catalogue',
     question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented.\nHow do you empower your employees to discover and trust your data?",
     options: [
-        { text: 'Invest in more data science', isCorrect: false },
-        { text: 'Launch a company-wide data literacy program', isCorrect: false },
+        { text: 'Invest in more data science', isCorrect: false, feedback: "More data scientists won't help if they can't find or trust the data they need to work with." },
+        { text: 'Launch a company-wide data literacy program', isCorrect: false, feedback: "A literacy program is great, but it's ineffective if people still can't access the data." },
         { text: 'Build a Data Catalogue', isCorrect: true },
-        { text: 'Purchase a new BI tool', isCorrect: false },
+        { text: 'Purchase a new BI tool', isCorrect: false, feedback: "A new tool is only as good as the data it's connected to. It doesn't solve the discovery and trust issues." },
     ],
     resultText: "Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.",
     summaryPoints: [
@@ -217,6 +217,42 @@ export const QUIZZES = [
         "Fosters a data-driven culture"
     ],
     projectButtonText: "The Data Catalogue"
+  },
+  {
+    id: 'aiDashboard',
+    title: 'AI Dashboard',
+    question: "A public service organization needs to prioritize which services to improve. They have vast amounts of data on what users ask for help with.\nHow can they best use this data to make decisions?",
+    options: [
+        { text: 'Have product teams read all user requests manually.', isCorrect: false, feedback: "This isn't scalable and is prone to individual bias, making it hard to see the bigger picture." },
+        { text: 'Use AI to analyze requests and present findings in an interactive dashboard.', isCorrect: true },
+        { text: 'Guess which services are most important based on gut feeling.', isCorrect: false, feedback: "This is not a data-driven approach and risks misallocating critical resources." },
+        { text: 'Hire more customer service staff to handle requests.', isCorrect: false, feedback: "This is a reactive solution that doesn't address the root cause of user struggles." },
+    ],
+    resultText: "Using AI to analyze user needs and a dashboard to visualize them empowers teams to make data-driven decisions.",
+    summaryPoints: [
+        "Identifies the real-time struggles of users.",
+        "Allows product teams to prioritize effectively.",
+        "Makes complex data accessible and understandable.",
+    ],
+    projectButtonText: "The AI Dashboard"
+  },
+  {
+    id: 'aiVideoProduction',
+    title: 'AI Video Production',
+    question: "A TV network's post-production team spends hours searching raw footage to find specific clips and quotes.\nHow can AI best help them speed up this process?",
+    options: [
+        { text: 'By automatically generating searchable metadata like transcriptions and face recognition.', isCorrect: true },
+        { text: 'By automatically editing the final program.', isCorrect: false, feedback: "Automated editing is still too complex and lacks the creative nuance required for storytelling." },
+        { text: 'By suggesting which camera angles are best during filming.', isCorrect: false, feedback: "This is a pre-production task and doesn't solve the post-production bottleneck." },
+        { text: 'By color grading the footage automatically.', isCorrect: false, feedback: "While useful, this doesn't address the primary time-sink of finding specific content within the footage." },
+    ],
+    resultText: "By using AI to automatically generate searchable metadata, you can drastically reduce the time spent on manual logging and clip retrieval.",
+    summaryPoints: [
+        "Saves hours of manual work in post-production.",
+        "Makes finding specific quotes or faces instant.",
+        "Allows editors to focus on the creative aspects of storytelling.",
+    ],
+    projectButtonText: "The AI Video Production Tool"
   }
 ];
 
@@ -226,7 +262,7 @@ export const PROJECTS = [
     id: 'aiPlatform',
     navText: 'AI Chat Platform',
     cardTitle: 'AI Chat Platform',
-    description: 'FortelVia is internal platform where emplyees can chat with the best AI models on the market in a secure and compliant way.',
+    description: 'FortelVia is an internal platform where employees can chat with the best AI models on the market in a secure and compliant way.',
     tags: ['Product','UX', 'UI'],
     icon: <MagicIcon />,
   },
@@ -249,16 +285,16 @@ export const PROJECTS = [
   {
     id: 'aiDashboard',
     navText: 'AI Dashboard',
-    cardTitle: 'AI Insights Dashboard',
-    description: 'Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.',
+    cardTitle: 'AI Insights Dashboard for NAV',
+    description: "Designed a user-friendly dashboard for NAV, visualizing AI-driven insights on user needs. This empowered product teams to prioritize services based on real-time data of what users struggled with the most.",
     tags: ['UX', 'UI', 'Data Visualization'],
     icon: <PieChartIcon />,
   },
   {
     id: 'aiVideoProduction',
     navText: 'AI Video Production',
-    cardTitle: 'MAI - Smart video production',
-    description: 'Designing a smarter tool for video production.',
+    cardTitle: 'MAI - Smart Video Production',
+    description: "Led a product discovery for a major TV network to find how AI could optimize video production. The result was MAI – a tool that automates metadata creation to drastically speed up post-production.",
     tags: ['Product','UX', 'UI'],
     icon: <VideoEditorIcon />,
   },
