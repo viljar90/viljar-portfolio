@@ -74,18 +74,18 @@ export const DESIGN_CONTENT = {
       { title: "You probably know", mainText: "People often perceive attractive people to be more intelligent, more successful and more trustworthy." },
       { title: "Bias", mainText: "This human bias is called the attractiveness halo." },
       { title: "Bias Leverage", mainText: "The aesthetic-usability effect is a very similar human bias designers leverage." },
-      { title: "Bias Leverage", mainText: "When comparing two products with the identical functionality the more visually appealing UI is... ", pause: 3000 },
+      { title: "Bias Leverage", mainText: "When comparing two products with identical functionality the more visually appealing UI is... ", pause: 3000 },
       { title: "Bias Leverage", mainText: "...perceived to be more useful, effective and simple to use.", pause: 2000 },
       { title: "Bias Leverage", mainText: "Even when the ugly UI has better functionality, the pretty can come out on top." },
       { title: "Not form over function", mainText: "As with everything designers do, form serves function." },
-      { title: "Form serves function", mainText: "It is thousends of tiny decisions that make a product or service great.  " },
+      { title: "Form serves function", mainText: "It is thousends of big and small intentional decisions that make a product or service great.  " },
       { title: "Invest in design", mainText: "Developing a product or service is expensive..." },
       { title: "Invest in design", mainText: "...but not having someone design your product or service is even more expensive." },
       { title: "Mistake 4", mainText: "You risk your whole investment by developing..." },
       { title: "Mistake 4", mainText: "something nobody needs..." },
       { title: "Mistake 4", mainText: "nobody wants..." },
       { title: "Mistake 4", mainText: "nobody will use..." },
-      { title: "Mistake 4", mainText: "and something that has to be made all over again." },
+      { title: "Mistake 4", mainText: "and something that probably should be made all over again." },
     ]
   },
   [DESIGN_STAGE_KEYS.WHAT]: {
@@ -184,16 +184,16 @@ export const QUIZZES = [
   {
     id: 'designSystem',
     title: 'Design System',
-    question: "Your product teams are struggling with inefficient development and a misaligned product portfolio.\nWhat's the most effective first step to solve this?",
+    question: "Your product teams are struggling with inefficient frontend development and a misaligned product portfolio.\nWhat's the most effective first step to solve this?",
     options: [
         { text: 'Hire an agile coach', isCorrect: false, feedback: "While helpful, an agile coach addresses process, not the core issues of design and development inconsistency." },
         { text: 'Create a design system', isCorrect: true },
-        { text: 'Reorganize your IT department', isCorrect: false, feedback: "Reorgs are disruptive and don't solve the underlying problem of inconsistent UI and duplicated effort." },
-        { text: 'Hire a service designer', isCorrect: false, feedback: "A service designer looks at the entire customer journey, but a design system provides the foundational tools for product consistency." },
+        { text: 'Reorganize your IT department', isCorrect: false, feedback: "Reorgs are needed for managerial, financial, strategic etc. issues. They won't solve the underlying problem of inconsistent UI and redundant efforts in design and development." },
+        { text: 'Hire a service designer', isCorrect: false, feedback: "A service designer looks at the entire customer journey, but don't provide foundational tools for product efficiancy and consistency." },
     ],
     resultText: 'A design system is the most effective way to ensure consistency and speed.',
     summaryPoints: [
-        "Core design and code ready - faster time to market",
+        "Core design and code ready-to-copy - faster time to market",
         "Avoids expensive duplicate work",
         "Consistent user experience across your products",
         "Scalable and maintainable - making updates cheap and easy"
@@ -221,36 +221,37 @@ export const QUIZZES = [
   {
     id: 'aiDashboard',
     title: 'AI Dashboard',
-    question: "A public service organization needs to prioritize which services to improve. They have vast amounts of data on what users ask for help with.\nHow can they best use this data to make decisions?",
+    question: "Your product teams are unsure which services to digitally improve in a huge organization with vast amounts of data.\nHow can they best prioritize what digital service to focus on next?",
     options: [
-        { text: 'Have product teams read all user requests manually.', isCorrect: false, feedback: "This isn't scalable and is prone to individual bias, making it hard to see the bigger picture." },
-        { text: 'Use AI to analyze requests and present findings in an interactive dashboard.', isCorrect: true },
-        { text: 'Guess which services are most important based on gut feeling.', isCorrect: false, feedback: "This is not a data-driven approach and risks misallocating critical resources." },
-        { text: 'Hire more customer service staff to handle requests.', isCorrect: false, feedback: "This is a reactive solution that doesn't address the root cause of user struggles." },
+        { text: 'Have product teams consistantly read through customer service records', isCorrect: false, feedback: "This isn't scalable and is prone to individual bias, making it hard to see the bigger picture." },
+        { text: 'Use AI to analyze records and present findings in an interactive dashboard', isCorrect: true },
+        { text: 'Hire UX designers to work with customer service to gain qualitative data', isCorrect: false, feedback: "This is a very good second step, but in a huge organization it will be difficult to get the full picture." },
+        { text: 'Hire more customer service staff to handle requests', isCorrect: false, feedback: "This is a reactive solution that doesn't address the root cause of user struggles." },
     ],
     resultText: "Using AI to analyze user needs and a dashboard to visualize them empowers teams to make data-driven decisions.",
     summaryPoints: [
-        "Identifies the real-time struggles of users.",
-        "Allows product teams to prioritize effectively.",
-        "Makes complex data accessible and understandable.",
+        "Identifies the real-time struggles of users",
+        "Allows product teams to prioritize effectively",
+        "Makes complex data accessible and understandable",
     ],
     projectButtonText: "The AI Dashboard"
   },
   {
     id: 'aiVideoProduction',
     title: 'AI Video Production',
-    question: "A TV network's post-production team spends hours searching raw footage to find specific clips and quotes.\nHow can AI best help them speed up this process?",
+    question: "Your company delivers digital products towards large tv broadcasters.\nHow do you leverage AI to get an advantage towards your client base?",
     options: [
-        { text: 'By automatically generating searchable metadata like transcriptions and face recognition.', isCorrect: true },
-        { text: 'By automatically editing the final program.', isCorrect: false, feedback: "Automated editing is still too complex and lacks the creative nuance required for storytelling." },
-        { text: 'By suggesting which camera angles are best during filming.', isCorrect: false, feedback: "This is a pre-production task and doesn't solve the post-production bottleneck." },
-        { text: 'By color grading the footage automatically.', isCorrect: false, feedback: "While useful, this doesn't address the primary time-sink of finding specific content within the footage." },
+        { text: 'Assign a multidisciplinary product team to the discover new oppertuneties', isCorrect: true },
+        { text: 'Invest in a new data science department', isCorrect: false, feedback: "Data scientists are required but won't alone get you the advantage you seek" },
+        { text: 'Build a new product around the latest generative AI video model', isCorrect: false, feedback: "Chasing the latest trend without insight into real user needs is risky. You need to ensure you're solving a real valuable problem." },
+        { text: 'Conduct a market research poll to see what features clients want', isCorrect: false, feedback: "While valuable, a poll only captures surface-level wants. It will not uncover nuanced needs, opportunities, or issues that even the users themselves are unaware of" },
     ],
-    resultText: "By using AI to automatically generate searchable metadata, you can drastically reduce the time spent on manual logging and clip retrieval.",
+    resultText: "A dedicated discovery team is the best first step. This ensures that any AI solution is built on a solid foundation of user needs and business goals.",
     summaryPoints: [
-        "Saves hours of manual work in post-production.",
-        "Makes finding specific quotes or faces instant.",
-        "Allows editors to focus on the creative aspects of storytelling.",
+        "Focuses on solving real, valuable problems",
+        "Reduces the risk of building a product nobody wants",
+        "Aligns the team around a clear, user-centric purpose",
+        "Uncovers opportunities for true innovation beyond the obvious"
     ],
     projectButtonText: "The AI Video Production Tool"
   }
