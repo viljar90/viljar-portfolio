@@ -509,7 +509,7 @@ function App() {
               : (currentChapter === 'work' && work.workView === 'Overview')
               ? 'w-full'
               : currentChapter === 'work' && work.workView === 'Quiz'
-              ? 'w-full sm:w-auto'
+              ? 'w-full md:max-w-3xl lg:auto xl:max-w-3.5xl'
               : 'w-auto'
           }`}
           navItemsFlexClass={'flex-1 min-w-0'}
