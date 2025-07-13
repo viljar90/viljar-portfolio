@@ -376,9 +376,13 @@ function App() {
   };
   
   // --- Render Logic & Derived State ---
+  const isFirstDesignStage = design.activeDesignStageKey === DESIGN_NAV_ITEMS[0].name;
+  const isLastDesignStage = design.activeDesignStageKey === DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
+
   const showPrevArrow =
     (currentChapter === 'main' && (landing.activeMainStep !== MAIN_STAGES.INSULTS || landing.currentSubLineIndex !== 0)) ||
-    (currentChapter === 'design' && (design.activeDesignStageKey !== DESIGN_STAGE_KEYS.ABOUT_DESIGN || design.currentDesignStepIndex !== 0)) ||
+    (currentChapter === 'design' && design.designView === 'Slideshow' && (design.activeDesignStageKey !== DESIGN_STAGE_KEYS.ABOUT_DESIGN || design.currentDesignStepIndex !== 0)) ||
+    (currentChapter === 'design' && design.designView === 'Document' && !isFirstDesignStage) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) ||
     (currentChapter === 'work' && work.workView === 'Overview');
 
@@ -411,7 +415,8 @@ function App() {
 
   const showNextArrow =
     (currentChapter === 'main' && landing.activeMainStep !== MAIN_STAGES.HOME) ||
-    (currentChapter === 'design' && !design.isDesignChapterFinished) ||
+    (currentChapter === 'design' && design.designView === 'Slideshow' && !design.isDesignChapterFinished) ||
+    (currentChapter === 'design' && design.designView === 'Document' && !isLastDesignStage) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) ||
     (currentChapter === 'work' && work.workView === 'Overview');
     

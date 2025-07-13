@@ -8,7 +8,7 @@ import {
   AnimatedBorderButton,
   ViewSwitcherButton,
 } from './uiElements';
-import { DESIGN_CONTENT, QUIZZES } from '../content';
+import { DESIGN_CONTENT, QUIZZES, DESIGN_NAV_ITEMS } from '../content';
 
 const BottomNavigation = ({
     navItems,
@@ -111,12 +111,29 @@ const BottomNavigation = ({
     );
 }
 
+    // *** NEW LOGIC FOR DOCUMENT VIEW ***
+    const isDesignDocumentView = currentChapter === 'design' && design.designView === 'Document';
+    const isLastDesignStage = design.activeDesignStageKey === DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
 
     return (
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
             <div className={containerClass}>
-                {/* *** MODIFIED LOGIC: Conditionally render the central button *** */}
-                {!(currentChapter === 'design' && design.designView === 'Document') && renderCentralButton()}
+                
+                {isDesignDocumentView ? (
+                    <button
+                        onClick={isLastDesignStage ? design.replay : design.nextDesignStage}
+                        className="group h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex-shrink-0 items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-105 active:scale-95 bg-bg-base dark:bg-black text-icon-interactive hover:text-icon-base ring-1 ring-gray-500 dark:ring-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-slate-800 hidden md:flex"
+                        aria-label={isLastDesignStage ? "Replay Chapter" : "Next Section"}
+                    >
+                        {isLastDesignStage ? (
+                            <ReplayIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105" />
+                        ) : (
+                            <SkipIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105" />
+                        )}
+                    </button>
+                ) : (
+                    renderCentralButton()
+                )}
                 
                 <div className={`relative ${navItemsFlexClass} transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
                     <div
@@ -139,8 +156,7 @@ const BottomNavigation = ({
                                 }
                             }
 
-                            // *** MODIFIED LOGIC: Ensure isPlaying is false in Document view ***
-                            const isPlayingForNavItem = (currentChapter === 'design' && design.designView === 'Document')
+                            const isPlayingForNavItem = isDesignDocumentView
                                 ? false
                                 : (activeNavItem === navIdentifier && isPlaying && !isFadingOut);
 
