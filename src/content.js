@@ -167,17 +167,17 @@ export const QUIZZES = [
     title: 'AI Platform',
     question: "Your company wants to leverage GenAI but is unsure where to start in a rapidly evolving market.\nWhat is the best approach to secure your data and maintain flexibility?",
     options: [
-        { text: 'Mandate the use of a single AI provider across the company', isCorrect: false, feedback: 'This can lead to vendor lock-in and limits your ability to use the best tool for the job.' },
+        { text: 'Mandate the use of a single GenAI provider across the company', isCorrect: false, feedback: 'Tying your AI strategy to a single provider leaves you exposed to the whims of one vendor. Changes in price, in service level agreement or discontinuation of services.  It is not a robust long-term strategy.' },
         { text: 'Build a custom in-house GenAI model from scratch', isCorrect: false, feedback: 'This is extremely resource-intensive and may not be necessary when powerful models are already available.' },
-        { text: 'Invest in an internal platform that can use any or multiple AI providers', isCorrect: true },
-        { text: 'Wait for the market to mature before adopting AI tools', isCorrect: false, feedback: 'Delaying adoption means missing out on significant efficiency gains and falling behind competitors.' },
+        { text: 'Invest in an internal platform that can use any or multiple GenAI providers', isCorrect: true },
+        { text: 'Wait for the market to mature before adopting AI tools', isCorrect: false, feedback: 'GenAI is mature enough now to create significant value. Delaying adoption means missing out on great efficiency gains and falling behind competitors.' },
     ],
-    resultText: "A well designed internal platform that connects to multiple AI providers offers many benefits.",
+    resultText: "A well designed internal platform that can connect to multiple AI providers offers many benefits.",
     summaryPoints: [
         "Reduces risk by avoiding vendor lock-in",
         "Modular architecture makes it future-proof as technlogies evolve",
         "Secures your company data and GDPR compliance",
-        "Guide in best practices in use of AI",
+        "Guide in best practices and a safe space to experiment with AI",
     ],
     projectButtonText: "The AI Platform"
   },
@@ -241,12 +241,12 @@ export const QUIZZES = [
     title: 'AI Video Production',
     question: "Your company delivers digital products towards large tv broadcasters.\nHow do you leverage AI to get an advantage towards your client base?",
     options: [
-        { text: 'Assign a multidisciplinary product team to the discover new oppertuneties', isCorrect: true },
+        { text: 'Assign a multidisciplinary product team to discover new oppertuneties', isCorrect: true },
         { text: 'Invest in a new data science department', isCorrect: false, feedback: "Data scientists are required but won't alone get you the advantage you seek" },
         { text: 'Build a new product around the latest generative AI video model', isCorrect: false, feedback: "Chasing the latest trend without insight into real user needs is risky. You need to ensure you're solving a real valuable problem." },
         { text: 'Conduct a market research poll to see what features clients want', isCorrect: false, feedback: "While valuable, a poll only captures surface-level wants. It will not uncover nuanced needs, opportunities, or issues that even the users themselves are unaware of" },
     ],
-    resultText: "A dedicated discovery team is the best first step. This ensures that any AI solution is built on a solid foundation of user needs and business goals.",
+    resultText: "A dedicated product team is the best first step. This ensures that any AI solution is built on a solid foundation of user needs and business goals.",
     summaryPoints: [
         "Focuses on solving real, valuable problems",
         "Reduces the risk of building a product nobody wants",
