@@ -165,11 +165,11 @@ export const QUIZZES = [
   {
     id: 'aiPlatform',
     title: 'AI Platform',
-    question: "Your company wants to leverage AI but is unsure where to start in a rapidly evolving market.\nWhat is the best approach to secure your data and maintain flexibility?",
+    question: "Your company wants to leverage GenAI but is unsure where to start in a rapidly evolving market.\nWhat is the best approach to secure your data and maintain flexibility?",
     options: [
         { text: 'Mandate the use of a single AI provider across the company', isCorrect: false, feedback: 'This can lead to vendor lock-in and limits your ability to use the best tool for the job.' },
-        { text: 'Build a custom in-house AI model from scratch', isCorrect: false, feedback: 'This is extremely resource-intensive and may not be necessary when powerful models are already available.' },
-        { text: 'Invest in an internal platform that integrates with multiple AI providers', isCorrect: true },
+        { text: 'Build a custom in-house GenAI model from scratch', isCorrect: false, feedback: 'This is extremely resource-intensive and may not be necessary when powerful models are already available.' },
+        { text: 'Invest in an internal platform that can use any or multiple AI providers', isCorrect: true },
         { text: 'Wait for the market to mature before adopting AI tools', isCorrect: false, feedback: 'Delaying adoption means missing out on significant efficiency gains and falling behind competitors.' },
     ],
     resultText: "A well designed internal platform that connects to multiple AI providers offers many benefits.",
@@ -221,11 +221,11 @@ export const QUIZZES = [
   {
     id: 'aiDashboard',
     title: 'AI Dashboard',
-    question: "Your product teams are unsure which services to digitally improve in a huge organization with vast amounts of data.\nHow can they best prioritize what digital service to focus on next?",
+    question: "Your product teams are unsure which services to improve digitally in a huge organization with vast amounts of data.\nHow can they best prioritize what digital service to focus on next?",
     options: [
         { text: 'Have product teams consistantly read through customer service records', isCorrect: false, feedback: "This isn't scalable and is prone to individual bias, making it hard to see the bigger picture." },
         { text: 'Use AI to analyze records and present findings in an interactive dashboard', isCorrect: true },
-        { text: 'Hire UX designers to work with customer service to gain qualitative data', isCorrect: false, feedback: "This is a very good second step, but in a huge organization it will be difficult to get the full picture." },
+        { text: 'Hire UX designers to work with customer service and users to gain qualitative data', isCorrect: false, feedback: "This is a very good second step, but in a huge organization it will be difficult to get the full picture." },
         { text: 'Hire more customer service staff to handle requests', isCorrect: false, feedback: "This is a reactive solution that doesn't address the root cause of user struggles." },
     ],
     resultText: "Using AI to analyze user needs and a dashboard to visualize them empowers teams to make data-driven decisions.",
