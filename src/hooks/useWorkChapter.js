@@ -1,6 +1,6 @@
 // src/hooks/useWorkChapter.js
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { QUIZZES, PROJECTS } from '../content';
 
 export const useWorkChapter = () => {
@@ -11,9 +11,12 @@ export const useWorkChapter = () => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
   const [previousProjectIndex, setPreviousProjectIndex] = useState(null);
   const [animationDirection, setAnimationDirection] = useState('next');
+  const [previousWorkStepIndex, setPreviousWorkStepIndex] = useState(null);
+  const [workAnimationDirection, setWorkAnimationDirection] = useState('next');
+
 
   const WORK_NAV_ITEMS = useMemo(() => [{ name: 'Start' }, ...QUIZZES.map((quiz, index) => ({ name: `Question ${index + 1}` }))], []);
-  
+
   const PROJECT_NAV_ITEMS = useMemo(() => PROJECTS.map(project => ({ name: project.navText, id: project.id })), []);
 
   const markIntroAsCompleted = () => {
@@ -36,7 +39,32 @@ export const useWorkChapter = () => {
         return newAnswers;
     });
   };
-  
+
+  const handleNextQuestion = useCallback(() => {
+    setWorkAnimationDirection('next');
+    setPreviousWorkStepIndex(workStepIndex);
+    setWorkStepIndex(prev => prev + 1);
+  }, [workStepIndex]);
+
+  const handlePrevQuestion = useCallback(() => {
+    setWorkAnimationDirection('prev');
+    setPreviousWorkStepIndex(workStepIndex);
+    setWorkStepIndex(prev => prev - 1);
+  }, [workStepIndex]);
+
+    const handleWorkNavItemClick = (index) => {
+    if (index !== workStepIndex) {
+      if (index > workStepIndex) {
+        setWorkAnimationDirection('next');
+      } else {
+        setWorkAnimationDirection('prev');
+      }
+      setPreviousWorkStepIndex(workStepIndex);
+      setWorkStepIndex(index);
+    }
+  };
+
+
   const handleNextProject = () => {
     setAnimationDirection('next');
     setPreviousProjectIndex(currentProjectIndex);
@@ -68,6 +96,7 @@ export const useWorkChapter = () => {
     setIntroCompleted(false);
     setCurrentProjectIndex(0);
     setPreviousProjectIndex(null);
+    setPreviousWorkStepIndex(null);
   }
 
   return {
@@ -80,13 +109,17 @@ export const useWorkChapter = () => {
     previousProjectIndex,
     animationDirection,
     WORK_NAV_ITEMS,
-    PROJECT_NAV_ITEMS, 
+    PROJECT_NAV_ITEMS,
+    previousWorkStepIndex,
+    workAnimationDirection,
+
 
     // State setters
     setWorkView,
     setWorkStepIndex,
     setQuizAnswers,
-    setPreviousProjectIndex, // Make sure to export this
+    setPreviousProjectIndex,
+    setPreviousWorkStepIndex,
 
     // Handlers
     handleQuizAnswer,
@@ -95,6 +128,9 @@ export const useWorkChapter = () => {
     markIntroAsCompleted,
     handleNextProject,
     handlePrevProject,
-    handleProjectNavItemClick, 
+    handleProjectNavItemClick,
+    handleNextQuestion,
+    handlePrevQuestion,
+    handleWorkNavItemClick,
   };
 };

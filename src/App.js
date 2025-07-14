@@ -245,8 +245,8 @@ function App() {
         design.nextStep();
       }
     } else if (currentChapter === 'work') {
-        if (work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) {
-            work.setWorkStepIndex(prev => prev + 1);
+        if (work.workView === 'Quiz') {
+            work.handleNextQuestion();
         } else if (work.workView === 'Overview') {
             work.handleNextProject();
         }
@@ -255,8 +255,12 @@ function App() {
 
   const handlePrevLine = () => {
     if (currentChapter === 'work') {
-      if (work.workView === 'Quiz' && work.workStepIndex > 0) {
-        work.setWorkStepIndex(prev => prev - 1);
+      if (work.workView === 'Quiz') {
+        if (work.workStepIndex > 0) {
+            work.handlePrevQuestion();
+        } else {
+            navigateToChapter('design')
+        }
       } else if (work.workView === 'Overview') {
         work.handlePrevProject();
       } else {
@@ -281,7 +285,7 @@ function App() {
   };
 
   const handleWorkStepperItemClick = (index) => {
-    work.setWorkStepIndex(index);
+    work.handleWorkNavItemClick(index);
   };
 
   const handleNavItemClick = (itemId) => {
@@ -428,8 +432,8 @@ function App() {
        <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen overflow-x-hidden`}>
         {currentChapter !== 'main' && (
           <>
-            <div className="fixed top-0 bottom-0 left-0 w-16 md:w-32 bg-gradient-to-r from-red-500 to-transparent pointer-events-none z-20" />
-            <div className="fixed top-0 bottom-0 right-0 w-16 md:w-32 bg-gradient-to-l from-red-500 to-transparent pointer-events-none z-20" />
+            <div className="fixed top-0 bottom-0 left-0 w-16 md:w-24 lg:w-40 xl:w-60 bg-gradient-to-r from-red-500 via-red-500/100 to-transparent pointer-events-none z-20" />
+            <div className="fixed top-0 bottom-0 right-0 w-16 md:w-24 lg:w-40 xl:w-60 bg-gradient-to-l from-red-500 via-red-500/100 to-transparent pointer-events-none z-20" />
           </>
         )}
 

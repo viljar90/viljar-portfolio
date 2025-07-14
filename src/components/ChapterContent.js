@@ -58,7 +58,7 @@ const ChapterContent = ({
         (work.workView === 'Quiz' ? (
           work.workStepIndex === 0 ? (
             <QuizIntro
-              onStart={() => work.setWorkStepIndex(1)}
+              onStart={() => work.handleNextQuestion()}
               isCompleted={work.introCompleted}
               onIntroViewed={work.markIntroAsCompleted}
             />
@@ -66,9 +66,12 @@ const ChapterContent = ({
             <WorkChapter
               darkMode={darkMode}
               quiz={QUIZZES[work.workStepIndex - 1]}
+              previousQuiz={work.previousWorkStepIndex !== null ? QUIZZES[work.previousWorkStepIndex - 1] : null}
               onAnswer={work.handleQuizAnswer}
               answerState={work.quizAnswers[QUIZZES[work.workStepIndex - 1]?.id]}
               onReplayQuestion={work.handleReplayQuestion}
+              workAnimationDirection={work.workAnimationDirection}
+              onAnimationEnd={() => work.setPreviousWorkStepIndex(null)}
             />
           )
         ) : (
