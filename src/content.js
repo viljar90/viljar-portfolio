@@ -242,7 +242,7 @@ export const QUIZZES = [
     question: "Your company delivers digital products towards large tv broadcasters.\nHow do you leverage AI to get an advantage towards your client base?",
     options: [
         { text: 'Assign a multidisciplinary product team to discover new oppertuneties', isCorrect: true },
-        { text: 'Invest in a new data science department', isCorrect: false, feedback: "Data scientists are required but won't alone get you the advantage you seek" },
+        { text: 'Invest in a new data science department', isCorrect: false, feedback: "Data scientists are required but won't alone get you the advantage you seek to create better products" },
         { text: 'Build a new product around the latest generative AI video model', isCorrect: false, feedback: "Chasing the latest trend without insight into real user needs is risky. You need to ensure you're solving a real valuable problem." },
         { text: 'Conduct a market research poll to see what features clients want', isCorrect: false, feedback: "While valuable, a poll only captures surface-level wants. It will not uncover nuanced needs, opportunities, or issues that even the users themselves are unaware of" },
     ],
