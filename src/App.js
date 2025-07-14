@@ -432,8 +432,8 @@ function App() {
        <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen overflow-x-hidden`}>
         {currentChapter === 'work' && work.workView === 'Quiz' && (
           <>
-            <div className="fixed top-0 bottom-0 left-0 w-16 md:w-24 lg:w-40 xl:w-60 bg-gradient-to-r from-bg-base via-bg-base to-transparent pointer-events-none z-20" />
-            <div className="fixed top-0 bottom-0 right-0 w-16 md:w-24 lg:w-40 xl:w-60 bg-gradient-to-l from-bg-base via-bg-base to-transparent pointer-events-none z-20" />
+            <div className="hidden md:block fixed top-0 bottom-0 left-0 w-16 md:w-24 lg:w-40 xl:w-60 bg-gradient-to-r from-bg-base via-bg-base to-transparent pointer-events-none z-20" />
+            <div className="hidden md:block fixed top-0 bottom-0 right-0 w-16 md:w-24 lg:w-40 xl:w-60 bg-gradient-to-l from-bg-base via-bg-base to-transparent pointer-events-none z-20" />
           </>
         )}
 
