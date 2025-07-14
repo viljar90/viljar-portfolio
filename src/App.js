@@ -426,6 +426,13 @@ function App() {
   return (
     <>
        <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen overflow-x-hidden`}>
+        {currentChapter !== 'main' && (
+          <>
+            <div className="fixed top-0 bottom-0 left-0 w-16 md:w-24 lg:w-32 bg-gradient-to-r from-red-500 to-transparent pointer-events-none z-20" />
+            <div className="fixed top-0 bottom-0 right-0 w-16 md:w-24 lg:w-32 bg-gradient-to-l from-red-500 to-transparent pointer-events-none z-20" />
+          </>
+        )}
+
         <div className="fixed top-4 right-4 z-50 flex items-center space-x-4">
           {currentChapter === 'work' && (
             <ViewSwitcher
