@@ -20,6 +20,17 @@ export const useDesignChapter = (currentChapter) => {
   const [isDesignChapterFinished, setIsDesignChapterFinished] = useState(false);
   const wasPlayingRef = useRef(false);
   const [designView, setDesignView] = useState('Slideshow');
+  const [previousDesignStageKey, setPreviousDesignStageKey] = useState(null);
+  const [designAnimationDirection, setDesignAnimationDirection] = useState('next');
+
+  useEffect(() => {
+    if (previousDesignStageKey !== null) {
+      const timer = setTimeout(() => {
+        setPreviousDesignStageKey(null);
+      }, 400); // Animation duration
+      return () => clearTimeout(timer);
+    }
+  }, [previousDesignStageKey]);
 
   const resetForStage = useCallback((stageKey, startPlaying = true) => {
     const stageData = DESIGN_CONTENT[stageKey];
@@ -116,6 +127,8 @@ export const useDesignChapter = (currentChapter) => {
   const nextDesignStage = useCallback(() => {
     const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
     if (currentIndex < DESIGN_NAV_ITEMS.length - 1) {
+      setDesignAnimationDirection('next');
+      setPreviousDesignStageKey(activeDesignStageKey);
       const nextStageKey = DESIGN_NAV_ITEMS[currentIndex + 1].name;
       setActiveDesignStageKey(nextStageKey);
     }
@@ -124,6 +137,8 @@ export const useDesignChapter = (currentChapter) => {
   const prevDesignStage = useCallback(() => {
     const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
     if (currentIndex > 0) {
+      setDesignAnimationDirection('prev');
+      setPreviousDesignStageKey(activeDesignStageKey);
       const prevStageKey = DESIGN_NAV_ITEMS[currentIndex - 1].name;
       setActiveDesignStageKey(prevStageKey);
     }
@@ -274,13 +289,15 @@ export const useDesignChapter = (currentChapter) => {
     isFadingOut,
     isDesignChapterFinished,
     designView,
+    previousDesignStageKey,
+    designAnimationDirection,
     navigateToStage,
     nextStep,
     prevStep,
     togglePlayPause,
     replay,
     toggleDesignView,
-    nextDesignStage, // Export new function
-    prevDesignStage, // Export new function
+    nextDesignStage,
+    prevDesignStage,
   };
 };
