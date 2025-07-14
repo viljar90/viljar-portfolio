@@ -203,7 +203,7 @@ export const QUIZZES = [
   {
     id: 'dataCatalogue',
     title: 'Data Catalogue',
-    question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented.\nHow do you empower your employees to discover and trust your data?",
+    question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented – working data-driven is diffucult.\nHow do you empower your employees to discover and trust your data?",
     options: [
         { text: 'Invest in more data science', isCorrect: false, feedback: "More data scientists won't help if they can't find or trust the data they need to work with." },
         { text: 'Launch a company-wide data literacy program', isCorrect: false, feedback: "A literacy program is great, but it's ineffective if people still can't access the data." },
