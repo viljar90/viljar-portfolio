@@ -1,10 +1,10 @@
 // src/components/DesignChapter.js
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { BlinkingCursor } from './uiElements';
 import { DESIGN_NAV_ITEMS, DESIGN_CONTENT } from '../content';
 
-const DocumentContent = React.forwardRef(({ stageKey }, ref) => {
+const DocumentContent = React.forwardRef(({ stageKey, onScroll }, ref) => {
     const stageContent = DESIGN_CONTENT[stageKey];
 
     if (!stageContent) return null;
@@ -12,7 +12,7 @@ const DocumentContent = React.forwardRef(({ stageKey }, ref) => {
     let lastTitle = null;
 
     return (
-        <div ref={ref} className="text-left overflow-y-auto h-full p-4 pt-16 no-scrollbar">
+        <div ref={ref} className="text-left overflow-y-auto h-full px-4 md:px-16 lg:px-24 pt-16 no-scrollbar" onScroll={onScroll}>
             <div className="space-y-10 pb-16">
                 {stageContent.steps.map((step, index) => {
                     const showTitle = step.title !== lastTitle;
@@ -37,21 +37,60 @@ const DocumentContent = React.forwardRef(({ stageKey }, ref) => {
 DocumentContent.displayName = 'DocumentContent';
 DocumentContent.propTypes = {
     stageKey: PropTypes.string.isRequired,
+    onScroll: PropTypes.func.isRequired,
 };
 
 const DesignDocumentView = ({ design }) => {
     const scrollContainerRef = useRef(null);
     const { activeDesignStageKey, previousDesignStageKey, designAnimationDirection } = design;
+    const [isScrolling, setIsScrolling] = useState(false);
+    const [showTopFade, setShowTopFade] = useState(false);
+    const [showBottomFade, setShowBottomFade] = useState(true);
+    const scrollTimeoutRef = useRef(null);
+    
+    const updateFades = useCallback(() => {
+        const el = scrollContainerRef.current;
+        if (!el) return;
+
+        const isScrollable = el.scrollHeight > el.clientHeight;
+        // A small buffer to prevent the fade from appearing too early
+        const buffer = 5;
+
+        setShowTopFade(isScrollable && el.scrollTop > buffer);
+        setShowBottomFade(isScrollable && el.scrollTop + el.clientHeight < el.scrollHeight - buffer);
+    }, []);
+
 
     useEffect(() => {
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollTop = 0;
+        const el = scrollContainerRef.current;
+        if (el) {
+            el.scrollTop = 0;
+            // A short delay to allow the DOM to update with new content
+            // before we check if it's scrollable.
+            setTimeout(updateFades, 50); 
         }
-    }, [activeDesignStageKey]);
+    }, [activeDesignStageKey, updateFades]);
+
+    const handleScroll = () => {
+        setIsScrolling(true);
+        updateFades();
+
+        if (scrollTimeoutRef.current) {
+            clearTimeout(scrollTimeoutRef.current);
+        }
+        scrollTimeoutRef.current = setTimeout(() => {
+            setIsScrolling(false);
+        }, 150);
+    };
 
     return (
         <div className="relative w-full max-w-2xl md:max-w-3xl lg:max-w-4xl h-[70vh] overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-bg-base to-transparent z-10 pointer-events-none" />
+            <div className={`absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-bg-base to-transparent z-10 pointer-events-none transition-opacity duration-300 ${showTopFade ? 'opacity-100' : 'opacity-0'}`} />
+
+            {/* Fading overlay for the left side */}
+            <div className="hidden md:block absolute top-0 bottom-0 left-0 w-8 lg:w-24 bg-gradient-to-r from-bg-base to-transparent pointer-events-none z-20" />
+            {/* Fading overlay for the right side */}
+            <div className={`hidden md:block absolute top-0 bottom-0 right-0 w-8 lg:w-24 bg-gradient-to-l from-bg-base to-transparent pointer-events-none z-20 transition-opacity duration-300 ${isScrolling ? 'opacity-0' : 'opacity-100'}`} />
 
             {/* Current Document */}
             <div
@@ -64,7 +103,7 @@ const DesignDocumentView = ({ design }) => {
                         : ''
                 }`}
             >
-                <DocumentContent ref={scrollContainerRef} stageKey={activeDesignStageKey} />
+                <DocumentContent ref={scrollContainerRef} stageKey={activeDesignStageKey} onScroll={handleScroll} />
             </div>
 
             {/* Previous Document (for animation) */}
@@ -77,11 +116,11 @@ const DesignDocumentView = ({ design }) => {
                         : 'animate-slide-out-right'
                     }`}
                 >
-                    <DocumentContent stageKey={previousDesignStageKey} />
+                    <DocumentContent stageKey={previousDesignStageKey} onScroll={handleScroll}/>
                 </div>
             )}
             
-            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-bg-base to-transparent z-10 pointer-events-none" />
+            <div className={`absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-bg-base to-transparent z-10 pointer-events-none transition-opacity duration-300 ${showBottomFade ? 'opacity-100' : 'opacity-0'}`} />
         </div>
     );
 };
