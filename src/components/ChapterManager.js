@@ -32,12 +32,31 @@ const ChapterManager = ({
   showCursorDesignMainText,
   onWorkViewChange,
 }) => {
+  const isQuizView = currentChapter === 'work' && work.workView === 'Quiz';
+
   const arrowButtonClass = "fixed z-20 p-2 rounded-full text-text-muted hover:text-text-base hover:bg-bg-muted/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-all opacity-40 hover:opacity-100";
+  
+  // Conditionally set the vertical position for medium screens and up
+  const verticalPositionClass = isQuizView ? 'md:top-[60%]' : 'md:top-1/2';
 
   return (
     <div>
-      {showPrevArrow && <button onClick={handlePrevLine} className={`${arrowButtonClass} bottom-20 left-4 md:top-1/2 md:bottom-auto md:left-12 lg:left-20 xl:left-48 md:-translate-y-1/2`}><PrevArrowIcon /></button>}
-      {showNextArrow && <button onClick={handleNextLine} className={`${arrowButtonClass} bottom-20 right-4 md:top-1/2 md:bottom-auto md:right-12 lg:right-20 xl:right-48 md:-translate-y-1/2`}><NextArrowIcon /></button>}
+      {showPrevArrow && (
+        <button
+          onClick={handlePrevLine}
+          className={`${arrowButtonClass} bottom-20 left-4 md:left-12 lg:left-20 xl:left-48 md:-translate-y-1/2 ${verticalPositionClass}`}
+        >
+          <PrevArrowIcon />
+        </button>
+      )}
+      {showNextArrow && (
+        <button
+          onClick={handleNextLine}
+          className={`${arrowButtonClass} bottom-20 right-4 md:right-12 lg:right-20 xl:right-48 md:-translate-y-1/2 ${verticalPositionClass}`}
+        >
+          <NextArrowIcon />
+        </button>
+      )}
       <Chapter ref={mainChapterRef} className={mainChapterAnimClass}>
         {currentChapter === 'main' && (
           <ChapterContent

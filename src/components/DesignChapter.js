@@ -13,7 +13,7 @@ const DocumentContent = React.forwardRef(({ stageKey, onScroll }, ref) => {
 
     return (
         <div ref={ref} className="text-left overflow-y-auto h-full px-4 md:px-16 lg:px-24 pt-16 no-scrollbar" onScroll={onScroll}>
-            <div className="space-y-10 pb-16">
+            <div className="space-y-8 pb-16">
                 {stageContent.steps.map((step, index) => {
                     const showTitle = step.title !== lastTitle;
                     lastTitle = step.title;

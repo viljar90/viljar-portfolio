@@ -206,7 +206,7 @@ export const QUIZZES = [
     question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented – working data-driven is diffucult.\nHow do you empower your employees to discover and trust your data?",
     options: [
         { text: 'Invest in more data science', isCorrect: false, feedback: "More data scientists won't help if they can't find or trust the data they need to work with." },
-        { text: 'Launch a company-wide data literacy program', isCorrect: false, feedback: "A literacy program is great, but it's ineffective if people still can't access the data." },
+        { text: 'Launch a company-wide data literacy program', isCorrect: false, feedback: "A literacy program is great to make people more comfortable with using data, but alone it's insufficient if people still can't access or trust the data." },
         { text: 'Build a Data Catalogue', isCorrect: true },
         { text: 'Purchase a new BI tool', isCorrect: false, feedback: "A new tool is only as good as the data it's connected to. It doesn't solve the discovery and trust issues." },
     ],
@@ -241,14 +241,14 @@ export const QUIZZES = [
     title: 'AI Video Production',
     question: "Your company delivers digital products towards large tv broadcasters.\nHow do you leverage AI to get an advantage towards your client base?",
     options: [
-        { text: 'Assign a multidisciplinary product team to discover new oppertuneties', isCorrect: true },
-        { text: 'Invest in a new data science department', isCorrect: false, feedback: "Data scientists are required but won't alone get you the advantage you seek to create better products" },
-        { text: 'Build a new product around the latest generative AI video model', isCorrect: false, feedback: "Chasing the latest trend without insight into real user needs is risky. You need to ensure you're solving a real valuable problem." },
-        { text: 'Conduct a market research poll to see what features clients want', isCorrect: false, feedback: "While valuable, a poll only captures surface-level wants. It will not uncover nuanced needs, opportunities, or issues that even the users themselves are unaware of" },
+        { text: 'Assign a multidisciplinary product team to discover new opportunities', isCorrect: true },
+        { text: 'Invest in a new data science department', isCorrect: false, feedback: "Data scientists are required but won't alone get you the advantage you seek to create better products." },
+        { text: 'Build a new product around the latest generative AI video model', isCorrect: false, feedback: "Chasing the latest trend without insight into real user needs is risky. You need to ensure you're solving real valuable problems." },
+        { text: 'Conduct a market research poll to see what features clients want', isCorrect: false, feedback: "While useful, a poll only captures surface-level wants. It will not uncover nuanced needs, opportunities, or issues that even users themselves are blind to." },
     ],
     resultText: "A dedicated product team is the best first step. This ensures that any AI solution is built on a solid foundation of user needs and business goals.",
     summaryPoints: [
-        "Focuses on solving real, valuable problems",
+        "Focuses on solving real valuable problems",
         "Reduces the risk of building a product nobody wants",
         "Aligns the team around a clear, user-centric purpose",
         "Uncovers opportunities for true innovation beyond the obvious"
