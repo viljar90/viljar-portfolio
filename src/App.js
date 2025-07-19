@@ -17,6 +17,7 @@ import BottomNavigation from './components/BottomNavigation';
 import ErrorBoundary from './components/ErrorBoundary';
 import ViewSwitcher from './components/ViewSwitcher';
 import { SunIcon, MoonIcon } from './components/uiElements';
+import InteractivePillNav from './components/InteractivePillNav'; // Import the new component
 
 // --- Animation Configuration ---
 const ANIMATION_DURATION_CHAPTER = "0.5s";
@@ -29,6 +30,10 @@ function App() {
   const [showLeftFade, setShowLeftFade] = useState(false);
   const [showRightFade, setShowRightFade] = useState(false);
   const [isThemeToggleClicked, setIsThemeToggleClicked] = useState(false);
+
+  // Dummy state for InteractivePillNav for visual testing
+  const dummyPillNavItems = ['Why Design', 'What Design'];
+  const [selectedPillItem, setSelectedPillItem] = useState(dummyPillNavItems[0]);
 
   // --- Shared Refs ---
   const mainChapterRef = useRef(null);
@@ -438,6 +443,13 @@ function App() {
         )}
 
         <div className="fixed top-4 right-4 z-50 flex items-center space-x-4">
+          {currentChapter === 'design' && ( // Conditionally render only on the 'design' chapter
+            <InteractivePillNav
+              menuItems={dummyPillNavItems}
+              selected={selectedPillItem}
+              setSelected={setSelectedPillItem}
+            />
+          )}
           {currentChapter === 'work' && (
             <ViewSwitcher
               work={work}

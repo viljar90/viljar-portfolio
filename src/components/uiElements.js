@@ -206,7 +206,7 @@ export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkM
     };
 
     return (
-        <div className={`flex items-center bg-bg-muted dark:bg-bg-muted p-1 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
+        <div className={`flex items-center bg-bg-muted p-1 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
             {options.map((option) => {
                 const isActive = activeOption === option;
                 const isClicked = clickedOption === option;
