@@ -16,7 +16,7 @@ import { useWorkChapter } from './hooks/useWorkChapter';
 import BottomNavigation from './components/BottomNavigation';
 import ErrorBoundary from './components/ErrorBoundary';
 import ViewSwitcher from './components/ViewSwitcher';
-import { SunIcon, MoonIcon } from './components/uiElements';
+import { SunIcon, MoonIcon, PotatoIcon } from './components/uiElements';
 import InteractivePillNav from './components/InteractivePillNav'; // Import the new component
 
 // --- Animation Configuration ---
@@ -441,6 +441,10 @@ function App() {
             <div className="hidden md:block fixed top-0 bottom-0 right-0 w-16 md:w-24 lg:w-40 xl:w-60 bg-gradient-to-l from-bg-base via-bg-base to-transparent pointer-events-none z-20" />
           </>
         )}
+
+        <div className={`fixed top-4 left-4 z-50 transition-opacity duration-300 ${currentChapter !== 'main' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+          <PotatoIcon className="w-10 h-10 text-primary dark:text-secondary" />
+        </div>
 
         <div className="fixed top-4 right-4 z-50 flex items-center space-x-4 h-12">
           {currentChapter === 'design' && ( // Conditionally render only on the 'design' chapter

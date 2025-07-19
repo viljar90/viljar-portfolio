@@ -98,6 +98,13 @@ module.exports = {
           '40%': { transform: 'rotate(-4deg)' },
           '50%': { transform: 'rotate(10deg)' },
         },
+        'jump-bounce': {
+          '0%, 67%, 100%': { transform: 'translateY(0)' },
+          '74%': { transform: 'translateY(-25%)' },
+          '80%': { transform: 'translateY(0) scale(1.1, 0.9)' },
+          '87%': { transform: 'translateY(-10%) scale(0.95, 1.05)' },
+          '93%': { transform: 'translateY(0) scale(1.02, 0.98)' },
+        },
       },
       animation: {
         spin: 'spin 2s ease-in-out infinite',
@@ -113,6 +120,8 @@ module.exports = {
         'slide-out-left': 'slide-out-to-left 0.4s ease-out forwards',
         'slide-out-right': 'slide-out-to-right 0.4s ease-out forwards',
         'wave': 'wave 2.5s infinite',
+        'jump-bounce': 'jump-bounce 3s infinite',
+        'jump-bounce-home': 'jump-bounce 3s infinite -1s',
       }
     },
   },

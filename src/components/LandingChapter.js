@@ -75,7 +75,7 @@ const LandingChapter = ({
                     {lastIntroStep?.icon === 'potato' && lastIntroStep.titleParts ? (
                         <span className="flex items-center justify-center gap-x-2 md:gap-x-3">
                             {lastIntroStep.titleParts[0]}
-                            <PotatoIcon className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-primary dark:text-secondary" />
+                            <PotatoIcon className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-primary dark:text-secondary animate-jump-bounce-home" />
                             {lastIntroStep.titleParts[1]}
                         </span>
                     ) : (
@@ -89,6 +89,7 @@ const LandingChapter = ({
                         <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
                             {CONTENT.HOME.BUTTON_OPTIONS.map((btnText) => (
                                 <button key={btnText} onClick={() => {
+                                    // *** FIXED LOGIC: Updated to handle navigation to 'work' or 'design' ***
                                     if (btnText === "Design") onNavigateToChapter('design');
                                     else if (btnText === "My Work") onNavigateToChapter('work');
                                     else console.log(`${btnText} clicked!`);
