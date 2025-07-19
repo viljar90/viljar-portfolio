@@ -43,6 +43,7 @@ const ChapterContent = ({
           displayedHomeQuestion={landing.displayedHomeQuestion}
           showCursorHomeQuestion={showCursorHomeQuestion}
           onNavigateToChapter={navigateToChapter}
+          landing={landing}
         />
       )}
       {currentChapter === 'design' && (

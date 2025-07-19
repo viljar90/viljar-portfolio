@@ -1,4 +1,5 @@
 // src/content.js
+
 import React from 'react';
 import { PuzzleIcon, ChartIcon, MagicIcon, PieChartIcon, VideoEditorIcon } from './components/uiElements';
 
@@ -25,12 +26,12 @@ export const CONTENT = {
   INTRO: {
     GREETING: "Hi there!",
     steps: [
-        { title: "Viljar Tornøe here 👋", mainText: "PRODUCT · UX · UI · AI", pause: 800 },
+        { title: "Viljar Tornøe here", titleParts: ["Viljar Tornøe here"], icon: "wave", mainText: "PRODUCT · UX · UI · AI", pause: 800 },
         { title: "aka", mainText: "PRODUCT · UX · UI · AI", pause: 800 },
         { title: "Professional Problemsolver", mainText: "PRODUCT · UX · UI · AI", pause: 1000 },
         { title: "aka", mainText: "PRODUCT · UX · UI · AI", pause: 500 },
         { title: "Design Potato", mainText: "PRODUCT · UX · UI · AI", pause: 1000 },
-        { title: "Viljar 🥔 Designer", mainText: "PRODUCT · UX · UI · AI", pause: 500 },
+        { title: "Viljar Designer", titleParts: ["Viljar", "Designer"], icon: "potato", mainText: "PRODUCT · UX · UI · AI", pause: 500 },
     ],
     QUESTION: "", //used to be the get to know text
   },

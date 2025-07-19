@@ -91,6 +91,13 @@ module.exports = {
             '0%': { transform: 'translateX(0)', opacity: '1' },
             '100%': { transform: 'translateX(100%)', opacity: '0' },
         },
+        wave: {
+          '0%, 60%, 100%': { transform: 'rotate(0deg)' },
+          '10%, 30%': { transform: 'rotate(14deg)' },
+          '20%': { transform: 'rotate(-8deg)' },
+          '40%': { transform: 'rotate(-4deg)' },
+          '50%': { transform: 'rotate(10deg)' },
+        },
       },
       animation: {
         spin: 'spin 2s ease-in-out infinite',
@@ -105,6 +112,7 @@ module.exports = {
         'slide-in-left': 'slide-in-from-left 0.4s ease-out forwards',
         'slide-out-left': 'slide-out-to-left 0.4s ease-out forwards',
         'slide-out-right': 'slide-out-to-right 0.4s ease-out forwards',
+        'wave': 'wave 2.5s infinite',
       }
     },
   },

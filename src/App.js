@@ -442,7 +442,7 @@ function App() {
           </>
         )}
 
-        <div className="fixed top-4 right-4 z-50 flex items-center space-x-4">
+        <div className="fixed top-4 right-4 z-50 flex items-center space-x-4 h-12">
           {currentChapter === 'design' && ( // Conditionally render only on the 'design' chapter
             <InteractivePillNav
               menuItems={dummyPillNavItems}

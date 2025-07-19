@@ -45,14 +45,16 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
         setMainAnimationPhase('intro-greeting');
       } else {
         const stepData = CONTENT.INTRO.steps[stepIndex];
-        setDisplayedNameChars(stepData.title);
+        const titleToSet = stepData.titleParts ? stepData.titleParts.join(' ') : stepData.title;
+        setDisplayedNameChars(titleToSet);
         setDisplayedTitleChars(stepData.mainText);
         setDisplayedChars('');
         setMainAnimationPhase('pausing');
       }
     } else if (stage === MAIN_STAGES.HOME) {
       const lastIntroStep = CONTENT.INTRO.steps[CONTENT.INTRO.steps.length - 1];
-      setDisplayedNameChars(lastIntroStep.title);
+      const lastTitle = lastIntroStep.titleParts ? lastIntroStep.titleParts.join(' ') : lastIntroStep.title;
+      setDisplayedNameChars(lastTitle);
       setDisplayedTitleChars(lastIntroStep.mainText);
       setDisplayedHomeQuestion(CONTENT.INTRO.QUESTION);
       setMainAnimationPhase('home-buttons-appear');
@@ -130,7 +132,8 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
       setMainAnimationPhase('intro-greeting');
     } else if (activeMainStep === MAIN_STAGES.HOME) {
       const lastIntroStep = CONTENT.INTRO.steps[CONTENT.INTRO.steps.length - 1];
-      setDisplayedNameChars(lastIntroStep.title);
+      const lastTitle = lastIntroStep.titleParts ? lastIntroStep.titleParts.join(' ') : lastIntroStep.title;
+      setDisplayedNameChars(lastTitle);
       setDisplayedTitleChars(lastIntroStep.mainText);
       setDisplayedHomeQuestion(CONTENT.INTRO.QUESTION);
       setMainAnimationPhase('typing-home-question');
@@ -211,10 +214,12 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
       const currentStepData = currentStageData.steps[introStepIndex];
       if (!currentStepData) return;
 
+      const titleToType = currentStepData.titleParts ? currentStepData.titleParts.join(' ') : currentStepData.title;
+
       switch (mainAnimationPhase) {
         case 'typing-title':
-          if (displayedNameChars.length < currentStepData.title.length) {
-            timer = setTimeout(() => setDisplayedNameChars(currentStepData.title.substring(0, displayedNameChars.length + 1)), TYPEWRITER_SPEED);
+          if (displayedNameChars.length < titleToType.length) {
+            timer = setTimeout(() => setDisplayedNameChars(titleToType.substring(0, displayedNameChars.length + 1)), TYPEWRITER_SPEED);
           } else { setMainAnimationPhase('typing-maintext'); }
           break;
         case 'typing-maintext':
@@ -226,10 +231,11 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
           timer = setTimeout(() => {
             if (introStepIndex < currentStageData.steps.length - 1) {
               const nextStepData = currentStageData.steps[introStepIndex + 1];
+              const nextTitleToType = nextStepData.titleParts ? nextStepData.titleParts.join(' ') : nextStepData.title;
               setIntroStepIndex(prev => prev + 1);
               if (nextStepData.mainText === currentStepData.mainText) {
                 setMainAnimationPhase('backspacing-title');
-              } else if (nextStepData.title === currentStepData.title) {
+              } else if (nextTitleToType === titleToType) {
                 setDisplayedTitleChars('');
                 setMainAnimationPhase('typing-maintext');
               } else {

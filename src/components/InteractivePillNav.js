@@ -124,7 +124,7 @@ const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
       `}</style>
       <div className="w-auto max-w-lg p-1 transform transition-transform duration-200 hover:scale-105"> {/* Added hover:scale-105 */}
         {/* Container now has the border back */}
-        <div className="p-1 border border-gray-500 dark:border-gray-700 rounded-full bg-bg-base">
+        <div className="p-1 border border-gray-500 dark:border-gray-700 rounded-full bg-bg-base shadow-lg">
           <ul className="relative flex items-center justify-center whitespace-nowrap" role="tablist">
             {/* The pill is now conditionally rendered only on the client */}
             {isMounted && (
