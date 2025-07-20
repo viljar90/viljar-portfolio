@@ -12,11 +12,11 @@
     --color-error: #DC2626;         /* A clear, accessible red */
     --color-text-base: #111827;     /* A strong, dark gray for text */
     --color-text-muted: #353c4b;    /* A medium gray for secondary text */
-    --color-text-interactive-muted: #5d5f64; /* A light gray for interactive text */
+    --color-text-interactive-muted: #696c71; /* A light gray for interactive text */
     --color-border-interactive: #D1D5DB; /* Add this line for light mode (gray-300) */
     --color-icon-static: #353c4b; /*static icons for cards and similar*/
     --color-icon-base: #111827; /* Add this: Same as text-base for light mode */
-    --color-icon-interactive: #5d5f64; /* Add this: Same as text-interactive-muted for light mode */
+    --color-icon-interactive: #696c71; /* Add this: Same as text-interactive-muted for light mode */
     --color-bg-base: #FFFFFF;        /* Pure white for the main background */
     --color-bg-overlay: #eeeff0;   /* White for light mode overlay */
     --color-bg-muted: #F9FAFB;      /* A very light off-white for cards/contrast */
