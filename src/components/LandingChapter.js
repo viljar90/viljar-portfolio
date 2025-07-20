@@ -47,13 +47,13 @@ const LandingChapter = ({
                   {showPotatoIcon ? (
                     <span className="flex items-center justify-center gap-x-2 md:gap-x-3">
                       {currentStepData.titleParts[0]}
-                      <PotatoIcon className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-primary dark:text-secondary" />
+                      <PotatoIcon className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14 text-text-base" />
                       {currentStepData.titleParts[1]}
                     </span>
                   ) : showWaveIcon ? (
                     <span className="flex items-center justify-center gap-x-2 md:gap-x-3">
                       {currentStepData.titleParts[0]}
-                      <WavingHandIcon className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 text-primary dark:text-secondary animate-wave" style={{ transformOrigin: '70% 70%' }} />
+                      <WavingHandIcon className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 text-text-base animate-wave" style={{ transformOrigin: '70% 70%' }} />
                     </span>
                   ) : (
                     <>
@@ -75,7 +75,7 @@ const LandingChapter = ({
                     {lastIntroStep?.icon === 'potato' && lastIntroStep.titleParts ? (
                         <span className="flex items-center justify-center gap-x-2 md:gap-x-3">
                             {lastIntroStep.titleParts[0]}
-                            <PotatoIcon className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-primary dark:text-secondary animate-jump-bounce-home" />
+                            <PotatoIcon className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14 text-text-base animate-jump-bounce-home" />
                             {lastIntroStep.titleParts[1]}
                         </span>
                     ) : (

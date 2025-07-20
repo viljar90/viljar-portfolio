@@ -189,10 +189,10 @@ export const QUIZZES = [
     options: [
         { text: 'Hire an agile coach', isCorrect: false, feedback: "While helpful, an agile coach addresses process, not the core issues of design and development inconsistency." },
         { text: 'Create a design system', isCorrect: true },
-        { text: 'Reorganize your IT department', isCorrect: false, feedback: "Reorgs are needed for managerial, financial, strategic etc. issues. They won't solve the underlying problem of inconsistent UI and redundant efforts in design and development." },
+        { text: 'Reorganize your IT department', isCorrect: false, feedback: "Reorgs are needed for managerial, financial, strategic etc issues. They won't solve the underlying problem of inconsistent UI and redundant efforts in design and development." },
         { text: 'Hire a service designer', isCorrect: false, feedback: "A service designer looks at the entire customer journey, but don't provide foundational tools for product efficiancy and consistency." },
     ],
-    resultText: 'A design system is the most effective way to ensure consistency and speed.',
+    resultText: 'A design system is the most effective way to boost consistency, quality and speed.',
     summaryPoints: [
         "Core design and code ready-to-copy - faster time to market",
         "Avoids expensive duplicate work",
@@ -226,7 +226,7 @@ export const QUIZZES = [
     options: [
         { text: 'Have product teams consistantly read through customer service records', isCorrect: false, feedback: "This isn't scalable and is prone to individual bias, making it hard to see the bigger picture." },
         { text: 'Use AI to analyze records and present findings in an interactive dashboard', isCorrect: true },
-        { text: 'Hire UX designers to work with customer service and users to gain qualitative data', isCorrect: false, feedback: "This is a very good second step, but in a huge organization it will be difficult to get the full picture." },
+        { text: 'Hire UX designers to work with customer service and users to gain qualitative data', isCorrect: false, feedback: "This is a very good second step, but in a huge organization it will be difficult to get the full picture with qualitative insights alone." },
         { text: 'Hire more customer service staff to handle requests', isCorrect: false, feedback: "This is a reactive solution that doesn't address the root cause of user struggles." },
     ],
     resultText: "Using AI to analyze user needs and a dashboard to visualize them empowers teams to make data-driven decisions.",

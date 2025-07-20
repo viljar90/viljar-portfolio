@@ -105,6 +105,13 @@ module.exports = {
           '87%': { transform: 'translateY(-10%) scale(0.95, 1.05)' },
           '93%': { transform: 'translateY(0) scale(1.02, 0.98)' },
         },
+        'jump-bounce-hover': {
+          '0%': { transform: 'translateY(0) scale(1, 1)' },
+          '20%': { transform: 'translateY(-25%)' },
+          '50%': { transform: 'translateY(0) scale(1.1, 0.9)' },
+          '70%': { transform: 'translateY(-10%) scale(0.95, 1.05)' },
+          '100%': { transform: 'translateY(0) scale(1, 1)' },
+        },
       },
       animation: {
         spin: 'spin 2s ease-in-out infinite',
@@ -122,6 +129,7 @@ module.exports = {
         'wave': 'wave 2.5s infinite',
         'jump-bounce': 'jump-bounce 3s infinite',
         'jump-bounce-home': 'jump-bounce 3s infinite -1s',
+        'jump-bounce-hover': 'jump-bounce-hover 0.8s ease-out',
       }
     },
   },

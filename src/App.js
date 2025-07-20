@@ -443,7 +443,13 @@ function App() {
         )}
 
         <div className={`fixed top-4 left-4 z-50 transition-opacity duration-300 ${currentChapter !== 'main' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-          <PotatoIcon className="w-10 h-10 text-primary dark:text-secondary" />
+          <button
+              onClick={() => navigateToChapter('main')}
+              aria-label="Go to Home"
+              className="group rounded-full p-1 transition-all duration-200 transform hover:scale-110 active:scale-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-base"
+          >
+              <PotatoIcon className="w-11 h-11 text-icon-interactive group-hover:text-icon-base transition-colors group-hover:animate-jump-bounce-hover" />
+          </button>
         </div>
 
         <div className="fixed top-4 right-4 z-50 flex items-center space-x-4 h-12">
