@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
  */
 const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
   const itemsRef = useRef({});
+  const [clickedItem, setClickedItem] = useState(null);
 
   const [pillStyle, setPillStyle] = useState({
     left: 0,
@@ -40,6 +41,18 @@ const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Effect for the text bounce animation
+  useEffect(() => {
+    if (clickedItem === null) return;
+    const timer = setTimeout(() => setClickedItem(null), 300); // Animation duration
+    return () => clearTimeout(timer);
+  }, [clickedItem]);
+
+  const handleItemClick = (item) => {
+      setClickedItem(item);
+      setSelected(item);
+  };
 
   // Step 1: Set the initial position synchronously before the first paint.
   // This now runs after the pill is first mounted on the client.
@@ -141,7 +154,9 @@ const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
               />
             )}
             
-            {menuItems.map((item) => (
+            {menuItems.map((item) => {
+              const isClicked = clickedItem === item;
+              return (
               <li
                 key={item}
                 ref={(el) => (itemsRef.current[item] = el)}
@@ -149,17 +164,19 @@ const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
                 className="relative z-10"
               >
                 <button
-                  onClick={() => setSelected(item)}
+                  onClick={() => handleItemClick(item)}
                   role="tab"
                   aria-selected={item === selected}
                   className={`block w-full cursor-pointer px-4 py-1.5 rounded-md transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-base font-semibold text-sm sm:text-base ${
                     selected === item ? 'text-text-base dark:text-white' : 'text-text-interactive-muted hover:text-text-base dark:hover:text-white'
                   }`}
                 >
-                  {item}
+                  <span className={`inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>
+                    {item}
+                  </span>
                 </button>
               </li>
-            ))}
+            )})}
           </ul>
         </div>
       </div>
