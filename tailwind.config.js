@@ -140,7 +140,7 @@ module.exports = {
         'slide-out-right': 'slide-out-to-right 0.4s ease-out forwards',
         'wave': 'wave 2.5s infinite',
         'jump-bounce': 'jump-bounce 3s infinite',
-        'jump-bounce-home': 'jump-bounce 3s infinite -2s',
+        'jump-bounce-home': 'jump-bounce 3s infinite -1s',
         'jump-bounce-hover': 'jump-bounce-hover 0.8s ease-out',
         'cycle-glow': 'cycle-glow-colors 4s ease-in-out infinite alternate',
       }
