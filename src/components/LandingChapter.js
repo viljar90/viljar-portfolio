@@ -47,7 +47,7 @@ const LandingChapter = ({
                   {showPotatoIcon ? (
                     <span className="flex items-center justify-center gap-x-2 md:gap-x-3">
                       {currentStepData.titleParts[0]}
-                      <PotatoIcon className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-primary dark:text-secondary" />
+                      <PotatoIcon className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14 text-text-base" />
                       {currentStepData.titleParts[1]}
                     </span>
                   ) : showWaveIcon ? (
