@@ -168,6 +168,14 @@ export const BlinkingCursor = ({sizeClass = "h-6 md:h-8 lg:h-10"}) => (
 export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
   return (
     <button {...props} className={`relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary dark:focus-visible:ring-offset-bg-base rounded-full transform hover:scale-105 active:scale-95 transition-all duration-200 ${props.className || ''}`}>
+      {/* New Glow Layer */}
+      <div
+        className={`absolute -inset-1 bg-[conic-gradient(from_var(--rotate),var(--color-anim-1),var(--color-anim-2),var(--color-anim-3))] rounded-full transition-opacity duration-300 animate-spin blur-md ${
+          isPlaying ? 'opacity-15 dark:opacity-45' : 'opacity-0'
+        }`}
+        style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
+      />
+      {/* Existing Border */}
       <div
         className={`absolute -inset-[1.25px] bg-[conic-gradient(from_var(--rotate),var(--color-anim-1),var(--color-anim-2),var(--color-anim-3))] rounded-full transition-opacity duration-300 animate-spin ${
           isPlaying ? 'opacity-100' : 'opacity-0'
@@ -175,16 +183,16 @@ export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
         style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
       />
       <div className={`relative z-10 w-full h-full flex items-center justify-center bg-bg-base dark:bg-black rounded-full text-icon-interactive group-hover:text-icon-base ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''}`}>
-  {isPlaying ? (
-    <div key="pause" className="animate-scale-in">
-      <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200" />
-    </div>
-  ) : (
-    <div key="play" className="animate-scale-in">
-      <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200" />
-    </div>
-  )}
-</div>
+        {isPlaying ? (
+          <div key="pause" className="animate-scale-in">
+            <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200" />
+          </div>
+        ) : (
+          <div key="play" className="animate-scale-in">
+            <PlayIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200" />
+          </div>
+        )}
+      </div>
     </button>
   );
 };
@@ -211,9 +219,8 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
 
     if (isActive) {
         let animationClass = '';
-        if (isFadingOut) {
-            animationClass = 'animate-fade-out';
-        } else if (isPlaying) {
+        const shouldAnimate = isPlaying && !isFadingOut;
+        if (shouldAnimate) {
             animationClass = 'animate-gradient-border';
         }
 
@@ -227,13 +234,15 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
             <button
               ref={ref}
               onClick={handleItemClick}
-              className={`${baseClasses} relative group overflow-hidden bg-transparent dark:bg-black text-text-base dark:text-white shadow-lg scale-105 ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''} ${className}`}
+              className={`${baseClasses} relative group overflow-hidden bg-transparent dark:bg-black text-text-base dark:text-white shadow-lg scale-105 ${!shouldAnimate ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''} ${shouldAnimate ? 'dark:drop-shadow-glow-secondary' : ''} ${className}`}
               onAnimationEnd={handleAnimationEnd}
             >
+                {/* Animated Border Layer */}
                 <div
-                    className={`absolute -top-[150%] -left-[150%] w-[400%] h-[400%] bg-[conic-gradient(from_var(--angle),transparent_var(--fill-percentage),var(--border-color)_100%)] ${animationClass}`}
+                    className={`absolute -top-[150%] -left-[150%] w-[400%] h-[400%] bg-[conic-gradient(from_var(--rotate),transparent_var(--fill-percentage),var(--border-color)_100%)] ${animationClass}`}
                     style={{ zIndex: 1 }}
                 />
+                {/* Solid Background Layer */}
                 <div className="absolute z-[2] inset-[1.25px] bg-bg-base dark:bg-black rounded-full" />
                 <span className={`relative z-[3] inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>{text}</span>
             </button>

@@ -14,6 +14,9 @@ module.exports = {
         'glow-primary': '0 0 15px 3px var(--color-primary-glow)',
         'glow-ring-secondary': '0 0 8px 2px var(--color-secondary-glow)',
       },
+       dropShadow: {
+        'glow-secondary': '0 0 5px var(--color-secondary-glow)',
+      },
       colors: {
         primary: 'var(--color-primary)',
         secondary: 'var(--color-secondary)',
