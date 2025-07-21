@@ -28,6 +28,11 @@
     --color-anim-1: #c6c6c6;
     --color-anim-2: #1F2937;
     --color-anim-3: #000000;
+
+    /* New Glow Colors with Opacity */
+    --color-anim-glow-1: rgba(198, 198, 198, 0.15);
+    --color-anim-glow-2: rgba(31, 41, 55, 0.15); /* New middle glow color */
+    --color-anim-glow-3: rgba(0, 0, 0, 0.15);
   }
   
   /* The .dark selector remains unchanged. */
@@ -53,6 +58,11 @@
     --color-anim-1: #5ddcff;
     --color-anim-2: #3c67e3;
     --color-anim-3: #f059eb;
+
+    /* New Glow Colors with Opacity */
+    --color-anim-glow-1: rgba(93, 220, 255, 0.45);
+    --color-anim-glow-2: rgba(60, 103, 227, 0.45); /* New middle glow color */
+    --color-anim-glow-3: rgba(240, 89, 235, 0.45);
   }
 }
 

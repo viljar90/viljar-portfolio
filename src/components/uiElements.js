@@ -171,7 +171,7 @@ export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
       {/* New Glow Layer */}
       <div
         className={`absolute -inset-1 bg-[conic-gradient(from_var(--rotate),var(--color-anim-1),var(--color-anim-2),var(--color-anim-3))] rounded-full transition-opacity duration-300 animate-spin blur-md ${
-          isPlaying ? 'opacity-15 dark:opacity-45' : 'opacity-0'
+          isPlaying ? 'opacity-15 dark:opacity-30' : 'opacity-0'
         }`}
         style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
       />
@@ -234,7 +234,7 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
             <button
               ref={ref}
               onClick={handleItemClick}
-              className={`${baseClasses} relative group overflow-hidden bg-transparent dark:bg-black text-text-base dark:text-white shadow-lg scale-105 ${!shouldAnimate ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''} ${shouldAnimate ? 'dark:drop-shadow-glow-secondary' : ''} ${className}`}
+              className={`${baseClasses} relative group overflow-hidden bg-transparent dark:bg-black text-text-base dark:text-white shadow-lg scale-105 ${!shouldAnimate ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''} ${shouldAnimate ? 'dark:animate-cycle-glow' : ''} ${className}`}
               onAnimationEnd={handleAnimationEnd}
             >
                 {/* Animated Border Layer */}

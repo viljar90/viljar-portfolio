@@ -14,8 +14,8 @@ module.exports = {
         'glow-primary': '0 0 15px 3px var(--color-primary-glow)',
         'glow-ring-secondary': '0 0 8px 2px var(--color-secondary-glow)',
       },
-       dropShadow: {
-        'glow-secondary': '0 0 5px var(--color-secondary-glow)',
+      dropShadow: {
+        'glow-secondary': '0 0 6px var(--color-secondary-glow)',
       },
       colors: {
         primary: 'var(--color-primary)',
@@ -119,6 +119,11 @@ module.exports = {
           '70%': { transform: 'translateY(-10%) scale(0.95, 1.05)' },
           '100%': { transform: 'translateY(0) scale(1, 1)' },
         },
+        'cycle-glow-colors': {
+          '0%': { filter: 'drop-shadow(0 0 8px var(--color-anim-glow-1))' },
+          '50%': { filter: 'drop-shadow(0 0 8px var(--color-anim-glow-2))' },
+          '100%': { filter: 'drop-shadow(0 0 8px var(--color-anim-glow-3))' },
+        },
       },
       animation: {
         spin: 'spin 2s ease-in-out infinite',
@@ -135,8 +140,9 @@ module.exports = {
         'slide-out-right': 'slide-out-to-right 0.4s ease-out forwards',
         'wave': 'wave 2.5s infinite',
         'jump-bounce': 'jump-bounce 3s infinite',
-        'jump-bounce-home': 'jump-bounce 3s infinite -1s',
+        'jump-bounce-home': 'jump-bounce 3s infinite -2s',
         'jump-bounce-hover': 'jump-bounce-hover 0.8s ease-out',
+        'cycle-glow': 'cycle-glow-colors 4s ease-in-out infinite alternate',
       }
     },
   },
