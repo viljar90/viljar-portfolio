@@ -1,7 +1,7 @@
 // src/components/QuizIntro.js
 
 import React, { useState, useEffect } from 'react';
-import { BlinkingCursor, PlayIcon } from './uiElements';
+import { BlinkingCursor, PlayIcon, PrimaryButton } from './uiElements';
 import PropTypes from 'prop-types';
 
 const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
@@ -61,13 +61,13 @@ const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
             </p>
             {phase === 'done' && (
                 <div className="mt-12 animate-fadeIn">
-                    <button
+                    <PrimaryButton
                         onClick={onStart}
-                        className="bg-transparent dark:bg-primary hover:bg-primary dark:hover:bg-secondary text-primary dark:text-white hover:text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out transform hover:scale-105 text-lg md:text-xl inline-flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary border border-primary dark:border-transparent"
+                        icon={PlayIcon}
+                        className="text-lg md:text-xl py-3 px-6"
                     >
-                        <PlayIcon className="w-6 h-6" />
-                        <span>Play</span>
-                    </button>
+                        Play
+                    </PrimaryButton>
                 </div>
             )}
         </div>

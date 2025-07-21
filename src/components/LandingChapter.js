@@ -1,7 +1,7 @@
 // src/components/LandingChapter.js
 
 import React from 'react';
-import { BlinkingCursor, PotatoIcon, WavingHandIcon } from './uiElements';
+import { BlinkingCursor, PotatoIcon, WavingHandIcon, PrimaryButton } from './uiElements';
 import { MAIN_STAGES, CONTENT } from '../content';
 import PropTypes from 'prop-types';
 
@@ -47,7 +47,7 @@ const LandingChapter = ({
                   {showPotatoIcon ? (
                     <span className="flex items-center justify-center gap-x-2 md:gap-x-3">
                       {currentStepData.titleParts[0]}
-                      <PotatoIcon className="w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14 text-text-base" />
+                      <PotatoIcon className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-primary dark:text-secondary" />
                       {currentStepData.titleParts[1]}
                     </span>
                   ) : showWaveIcon ? (
@@ -88,14 +88,16 @@ const LandingChapter = ({
                     {mainAnimationPhase === 'home-buttons-appear' && (
                         <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
                             {CONTENT.HOME.BUTTON_OPTIONS.map((btnText) => (
-                                <button key={btnText} onClick={() => {
-                                    // *** FIXED LOGIC: Updated to handle navigation to 'work' or 'design' ***
-                                    if (btnText === "Design") onNavigateToChapter('design');
-                                    else if (btnText === "My Work") onNavigateToChapter('work');
-                                    else console.log(`${btnText} clicked!`);
-                                }}
-                                    className="bg-transparent dark:bg-primary hover:bg-primary dark:hover:bg-secondary text-primary dark:text-white hover:text-white font-semibold py-2.5 px-7 rounded-full shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full sm:w-auto text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary dark:focus-visible:ring-offset-bg-base border border-primary dark:border-transparent"
-                                >{btnText}</button>
+                                <PrimaryButton
+                                    key={btnText}
+                                    onClick={() => {
+                                        if (btnText === "Design") onNavigateToChapter('design');
+                                        else if (btnText === "My Work") onNavigateToChapter('work');
+                                        else console.log(`${btnText} clicked!`);
+                                    }}
+                                >
+                                    {btnText}
+                                </PrimaryButton>
                             ))}
                         </div>
                     )}

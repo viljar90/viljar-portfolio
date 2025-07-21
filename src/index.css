@@ -20,6 +20,9 @@
     --color-bg-base: #FFFFFF;        /* Pure white for the main background */
     --color-bg-overlay: #eeeff0;   /* White for light mode overlay */
     --color-bg-muted: #F9FAFB;      /* A very light off-white for cards/contrast */
+
+    --color-primary-glow: rgba(31, 41, 55, 0); /* No glow in light mode */
+    --color-secondary-glow: rgba(0, 0, 0, 0); /* No glow in light mode */
     
     /* Animation colors updated for a monochrome feel */
     --color-anim-1: #c6c6c6;
@@ -43,6 +46,9 @@
     --color-bg-base: #020617;
     --color-bg-overlay: #1e293b;
     --color-bg-muted: #04070c;
+
+    --color-primary-glow: rgba(56, 189, 248, 0.4); /* Blue glow in dark mode */
+    --color-secondary-glow: rgba(125, 211, 252, 0.4); /* Lighter blue glow for rings */
 
     --color-anim-1: #5ddcff;
     --color-anim-2: #3c67e3;

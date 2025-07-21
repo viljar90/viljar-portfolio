@@ -10,6 +10,10 @@ module.exports = {
       maxWidth: {
         '3.5xl': '53rem',
       },
+      boxShadow: {
+        'glow-primary': '0 0 15px 3px var(--color-primary-glow)',
+        'glow-ring-secondary': '0 0 8px 2px var(--color-secondary-glow)',
+      },
       colors: {
         primary: 'var(--color-primary)',
         secondary: 'var(--color-secondary)',

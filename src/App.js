@@ -486,8 +486,8 @@ function App() {
               title={`Go to ${dot.label}`}
               className={`block w-3.5 h-3.5 rounded-full transition-all duration-300 ease-in-out focus:outline-none ${
                 currentChapter === dot.name
-                  ? 'bg-primary dark:bg-secondary scale-125 shadow-lg border-2 border-primary dark:border-transparent'
-                  : 'bg-transparent hover:bg-text-muted dark:hover:bg-slate-500 scale-100 border border-text-muted'
+                  ? 'bg-primary dark:bg-secondary scale-125 shadow-lg dark:shadow-glow-ring-secondary border-2 border-primary dark:border-transparent'
+                  : 'bg-transparent hover:bg-text-muted dark:hover:border-secondary dark:hover:shadow-glow-ring-secondary scale-100 border border-text-muted'
               } focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted`}
               aria-label={`Go to ${dot.label} page`}
             />
