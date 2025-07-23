@@ -27,7 +27,7 @@ StatBox.propTypes = {
 const getResultMessage = (allAnswered, accuracy, answeredCount) => {
   if (!allAnswered) {
     if (answeredCount === 0) {
-      return "Skipped all? This won't get you anywhere in life!";
+      return "Skipped all? That mentality won't get you anywhere!";
     }
     return "Keep going! Just a few more to go.";
   }
@@ -35,14 +35,17 @@ const getResultMessage = (allAnswered, accuracy, answeredCount) => {
   if (accuracy === 100) {
     return "Perfect score! You gotta know me already!";
   }
-  if (accuracy >= 80) {
-    return "Excellent job! I'm impressed.";
+  if (accuracy >= 70) {
+    return "Wow! I'm impressed.";
   }
-  if (accuracy >= 60) {
-    return "Nice one! Not too shabby.";
+  if (accuracy >= 55) {
+    return "Excellent job! You got good instincts.";
   }
   if (accuracy >= 40) {
-    return "You did fine. The questions are tough!";
+    return "Nice one! Not too shabby.";
+  }
+  if (accuracy >= 30) {
+    return "You did ok. The questions are tough!";
   }
   return "Good effort! You never gave up!";
 };
@@ -83,7 +86,7 @@ const QuizResults = ({ quizAnswers, onReset, onSwitchView }) => {
               <span className="font-bold text-green-500">{correctAnswers}</span>
             </div>
             <div className="flex justify-between my-2">
-              <span className="font-semibold text-text-muted">Tries</span>
+              <span className="font-semibold text-text-muted">Misclicks</span>
               <span className="font-bold text-error">{wrongAttempts}</span>
             </div>
             <div className="flex justify-between">
@@ -112,7 +115,7 @@ const QuizResults = ({ quizAnswers, onReset, onSwitchView }) => {
               <span className="font-bold text-green-500">{correctAnswers}</span>
             </div>
             <div className="flex justify-between my-2">
-              <span className="font-semibold text-text-muted">Tries</span>
+              <span className="font-semibold text-text-muted">Misclicks</span>
               <span className="font-bold text-error">{wrongAttempts}</span>
             </div>
             <div className="flex justify-between">
@@ -135,7 +138,7 @@ const QuizResults = ({ quizAnswers, onReset, onSwitchView }) => {
             {allAnswered ? 'Play Again' : 'Start Over'}
         </SecondaryButton>
         <PrimaryButton onClick={() => onSwitchView('Overview')}>
-            Overview
+            Work Overview
         </PrimaryButton>
       </div>
     </div>
