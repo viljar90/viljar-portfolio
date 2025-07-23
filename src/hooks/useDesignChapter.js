@@ -15,7 +15,7 @@ export const useDesignChapter = (currentChapter) => {
   const [designStepAnimationPhase, setDesignStepAnimationPhase] = useState('typing-title');
   const [isPlayingDesign, setIsPlayingDesign] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const [navigationMode, setNavigationMode] = useState('manual');
+  const [navigationMode, setNavigationMode] = useState('automatic');
   const [error, setError] = useState(null);
   const [isDesignChapterFinished, setIsDesignChapterFinished] = useState(false);
   const wasPlayingRef = useRef(false);
@@ -71,7 +71,7 @@ export const useDesignChapter = (currentChapter) => {
   }, []);
 
   const navigateToStage = useCallback((stageKey) => {
-    setNavigationMode('manual');
+    setNavigationMode('automatic');
     resetForStage(stageKey, true);
   }, [resetForStage]);
 
