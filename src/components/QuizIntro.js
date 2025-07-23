@@ -64,7 +64,6 @@ const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
                     <PrimaryButton
                         onClick={onStart}
                         icon={PlayIcon}
-                        className="text-lg md:text-xl py-3 px-6"
                     >
                         Play
                     </PrimaryButton>
