@@ -171,7 +171,7 @@ export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
       {/* New Glow Layer */}
       <div
         className={`absolute -inset-1 bg-[conic-gradient(from_var(--rotate),var(--color-anim-1),var(--color-anim-2),var(--color-anim-3))] rounded-full transition-opacity duration-300 animate-spin blur-md ${
-          isPlaying ? 'opacity-15 dark:opacity-30' : 'opacity-0'
+          isPlaying ? 'opacity-15 dark:opacity-35' : 'opacity-0'
         }`}
         style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
       />
@@ -275,11 +275,11 @@ export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkM
     };
 
     return (
-        <div className={`flex items-center bg-bg-muted p-1 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
+        <div className={`flex items-center bg-bg-base p-1 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 transform transition-transform duration-200 hover:scale-105`}>
             {options.map((option) => {
                 const isActive = activeOption === option;
                 const isClicked = clickedOption === option;
-                const activeClasses = `bg-bg-base dark:bg-black text-text-base dark:text-white ring-1 ring-gray-500 dark:ring-gray-700`;
+                const activeClasses = `bg-bg-base text-text-base dark:text-white ring-1 ring-gray-500 dark:ring-gray-700`;
                 const inactiveClasses = `text-text-interactive-muted hover:text-text-base dark:hover:text-white`;
 
                 return (

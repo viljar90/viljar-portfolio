@@ -47,7 +47,7 @@ const BottomNavigation = ({
         const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
         const isLastQuestion = work.workView === 'Quiz' && work.workStepIndex === QUIZZES.length;
 
-        const nonAnimatedButtonClasses = "group h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex-shrink-0 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-105 active:scale-95 bg-bg-base dark:bg-black text-icon-interactive hover:text-icon-base ring-1 ring-gray-500 dark:ring-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-slate-800";
+        const nonAnimatedButtonClasses = "group h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex-shrink-0 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-105 active:scale-95 bg-bg-base text-icon-interactive hover:text-icon-base ring-1 ring-gray-500 dark:ring-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-slate-800";
         const iconAnimationClass = isClicked ? 'animate-click-bounce' : '';
 
         if (currentChapter === 'work' && work.workView === 'Quiz' && !showReplayButtonForChapters) {
