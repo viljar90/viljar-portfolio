@@ -6,6 +6,7 @@ import LandingChapter from './LandingChapter';
 import DesignChapter from './DesignChapter';
 import WorkChapter from './WorkChapter';
 import QuizIntro from './QuizIntro';
+import QuizResults from './QuizResults'; // Import the new component
 import ProjectOverview from './ProjectOverview';
 import { QUIZZES, PROJECTS } from '../content';
 
@@ -25,6 +26,8 @@ const ChapterContent = ({
   showCursorDesignTitle,
   showCursorDesignMainText,
 }) => {
+  const isLastStep = work.workStepIndex === QUIZZES.length + 1;
+
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative px-4 sm:px-16">
       {currentChapter === 'main' && (
@@ -57,25 +60,36 @@ const ChapterContent = ({
       )}
       {currentChapter === 'work' &&
         (work.workView === 'Quiz' ? (
-          work.workStepIndex === 0 ? (
-            <QuizIntro
-              onStart={() => work.handleNextQuestion()}
-              isCompleted={work.introCompleted}
-              onIntroViewed={work.markIntroAsCompleted}
-            />
+            <>
+              {work.workStepIndex === 0 && (
+                <QuizIntro
+                  onStart={() => work.handleNextQuestion()}
+                  isCompleted={work.introCompleted}
+                  onIntroViewed={work.markIntroAsCompleted}
+                />
+              )}
+              {work.workStepIndex > 0 && work.workStepIndex <= QUIZZES.length && (
+                <WorkChapter
+                  darkMode={darkMode}
+                  quiz={QUIZZES[work.workStepIndex - 1]}
+                  previousQuiz={work.previousWorkStepIndex !== null ? QUIZZES[work.previousWorkStepIndex - 1] : null}
+                  onAnswer={work.handleQuizAnswer}
+                  answerState={work.quizAnswers[QUIZZES[work.workStepIndex - 1]?.id]}
+                  onReplayQuestion={work.handleReplayQuestion}
+                  workAnimationDirection={work.workAnimationDirection}
+                  onAnimationEnd={() => work.setPreviousWorkStepIndex(null)}
+                />
+              )}
+              {isLastStep && (
+                <QuizResults
+                  quizAnswers={work.quizAnswers}
+                  onReplay={work.handleReplayQuestion}
+                  onReset={work.resetWorkChapter}
+                  onSwitchView={work.setWorkView} 
+                />
+              )}
+            </>
           ) : (
-            <WorkChapter
-              darkMode={darkMode}
-              quiz={QUIZZES[work.workStepIndex - 1]}
-              previousQuiz={work.previousWorkStepIndex !== null ? QUIZZES[work.previousWorkStepIndex - 1] : null}
-              onAnswer={work.handleQuizAnswer}
-              answerState={work.quizAnswers[QUIZZES[work.workStepIndex - 1]?.id]}
-              onReplayQuestion={work.handleReplayQuestion}
-              workAnimationDirection={work.workAnimationDirection}
-              onAnimationEnd={() => work.setPreviousWorkStepIndex(null)}
-            />
-          )
-        ) : (
           <div className="w-full overflow-hidden h-96 flex items-center justify-center relative">
             <ProjectOverview
               projects={PROJECTS}

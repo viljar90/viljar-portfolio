@@ -15,7 +15,12 @@ export const useWorkChapter = () => {
   const [workAnimationDirection, setWorkAnimationDirection] = useState('next');
 
 
-  const WORK_NAV_ITEMS = useMemo(() => [{ name: 'Start' }, ...QUIZZES.map((quiz, index) => ({ name: `Question ${index + 1}` }))], []);
+  const WORK_NAV_ITEMS = useMemo(() => [
+    { name: 'Start' },
+    ...QUIZZES.map((quiz, index) => ({ name: `Question ${index + 1}` })),
+    { name: 'Results' }
+  ], []);
+
 
   const PROJECT_NAV_ITEMS = useMemo(() => PROJECTS.map(project => ({ name: project.navText, id: project.id })), []);
 
@@ -26,10 +31,22 @@ export const useWorkChapter = () => {
   };
 
   const handleQuizAnswer = (quizId, option) => {
-    setQuizAnswers(prev => ({
+    setQuizAnswers(prev => {
+      const existingAnswer = prev[quizId] || { attempts: 0 };
+      
+      if (existingAnswer.correct) {
+        return prev;
+      }
+
+      return {
         ...prev,
-        [quizId]: { selected: option.text, correct: option.isCorrect }
-    }));
+        [quizId]: {
+          selected: option.text,
+          correct: option.isCorrect,
+          attempts: existingAnswer.attempts + 1,
+        }
+      };
+    });
   };
 
   const handleReplayQuestion = (quizId) => {
@@ -90,14 +107,25 @@ export const useWorkChapter = () => {
     }
   };
 
-  const resetWorkChapter = () => {
+  const resetWorkChapter = useCallback(() => {
     setWorkStepIndex(0);
     setQuizAnswers({});
     setIntroCompleted(false);
     setCurrentProjectIndex(0);
     setPreviousProjectIndex(null);
     setPreviousWorkStepIndex(null);
-  }
+  }, []);
+
+  const handleWorkChapterCentralButtonClick = useCallback(() => {
+    // If we're on the results page, reset the quiz.
+    if (workStepIndex > QUIZZES.length) {
+        resetWorkChapter();
+    } else {
+        // Otherwise, the button's action is to skip to the next question.
+        handleNextQuestion();
+    }
+  }, [workStepIndex, handleNextQuestion, resetWorkChapter]);
+
 
   return {
     // State values
@@ -132,5 +160,6 @@ export const useWorkChapter = () => {
     handleNextQuestion,
     handlePrevQuestion,
     handleWorkNavItemClick,
+    handleWorkChapterCentralButtonClick, // Export the new handler
   };
 };

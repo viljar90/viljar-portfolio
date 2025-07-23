@@ -123,30 +123,41 @@ export const PrimaryButton = ({ onClick, children, icon: Icon, className = '' })
     if (onClick) {
         onClick();
     }
-    setTimeout(() => setIsClicked(false), 300); // Animation duration
+    setTimeout(() => setIsClicked(false), 300);
   };
 
-  const baseClasses = `
-    font-semibold py-2.5 px-7 rounded-full shadow-md hover:shadow-lg dark:shadow-none dark:hover:shadow-glow-primary 
-    transition-all duration-200 ease-in-out 
-    transform hover:scale-105 w-full sm:w-auto text-sm md:text-base 
-    focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 
-    focus-visible:ring-secondary dark:focus-visible:ring-offset-bg-base 
-    border border-primary
-  `;
-
-  const themeClasses = `
-    bg-transparent hover:bg-primary dark:hover:bg-primary 
-    text-base hover:text-white dark:hover:text-white
-  `;
-
-  const contentClasses = `inline-flex items-center justify-center space-x-2 ${isClicked ? 'animate-text-bounce' : ''}`;
+  const baseClasses = `font-semibold py-2.5 px-7 rounded-full shadow-md hover:shadow-lg dark:shadow-none dark:hover:shadow-glow-primary transition-all duration-200 ease-in-out transform hover:scale-105 w-full sm:w-auto text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary dark:focus-visible:ring-offset-bg-base border border-primary`;
+  const themeClasses = `bg-transparent hover:bg-primary dark:hover:bg-primary text-base hover:text-white dark:hover:text-white`;
+  const contentClasses = `inline-flex items-center justify-center ${isClicked ? 'animate-text-bounce' : ''} ${Icon ? 'space-x-2 relative top-[2px]' : ''}`;
 
   return (
-    <button
-      onClick={handleClick}
-      className={`${baseClasses} ${themeClasses} ${className}`}
-    >
+    <button onClick={handleClick} className={`${baseClasses} ${themeClasses} ${className}`}>
+      <span className={contentClasses}>
+        {Icon && <Icon className="w-5 h-5" />}
+        <span>{children}</span>
+      </span>
+    </button>
+  );
+};
+
+// --- Secondary Button Component ---
+export const SecondaryButton = ({ onClick, children, icon: Icon, className = '' }) => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(true);
+    if (onClick) {
+        onClick();
+    }
+    setTimeout(() => setIsClicked(false), 300);
+  };
+
+  const baseClasses = `font-semibold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full sm:w-auto text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary dark:focus-visible:ring-offset-bg-base`;
+  const themeClasses = `bg-transparent border border-text-muted dark:border-gray-700 text-text-muted hover:border-text-base dark:hover:border-white hover:text-text-base dark:hover:text-white`;
+  const contentClasses = `inline-flex items-center justify-center ${isClicked ? 'animate-text-bounce' : ''} ${Icon ? 'space-x-2 relative top-[2px]' : ''}`;
+
+  return (
+    <button onClick={handleClick} className={`${baseClasses} ${themeClasses} ${className}`}>
       <span className={contentClasses}>
         {Icon && <Icon className="w-5 h-5" />}
         <span>{children}</span>

@@ -335,40 +335,6 @@ function App() {
     design.navigateToStage(stageKey);
   }, [currentChapter, design]);
 
-  const togglePlayPause = () => {
-    if (currentChapter === 'main') {
-      landing.togglePlayPause();
-    } else if (currentChapter === 'design') {
-      design.togglePlayPause();
-    }
-  };
-
-  const handleReplayChapter = () => {
-    navigatedManually.current = false;
-    if (currentChapter === 'main') {
-      landing.setActiveMainStep(MAIN_STAGES.INSULTS);
-      landing.setIsPlaying(true);
-    } else if (currentChapter === 'design') {
-      design.replay();
-    } else if (currentChapter === 'work') {
-        work.resetWorkChapter();
-    }
-  };
-
-  const handleCentralButtonClick = () => {
-    const isMainChapterFinalState = currentChapter === 'main' && landing.activeMainStep === MAIN_STAGES.HOME && !landing.isPlaying;
-    const isDesignChapterFinalState = currentChapter === 'design' && design.isDesignChapterFinished;
-    const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
-    const isLastQuizQuestion = currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex === QUIZZES.length;
-
-    if (isMainChapterFinalState || isDesignChapterFinalState || allQuizzesAnswered || isLastQuizQuestion) {
-        handleReplayChapter();
-    } else if (currentChapter === 'work' && work.workView === 'Quiz') {
-        handleNextLine();
-    } else {
-        togglePlayPause();
-    }
-  };
   
   const toggleDarkMode = () => {
     setIsThemeToggleClicked(true);
@@ -397,17 +363,26 @@ function App() {
 
   const currentPlayPauseButtonState = currentChapter === 'main' ? landing.isPlaying : (currentChapter === 'design' ? design.isPlayingDesign : false);
 
+  // src/App.js
+
   let activeNavStepOrStage = '';
-  if (currentChapter === 'main') activeNavStepOrStage = landing.activeMainStep;
-  else if (currentChapter === 'design') activeNavStepOrStage = design.activeDesignStageKey;
-  else if (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) {
+  if (currentChapter === 'main') {
+    activeNavStepOrStage = landing.activeMainStep;
+  } else if (currentChapter === 'design') {
+    activeNavStepOrStage = design.activeDesignStageKey;
+  } else if (currentChapter === 'work' && work.workView === 'Quiz') {
+    if (work.workStepIndex === 0) {
+      activeNavStepOrStage = 'Start';
+    } else if (work.workStepIndex > QUIZZES.length) {
+      activeNavStepOrStage = 'Results';
+    } else {
       const quiz = QUIZZES[work.workStepIndex - 1];
       activeNavStepOrStage = work.quizAnswers[quiz.id]?.correct ? quiz.title : `Question ${work.workStepIndex}`;
+    }
   } else if (currentChapter === 'work' && work.workView === 'Overview') {
-      activeNavStepOrStage = work.PROJECT_NAV_ITEMS[work.currentProjectIndex]?.id;
-  }
-   else if (currentChapter === 'work') {
-      activeNavStepOrStage = 'Start';
+    activeNavStepOrStage = work.PROJECT_NAV_ITEMS[work.currentProjectIndex]?.id;
+  } else if (currentChapter === 'work') {
+    activeNavStepOrStage = 'Start';
   }
 
   const itemNavRefs = currentChapter === 'main' ? mainItemRefs : (currentChapter === 'design' ? designItemRefs : workItemRefs);
@@ -532,7 +507,13 @@ function App() {
           isDarkMode={darkMode}
           showLeftFade={showLeftFade}
           showRightFade={showRightFade}
-          onCentralButtonClick={handleCentralButtonClick}
+          onCentralButtonClick={
+          currentChapter === 'work'
+            ? work.handleWorkChapterCentralButtonClick
+            : currentChapter === 'design'
+            ? (design.isDesignChapterFinished ? design.replay : design.togglePlayPause)
+            : landing.togglePlayPause // Default to landing page logic
+          }
           onNavItemClick={handleNavItemClick}
           scrollContainerRef={scrollContainerRef}
           itemNavRefs={itemNavRefs}
