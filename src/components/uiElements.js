@@ -182,7 +182,7 @@ export const AnimatedBorderButton = ({ isPlaying, ...props }) => {
         }`}
         style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
       />
-      <div className={`relative z-10 w-full h-full flex items-center justify-center bg-bg-base dark:bg-black rounded-full text-icon-interactive group-hover:text-icon-base ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''}`}>
+      <div className={`relative z-10 w-full h-full flex items-center justify-center bg-bg-base rounded-full text-icon-interactive group-hover:text-icon-base ${!isPlaying ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''}`}>
         {isPlaying ? (
           <div key="pause" className="animate-scale-in">
             <PauseIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200" />
@@ -234,7 +234,7 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
             <button
               ref={ref}
               onClick={handleItemClick}
-              className={`${baseClasses} relative group overflow-hidden bg-transparent dark:bg-black text-text-base dark:text-white shadow-lg scale-105 ${!shouldAnimate ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''} ${shouldAnimate ? 'dark:animate-cycle-glow' : ''} ${className}`}
+              className={`${baseClasses} relative group overflow-hidden bg-transparent dark:bg-transparent text-text-base dark:text-white shadow-lg scale-105 ${!shouldAnimate ? 'ring-1 ring-gray-500 dark:ring-gray-700' : ''} ${shouldAnimate ? 'dark:animate-cycle-glow' : ''} ${className}`}
               onAnimationEnd={handleAnimationEnd}
             >
                 {/* Animated Border Layer */}
@@ -243,7 +243,7 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
                     style={{ zIndex: 1 }}
                 />
                 {/* Solid Background Layer */}
-                <div className="absolute z-[2] inset-[1.25px] bg-bg-base dark:bg-black rounded-full" />
+                <div className="absolute z-[2] inset-[1.25px] bg-bg-base rounded-full" />
                 <span className={`relative z-[3] inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>{text}</span>
             </button>
         );
@@ -331,7 +331,7 @@ export const ViewSwitcherButton = ({ currentView, onClick, isDarkMode }) => {
     return (
         <button
             onClick={handleClick}
-            className={`h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-transparent dark:bg-bg-muted text-icon-interactive hover:text-icon-base transform hover:scale-105 active:scale-95 shadow-md`}
+            className={`h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-transparent text-icon-interactive hover:text-icon-base transform hover:scale-105 active:scale-95 shadow-md`}
             aria-label={`Switch to ${currentView === 'Slideshow' ? 'Document' : 'Slideshow'} view`}
         >
             <span className={isClicked ? 'animate-click-bounce' : ''}>
