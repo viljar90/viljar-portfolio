@@ -1,11 +1,11 @@
 // src/components/WhyDesignIntro.js
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BlinkingCursor, PlayIcon, PrimaryButton } from './uiElements';
 import PropTypes from 'prop-types';
 import { WHY_DESIGN_CONTENT } from '../content';
 
-const WhyDesignIntro = ({ onStart }) => {
+const WhyDesignIntro = ({ onStart, isPlaying, onAnimationComplete }) => {
     const { steps } = WHY_DESIGN_CONTENT.intro;
     const TYPEWRITER_SPEED = 35;
 
@@ -13,8 +13,21 @@ const WhyDesignIntro = ({ onStart }) => {
     const [displayedTitle, setDisplayedTitle] = useState('');
     const [displayedMainText, setDisplayedMainText] = useState('');
     const [phase, setPhase] = useState('typing-title');
+    const isPlayingRef = useRef(isPlaying);
 
     useEffect(() => {
+        isPlayingRef.current = isPlaying;
+    }, [isPlaying]);
+
+    useEffect(() => {
+        // When isPlaying becomes false, we just stop.
+        if (!isPlaying) return;
+
+        // When the component appears and should play, reset if needed.
+        if (phase === 'done') {
+            return;
+        }
+
         const currentStep = steps[currentStepIndex];
         let timer;
 
@@ -37,12 +50,12 @@ const WhyDesignIntro = ({ onStart }) => {
         } else if (phase === 'pausing') {
             if (currentStepIndex < steps.length - 1) {
                 timer = setTimeout(() => {
+                    if (!isPlayingRef.current) return;
                     const nextStep = steps[currentStepIndex + 1];
                     setCurrentStepIndex(currentStepIndex + 1);
                     setDisplayedMainText('');
                     
                     if (nextStep.title === currentStep.title) {
-                        // If the title is the same, skip re-typing it
                         setPhase('typing-main');
                     } else {
                         setDisplayedTitle('');
@@ -51,28 +64,31 @@ const WhyDesignIntro = ({ onStart }) => {
                 }, 1200); // Pause between steps
             } else {
                 setPhase('done');
+                if (onAnimationComplete) {
+                    onAnimationComplete();
+                }
             }
         }
 
         return () => clearTimeout(timer);
-    }, [phase, displayedTitle, displayedMainText, currentStepIndex, steps]);
+    }, [phase, displayedTitle, displayedMainText, currentStepIndex, steps, isPlaying, onAnimationComplete]);
 
     return (
         <div className="text-center">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary dark:text-secondary mb-4 min-h-[1.2em]">
                 {displayedTitle}
-                {phase === 'typing-title' && <BlinkingCursor sizeClass="h-12 md:h-14" />}
+                {isPlaying && phase === 'typing-title' && <BlinkingCursor sizeClass="h-12 md:h-14" />}
             </h1>
             <p className="text-2xl md:text-3xl text-text-base dark:text-text-muted min-h-[3em]" style={{ whiteSpace: 'pre-line' }}>
               {displayedMainText}
-              {phase === 'typing-main' && <BlinkingCursor sizeClass="h-8 md:h-9" />}
+              {isPlaying && phase === 'typing-main' && <BlinkingCursor sizeClass="h-8 md:h-9" />}
             </p>
             <div className="mt-12">
                 <PrimaryButton
                     onClick={onStart}
                     icon={PlayIcon}
                 >
-                    Play
+                    Start
                 </PrimaryButton>
             </div>
         </div>
@@ -81,6 +97,8 @@ const WhyDesignIntro = ({ onStart }) => {
 
 WhyDesignIntro.propTypes = {
   onStart: PropTypes.func.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  onAnimationComplete: PropTypes.func.isRequired,
 };
 
 export default WhyDesignIntro;

@@ -21,19 +21,15 @@ import ViewSwitcher from './components/ViewSwitcher';
 import { SunIcon, MoonIcon, PotatoIcon } from './components/uiElements';
 import InteractivePillNav from './components/InteractivePillNav';
 
-// --- Animation Configuration ---
 const ANIMATION_DURATION_CHAPTER = "0.5s";
 
-// --- Main App Component ---
 function App() {
-  // --- Top-Level State ---
   const [darkMode, setDarkMode] = useState(true);
   const [currentChapter, setCurrentChapter] = useState('main');
   const [showLeftFade, setShowLeftFade] = useState(false);
   const [showRightFade, setShowRightFade] = useState(false);
   const [isThemeToggleClicked, setIsThemeToggleClicked] = useState(false);
 
-  // --- Shared Refs ---
   const mainChapterRef = useRef(null);
   const designChapterRef = useRef(null);
   const workChapterRef = useRef(null);
@@ -45,17 +41,14 @@ function App() {
   const scrollTimeoutRef = useRef(null);
   const isProgrammaticScrollRef = useRef(false);
 
-  // --- Logic Hooks ---
   const landing = useLandingChapter(currentChapter, navigatedManually);
   const design = useDesignChapter(currentChapter);
   const work = useWorkChapter();
 
-  // --- Chapter Animation Classes ---
   const [mainChapterAnimClass, setMainChapterAnimClass] = useState(`animate-[slideUpIn_${ANIMATION_DURATION_CHAPTER}_ease-out_forwards]`);
   const [designChapterAnimClass, setDesignChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
   const [workChapterAnimClass, setWorkChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
 
-  // --- useEffect Hooks ---
   useEffect(() => {
     const hour = new Date().getHours();
     const isNight = hour >= 18 || hour < 6;
@@ -116,7 +109,7 @@ function App() {
         refs = designItemRefs;
     } else if (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN) {
       items = WHY_DESIGN_NAV_ITEMS;
-      activeIndex = 0; // Only one item for now
+      activeIndex = 0;
       refs = designItemRefs;
     } else if (currentChapter === 'work' && work.workView === 'Quiz') {
         items = work.WORK_NAV_ITEMS;
@@ -335,7 +328,7 @@ function App() {
       document.documentElement.classList.toggle('dark', newMode);
       return newMode;
     });
-    setTimeout(() => setIsThemeToggleClicked(false), 400); // Reset after animation
+    setTimeout(() => setIsThemeToggleClicked(false), 400);
   };
 
   const handleWorkViewChange = (newView) => {
@@ -352,7 +345,11 @@ function App() {
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) ||
     (currentChapter === 'work' && work.workView === 'Overview');
 
-  const currentPlayPauseButtonState = currentChapter === 'main' ? landing.isPlaying : (currentChapter === 'design' ? design.isPlayingDesign : false);
+  const currentPlayPauseButtonState = 
+    currentChapter === 'main' ? landing.isPlaying 
+    : (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN) ? design.isPlayingDesign
+    : (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN) ? design.isPlayingWhyDesignIntro
+    : false;
 
   let activeNavStepOrStage = '';
   if (currentChapter === 'main') {
@@ -498,11 +495,10 @@ function App() {
           showLeftFade={showLeftFade}
           showRightFade={showRightFade}
           onCentralButtonClick={
-          currentChapter === 'work'
-            ? work.handleWorkChapterCentralButtonClick
-            : (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN)
-            ? (design.isDesignChapterFinished ? design.replay : design.togglePlayPause)
-            : landing.togglePlayPause
+            currentChapter === 'work' ? work.handleWorkChapterCentralButtonClick :
+            currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN ? (design.isDesignChapterFinished ? design.replay : design.togglePlayPause) :
+            currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN ? design.togglePlayPauseWhyDesignIntro :
+            landing.togglePlayPause
           }
           onNavItemClick={handleNavItemClick}
           scrollContainerRef={scrollContainerRef}

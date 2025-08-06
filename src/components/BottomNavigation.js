@@ -40,8 +40,9 @@ const BottomNavigation = ({
         const isMainChapterFinalState = currentChapter === 'main' && activeNavItem === 'Home' && !isPlaying;
         const isDesignChapterFinalState =
             currentChapter === 'design' &&
+            design.designView === DESIGN_VIEWS.WHAT_DESIGN &&
             !isPlaying &&
-            design?.isDesignChapterFinished;
+            design.isDesignChapterFinished;
 
         const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
         const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
@@ -73,7 +74,7 @@ const BottomNavigation = ({
                 </button>
             );
         }
-
+        
         return (
             <AnimatedBorderButton
                 isPlaying={isPlaying}
@@ -111,7 +112,6 @@ const BottomNavigation = ({
 }
 
     const isDesignDocumentView = currentChapter === 'design' && design.documentView === 'Document';
-    const isWhyDesignView = currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN;
     const isLastDesignStage = design.activeDesignStageKey === WHAT_DESIGN_NAV_ITEMS[WHAT_DESIGN_NAV_ITEMS.length - 1].name;
 
     return (
@@ -130,8 +130,6 @@ const BottomNavigation = ({
                             <SkipIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105" />
                         )}
                     </button>
-                ) : isWhyDesignView ? (
-                  <div className="h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex-shrink-0"></div>
                 ) : (
                     renderCentralButton()
                 )}
@@ -157,9 +155,10 @@ const BottomNavigation = ({
                                 }
                             }
 
-                            const isPlayingForNavItem = isDesignDocumentView
+                            const isPlayingForNavItem = (isDesignDocumentView || design.designView === DESIGN_VIEWS.WHY_DESIGN)
                                 ? false
                                 : (activeNavItem === navIdentifier && isPlaying && !isFadingOut);
+
 
                             return (
                                 <InteractiveOblongNavItem

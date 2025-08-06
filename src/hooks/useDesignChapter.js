@@ -26,19 +26,33 @@ export const useDesignChapter = (currentChapter) => {
   const [previousDesignStageKey, setPreviousDesignStageKey] = useState(null);
   const [designAnimationDirection, setDesignAnimationDirection] = useState('next');
 
-  // State for "Why Design"
-  const [whyDesignStep, setWhyDesignStep] = useState('intro'); // 'intro', 'game', 'results'
+  // New states for "Why Design"
+  const [whyDesignStep, setWhyDesignStep] = useState('intro');
+  const [isPlayingWhyDesignIntro, setIsPlayingWhyDesignIntro] = useState(false);
+  const [whyDesignIntroCompleted, setWhyDesignIntroCompleted] = useState(false);
 
   const handleStartWhyDesignGame = () => {
     console.log('Starting Why Design Game...');
     setWhyDesignStep('game');
+    setIsPlayingWhyDesignIntro(false);
   };
+
+  const togglePlayPauseWhyDesignIntro = useCallback(() => {
+    setIsPlayingWhyDesignIntro(prev => !prev);
+  }, []);
+  
+  // *** THE FIX: Create a stable callback function ***
+  const whyDesignIntroAnimationCompleted = useCallback(() => {
+    setIsPlayingWhyDesignIntro(false);
+    setWhyDesignIntroCompleted(true);
+  }, []);
+
 
   useEffect(() => {
     if (previousDesignStageKey !== null) {
       const timer = setTimeout(() => {
         setPreviousDesignStageKey(null);
-      }, 400); // Animation duration
+      }, 400);
       return () => clearTimeout(timer);
     }
   }, [previousDesignStageKey]);
@@ -168,7 +182,7 @@ export const useDesignChapter = (currentChapter) => {
     setIsDesignChapterFinished(false);
     resetForStage(WHAT_DESIGN_NAV_ITEMS[0].name, true);
   }, [resetForStage]);
-
+  
   const toggleDocumentView = useCallback(() => {
     setDocumentView(prevView => (prevView === 'Slideshow' ? 'Document' : 'Slideshow'));
     setIsPlayingDesign(false);
@@ -178,12 +192,17 @@ export const useDesignChapter = (currentChapter) => {
     if (currentChapter !== 'design') {
       wasPlayingRef.current = isPlayingDesign;
       setIsPlayingDesign(false);
-    } else if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
-      if (!isDesignChapterFinished && documentView === 'Slideshow') {
-        setDisplayedDesignTitleChars('');
-        setDisplayedDesignMainTextChars('');
-        setDesignStepAnimationPhase('typing-title');
-        setIsPlayingDesign(true);
+      setIsPlayingWhyDesignIntro(false);
+    } else {
+      if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
+        if (!isDesignChapterFinished && documentView === 'Slideshow') {
+          setDisplayedDesignTitleChars('');
+          setDisplayedDesignMainTextChars('');
+          setDesignStepAnimationPhase('typing-title');
+          setIsPlayingDesign(true);
+        }
+      } else if (designView === DESIGN_VIEWS.WHY_DESIGN) {
+        setIsPlayingWhyDesignIntro(!whyDesignIntroCompleted);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -302,7 +321,10 @@ export const useDesignChapter = (currentChapter) => {
     setDesignView,
     documentView,
     whyDesignStep,
+    isPlayingWhyDesignIntro,
     handleStartWhyDesignGame,
+    togglePlayPauseWhyDesignIntro,
+    whyDesignIntroAnimationCompleted, // <-- Expose the new stable function
     previousDesignStageKey,
     designAnimationDirection,
     navigateToStage,

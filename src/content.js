@@ -33,7 +33,7 @@ export const CONTENT = {
         { title: "Design Potato", mainText: "PRODUCT · UX · UI · AI", pause: 1000 },
         { title: "Viljar Designer", titleParts: ["Viljar", "Designer"], icon: "potato", mainText: "PRODUCT · UX · UI · AI", pause: 500 },
     ],
-    QUESTION: "", //used to be the get to know text
+    QUESTION: "",
   },
   HOME: {
     BUTTON_OPTIONS: ["Design", "My Work", "Me"]
@@ -49,9 +49,8 @@ export const WHY_DESIGN_CONTENT = {
   intro: {
     steps: [
       { title: "Why Design", mainText: "Money is not talked about enough in design." },
-      { title: "Why Design", mainText: "Probably because quantifying is difficult." },
-      { title: "Why Design", mainText: "Success is harder to measure than failure" },
-      { title: "Why Design", mainText: "Play the game to understand why design can make or break the bank." },
+      { title: "Why Design", mainText: "Perhaps because quantifying it to numbers isn't very easy." },
+      { title: "Why Design", mainText: "Play the game to undertstand why design can make or break the bank." },
     ]
   }
 };
@@ -65,7 +64,6 @@ export const DESIGN_STAGE_KEYS = {
   WHAT: "WHAT_KEY",
   PRODUCT_DESIGNER: "PRODUCT_DESIGNER_KEY",
   UX_RESEARCHER: "UX_RESEARCHER_KEY",
-  //SERVICE_DESIGNER: "SERVICE_DESIGNER_KEY",
   UX_DESIGNER: "UX_DESIGNER_KEY",
   UI_DESIGNER: "UI_DESIGNER_KEY",
 };
@@ -75,7 +73,6 @@ export const WHAT_DESIGN_NAV_ITEMS = [
   { name: DESIGN_STAGE_KEYS.WHAT },
   { name: DESIGN_STAGE_KEYS.PRODUCT_DESIGNER },
   { name: DESIGN_STAGE_KEYS.UX_RESEARCHER },
-  //{ name: DESIGN_STAGE_KEYS.SERVICE_DESIGNER },
   { name: DESIGN_STAGE_KEYS.UX_DESIGNER },
   { name: DESIGN_STAGE_KEYS.UI_DESIGNER },
 ];
@@ -117,14 +114,9 @@ export const DESIGN_CONTENT = {
       { title: "What I do", mainText: "Human minds are far more complex than computers." },
       { title: "What I do", mainText: "But unlike computers, minds get bored and easily frustrated..."},
       { title: "What I do", mainText: "...they reject needless complexity." },
-      //{ title: "What I do", mainText: "They seek the path of least resistance." },
       { title: "What I do", mainText: "So let me demonstrate the most important skill of a designer..." },
       { title: "What I do", mainText: "...by making complicated things seem simple." },
       { title: "What I do", mainText: "Understand what I do in an engaging and simple to follow way." }
-      //{ title: "What I do", mainText: "To make it clear how I can help..." },
-      //{ title: "What I do", mainText: "...or perhaps you need a different designer." },
-      //{ title: "What I do", mainText: "I know many good ones." },
-      //{ title: "What I do", mainText: "The roles marked with a ★ are my specialties." },
     ]
   },
   [DESIGN_STAGE_KEYS.PRODUCT_DESIGNER]: {
@@ -155,15 +147,7 @@ export const DESIGN_CONTENT = {
       { title: "The UX Researcher", mainText: "The Commercial Market Researcher answers this crucial question." },
       { title: "The UX Researcher", mainText: "Their data on potential tenants and their critical needs makes my design commercially sound." },
     ]
-  },/*
-  [DESIGN_STAGE_KEYS.SERVICE_DESIGNER]: {
-    navText: "Service Designer",
-    steps: [
-      { title: "The Service Designer", mainText: "The user's journey doesn't start or end with the product I design." },
-      { title: "The Service Designer", mainText: "The Supply Chain and Logistics Expert designs this bigger picture." },
-      { title: "The Service Designer", mainText: "They map the entire end-to-end customer experience, and my work must fit seamlessly within it." },
-    ]
-  },*/
+  },
   [DESIGN_STAGE_KEYS.UX_DESIGNER]: {
     navText: "UX Designer",
     steps: [
