@@ -49,7 +49,7 @@ export const WHY_DESIGN_CONTENT = {
   intro: {
     steps: [
       { title: "Why Design", mainText: "Money is not talked about enough in design." },
-      { title: "Why Design", mainText: "Probably because quantifying it to numbers isn't so simple." },
+      { title: "Why Design", mainText: "Probably because quantifying it isn't so simple." },
       { title: "Why Design", mainText: "Play the game to learn why design can make or break the bank." },
     ]
   }
