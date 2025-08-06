@@ -394,6 +394,24 @@ function App() {
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) ||
     (currentChapter === 'work' && work.workView === 'Overview');
     
+  const handleCentralButtonClick = () => {
+    if (currentChapter === 'work') {
+      work.handleWorkChapterCentralButtonClick();
+    } else if (currentChapter === 'design') {
+      if (design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
+        if (design.isDesignChapterFinished) {
+          design.replay();
+        } else {
+          design.togglePlayPause();
+        }
+      } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
+        design.togglePlayPauseWhyDesignIntro();
+      }
+    } else {
+      landing.togglePlayPause();
+    }
+  };
+
   return (
     <>
        <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen overflow-x-hidden`}>
@@ -494,12 +512,7 @@ function App() {
           isDarkMode={darkMode}
           showLeftFade={showLeftFade}
           showRightFade={showRightFade}
-          onCentralButtonClick={
-            currentChapter === 'work' ? work.handleWorkChapterCentralButtonClick :
-            currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN ? (design.isDesignChapterFinished ? design.replay : design.togglePlayPause) :
-            currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN ? design.togglePlayPauseWhyDesignIntro :
-            landing.togglePlayPause
-          }
+          onCentralButtonClick={handleCentralButtonClick}
           onNavItemClick={handleNavItemClick}
           scrollContainerRef={scrollContainerRef}
           itemNavRefs={itemNavRefs}

@@ -49,8 +49,8 @@ export const WHY_DESIGN_CONTENT = {
   intro: {
     steps: [
       { title: "Why Design", mainText: "Money is not talked about enough in design." },
-      { title: "Why Design", mainText: "Perhaps because quantifying it to numbers isn't very easy." },
-      { title: "Why Design", mainText: "Play the game to undertstand why design can make or break the bank." },
+      { title: "Why Design", mainText: "Probably because quantifying it to numbers isn't so simple." },
+      { title: "Why Design", mainText: "Play the game to learn why design can make or break the bank." },
     ]
   }
 };
@@ -79,12 +79,12 @@ export const WHAT_DESIGN_NAV_ITEMS = [
 
 export const DESIGN_CONTENT = {
   [DESIGN_STAGE_KEYS.ABOUT_DESIGN]: {
-    navText: "About Design",
+    navText: "What Design",
     steps: [
-      { title: "About design", mainText: "Most people don't understand design.", pause: 3000 },
-      { title: "About design", mainText: "Lets look at some classic mistakes." },
+      { title: "What is design", mainText: "Most people don't understand design.", pause: 3000 },
+      { title: "What is design", mainText: "Lets look at some classic mistakes." },
       { title: "Mistake 1", mainText: "Those who don't know design think it is all about what something looks like." },
-      { title: "Mistake 2", mainText: "So decision makers often think they can skip it to cut cost." },
+      { title: "Mistake 2", mainText: "So some decision makers think they can skip it to cut cost." },
       { title: "Mistake 3", mainText: "Or far too often, designers are brought on way too late just to fix the visuals..." },
       { title: "Mistake 3", mainText: "...too late to let design be the critical driver as it always should be." },
       { title: "Back to No. 1", mainText: "Making a nice looking design is just one small part of what designers actually do." },

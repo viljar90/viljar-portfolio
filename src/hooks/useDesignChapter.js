@@ -31,6 +31,7 @@ export const useDesignChapter = (currentChapter) => {
   const [isPlayingWhyDesignIntro, setIsPlayingWhyDesignIntro] = useState(false);
   const [whyDesignIntroCompleted, setWhyDesignIntroCompleted] = useState(false);
 
+
   const handleStartWhyDesignGame = () => {
     console.log('Starting Why Design Game...');
     setWhyDesignStep('game');
@@ -41,7 +42,6 @@ export const useDesignChapter = (currentChapter) => {
     setIsPlayingWhyDesignIntro(prev => !prev);
   }, []);
   
-  // *** THE FIX: Create a stable callback function ***
   const whyDesignIntroAnimationCompleted = useCallback(() => {
     setIsPlayingWhyDesignIntro(false);
     setWhyDesignIntroCompleted(true);
@@ -195,17 +195,18 @@ export const useDesignChapter = (currentChapter) => {
       setIsPlayingWhyDesignIntro(false);
     } else {
       if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
+        setIsPlayingWhyDesignIntro(false);
         if (!isDesignChapterFinished && documentView === 'Slideshow') {
-          setDisplayedDesignTitleChars('');
-          setDisplayedDesignMainTextChars('');
-          setDesignStepAnimationPhase('typing-title');
           setIsPlayingDesign(true);
         }
       } else if (designView === DESIGN_VIEWS.WHY_DESIGN) {
-        setIsPlayingWhyDesignIntro(!whyDesignIntroCompleted);
+        setIsPlayingDesign(false);
+        if (!whyDesignIntroCompleted) {
+          setIsPlayingWhyDesignIntro(true);
+        }
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChapter, designView, documentView]);
 
   useEffect(() => {
@@ -322,9 +323,10 @@ export const useDesignChapter = (currentChapter) => {
     documentView,
     whyDesignStep,
     isPlayingWhyDesignIntro,
+    whyDesignIntroCompleted,
     handleStartWhyDesignGame,
     togglePlayPauseWhyDesignIntro,
-    whyDesignIntroAnimationCompleted, // <-- Expose the new stable function
+    whyDesignIntroAnimationCompleted,
     previousDesignStageKey,
     designAnimationDirection,
     navigateToStage,

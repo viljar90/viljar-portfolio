@@ -38,13 +38,17 @@ const BottomNavigation = ({
 
     const renderCentralButton = () => {
         const isMainChapterFinalState = currentChapter === 'main' && activeNavItem === 'Home' && !isPlaying;
-        const isDesignChapterFinalState =
-            currentChapter === 'design' &&
+        
+        const isWhatDesignFinished = currentChapter === 'design' &&
             design.designView === DESIGN_VIEWS.WHAT_DESIGN &&
             !isPlaying &&
             design.isDesignChapterFinished;
 
-        const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
+        const isWhyDesignFinished = currentChapter === 'design' &&
+            design.designView === DESIGN_VIEWS.WHY_DESIGN &&
+            design.whyDesignIntroCompleted;
+
+        const showReplayButtonForChapters = isMainChapterFinalState || isWhatDesignFinished || isWhyDesignFinished;
         const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
         const isOnResultsPage = work.workView === 'Quiz' && work.workStepIndex > QUIZZES.length;
 
@@ -155,10 +159,8 @@ const BottomNavigation = ({
                                 }
                             }
 
-                            const isPlayingForNavItem = (isDesignDocumentView || design.designView === DESIGN_VIEWS.WHY_DESIGN)
-                                ? false
+                            const isPlayingForNavItem = isDesignDocumentView ? false
                                 : (activeNavItem === navIdentifier && isPlaying && !isFadingOut);
-
 
                             return (
                                 <InteractiveOblongNavItem
