@@ -6,9 +6,10 @@ import LandingChapter from './LandingChapter';
 import DesignChapter from './DesignChapter';
 import WorkChapter from './WorkChapter';
 import QuizIntro from './QuizIntro';
-import QuizResults from './QuizResults'; // Import the new component
+import QuizResults from './QuizResults';
 import ProjectOverview from './ProjectOverview';
-import { QUIZZES, PROJECTS } from '../content';
+import { QUIZZES, PROJECTS, DESIGN_VIEWS } from '../content';
+import WhyDesignIntro from './WhyDesignIntro';
 
 const ChapterContent = ({
   currentChapter,
@@ -27,6 +28,23 @@ const ChapterContent = ({
   showCursorDesignMainText,
 }) => {
   const isLastStep = work.workStepIndex === QUIZZES.length + 1;
+
+  const renderDesignContent = () => {
+    if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
+      return <WhyDesignIntro onStart={design.handleStartWhyDesignGame} />;
+    }
+    
+    // Default to 'What Design' content
+    return (
+      <DesignChapter
+        darkMode={darkMode}
+        design={design}
+        currentDesignStepData={currentDesignStepData}
+        showCursorDesignTitle={showCursorDesignTitle}
+        showCursorDesignMainText={showCursorDesignMainText}
+      />
+    );
+  };
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative px-4 sm:px-16">
@@ -49,15 +67,7 @@ const ChapterContent = ({
           landing={landing}
         />
       )}
-      {currentChapter === 'design' && (
-        <DesignChapter
-          darkMode={darkMode}
-          design={design}
-          currentDesignStepData={currentDesignStepData}
-          showCursorDesignTitle={showCursorDesignTitle}
-          showCursorDesignMainText={showCursorDesignMainText}
-        />
-      )}
+      {currentChapter === 'design' && renderDesignContent()}
       {currentChapter === 'work' &&
         (work.workView === 'Quiz' ? (
             <>

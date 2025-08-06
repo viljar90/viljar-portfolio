@@ -8,7 +8,7 @@ import {
   AnimatedBorderButton,
   ViewSwitcherButton,
 } from './uiElements';
-import { DESIGN_CONTENT, QUIZZES, DESIGN_NAV_ITEMS } from '../content';
+import { DESIGN_CONTENT, QUIZZES, WHAT_DESIGN_NAV_ITEMS, DESIGN_VIEWS } from '../content';
 
 const BottomNavigation = ({
     navItems,
@@ -45,7 +45,6 @@ const BottomNavigation = ({
 
         const showReplayButtonForChapters = isMainChapterFinalState || isDesignChapterFinalState;
         const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
-        // Corrected logic: Check if the current step is beyond the last question.
         const isOnResultsPage = work.workView === 'Quiz' && work.workStepIndex > QUIZZES.length;
 
         const nonAnimatedButtonClasses = "group h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex-shrink-0 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-105 active:scale-95 bg-bg-base text-icon-interactive hover:text-icon-base ring-1 ring-gray-500 dark:ring-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-slate-800";
@@ -104,7 +103,6 @@ const BottomNavigation = ({
                         />
                     ))}
                 </div>
-                {/* Fading overlays for scrollable nav */}
                 <div className={`absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-bg-muted to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
                 <div className={`absolute top-0 bottom-0 right-[-0.1rem] w-24 bg-gradient-to-l from-bg-muted to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
             </div>
@@ -112,9 +110,9 @@ const BottomNavigation = ({
     );
 }
 
-    // *** NEW LOGIC FOR DOCUMENT VIEW ***
-    const isDesignDocumentView = currentChapter === 'design' && design.designView === 'Document';
-    const isLastDesignStage = design.activeDesignStageKey === DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
+    const isDesignDocumentView = currentChapter === 'design' && design.documentView === 'Document';
+    const isWhyDesignView = currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN;
+    const isLastDesignStage = design.activeDesignStageKey === WHAT_DESIGN_NAV_ITEMS[WHAT_DESIGN_NAV_ITEMS.length - 1].name;
 
     return (
         <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
@@ -132,6 +130,8 @@ const BottomNavigation = ({
                             <SkipIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105" />
                         )}
                     </button>
+                ) : isWhyDesignView ? (
+                  <div className="h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex-shrink-0"></div>
                 ) : (
                     renderCentralButton()
                 )}
@@ -142,7 +142,7 @@ const BottomNavigation = ({
                         className="py-1.5 px-2 flex items-center space-x-1 transition-colors duration-300 overflow-x-auto no-scrollbar"
                     >
                         {navItems.map((item, index) => {
-                            let navItemText = (currentChapter === 'design' && DESIGN_CONTENT[item.name])
+                            let navItemText = (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && DESIGN_CONTENT[item.name])
                                 ? DESIGN_CONTENT[item.name].navText
                                 : item.name;
                             let navIdentifier = item.name;
@@ -161,10 +161,9 @@ const BottomNavigation = ({
                                 ? false
                                 : (activeNavItem === navIdentifier && isPlaying && !isFadingOut);
 
-
                             return (
                                 <InteractiveOblongNavItem
-                                    key={`${currentChapter}-${item.name}`}
+                                    key={`${currentChapter}-${design.designView}-${item.name}`}
                                     ref={el => itemNavRefs.current[index] = el}
                                     text={navItemText}
                                     onClick={() => onNavItemClick(navIdentifier)}
@@ -179,10 +178,10 @@ const BottomNavigation = ({
                     <div className={`absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
                     <div className={`absolute top-0 bottom-0 right-[-0.1rem] w-24 bg-gradient-to-l from-[var(--color-bg-muted)] to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
                 </div>
-                {currentChapter === 'design' && (
+                {currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && (
                     <ViewSwitcherButton
-                        currentView={design.designView}
-                        onClick={design.toggleDesignView}
+                        currentView={design.documentView}
+                        onClick={design.toggleDocumentView}
                         isDarkMode={isDarkMode}
                     />
                 )}

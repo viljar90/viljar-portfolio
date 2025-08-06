@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { BlinkingCursor } from './uiElements';
-import { DESIGN_NAV_ITEMS, DESIGN_CONTENT } from '../content';
+import { WHAT_DESIGN_NAV_ITEMS, DESIGN_CONTENT } from '../content';
 
 const DocumentContent = React.forwardRef(({ stageKey, onScroll }, ref) => {
     const stageContent = DESIGN_CONTENT[stageKey];
@@ -53,7 +53,6 @@ const DesignDocumentView = ({ design }) => {
         if (!el) return;
 
         const isScrollable = el.scrollHeight > el.clientHeight;
-        // A small buffer to prevent the fade from appearing too early
         const buffer = 5;
 
         setShowTopFade(isScrollable && el.scrollTop > buffer);
@@ -65,8 +64,6 @@ const DesignDocumentView = ({ design }) => {
         const el = scrollContainerRef.current;
         if (el) {
             el.scrollTop = 0;
-            // A short delay to allow the DOM to update with new content
-            // before we check if it's scrollable.
             setTimeout(updateFades, 50); 
         }
     }, [activeDesignStageKey, updateFades]);
@@ -86,13 +83,8 @@ const DesignDocumentView = ({ design }) => {
     return (
         <div className="relative w-full max-w-2xl md:max-w-3xl lg:max-w-4xl h-[70vh] overflow-hidden">
             <div className={`absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-bg-base to-transparent z-10 pointer-events-none transition-opacity duration-300 ${showTopFade ? 'opacity-100' : 'opacity-0'}`} />
-
-            {/* Fading overlay for the left side */}
             <div className="hidden md:block absolute top-0 bottom-0 left-0 w-8 lg:w-24 bg-gradient-to-r from-bg-base to-transparent pointer-events-none z-20" />
-            {/* Fading overlay for the right side */}
             <div className={`hidden md:block absolute top-0 bottom-0 right-0 w-8 lg:w-24 bg-gradient-to-l from-bg-base to-transparent pointer-events-none z-20 transition-opacity duration-300 ${isScrolling ? 'opacity-0' : 'opacity-100'}`} />
-
-            {/* Current Document */}
             <div
                 key={activeDesignStageKey}
                 className={`w-full h-full absolute inset-0 ${
@@ -105,8 +97,6 @@ const DesignDocumentView = ({ design }) => {
             >
                 <DocumentContent ref={scrollContainerRef} stageKey={activeDesignStageKey} onScroll={handleScroll} />
             </div>
-
-            {/* Previous Document (for animation) */}
             {previousDesignStageKey && (
                 <div
                     key={previousDesignStageKey}
@@ -119,7 +109,6 @@ const DesignDocumentView = ({ design }) => {
                     <DocumentContent stageKey={previousDesignStageKey} onScroll={handleScroll}/>
                 </div>
             )}
-            
             <div className={`absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-bg-base to-transparent z-10 pointer-events-none transition-opacity duration-300 ${showBottomFade ? 'opacity-100' : 'opacity-0'}`} />
         </div>
     );
@@ -127,7 +116,7 @@ const DesignDocumentView = ({ design }) => {
 
 DesignDocumentView.propTypes = {
     design: PropTypes.shape({
-        activeDesignStageKey: PropTypes.oneOf(DESIGN_NAV_ITEMS.map(item => item.name)).isRequired,
+        activeDesignStageKey: PropTypes.oneOf(WHAT_DESIGN_NAV_ITEMS.map(item => item.name)).isRequired,
         previousDesignStageKey: PropTypes.string,
         designAnimationDirection: PropTypes.string,
     }).isRequired,
@@ -149,7 +138,7 @@ const DesignChapter = ({
         );
     }
 
-    if (design.designView === 'Document') {
+    if (design.documentView === 'Document') {
         return <DesignDocumentView design={design} />;
     }
 
@@ -183,7 +172,7 @@ DesignChapter.propTypes = {
   darkMode: PropTypes.bool.isRequired,
   design: PropTypes.shape({
     error: PropTypes.string,
-    designView: PropTypes.string.isRequired,
+    documentView: PropTypes.string.isRequired,
     activeDesignStageKey: PropTypes.string.isRequired,
     previousDesignStageKey: PropTypes.string,
     designAnimationDirection: PropTypes.string,

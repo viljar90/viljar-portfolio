@@ -1,14 +1,17 @@
 // src/hooks/useDesignChapter.js
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { DESIGN_NAV_ITEMS, DESIGN_CONTENT } from '../content';
+import { WHAT_DESIGN_NAV_ITEMS, DESIGN_CONTENT, DESIGN_VIEWS } from '../content';
 
 const TYPEWRITER_SPEED = 25;
 const BACKSPACE_SPEED = 20;
 const LONG_PAUSE_DURATION = 2700;
 
 export const useDesignChapter = (currentChapter) => {
-  const [activeDesignStageKey, setActiveDesignStageKey] = useState(DESIGN_NAV_ITEMS[0].name);
+  const [designView, setDesignView] = useState(DESIGN_VIEWS.WHAT_DESIGN);
+  
+  // State for "What Design" (Slideshow/Document)
+  const [activeDesignStageKey, setActiveDesignStageKey] = useState(WHAT_DESIGN_NAV_ITEMS[0].name);
   const [currentDesignStepIndex, setCurrentDesignStepIndex] = useState(0);
   const [displayedDesignTitleChars, setDisplayedDesignTitleChars] = useState('');
   const [displayedDesignMainTextChars, setDisplayedDesignMainTextChars] = useState('');
@@ -19,9 +22,17 @@ export const useDesignChapter = (currentChapter) => {
   const [error, setError] = useState(null);
   const [isDesignChapterFinished, setIsDesignChapterFinished] = useState(false);
   const wasPlayingRef = useRef(false);
-  const [designView, setDesignView] = useState('Slideshow');
+  const [documentView, setDocumentView] = useState('Slideshow');
   const [previousDesignStageKey, setPreviousDesignStageKey] = useState(null);
   const [designAnimationDirection, setDesignAnimationDirection] = useState('next');
+
+  // State for "Why Design"
+  const [whyDesignStep, setWhyDesignStep] = useState('intro'); // 'intro', 'game', 'results'
+
+  const handleStartWhyDesignGame = () => {
+    console.log('Starting Why Design Game...');
+    setWhyDesignStep('game');
+  };
 
   useEffect(() => {
     if (previousDesignStageKey !== null) {
@@ -81,7 +92,7 @@ export const useDesignChapter = (currentChapter) => {
 
     const currentStageData = DESIGN_CONTENT[activeDesignStageKey];
     const isLastStepOfStage = currentDesignStepIndex >= currentStageData.steps.length - 1;
-    const isLastStage = activeDesignStageKey === DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
+    const isLastStage = activeDesignStageKey === WHAT_DESIGN_NAV_ITEMS[WHAT_DESIGN_NAV_ITEMS.length - 1].name;
 
     if (isLastStepOfStage && isLastStage) {
       setIsDesignChapterFinished(true);
@@ -92,8 +103,8 @@ export const useDesignChapter = (currentChapter) => {
       const nextIndex = currentDesignStepIndex + 1;
       setStepContent(activeDesignStageKey, nextIndex, false);
     } else {
-      const currentNavIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
-      const nextStageKey = DESIGN_NAV_ITEMS[currentNavIndex + 1].name;
+      const currentNavIndex = WHAT_DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
+      const nextStageKey = WHAT_DESIGN_NAV_ITEMS[currentNavIndex + 1].name;
       setStepContent(nextStageKey, 0, false);
     }
 
@@ -109,9 +120,9 @@ export const useDesignChapter = (currentChapter) => {
       const prevIndex = currentDesignStepIndex - 1;
       setStepContent(activeDesignStageKey, prevIndex, false);
     } else {
-      const currentNavIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
+      const currentNavIndex = WHAT_DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
       if (currentNavIndex > 0) {
-        const prevStageKey = DESIGN_NAV_ITEMS[currentNavIndex - 1].name;
+        const prevStageKey = WHAT_DESIGN_NAV_ITEMS[currentNavIndex - 1].name;
         const prevStageData = DESIGN_CONTENT[prevStageKey];
         const lastStepIndex = prevStageData.steps.length - 1;
         setStepContent(prevStageKey, lastStepIndex, false);
@@ -123,23 +134,22 @@ export const useDesignChapter = (currentChapter) => {
     return 'success';
   }, [activeDesignStageKey, currentDesignStepIndex, setStepContent]);
 
-  // New navigation functions for Document View
   const nextDesignStage = useCallback(() => {
-    const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
-    if (currentIndex < DESIGN_NAV_ITEMS.length - 1) {
+    const currentIndex = WHAT_DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
+    if (currentIndex < WHAT_DESIGN_NAV_ITEMS.length - 1) {
       setDesignAnimationDirection('next');
       setPreviousDesignStageKey(activeDesignStageKey);
-      const nextStageKey = DESIGN_NAV_ITEMS[currentIndex + 1].name;
+      const nextStageKey = WHAT_DESIGN_NAV_ITEMS[currentIndex + 1].name;
       setActiveDesignStageKey(nextStageKey);
     }
   }, [activeDesignStageKey]);
 
   const prevDesignStage = useCallback(() => {
-    const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
+    const currentIndex = WHAT_DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
     if (currentIndex > 0) {
       setDesignAnimationDirection('prev');
       setPreviousDesignStageKey(activeDesignStageKey);
-      const prevStageKey = DESIGN_NAV_ITEMS[currentIndex - 1].name;
+      const prevStageKey = WHAT_DESIGN_NAV_ITEMS[currentIndex - 1].name;
       setActiveDesignStageKey(prevStageKey);
     }
   }, [activeDesignStageKey]);
@@ -156,11 +166,11 @@ export const useDesignChapter = (currentChapter) => {
   const replay = useCallback(() => {
     setNavigationMode('automatic');
     setIsDesignChapterFinished(false);
-    resetForStage(DESIGN_NAV_ITEMS[0].name, true);
+    resetForStage(WHAT_DESIGN_NAV_ITEMS[0].name, true);
   }, [resetForStage]);
 
-  const toggleDesignView = useCallback(() => {
-    setDesignView(prevView => (prevView === 'Slideshow' ? 'Document' : 'Slideshow'));
+  const toggleDocumentView = useCallback(() => {
+    setDocumentView(prevView => (prevView === 'Slideshow' ? 'Document' : 'Slideshow'));
     setIsPlayingDesign(false);
   }, []);
 
@@ -168,8 +178,8 @@ export const useDesignChapter = (currentChapter) => {
     if (currentChapter !== 'design') {
       wasPlayingRef.current = isPlayingDesign;
       setIsPlayingDesign(false);
-    } else {
-      if (!isDesignChapterFinished && designView === 'Slideshow') {
+    } else if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
+      if (!isDesignChapterFinished && documentView === 'Slideshow') {
         setDisplayedDesignTitleChars('');
         setDisplayedDesignMainTextChars('');
         setDesignStepAnimationPhase('typing-title');
@@ -177,15 +187,15 @@ export const useDesignChapter = (currentChapter) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChapter, designView]);
+  }, [currentChapter, designView, documentView]);
 
   useEffect(() => {
-    if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete' || designView !== 'Slideshow') {
+    if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete' || documentView !== 'Slideshow') {
       return;
     }
 
-    const currentIndex = DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
-    if (currentIndex >= DESIGN_NAV_ITEMS.length - 1) {
+    const currentIndex = WHAT_DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
+    if (currentIndex >= WHAT_DESIGN_NAV_ITEMS.length - 1) {
       setIsPlayingDesign(false);
       setIsDesignChapterFinished(true);
       return;
@@ -196,7 +206,7 @@ export const useDesignChapter = (currentChapter) => {
       setTimeout(() => {
         setIsFadingOut(false);
         const nextIndex = currentIndex + 1;
-        const nextStageKey = DESIGN_NAV_ITEMS[nextIndex].name;
+        const nextStageKey = WHAT_DESIGN_NAV_ITEMS[nextIndex].name;
         resetForStage(nextStageKey, true);
       }, 1500);
     }, 1500);
@@ -206,7 +216,7 @@ export const useDesignChapter = (currentChapter) => {
   }, [currentChapter, isPlayingDesign, designStepAnimationPhase, activeDesignStageKey, resetForStage, navigationMode]);
 
   useEffect(() => {
-    if (currentChapter !== 'design' || !isPlayingDesign || designView !== 'Slideshow') return;
+    if (currentChapter !== 'design' || !isPlayingDesign || documentView !== 'Slideshow' || designView !== DESIGN_VIEWS.WHAT_DESIGN) return;
 
     let timer;
     const currentStageData = DESIGN_CONTENT[activeDesignStageKey];
@@ -275,7 +285,7 @@ export const useDesignChapter = (currentChapter) => {
     }
 
     return () => clearTimeout(timer);
-  }, [currentChapter, isPlayingDesign, activeDesignStageKey, currentDesignStepIndex, designStepAnimationPhase, displayedDesignTitleChars, displayedDesignMainTextChars, designView]);
+  }, [currentChapter, isPlayingDesign, activeDesignStageKey, currentDesignStepIndex, designStepAnimationPhase, displayedDesignTitleChars, displayedDesignMainTextChars, documentView, designView]);
 
 
   return {
@@ -289,6 +299,10 @@ export const useDesignChapter = (currentChapter) => {
     isFadingOut,
     isDesignChapterFinished,
     designView,
+    setDesignView,
+    documentView,
+    whyDesignStep,
+    handleStartWhyDesignGame,
     previousDesignStageKey,
     designAnimationDirection,
     navigateToStage,
@@ -296,7 +310,7 @@ export const useDesignChapter = (currentChapter) => {
     prevStep,
     togglePlayPause,
     replay,
-    toggleDesignView,
+    toggleDocumentView,
     nextDesignStage,
     prevDesignStage,
   };

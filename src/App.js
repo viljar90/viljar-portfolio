@@ -4,10 +4,12 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import {
   MAIN_STAGES,
   MAIN_NAV_ITEMS,
-  DESIGN_NAV_ITEMS,
+  WHAT_DESIGN_NAV_ITEMS,
+  WHY_DESIGN_NAV_ITEMS,
   DESIGN_CONTENT,
   QUIZZES,
   DESIGN_STAGE_KEYS,
+  DESIGN_VIEWS,
 } from './content';
 import ChapterManager from './components/ChapterManager';
 import { useLandingChapter } from './hooks/useLandingChapter';
@@ -17,7 +19,7 @@ import BottomNavigation from './components/BottomNavigation';
 import ErrorBoundary from './components/ErrorBoundary';
 import ViewSwitcher from './components/ViewSwitcher';
 import { SunIcon, MoonIcon, PotatoIcon } from './components/uiElements';
-import InteractivePillNav from './components/InteractivePillNav'; // Import the new component
+import InteractivePillNav from './components/InteractivePillNav';
 
 // --- Animation Configuration ---
 const ANIMATION_DURATION_CHAPTER = "0.5s";
@@ -30,10 +32,6 @@ function App() {
   const [showLeftFade, setShowLeftFade] = useState(false);
   const [showRightFade, setShowRightFade] = useState(false);
   const [isThemeToggleClicked, setIsThemeToggleClicked] = useState(false);
-
-  // Dummy state for InteractivePillNav for visual testing
-  const dummyPillNavItems = ['Why Design', 'What Design'];
-  const [selectedPillItem, setSelectedPillItem] = useState(dummyPillNavItems[0]);
 
   // --- Shared Refs ---
   const mainChapterRef = useRef(null);
@@ -58,20 +56,13 @@ function App() {
   const [workChapterAnimClass, setWorkChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
 
   // --- useEffect Hooks ---
-  // Effect to set initial dark mode based on the user's local time
   useEffect(() => {
-    // Get the current hour from the user's own system clock
     const hour = new Date().getHours();
-
-    // Set dark mode if it's between 6 PM (18) and 6 AM (6) local time
     const isNight = hour >= 18 || hour < 6;
     setDarkMode(isNight);
     document.documentElement.classList.toggle('dark', isNight);
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []);
 
-
-
-  // Effect 1: Manages chapter slide transitions
   useEffect(() => {
     const duration = ANIMATION_DURATION_CHAPTER;
     const mainAnim = currentChapter === 'main' ? `animate-[slideUpIn_${duration}_ease-out_forwards]` : `animate-[slideDownOut_${duration}_ease-in_forwards] pointer-events-none`;
@@ -82,7 +73,6 @@ function App() {
     setWorkChapterAnimClass(workAnim);
   }, [currentChapter]);
 
-  // Effect 3: Intersection Observer for detecting visible chapter
   useEffect(() => {
     const observerOptions = { root: null, rootMargin: '0px', threshold: 0.5 };
     const handleIntersection = (entries) => {
@@ -112,7 +102,6 @@ function App() {
     };
   }, [currentChapter]);
 
-  // Effect 4: Stepper Auto-scroll for ALL chapters
   useEffect(() => {
     let items;
     let activeIndex;
@@ -121,15 +110,19 @@ function App() {
         items = MAIN_NAV_ITEMS;
         activeIndex = items.findIndex(item => item.name === landing.activeMainStep);
         refs = mainItemRefs;
-    } else if (currentChapter === 'design') {
-        items = DESIGN_NAV_ITEMS;
+    } else if (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
+        items = WHAT_DESIGN_NAV_ITEMS;
         activeIndex = items.findIndex(item => item.name === design.activeDesignStageKey);
         refs = designItemRefs;
+    } else if (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN) {
+      items = WHY_DESIGN_NAV_ITEMS;
+      activeIndex = 0; // Only one item for now
+      refs = designItemRefs;
     } else if (currentChapter === 'work' && work.workView === 'Quiz') {
         items = work.WORK_NAV_ITEMS;
         activeIndex = work.workStepIndex;
         refs = workItemRefs;
-    } else if (currentChapter === 'work' && work.workView === 'Overview') { // New logic for Overview
+    } else if (currentChapter === 'work' && work.workView === 'Overview') {
         items = work.PROJECT_NAV_ITEMS;
         activeIndex = work.currentProjectIndex;
         refs = workItemRefs;
@@ -149,9 +142,8 @@ function App() {
       observer.observe(activeElement);
       return () => observer.disconnect();
     }
-  }, [landing.activeMainStep, design.activeDesignStageKey, work.workStepIndex, currentChapter, work.workView, work.WORK_NAV_ITEMS, work.currentProjectIndex, work.PROJECT_NAV_ITEMS]);
+  }, [landing.activeMainStep, design.activeDesignStageKey, work.workStepIndex, currentChapter, work.workView, work.WORK_NAV_ITEMS, work.currentProjectIndex, work.PROJECT_NAV_ITEMS, design.designView]);
 
-  // Effect 5: Scroll-snapping logic
   useEffect(() => {
     const handleScroll = () => {
         if (isProgrammaticScrollRef.current) return;
@@ -189,14 +181,17 @@ function App() {
     };
   }, []);
 
-  // --- Navigation Items for Stepper ---
   const navItemsToDisplay = useMemo(() => {
     if (currentChapter === 'main') return MAIN_NAV_ITEMS;
-    if (currentChapter === 'design') return DESIGN_NAV_ITEMS;
+    if (currentChapter === 'design') {
+      return design.designView === DESIGN_VIEWS.WHAT_DESIGN
+        ? WHAT_DESIGN_NAV_ITEMS
+        : WHY_DESIGN_NAV_ITEMS;
+    }
     if (currentChapter === 'work' && work.workView === 'Quiz') return work.WORK_NAV_ITEMS;
     if (currentChapter === 'work' && work.workView === 'Overview') return work.PROJECT_NAV_ITEMS;
     return [];
-  }, [currentChapter, work.workView, work.WORK_NAV_ITEMS, work.PROJECT_NAV_ITEMS]);
+  }, [currentChapter, work.workView, work.WORK_NAV_ITEMS, work.PROJECT_NAV_ITEMS, design.designView]);
 
   const updateNavFade = useCallback(() => {
     const el = scrollContainerRef.current;
@@ -219,7 +214,6 @@ function App() {
       };
   }, [updateNavFade, navItemsToDisplay]);
 
-  // --- Event Handlers ---
   const navigateToChapter = (chapterName) => {
     isProgrammaticScrollRef.current = true;
     let targetRef;
@@ -243,10 +237,9 @@ function App() {
         navigateToChapter('design');
       }
     } else if (currentChapter === 'design') {
-      // *** ADDED LOGIC: Check for document view ***
-      if (design.designView === 'Document') {
+      if (design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document') {
         design.nextDesignStage();
-      } else {
+      } else if (design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
         design.nextStep();
       }
     } else if (currentChapter === 'work') {
@@ -274,13 +267,12 @@ function App() {
     } else if (currentChapter === 'main') {
       landing.handlePrevLine();
     } else if (currentChapter === 'design') {
-       // *** ADDED LOGIC: Check for document view ***
-      if (design.designView === 'Document') {
+      if (design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document') {
         const result = design.prevDesignStage();
         if (result === 'navigate-to-main') {
           navigateToChapter('main');
         }
-      } else {
+      } else if (design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
         const result = design.prevStep();
         if (result === 'navigate-to-main') {
           navigateToChapter('main');
@@ -296,7 +288,7 @@ function App() {
   const handleNavItemClick = (itemId) => {
     if (currentChapter === 'main') {
         handleMainStepperItemClick(itemId);
-    } else if (currentChapter === 'design') {
+    } else if (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
         handleDesignStepperItemClick(itemId);
     } else if (currentChapter === 'work' && work.workView === 'Quiz') {
       const index = work.WORK_NAV_ITEMS.findIndex(item => {
@@ -350,26 +342,27 @@ function App() {
     work.setWorkView(newView);
   };
   
-  // --- Render Logic & Derived State ---
-  const isFirstDesignStage = design.activeDesignStageKey === DESIGN_NAV_ITEMS[0].name;
-  const isLastDesignStage = design.activeDesignStageKey === DESIGN_NAV_ITEMS[DESIGN_NAV_ITEMS.length - 1].name;
+  const isFirstDesignStage = design.activeDesignStageKey === WHAT_DESIGN_NAV_ITEMS[0].name;
+  const isLastDesignStage = design.activeDesignStageKey === WHAT_DESIGN_NAV_ITEMS[WHAT_DESIGN_NAV_ITEMS.length - 1].name;
 
   const showPrevArrow =
     (currentChapter === 'main' && (landing.activeMainStep !== MAIN_STAGES.INSULTS || landing.currentSubLineIndex !== 0)) ||
-    (currentChapter === 'design' && design.designView === 'Slideshow' && (design.activeDesignStageKey !== DESIGN_STAGE_KEYS.ABOUT_DESIGN || design.currentDesignStepIndex !== 0)) ||
-    (currentChapter === 'design' && design.designView === 'Document' && !isFirstDesignStage) ||
+    (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Slideshow' && (design.activeDesignStageKey !== DESIGN_STAGE_KEYS.ABOUT_DESIGN || design.currentDesignStepIndex !== 0)) ||
+    (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document' && !isFirstDesignStage) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) ||
     (currentChapter === 'work' && work.workView === 'Overview');
 
   const currentPlayPauseButtonState = currentChapter === 'main' ? landing.isPlaying : (currentChapter === 'design' ? design.isPlayingDesign : false);
 
-  // src/App.js
-
   let activeNavStepOrStage = '';
   if (currentChapter === 'main') {
     activeNavStepOrStage = landing.activeMainStep;
   } else if (currentChapter === 'design') {
-    activeNavStepOrStage = design.activeDesignStageKey;
+    if (design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
+      activeNavStepOrStage = design.activeDesignStageKey;
+    } else {
+      activeNavStepOrStage = 'Start';
+    }
   } else if (currentChapter === 'work' && work.workView === 'Quiz') {
     if (work.workStepIndex === 0) {
       activeNavStepOrStage = 'Start';
@@ -394,19 +387,16 @@ function App() {
   const showCursorHomeQuestion = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'typing-home-question';
   
   const currentDesignStepData = DESIGN_CONTENT[design.activeDesignStageKey]?.steps[design.currentDesignStepIndex];
-  const showCursorDesignTitle = currentChapter === 'design' && design.isPlayingDesign && (design.stepAnimationPhase === 'typing-title' || design.stepAnimationPhase === 'backspacing-title');
+  const showCursorDesignTitle = currentChapter === 'design' && design.isPlayingDesign && (design.designStepAnimationPhase === 'typing-title' || design.designStepAnimationPhase === 'backspacing-title');
   const showCursorDesignMainText = currentChapter === 'design' && design.isPlayingDesign && design.stepAnimationPhase === 'typing-maintext';
 
   const showNextArrow =
     (currentChapter === 'main' && landing.activeMainStep !== MAIN_STAGES.HOME) ||
-    (currentChapter === 'design' && design.designView === 'Slideshow' && !design.isDesignChapterFinished) ||
-    (currentChapter === 'design' && design.designView === 'Document' && !isLastDesignStage) ||
+    (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Slideshow' && !design.isDesignChapterFinished) ||
+    (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document' && !isLastDesignStage) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) ||
     (currentChapter === 'work' && work.workView === 'Overview');
     
-  // #################################################################
-  // ### FINAL RENDER BLOCK ###
-  // #################################################################
   return (
     <>
        <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen overflow-x-hidden`}>
@@ -428,11 +418,11 @@ function App() {
         </div>
 
         <div className="fixed top-4 right-4 z-50 flex items-center space-x-4 h-12">
-          {currentChapter === 'design' && ( // Conditionally render only on the 'design' chapter
+          {currentChapter === 'design' && (
             <InteractivePillNav
-              menuItems={dummyPillNavItems}
-              selected={selectedPillItem}
-              setSelected={setSelectedPillItem}
+              menuItems={Object.values(DESIGN_VIEWS)}
+              selected={design.designView}
+              setSelected={design.setDesignView}
             />
           )}
           {currentChapter === 'work' && (
@@ -510,9 +500,9 @@ function App() {
           onCentralButtonClick={
           currentChapter === 'work'
             ? work.handleWorkChapterCentralButtonClick
-            : currentChapter === 'design'
+            : (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN)
             ? (design.isDesignChapterFinished ? design.replay : design.togglePlayPause)
-            : landing.togglePlayPause // Default to landing page logic
+            : landing.togglePlayPause
           }
           onNavItemClick={handleNavItemClick}
           scrollContainerRef={scrollContainerRef}
@@ -528,7 +518,7 @@ function App() {
           }`}
           navItemsFlexClass={'flex-1 min-w-0'}
           currentChapter={currentChapter}
-          design={design} // Pass the whole design object
+          design={design}
           work={work}
         />
       </div>

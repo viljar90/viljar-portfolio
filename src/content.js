@@ -40,6 +40,26 @@ export const CONTENT = {
   }
 };
 
+export const DESIGN_VIEWS = {
+  WHY_DESIGN: 'Why Design',
+  WHAT_DESIGN: 'What Design',
+};
+
+export const WHY_DESIGN_CONTENT = {
+  intro: {
+    steps: [
+      { title: "Why Design", mainText: "Money is not talked about enough in design." },
+      { title: "Why Design", mainText: "Probably because quantifying is difficult." },
+      { title: "Why Design", mainText: "Success is harder to measure than failure" },
+      { title: "Why Design", mainText: "Play the game to understand why design can make or break the bank." },
+    ]
+  }
+};
+
+export const WHY_DESIGN_NAV_ITEMS = [
+  { name: 'Start' },
+];
+
 export const DESIGN_STAGE_KEYS = {
   ABOUT_DESIGN: "ABOUT_DESIGN_KEY",
   WHAT: "WHAT_KEY",
@@ -50,7 +70,7 @@ export const DESIGN_STAGE_KEYS = {
   UI_DESIGNER: "UI_DESIGNER_KEY",
 };
 
-export const DESIGN_NAV_ITEMS = [
+export const WHAT_DESIGN_NAV_ITEMS = [
   { name: DESIGN_STAGE_KEYS.ABOUT_DESIGN },
   { name: DESIGN_STAGE_KEYS.WHAT },
   { name: DESIGN_STAGE_KEYS.PRODUCT_DESIGNER },
