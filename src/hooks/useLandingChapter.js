@@ -21,11 +21,19 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
   const [introGreetingPhase, setIntroGreetingPhase] = useState('typing-greeting');
   const [isSliding, setIsSliding] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
+  const [isLandingChapterFinished, setIsLandingChapterFinished] = useState(false);
   const wasPlayingRef = useRef(true);
 
   const togglePlayPause = useCallback(() => {
     setIsPlaying(p => !p);
   }, []);
+
+  const replayLandingChapter = useCallback(() => {
+    navigatedManually.current = false;
+    setActiveMainStep(MAIN_STAGES.INSULTS);
+    setIsLandingChapterFinished(false);
+    setIsPlaying(true);
+  }, [navigatedManually]);
 
   const setStepContent = useCallback((stage, stepIndex, subLineIndex = 0) => {
     navigatedManually.current = true;
@@ -265,6 +273,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
         }
       } else if (mainAnimationPhase === 'home-buttons-appear') {
         setIsPlaying(false);
+        setIsLandingChapterFinished(true); // Mark as finished
       }
     }
     return () => clearTimeout(timer);
@@ -274,6 +283,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     activeMainStep,
     isPlaying,
     isFadingOut,
+    isLandingChapterFinished,
     currentSubLineIndex,
     displayedChars,
     mainAnimationPhase,
@@ -283,6 +293,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     introStepIndex,
     isSliding,
     togglePlayPause,
+    replayLandingChapter,
     handleNextLine,
     handlePrevLine,
     setActiveMainStep, 

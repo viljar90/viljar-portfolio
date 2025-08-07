@@ -417,8 +417,12 @@ function App() {
           design.togglePlayPauseWhyDesignIntro();
         }
       }
-    } else {
-      landing.togglePlayPause();
+    } else if (currentChapter === 'main') {
+      if (landing.isLandingChapterFinished) {
+        landing.replayLandingChapter();
+      } else {
+        landing.togglePlayPause();
+      }
     }
   };
 

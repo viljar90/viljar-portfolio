@@ -32,6 +32,18 @@ const LandingChapter = ({
         return <p className={`${genMainTextStyle} text-text-base`}>{displayedChars}{showCursorInsults && <BlinkingCursor sizeClass="h-8 md:h-10 lg:h-12" />}</p>;
     }
     if (activeMainStep === MAIN_STAGES.INTRO) {
+        // FIX: This guard condition prevents the flash of old content during the transition.
+        const isIntroPhase = ['intro-greeting', 'typing-title', 'typing-maintext', 'pausing', 'backspacing-title', 'intro-done'].includes(mainAnimationPhase);
+        if (!isIntroPhase) {
+            // Render a placeholder that matches the layout to prevent content shifting
+            return (
+                <div className="text-center">
+                    <p className={genNameTextStyle}>&nbsp;</p>
+                    <p className={genTitleSubTextStyle}>&nbsp;</p>
+                </div>
+            );
+        }
+
         if (mainAnimationPhase === 'intro-greeting' && mainAnimationPhase !== 'done') {
             return <p className={`${genMainTextStyle} text-text-base ${isSliding ? `animate-[slideOutRightAndFade_${SLIDE_DURATION}ms_ease-in-out_forwards]` : ''}`}>{displayedChars}{showCursorIntroGreeting && <BlinkingCursor sizeClass="h-8 md:h-10 lg:h-12" />}</p>;
         }
