@@ -47,6 +47,13 @@ export const useDesignChapter = (currentChapter) => {
     setWhyDesignIntroCompleted(true);
   }, []);
 
+  useEffect(() => {
+    if (designView !== DESIGN_VIEWS.WHY_DESIGN) {
+      setIsPlayingWhyDesignIntro(false);
+      setWhyDesignIntroCompleted(false);
+      setWhyDesignStep('intro');
+    }
+  }, [designView]);
 
   useEffect(() => {
     if (previousDesignStageKey !== null) {
@@ -193,6 +200,8 @@ export const useDesignChapter = (currentChapter) => {
       wasPlayingRef.current = isPlayingDesign;
       setIsPlayingDesign(false);
       setIsPlayingWhyDesignIntro(false);
+      setWhyDesignIntroCompleted(false); // Reset completion state when leaving chapter
+      setWhyDesignStep('intro'); // Reset step to intro
     } else {
       if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
         setIsPlayingWhyDesignIntro(false);

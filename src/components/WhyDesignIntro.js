@@ -61,7 +61,7 @@ const WhyDesignIntro = ({ onStart, isPlaying, onAnimationComplete }) => {
                         setDisplayedTitle('');
                         setPhase('typing-title');
                     }
-                }, 1400); // Pause between steps
+                }, 1600); // Pause between steps
             } else {
                 setPhase('done');
                 if (onAnimationComplete) {
