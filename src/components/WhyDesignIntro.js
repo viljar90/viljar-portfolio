@@ -14,19 +14,25 @@ const WhyDesignIntro = ({ onStart, isPlaying, onAnimationComplete }) => {
     const [displayedMainText, setDisplayedMainText] = useState('');
     const [phase, setPhase] = useState('typing-title');
     const isPlayingRef = useRef(isPlaying);
+    const prevIsPlaying = useRef(isPlaying);
+
+    useEffect(() => {
+        // Reset animation if isPlaying changes from false to true
+        if (isPlaying && !prevIsPlaying.current) {
+            setCurrentStepIndex(0);
+            setDisplayedTitle('');
+            setDisplayedMainText('');
+            setPhase('typing-title');
+        }
+        prevIsPlaying.current = isPlaying;
+    }, [isPlaying]);
 
     useEffect(() => {
         isPlayingRef.current = isPlaying;
     }, [isPlaying]);
 
     useEffect(() => {
-        // When isPlaying becomes false, we just stop.
-        if (!isPlaying) return;
-
-        // When the component appears and should play, reset if needed.
-        if (phase === 'done') {
-            return;
-        }
+        if (!isPlaying || phase === 'done') return;
 
         const currentStep = steps[currentStepIndex];
         let timer;
@@ -61,7 +67,7 @@ const WhyDesignIntro = ({ onStart, isPlaying, onAnimationComplete }) => {
                         setDisplayedTitle('');
                         setPhase('typing-title');
                     }
-                }, 1600); // Pause between steps
+                }, 1400); // Pause between steps
             } else {
                 setPhase('done');
                 if (onAnimationComplete) {

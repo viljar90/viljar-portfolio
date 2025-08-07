@@ -26,10 +26,11 @@ export const useDesignChapter = (currentChapter) => {
   const [previousDesignStageKey, setPreviousDesignStageKey] = useState(null);
   const [designAnimationDirection, setDesignAnimationDirection] = useState('next');
 
-  // New states for "Why Design"
+  // State for "Why Design"
   const [whyDesignStep, setWhyDesignStep] = useState('intro');
   const [isPlayingWhyDesignIntro, setIsPlayingWhyDesignIntro] = useState(false);
   const [whyDesignIntroCompleted, setWhyDesignIntroCompleted] = useState(false);
+  const [whyDesignIntroResetKey, setWhyDesignIntroResetKey] = useState(0);
 
 
   const handleStartWhyDesignGame = () => {
@@ -45,6 +46,11 @@ export const useDesignChapter = (currentChapter) => {
   const whyDesignIntroAnimationCompleted = useCallback(() => {
     setIsPlayingWhyDesignIntro(false);
     setWhyDesignIntroCompleted(true);
+  }, []);
+
+  const replayWhyDesignIntro = useCallback(() => {
+    setWhyDesignIntroResetKey(prevKey => prevKey + 1);
+    setIsPlayingWhyDesignIntro(true);
   }, []);
 
   useEffect(() => {
@@ -200,8 +206,6 @@ export const useDesignChapter = (currentChapter) => {
       wasPlayingRef.current = isPlayingDesign;
       setIsPlayingDesign(false);
       setIsPlayingWhyDesignIntro(false);
-      setWhyDesignIntroCompleted(false); // Reset completion state when leaving chapter
-      setWhyDesignStep('intro'); // Reset step to intro
     } else {
       if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
         setIsPlayingWhyDesignIntro(false);
@@ -216,7 +220,7 @@ export const useDesignChapter = (currentChapter) => {
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChapter, designView, documentView]);
+  }, [currentChapter, designView, documentView, isDesignChapterFinished, whyDesignIntroCompleted]);
 
   useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete' || documentView !== 'Slideshow') {
@@ -333,9 +337,11 @@ export const useDesignChapter = (currentChapter) => {
     whyDesignStep,
     isPlayingWhyDesignIntro,
     whyDesignIntroCompleted,
+    whyDesignIntroResetKey,
     handleStartWhyDesignGame,
     togglePlayPauseWhyDesignIntro,
     whyDesignIntroAnimationCompleted,
+    replayWhyDesignIntro,
     previousDesignStageKey,
     designAnimationDirection,
     navigateToStage,

@@ -33,9 +33,10 @@ const ChapterContent = ({
     if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
       return (
         <WhyDesignIntro 
+          key={design.whyDesignIntroResetKey} // This is the fix
           onStart={design.handleStartWhyDesignGame}
           isPlaying={design.isPlayingWhyDesignIntro}
-          onAnimationComplete={design.whyDesignIntroAnimationCompleted} // <-- Use the stable callback here
+          onAnimationComplete={design.whyDesignIntroAnimationCompleted}
         />
       );
     }

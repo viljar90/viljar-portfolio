@@ -277,12 +277,18 @@ function App() {
   const handleWorkStepperItemClick = (index) => {
     work.handleWorkNavItemClick(index);
   };
-
+  
   const handleNavItemClick = (itemId) => {
     if (currentChapter === 'main') {
         handleMainStepperItemClick(itemId);
-    } else if (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
-        handleDesignStepperItemClick(itemId);
+    } else if (currentChapter === 'design') {
+        if (design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
+            handleDesignStepperItemClick(itemId);
+        } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
+            if (itemId === 'Start') {
+                design.replayWhyDesignIntro();
+            }
+        }
     } else if (currentChapter === 'work' && work.workView === 'Quiz') {
       const index = work.WORK_NAV_ITEMS.findIndex(item => {
         if (item.name.startsWith('Question')) {
@@ -405,7 +411,11 @@ function App() {
           design.togglePlayPause();
         }
       } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-        design.togglePlayPauseWhyDesignIntro();
+        if (design.whyDesignIntroCompleted || !design.isPlayingWhyDesignIntro) {
+          design.replayWhyDesignIntro();
+        } else {
+          design.togglePlayPauseWhyDesignIntro();
+        }
       }
     } else {
       landing.togglePlayPause();
@@ -500,6 +510,7 @@ function App() {
             showCursorHomeQuestion={showCursorHomeQuestion}
             showCursorDesignTitle={showCursorDesignTitle}
             showCursorDesignMainText={showCursorDesignMainText}
+            onWorkViewChange={handleWorkViewChange}
             QUIZZES={QUIZZES}
           />
         </ErrorBoundary>

@@ -1,4 +1,5 @@
 // src/components/ChapterManager.js
+
 import React from 'react';
 import Chapter from './Chapter';
 import ChapterContent from './ChapterContent';
@@ -36,7 +37,6 @@ const ChapterManager = ({
 
   const arrowButtonClass = "fixed z-20 p-2 rounded-full text-text-muted hover:text-text-base hover:bg-bg-muted/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-all opacity-40 hover:opacity-100";
   
-  // Conditionally set the vertical position for medium screens and up
   const verticalPositionClass = isQuizView ? 'md:top-[60%]' : 'md:top-1/2';
 
   return (
