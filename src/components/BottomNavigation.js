@@ -138,7 +138,7 @@ const BottomNavigation = ({
                     renderCentralButton()
                 )}
                 
-                <div className={`relative ${navItemsFlexClass} transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
+                <div className={`relative ${navItemsFlexClass} transform transition-transform duration-200 hover:scale-[1.0125] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden`}>
                     <div
                         ref={scrollContainerRef}
                         className="py-1.5 px-2 flex items-center space-x-1 transition-colors duration-300 overflow-x-auto no-scrollbar"

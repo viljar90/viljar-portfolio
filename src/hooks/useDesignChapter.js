@@ -49,6 +49,7 @@ export const useDesignChapter = (currentChapter) => {
   }, []);
 
   const replayWhyDesignIntro = useCallback(() => {
+    setWhyDesignIntroCompleted(false); // This is the fix
     setWhyDesignIntroResetKey(prevKey => prevKey + 1);
     setIsPlayingWhyDesignIntro(true);
   }, []);
