@@ -49,7 +49,7 @@ export const useDesignChapter = (currentChapter) => {
   }, []);
 
   const replayWhyDesignIntro = useCallback(() => {
-    setWhyDesignIntroCompleted(false); // This is the fix
+    setWhyDesignIntroCompleted(false);
     setWhyDesignIntroResetKey(prevKey => prevKey + 1);
     setIsPlayingWhyDesignIntro(true);
   }, []);
@@ -207,6 +207,9 @@ export const useDesignChapter = (currentChapter) => {
       wasPlayingRef.current = isPlayingDesign;
       setIsPlayingDesign(false);
       setIsPlayingWhyDesignIntro(false);
+      // FIX: Reset "Why Design" state when leaving the chapter
+      setWhyDesignIntroCompleted(false);
+      setWhyDesignIntroResetKey(0); 
     } else {
       if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
         setIsPlayingWhyDesignIntro(false);

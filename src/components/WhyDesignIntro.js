@@ -14,24 +14,14 @@ const WhyDesignIntro = ({ onStart, isPlaying, onAnimationComplete }) => {
     const [displayedMainText, setDisplayedMainText] = useState('');
     const [phase, setPhase] = useState('typing-title');
     const isPlayingRef = useRef(isPlaying);
-    const prevIsPlaying = useRef(isPlaying);
-
-    useEffect(() => {
-        // Reset animation if isPlaying changes from false to true
-        if (isPlaying && !prevIsPlaying.current) {
-            setCurrentStepIndex(0);
-            setDisplayedTitle('');
-            setDisplayedMainText('');
-            setPhase('typing-title');
-        }
-        prevIsPlaying.current = isPlaying;
-    }, [isPlaying]);
 
     useEffect(() => {
         isPlayingRef.current = isPlaying;
     }, [isPlaying]);
 
     useEffect(() => {
+        // This effect now correctly handles pausing and resuming.
+        // The aggressive reset logic has been removed.
         if (!isPlaying || phase === 'done') return;
 
         const currentStep = steps[currentStepIndex];

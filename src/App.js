@@ -9,7 +9,7 @@ import {
   DESIGN_CONTENT,
   QUIZZES,
   DESIGN_STAGE_KEYS,
-  DESIGN_VIEWS,
+  DESIGN_VIEWS
 } from './content';
 import ChapterManager from './components/ChapterManager';
 import { useLandingChapter } from './hooks/useLandingChapter';
@@ -411,7 +411,7 @@ function App() {
           design.togglePlayPause();
         }
       } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-        if (design.whyDesignIntroCompleted || !design.isPlayingWhyDesignIntro) {
+        if (design.whyDesignIntroCompleted) {
           design.replayWhyDesignIntro();
         } else {
           design.togglePlayPauseWhyDesignIntro();

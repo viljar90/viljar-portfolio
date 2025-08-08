@@ -114,9 +114,11 @@ export const DESIGN_CONTENT = {
       { title: "What I do", mainText: "Human minds are far more complex than computers." },
       { title: "What I do", mainText: "But unlike computers, minds get bored and easily frustrated..."},
       { title: "What I do", mainText: "...they reject needless complexity." },
-      { title: "What I do", mainText: "So let me demonstrate the most important skill of a designer..." },
+      { title: "What I do", mainText: "The most important skill of a designer is to distill complexity..." },
+      { title: "What I do", mainText: "...into something that is useful, intuitive and deceptively simple." },
+      { title: "What I do", mainText: "Explore the design roles where i demonstrate this skill..." },
       { title: "What I do", mainText: "...by making complicated things seem simple." },
-      { title: "What I do", mainText: "Understand what I do in an engaging and simple to follow way." }
+      //{ title: "What I do", mainText: "Understand what I do in an engaging and simple to follow way." }
     ]
   },
   [DESIGN_STAGE_KEYS.PRODUCT_DESIGNER]: {
