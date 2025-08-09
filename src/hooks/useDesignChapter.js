@@ -32,6 +32,8 @@ export const useDesignChapter = (currentChapter) => {
   const [whyDesignIntroCompleted, setWhyDesignIntroCompleted] = useState(false);
   const [whyDesignIntroResetKey, setWhyDesignIntroResetKey] = useState(0);
 
+  // Ref to track the previous chapter
+  const prevChapterRef = useRef(currentChapter);
 
   const handleStartWhyDesignGame = () => {
     console.log('Starting Why Design Game...');
@@ -202,19 +204,25 @@ export const useDesignChapter = (currentChapter) => {
     setIsPlayingDesign(false);
   }, []);
 
+  // Main effect for handling chapter and view changes
   useEffect(() => {
+    const justEnteredDesign = prevChapterRef.current !== 'design' && currentChapter === 'design';
+
     if (currentChapter !== 'design') {
       wasPlayingRef.current = isPlayingDesign;
       setIsPlayingDesign(false);
       setIsPlayingWhyDesignIntro(false);
-      // FIX: Reset "Why Design" state when leaving the chapter
       setWhyDesignIntroCompleted(false);
       setWhyDesignIntroResetKey(0); 
     } else {
       if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
         setIsPlayingWhyDesignIntro(false);
-        if (!isDesignChapterFinished && documentView === 'Slideshow') {
-          setIsPlayingDesign(true);
+        if (justEnteredDesign && documentView === 'Slideshow' && !isDesignChapterFinished) {
+            // FIX: If we just entered the chapter, reset the current stage from the top
+            resetForStage(activeDesignStageKey, true);
+        } else if (!isDesignChapterFinished && documentView === 'Slideshow') {
+            // Otherwise, just ensure it's playing (handles view switching)
+            setIsPlayingDesign(true);
         }
       } else if (designView === DESIGN_VIEWS.WHY_DESIGN) {
         setIsPlayingDesign(false);
@@ -223,9 +231,13 @@ export const useDesignChapter = (currentChapter) => {
         }
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChapter, designView, documentView, isDesignChapterFinished, whyDesignIntroCompleted]);
 
+    // Update the ref for the next render
+    prevChapterRef.current = currentChapter;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentChapter, designView, documentView]);
+
+  // Effect for auto-advancing stages in "What Design"
   useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete' || documentView !== 'Slideshow') {
       return;
@@ -249,9 +261,9 @@ export const useDesignChapter = (currentChapter) => {
     }, 1500);
 
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChapter, isPlayingDesign, designStepAnimationPhase, activeDesignStageKey, resetForStage, navigationMode]);
+  }, [currentChapter, isPlayingDesign, designStepAnimationPhase, activeDesignStageKey, resetForStage, navigationMode, documentView]);
 
+  // Effect for typewriter animation in "What Design"
   useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingDesign || documentView !== 'Slideshow' || designView !== DESIGN_VIEWS.WHAT_DESIGN) return;
 
