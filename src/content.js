@@ -174,9 +174,9 @@ export const QUIZZES = [
   {
     id: 'aiPlatform',
     title: 'AI Platform',
-    question: "Your company wants to leverage GenAI but is unsure where to start in a rapidly evolving market.\nWhat is the best approach to secure your data and maintain flexibility?",
+    question: "Your large Norwegian company wants to leverage GenAI but is unsure where to start in a rapidly evolving market.\nWhat is the best approach maintain flexibility and secure company data?",
     options: [
-        { text: 'Mandate the use of a single GenAI provider across the company', isCorrect: false, feedback: 'A single-provider AI strategy is a gamble on two fronts: it is restrictive, locking you out of the best tools, and it is risky, leaving you vulnerable to unpredictable changes in price, platform, and terms of service.' },
+        { text: 'Mandate the use of a single GenAI provider across the company', isCorrect: false, feedback: 'A single-provider AI strategy is a gamble on two fronts. It is restrictive, locking you out of the best tools, and it is risky, leaving you vulnerable to unpredictable changes in price, platform, and terms of service.' },
         { text: 'Build a custom in-house GenAI model from scratch', isCorrect: false, feedback: 'This is extremely resource-intensive and may not be necessary when powerful models are already available.' },
         { text: 'Invest in an internal platform that can use any or multiple GenAI providers', isCorrect: true },
         { text: 'Wait for the market to mature before adopting AI tools', isCorrect: false, feedback: 'GenAI is mature enough to create significant value. Delaying adoption means missing out on great potential gains and falling behind competitors.' },
