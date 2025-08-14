@@ -10,6 +10,7 @@ import QuizResults from './QuizResults';
 import ProjectOverview from './ProjectOverview';
 import { QUIZZES, PROJECTS, DESIGN_VIEWS } from '../content';
 import WhyDesignIntro from './WhyDesignIntro';
+import WhyDesignGame from './WhyDesignGame'; // Import the new game component
 
 const ChapterContent = ({
   currentChapter,
@@ -31,14 +32,18 @@ const ChapterContent = ({
 
   const renderDesignContent = () => {
     if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-      return (
-        <WhyDesignIntro 
-          key={design.whyDesignIntroResetKey} // This is the fix
-          onStart={design.handleStartWhyDesignGame}
-          isPlaying={design.isPlayingWhyDesignIntro}
-          onAnimationComplete={design.whyDesignIntroAnimationCompleted}
-        />
-      );
+      if (design.whyDesignStep === 'intro') {
+        return (
+          <WhyDesignIntro 
+            key={design.whyDesignIntroResetKey} // This is the fix
+            onStart={design.handleStartWhyDesignGame}
+            isPlaying={design.isPlayingWhyDesignIntro}
+            onAnimationComplete={design.whyDesignIntroAnimationCompleted}
+          />
+        );
+      } else if (design.whyDesignStep === 'game') {
+        return <WhyDesignGame onGameComplete={design.replayWhyDesignIntro} />;
+      }
     }
     
     // Default to 'What Design' content

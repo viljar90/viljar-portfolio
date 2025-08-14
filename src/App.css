@@ -1,3 +1,4 @@
+/* src/App.css */
 /*
   This file is intentionally left blank.
   All styles for the application are now handled by Tailwind CSS,
@@ -39,4 +40,45 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* --- Why Design Game Styles --- */
+.rationale {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out, margin-top 0.5s ease-in-out;
+}
+.rationale.visible {
+    max-height: 200px; /* Adjust as needed */
+    margin-top: 0.75rem; /* mt-3 */
+}
+.option-card, .bonus-card {
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+.option-card:not(.disabled):not(.selected):hover, .bonus-card:not(.completed):hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.option-card.selected:not(.incorrect):not(.correct) {
+    transform: scale(1.03);
+    box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.2), 0 4px 6px -4px rgb(59 130 246 / 0.2);
+}
+.checkmark-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    stroke-width: 3;
+    color: var(--color-primary);
+}
+.dark .checkmark-icon {
+    color: var(--color-secondary);
+}
+.option-card.correct .checkmark-icon {
+    color: #22c55e;
+}
+.option-card.incorrect .checkmark-icon {
+    color: #ef4444;
 }

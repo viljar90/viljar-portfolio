@@ -36,7 +36,6 @@ export const useDesignChapter = (currentChapter) => {
   const prevChapterRef = useRef(currentChapter);
 
   const handleStartWhyDesignGame = () => {
-    console.log('Starting Why Design Game...');
     setWhyDesignStep('game');
     setIsPlayingWhyDesignIntro(false);
   };
@@ -54,6 +53,7 @@ export const useDesignChapter = (currentChapter) => {
     setWhyDesignIntroCompleted(false);
     setWhyDesignIntroResetKey(prevKey => prevKey + 1);
     setIsPlayingWhyDesignIntro(true);
+    setWhyDesignStep('intro');
   }, []);
 
   useEffect(() => {

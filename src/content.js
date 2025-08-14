@@ -57,6 +57,305 @@ export const WHY_DESIGN_CONTENT = {
   }
 };
 
+export const WHY_DESIGN_GAME_CONTENT = [
+    {
+        caseTitle: "Case 1/3: Best Buy - The Expensive Button",
+        parts: [
+            {
+                type: 'singleChoice',
+                context: "E-commerce giant Best Buy required customers to create an account before purchase, creating a barrier for buyers.",
+                question: "What do you think was the estimated annual cost of this friction?",
+                options: [
+                    { text: "$150,000,000", isCorrect: false, rationale: "The actual cost was significantly higher." },
+                    { text: "$75,000,000", isCorrect: false, rationale: "The actual cost was significantly higher." },
+                    { text: "$300,000,000", isCorrect: true, rationale: "This case illustrates how a single point of friction can lead to massive revenue loss." },
+                    { text: "$5,000,000", isCorrect: false, rationale: "The actual cost was significantly higher." }
+                ]
+            },
+            {
+                type: 'selectAll',
+                context: "Simply by adding a 'Continue As Guest' button led to a 45% increase in purchasing customers for Best Buy.",
+                question: "Guess which design lessons the original design ignored?",
+                options: [
+                    { text: "User Control and Freedom", isCorrect: true, rationale: "The design removed the user's freedom to simply purchase an item, offering no easy 'emergency exit.' Good design empowers users, it doesn't trap them." },
+                    { text: "Visibility of System Status", isCorrect: false, rationale: "While important, this wasn't the primary failure. The system was clear about what it wanted (registration); the problem was that the requirement itself was flawed." },
+                    { text: "Reactance", isCorrect: true, rationale: "This is a bias where people react negatively when forced to do something. Forcing registration made almost half of users to abandon their carts." },
+                    { text: "Fitt's Law", isCorrect: false, rationale: "Fitt's Law relates to the time it takes to move to a target area (e.g., making buttons large and easy to click). It wasn't the core issue here." }
+                ]
+            }
+        ]
+    },
+    {
+        caseTitle: "Case 2/3: Helseplattformen - The Rejected System",
+        parts: [
+             {
+                type: 'singleChoice',
+                context: "The 'Helseplattformen' IT system has been harshly criticized for being so slow and difficult to use to the point of risking patient care.",
+                question: "Guess how much has this life risking system cost so far?",
+                options: [
+                    { text: "2.6 billion NOK", isCorrect: false, rationale: "This is just the overrun cost." },
+                    { text: "980 million NOK", isCorrect: false, rationale: "The total cost is much higher." },
+                    { text: "6.6 billion NOK", isCorrect: true, rationale: "4 billion NOK was the orignal budget, but with significant overruns of 2.6 billion part in due to the ongoing design issues." },
+                    { text: "9.5 billion NOK", isCorrect: false, rationale: "The total is lower." }
+                ]
+            },
+            {
+                type: 'selectAll',
+                context: "84% of doctors felt that 'Helseplattformen' could endanger patients because it was too complicated and not adapted to clinical workflows.",
+                question: "Which of these key design points should have been concidered?",
+                options: [
+                    { text: "Dunning-Kruger effect", isCorrect: false, rationale: "The Dunning-Kruger effect is a cognitive bias where people with low ability at a task overestimate their competence, while those with high ability can underestimate their own. Not relevant to this question." },
+                    { text: "Match Between System and the Real World", isCorrect: true, rationale: "The system failed to speak the users' language or align with the workflows of Norwegian clinical practice, making even simple tasks difficult. Qualitative insights and contextual user testing were clearly neglegted." },
+                    { text: "Aesthetic and Minimalist Design", isCorrect: true, rationale: "This principle states that interfaces should be clean and not make tasks more complicated than necessary. Any information a user sees related to any given task should be thought of as on a need-to-know-now basis." },
+                    { text: "Flexibility and Efficiency of Use", isCorrect: true, rationale: "The new system's poor usability is a critical issue, with tasks taking up to five times as long. The cost in wasted staff hours is unsustainable for a health sector already under pressure." }
+                ]
+            }
+        ]
+    },
+    {
+        caseTitle: "Case 3/3: Citibank - Big Small Mistake",
+        parts: [
+             {
+                type: 'singleChoice',
+                context: "The confusing UI design of Citibank's software directly caused an employee to turn a simple click into a costly mistake.",
+                question: "Guess the direct financial loss from this bad user interface?",
+                options: [
+                    { text: "$900,000", isCorrect: false, rationale: "The loss was much, much larger." },
+                    { text: "$50,000,000", isCorrect: false, rationale: "The loss was much larger." },
+                    { text: "$90,000,000", isCorrect: false, rationale: "The loss was much larger." },
+                    { text: "$900,000,000", isCorrect: true, rationale: "Citibank accidentally wired nearly a billion dollars due to a confusing interface, and courts ruled they legally did not have the right get it back, though a portion was returned willingly." }
+                ]
+            },
+            {
+                type: 'selectAll',
+                context: "The court decided that the UI was not user-friendly, had inadequate safeguards and Citibank could only blame themselves.",
+                question: "Which of these design lessons were overlooked?",
+                options: [
+                    { text: "Error Prevention", isCorrect: true, rationale: "The best designs strive to prevent critical errors entirely. Actions should be reversible and small mistakes should not lead to a huge negative impacts. Users make small mistakes all the time." },
+                    { text: "Negative Feedback Loop", isCorrect: true, rationale: "A well-designed system uses negative feedback (like warnings) to prevent mistakes. This interface failed to provide  good guidance, which directly led to the massive financial loss." },
+                    { text: "Jakob's Law", isCorrect: false, rationale: "This law states that users prefer sites to work like other sites they know. In this case all interactions were actually too similar, the most critical failure was the lack of safeguards against catastrophic mistakes." },
+                    { text: "Miller's Law", isCorrect: false, rationale: "This law suggests users can only keep 5-9 items in working memory. While a cluttered interface can strain memory, the core issue here was a confusing workflow and lack of safeguards, not just the number of items on screen." }
+                ]
+            }
+        ]
+    },
+    {
+        caseTitle: "NAV Case: Confused Calculations",
+        parts: [
+             {
+                type: 'singleChoice',
+                context: "NAV's new pension systems resulted in a tool notoriously difficult for both employees and citizens to understand.",
+                question: "What was the total cost for this part of the modernization project?",
+                options: [
+                    { text: "3 billion NOK", isCorrect: false, rationale: "This was the budget overrun, not the total cost." },
+                    { text: "3.4 billion NOK", isCorrect: false, rationale: "This was the original budget, not the final cost." },
+                    { text: "6 billion NOK", isCorrect: true, rationale: "The cost soared past 6 billion NOK on a 3.4 billion budget. Years of expensive fixes still haven't solved its user-unfriendliness. A costly lesson how just fixing things later isn't that simple." },
+                    { text: "8 billion NOK", isCorrect: false, rationale: "The total cost a but lower." }
+                ]
+            },
+            {
+                type: 'selectAll',
+                context: "The NAV system's calculations were so opaque that it became near impossible for citizens and case workers to verify financial pension decisions.",
+                question: "Which of these factors did the system fail to deliver on?",
+                options: [
+                    { text: "Visibility of System Status", isCorrect: true, rationale: "The system completely failed to communicate to users how it arrived at its conclusions. It left both caseworkers and citizens in the dark about the logic behind critical financial decisions." },
+                    { text: "Authority Bias", isCorrect: false, rationale: "This bias relates to our tendency to attribute greater accuracy to the opinion of an authority figure. While a factor in how users might have initially trusted the system's outputs, it wasn't the core design failure itself." },
+                    { text: "Tesler's Law", isCorrect: true, rationale: "Also known as The Law of Conservation of Complexity. By hiding how it reached its financial conclusions, the system didn't remove complexity, it just transferred the burden of figuring out the opaque result onto workers and clients." },
+                    { text: "The Efficiency Tax", isCorrect: true, rationale: "This refers to the enormous waste in resources when employees fight with clunky software. A difficult-to-use tool creates an ongoing, compounding effect on efficiency, wasting time and resources. The inefficacy of a widely used tool can, over time, dwarf the billions that went into creating it." }
+                ]
+            }
+        ]
+    },
+    {
+        caseTitle: "Norwegian Police Case: PEN Scandal",
+        parts: [
+            {
+                type: 'singleChoice',
+                context: "The Police's 'PEN' system was designed for stationary, office-based work, conflicting with the on-the-go nature of modern policing.",
+                question: "Guess what was the financial loss for cancelling this from-the-start fatally flawed system?",
+                options: [
+                    { text: "250 million NOK", isCorrect: false, rationale: "The loss was higher." },
+                    { text: "728 million NOK", isCorrect: false, rationale: "The loss was lower." },
+                    { text: "1.2 billion NOK", isCorrect: false, rationale: "The loss was lower." },
+                    { text: "485 million NOK", isCorrect: true, rationale: "The project was cancelled after consuming 485 million NOK, a significant loss for a system that failed the most basic contextual needs of its users." }
+                ]
+            },
+            {
+                type: 'selectAll',
+                context: "The system forced officers to return to the station to do administrative tasks instead of on-the-go, wasting time",
+                question: "Which core UX principles were violated by designing a system completely disconnected from the user's real-world context?",
+                options: [
+                    { text: "Match Between System and the Real World", isCorrect: true, rationale: "The design was based on an office environment, completely failing to match the real-world context of a police officer on patrol." },
+                    { text: "Flexibility and Efficiency of Use", isCorrect: true, rationale: "The system was not flexible enough to be used efficiently in the field. It lacked the accelerators needed for expert, mobile use, forcing an inefficient workflow." },
+                    { text: "Outdated Mental Model", isCorrect: true, rationale: "The developers of the system had a preconceived mental model how police work. With good qualitative research the PEN project would probably been a success." },
+                    { text: "Consistency and Standards", isCorrect: false, rationale: "Refers in simple terms to don't reinvent the wheel unless necessary. However, in this case not just another desktop solution was not enough." }
+                ]
+            }
+        ]
+    },
+     {
+        caseTitle: "Lidl Case: Mismatched System",
+        parts: [
+            {
+                type: 'singleChoice',
+                context: "Supermarket giant Lidl selected an industry-standard inventory system, thinking they could just adapt their business model to the system.",
+                question: "How much did Lidl write off after finally dropping the system?",
+                options: [
+                    { text: "€90 million", isCorrect: false, rationale: "The write-off was much larger." },
+                    { text: "€500 million", isCorrect: true, rationale: "A costly reminder that the 'standard' solution isn't always the right one." },
+                    { text: "€800 million", isCorrect: false, rationale: "The write-off was lower." },
+                    { text: "€1 billion", isCorrect: false, rationale: "The write-off was lower." }
+                ]
+            },
+            {
+                type: 'selectAll',
+                context: "The project failed because the chosen software could not be adapted to fit Lidl's core business logic, proving that even a popular, standard solution can be the wrong one if it doesn't serve the user's needs.",
+                question: "Which principles or biases explain this failure?",
+                options: [
+                    { text: "Match Between System and the Real World", isCorrect: true, rationale: "A tool must serve the user's reality. The system's logic was fundamentally opposed to Lidl's business logic, making it a bad fit from the start." },
+                    { text: "Sunk Cost Effect", isCorrect: true, rationale: "As costs mounted into the hundreds of millions, this psychological bias made it harder for leadership to abandon the failing project, as they were too focused on the money already 'sunk' into it." },
+                    { text: "Occam's Razor", isCorrect: false, rationale: "This principle suggests simpler solutions are better. While a better-fitting system would have been a 'simpler' solution in hindsight, the core failure was the mismatch, not just a failure to choose the simplest path." },
+                    { text: "Status Quo Bias", isCorrect: true, rationale: "The organization was unwilling to change its established behavior and internal processes (the status quo), leading them to make the irrational decision to spend a fortune on unsustainable customization rather than adapt." }
+                ]
+            }
+        ]
+    },
+    {
+        caseTitle: "US Census Case: Ignoring users",
+        parts: [
+            {
+                type: 'singleChoice',
+                context: "The US Census Bureau developed new handheld devices to collect data, but field tests showed they were slow, confusing, and unreliable.",
+                question: "Guess the cost to abandon the failing digital system and revert to paper-and-pencil at the last minute?",
+                options: [
+                    { text: "$500 million", isCorrect: false, rationale: "The cost was much higher." },
+                    { text: "$1 billion", isCorrect: false, rationale: "The cost was double this." },
+                    { text: "$2 billion", isCorrect: true, rationale: "It cost an extra $2 billion on top of the $600 million to develop the failed devices." },
+                    { text: "$100 million", isCorrect: false, rationale: "The cost was much higher." }
+                ]
+            },
+            {
+                type: 'selectAll',
+                context: "The user testing process worked perfectly! It correctly identified that the solution was not good enough. The failure was that leadership ignored these clear warnings from users.",
+                question: "Which biases and process failures explain this decision to ignore clear user feedback?",
+                options: [
+                    { text: "Confirmation Bias", isCorrect: true, rationale: "Leadership, already committed to the digital strategy, likely looked for any evidence that confirmed their decision while downplaying the overwhelmingly negative user feedback." },
+                    { text: "Sunk Cost Effect", isCorrect: true, rationale: "As millions were already invested in the handhelds, it became psychologically harder for leadership to abandon the plan, even when faced with evidence of its failure." },
+                    { text: "Feedback Loop Failure", isCorrect: true, rationale: "This is the core process failure. The organization had a system for getting user feedback (field tests), but it failed to act on that feedback, rendering it useless." },
+                    { text: "The Framing Effect", isCorrect: false, rationale: "This bias refers to that how information is presented influences how people make decisions. While potentially a factor, the core issue was the complete breakdown of the feedback process itself." }
+                ]
+            }
+        ]
+    },
+    {
+        caseTitle: "Walmart Case: Expensive Question",
+        parts: [
+            {
+                type: 'singleChoice',
+                context: 'On their website, they asked "Would you like Walmart to be less cluttered?" Users overwhelmingly responded "yes".',
+                question: "Guess the loss in sales from removing 15% of the inventory based on this single question?",
+                options: [
+                    { text: "$250 million", isCorrect: false, rationale: "The loss was much higher." },
+                    { text: "$850 million", isCorrect: false, rationale: "The loss was more than double this amount." },
+                    { text: "$1.85 billion", isCorrect: true, rationale: "The move alienated customers who couldn't find their usual products, leading to a massive, self-inflicted sales drop." },
+                    { text: "$2.4 billion", isCorrect: false, rationale: "The a bit lower." }
+                ]
+            },
+            {
+                type: 'selectAll',
+                context: "The failure wasn't in listening to customers, but the approach. The closed-ended question didn't uncover the real user need.",
+                question: "Which user design rules were violated by this approach?",
+                options: [
+                    { text: "Leading Question", isCorrect: true, rationale: "The question was framed to elicit a 'yes' answer. Of course people want less clutter. This is a classic user research mistake. It failed to discover the root issue." },
+                    { text: "Anchoring Bias ", isCorrect: false, rationale: "Simply refers to that users rely more heavily on the first piece of information they see." },
+                    { text: "Confirmation Bias", isCorrect: true, rationale: "As the team posed the question, they likely already believed that removing inventory was the solution to 'clutter' and used the flawed survey results to confirm their pre-existing belief." },
+                    { text: "The Peak-End Rule", isCorrect: false, rationale: "This rule states people judge an experience based on its most intense point and its end. It's not relevant to the flawed methodology of the survey question itself." }
+                ]
+            }
+        ]
+    },
+    {
+        caseTitle: "USS McCain Case: Deadly Design",
+        parts: [
+            {
+                type: 'singleChoice',
+                context: "Navy destroyer USS McCain collided with a commercial tanker, the accident was traced to a confusing UI in the cockpit.",
+                question: "The tragic loss of 10 lives is immeasurable, the cost in repairs are not.",
+                options: [
+                    { text: "$118 million", isCorrect: false, rationale: "The cost was higher." },
+                    { text: "$223 million", isCorrect: true, rationale: "It was mere luck it didn't sink losing more lives and the $1.8 billion ship." },
+                    { text: "$760 million", isCorrect: false, rationale: "The cost was lower." },
+                    { text: "$1.1 billion", isCorrect: false, rationale: "The cost was lower." }
+                ]
+            },
+            {
+                type: 'selectAll',
+                context: "A new, complex touchscreen system made the crew lose control causing the crash.",
+                question: "Which critical design failures contributed to this tragedy?",
+                options: [
+                    { text: "Visibility of System Status", isCorrect: true, rationale: "The system failed to provide clear, immediate feedback about which station had control of which function (steering vs. throttle), leaving the crew in the dark during a critical moment." },
+                    { text: "Recognition Rather Than Recall", isCorrect: true, rationale: "The complex system forced sailors to recall complex procedures from memory under high stress, rather than making system functions and statuses clearly visible." },
+                    { text: "Empathy Gap", isCorrect: true, rationale: "The designers likely underestimated how much the stress and high-pressure emotions of a real-world naval operation would influence the crew's ability to interact with a complex system." },
+                    { text: "Fitt's Law", isCorrect: false, rationale: "While related to interaction, the core issue was the system's confusing feedback and logic, not the physical difficulty of tapping a target." }
+                ]
+            }
+        ]
+    },
+    {
+        caseTitle: "FoxMeyer Case: Internal Rebellion",
+        parts: [
+            {
+                type: 'singleChoice',
+                context: "Pharmaceutical giant FoxMeyer invested in a system to automate its warehouses which failed.",
+                question: "What was the ultimate outcome for the multi-billion dollar company?",
+                options: [
+                    { text: "A 50% loss in stock value", isCorrect: false, rationale: "The outcome was far more severe." },
+                    { text: "A government bailout", isCorrect: false, rationale: "No, this went beyond a bailout." },
+                    { text: "Bankruptcy", isCorrect: true, rationale: "Correct. The failed project led directly to the company's bankruptcy in 1996." },
+                    { text: "A hostile takeover", isCorrect: false, rationale: "It went beyond this." }
+                ]
+            },
+            {
+                type: 'selectAll',
+                context: "Warehouse employees in fear for their jobs felt they had no control and began to actively sabotage the new system.",
+                question: "Which powerful psychological factors were at play?",
+                options: [
+                    { text: "Reactance", isCorrect: true, rationale: "The employees felt their freedom and job security were threatened by the new system. This triggered a strong negative reaction, leading them to actively work against its success." },
+                    { text: "Loss Aversion", isCorrect: true, rationale: "States people prefer to avoid loss more than potential new gains. The perceived loss of jobs was a much more powerful motivator for the employees than any potential company efficiency gain. They acted to avoid this loss." },
+                    { text: "Empathy Gap", isCorrect: true, rationale: "Refers to underestimating how much emotions influence behavior. The planners underestimated how fear and uncertainty would influence the workers behavior." },
+                    { text: "Negativity Bias", isCorrect: false, rationale: "This bias refers to how people remember negative events more than positive ones. Not relevant to situation." }
+                ]
+            }
+        ]
+    },
+    {
+        caseTitle: "E-helse Direktoratet Case: Akson",
+        parts: [
+            {
+                type: 'singleChoice',
+                context: "The Norwegian government's 'Akson' project had a 'one health journal for all' vision.",
+                question: "Guess the cost of this vision that did not deliver a single line of code",
+                options: [
+                    { text: "981 million NOK", isCorrect: false, rationale: "It was much lower." },
+                    { text: "640 million NOK", isCorrect: false, rationale: "It was lower." },
+                    { text: "482 million NOK", isCorrect: true, rationale: "Too much money for something that didn't deliver anything of value." },
+                    { text: "1.3 billion NOK", isCorrect: false, rationale: "It was much lower." }
+                ]
+            },
+            {
+                type: 'selectAll',
+                context: "The project was stopped after massive opposition from its intended users (GPs), who argued that a single, monolithic system could never meet their diverse needs.",
+                question: "Which strategic errors and biases led to this conceptual failure?",
+                options: [
+                    { text: "False Consensus Effect", isCorrect: true, rationale: "This bias describes the tendency to assume others share our beliefs. The project's proponents likely overestimated how much GPs agreed with their top-down vision." },
+                    { text: "Occam's Razor", isCorrect: true, rationale: "This principle states that simpler solutions are often better. The project chose the most complex possible solution (one giant system) instead of a simpler one (integrating existing systems)." },
+                    { text: "User Control and Freedom", isCorrect: true, rationale: "The proposed system would have removed the autonomy that GPs and municipalities had over their own tools and workflows, forcing them into a rigid system." },
+                    { text: "Sunk Cost Effect", isCorrect: false, rationale: "This case is an example of avoiding the Sunk Cost Effect. By cancelling the project despite the money already spent on planning, the government made a rational decision and prevented much larger losses." }
+                ]
+            }
+        ]
+    }
+];
 export const WHY_DESIGN_NAV_ITEMS = [
   { name: 'Start' },
 ];
