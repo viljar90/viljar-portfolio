@@ -1,9 +1,9 @@
 // src/components/WhyDesignIntro.js
 
 import React, { useState, useEffect, useRef } from 'react';
-import { BlinkingCursor, PlayIcon, PrimaryButton } from './uiElements';
 import PropTypes from 'prop-types';
 import { WHY_DESIGN_CONTENT } from '../content';
+import { PrimaryButton, BlinkingCursor } from './uiElements';
 
 const WhyDesignIntro = ({ onStart, isPlaying, onAnimationComplete }) => {
     const { steps } = WHY_DESIGN_CONTENT.intro;
@@ -20,8 +20,6 @@ const WhyDesignIntro = ({ onStart, isPlaying, onAnimationComplete }) => {
     }, [isPlaying]);
 
     useEffect(() => {
-        // This effect now correctly handles pausing and resuming.
-        // The aggressive reset logic has been removed.
         if (!isPlaying || phase === 'done') return;
 
         const currentStep = steps[currentStepIndex];
@@ -73,7 +71,7 @@ const WhyDesignIntro = ({ onStart, isPlaying, onAnimationComplete }) => {
         <div className="text-center">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary dark:text-secondary mb-4 min-h-[1.2em]">
                 {displayedTitle}
-                {isPlaying && phase === 'typing-title' && <BlinkingCursor sizeClass="h-12 md:h-14" />}
+                {isPlaying && phase === 'typing-title' && <BlinkingCursor sizeClass="h-12 md:h-14 lg:h-16" />}
             </h1>
             <p className="text-2xl md:text-3xl text-text-base dark:text-text-muted min-h-[3em]" style={{ whiteSpace: 'pre-line' }}>
               {displayedMainText}
@@ -82,9 +80,8 @@ const WhyDesignIntro = ({ onStart, isPlaying, onAnimationComplete }) => {
             <div className="mt-12">
                 <PrimaryButton
                     onClick={onStart}
-                    icon={PlayIcon}
                 >
-                    Start
+                    Play
                 </PrimaryButton>
             </div>
         </div>

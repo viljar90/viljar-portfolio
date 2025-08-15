@@ -5,7 +5,7 @@ import {
   MAIN_STAGES,
   MAIN_NAV_ITEMS,
   WHAT_DESIGN_NAV_ITEMS,
-  WHY_DESIGN_NAV_ITEMS,
+  // WHY_DESIGN_NAV_ITEMS is no longer needed here
   DESIGN_CONTENT,
   QUIZZES,
   DESIGN_STAGE_KEYS,
@@ -108,8 +108,8 @@ function App() {
         activeIndex = items.findIndex(item => item.name === design.activeDesignStageKey);
         refs = designItemRefs;
     } else if (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-      items = WHY_DESIGN_NAV_ITEMS;
-      activeIndex = 0;
+      items = design.whyDesignNavItems;
+      activeIndex = design.whyDesignActiveIndex;
       refs = designItemRefs;
     } else if (currentChapter === 'work' && work.workView === 'Quiz') {
         items = work.WORK_NAV_ITEMS;
@@ -135,7 +135,7 @@ function App() {
       observer.observe(activeElement);
       return () => observer.disconnect();
     }
-  }, [landing.activeMainStep, design.activeDesignStageKey, work.workStepIndex, currentChapter, work.workView, work.WORK_NAV_ITEMS, work.currentProjectIndex, work.PROJECT_NAV_ITEMS, design.designView]);
+  }, [landing.activeMainStep, design.activeDesignStageKey, work.workStepIndex, currentChapter, work.workView, work.WORK_NAV_ITEMS, work.currentProjectIndex, work.PROJECT_NAV_ITEMS, design.designView, design.whyDesignNavItems, design.whyDesignActiveIndex]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -179,12 +179,12 @@ function App() {
     if (currentChapter === 'design') {
       return design.designView === DESIGN_VIEWS.WHAT_DESIGN
         ? WHAT_DESIGN_NAV_ITEMS
-        : WHY_DESIGN_NAV_ITEMS;
+        : design.whyDesignNavItems;
     }
     if (currentChapter === 'work' && work.workView === 'Quiz') return work.WORK_NAV_ITEMS;
     if (currentChapter === 'work' && work.workView === 'Overview') return work.PROJECT_NAV_ITEMS;
     return [];
-  }, [currentChapter, work.workView, work.WORK_NAV_ITEMS, work.PROJECT_NAV_ITEMS, design.designView]);
+  }, [currentChapter, work.workView, work.WORK_NAV_ITEMS, work.PROJECT_NAV_ITEMS, design.designView, design.whyDesignNavItems]);
 
   const updateNavFade = useCallback(() => {
     const el = scrollContainerRef.current;
@@ -287,6 +287,8 @@ function App() {
         } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
             if (itemId === 'Start') {
                 design.replayWhyDesignIntro();
+            } else {
+                design.navigateToWhyDesignStep(itemId);
             }
         }
     } else if (currentChapter === 'work' && work.workView === 'Quiz') {
@@ -364,7 +366,7 @@ function App() {
     if (design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
       activeNavStepOrStage = design.activeDesignStageKey;
     } else {
-      activeNavStepOrStage = 'Start';
+      activeNavStepOrStage = design.whyDesignNavItems[design.whyDesignActiveIndex]?.name;
     }
   } else if (currentChapter === 'work' && work.workView === 'Quiz') {
     if (work.workStepIndex === 0) {

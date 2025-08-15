@@ -10,7 +10,7 @@ import QuizResults from './QuizResults';
 import ProjectOverview from './ProjectOverview';
 import { QUIZZES, PROJECTS, DESIGN_VIEWS } from '../content';
 import WhyDesignIntro from './WhyDesignIntro';
-import WhyDesignGame from './WhyDesignGame'; // Import the new game component
+import WhyDesignGame from './WhyDesignGame';
 
 const ChapterContent = ({
   currentChapter,
@@ -32,21 +32,37 @@ const ChapterContent = ({
 
   const renderDesignContent = () => {
     if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
+      // **THE FIX**: The view is now determined by the `whyDesignStep` state
       if (design.whyDesignStep === 'intro') {
         return (
           <WhyDesignIntro 
-            key={design.whyDesignIntroResetKey} // This is the fix
-            onStart={design.handleStartWhyDesignGame}
-            isPlaying={design.isPlayingWhyDesignIntro}
+            key={design.whyDesignIntroResetKey}
+            onStart={design.handleStartWhyDesignGame} // Use the correct handler
+            isPlaying={design.isPlayingWhyDesignIntro} 
             onAnimationComplete={design.whyDesignIntroAnimationCompleted}
           />
         );
-      } else if (design.whyDesignStep === 'game') {
-        return <WhyDesignGame onGameComplete={design.replayWhyDesignIntro} />;
+      } else { // 'game' step
+        return (
+          <WhyDesignGame
+            gameStatus={design.gameStatus}
+            gameScore={design.gameScore}
+            gameCaseIndex={design.gameCaseIndex}
+            gamePartIndex={design.gamePartIndex}
+            gameQuestionStates={design.gameQuestionStates}
+            gameSelectedAnswers={design.gameSelectedAnswers}
+            handleGameOptionClick={design.handleGameOptionClick}
+            handleGameSubmitSelectAll={design.handleGameSubmitSelectAll}
+            handleGameNext={design.handleGameNext}
+            resetGame={design.resetGame}
+            startBonusCase={design.startBonusCase}
+            setGameStatus={design.setGameStatus}
+            onGameComplete={design.replayWhyDesignIntro}
+          />
+        );
       }
     }
     
-    // Default to 'What Design' content
     return (
       <DesignChapter
         darkMode={darkMode}
@@ -60,7 +76,7 @@ const ChapterContent = ({
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative px-4 sm:px-16">
-      {currentChapter === 'main' && (
+       {currentChapter === 'main' && (
         <LandingChapter
           darkMode={darkMode}
           activeMainStep={landing.activeMainStep}
@@ -143,6 +159,6 @@ ChapterContent.propTypes = {
     showCursorHomeQuestion: PropTypes.bool.isRequired,
     showCursorDesignTitle: PropTypes.bool.isRequired,
     showCursorDesignMainText: PropTypes.bool.isRequired,
-  };
+};
 
 export default ChapterContent;

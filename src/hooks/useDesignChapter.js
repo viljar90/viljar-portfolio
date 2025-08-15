@@ -1,16 +1,15 @@
 // src/hooks/useDesignChapter.js
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { WHAT_DESIGN_NAV_ITEMS, DESIGN_CONTENT, DESIGN_VIEWS } from '../content';
+import { WHAT_DESIGN_NAV_ITEMS, DESIGN_CONTENT, DESIGN_VIEWS, WHY_DESIGN_GAME_CONTENT, WHY_DESIGN_NAV_ITEMS } from '../content';
 
 const TYPEWRITER_SPEED = 25;
 const BACKSPACE_SPEED = 20;
 const LONG_PAUSE_DURATION = 2700;
 
 export const useDesignChapter = (currentChapter) => {
+  // --- "What Design" States ---
   const [designView, setDesignView] = useState(DESIGN_VIEWS.WHAT_DESIGN);
-  
-  // State for "What Design" (Slideshow/Document)
   const [activeDesignStageKey, setActiveDesignStageKey] = useState(WHAT_DESIGN_NAV_ITEMS[0].name);
   const [currentDesignStepIndex, setCurrentDesignStepIndex] = useState(0);
   const [displayedDesignTitleChars, setDisplayedDesignTitleChars] = useState('');
@@ -25,54 +24,153 @@ export const useDesignChapter = (currentChapter) => {
   const [documentView, setDocumentView] = useState('Slideshow');
   const [previousDesignStageKey, setPreviousDesignStageKey] = useState(null);
   const [designAnimationDirection, setDesignAnimationDirection] = useState('next');
-
-  // State for "Why Design"
-  const [whyDesignStep, setWhyDesignStep] = useState('intro');
-  const [isPlayingWhyDesignIntro, setIsPlayingWhyDesignIntro] = useState(false);
-  const [whyDesignIntroCompleted, setWhyDesignIntroCompleted] = useState(false);
-  const [whyDesignIntroResetKey, setWhyDesignIntroResetKey] = useState(0);
-
-  // Ref to track the previous chapter
   const prevChapterRef = useRef(currentChapter);
 
-  const handleStartWhyDesignGame = () => {
-    setWhyDesignStep('game');
-    setIsPlayingWhyDesignIntro(false);
-  };
+  // --- "Why Design" States ---
+  const [whyDesignStep, setWhyDesignStep] = useState('intro');
+  const [whyDesignIntroCompleted, setWhyDesignIntroCompleted] = useState(false);
+  const [whyDesignIntroResetKey, setWhyDesignIntroResetKey] = useState(0);
+  const [isPlayingWhyDesignIntro, setIsPlayingWhyDesignIntro] = useState(false);
+  const hasAutoPlayedWhyDesignIntro = useRef(false);
 
+  // --- Game States ---
+  const [gameScore, setGameScore] = useState(0);
+  const [gameCaseIndex, setGameCaseIndex] = useState(0);
+  const [gamePartIndex, setGamePartIndex] = useState(0);
+  const [gameQuestionStates, setGameQuestionStates] = useState({});
+  const [gameSelectedAnswers, setGameSelectedAnswers] = useState([]);
+  const [gameStatus, setGameStatus] = useState('playing');
+
+  // --- Logic ---
   const togglePlayPauseWhyDesignIntro = useCallback(() => {
     setIsPlayingWhyDesignIntro(prev => !prev);
   }, []);
-  
+
   const whyDesignIntroAnimationCompleted = useCallback(() => {
     setIsPlayingWhyDesignIntro(false);
     setWhyDesignIntroCompleted(true);
+    // Game no longer auto-starts
+  }, []);
+
+  const resetGame = useCallback(() => {
+    setGameScore(0);
+    setGameCaseIndex(0);
+    setGamePartIndex(0);
+    setGameQuestionStates({});
+    setGameSelectedAnswers([]);
+    setGameStatus('playing');
+  }, []);
+  
+  const handleStartWhyDesignGame = useCallback(() => {
+    setWhyDesignStep('game');
   }, []);
 
   const replayWhyDesignIntro = useCallback(() => {
     setWhyDesignIntroCompleted(false);
     setWhyDesignIntroResetKey(prevKey => prevKey + 1);
-    setIsPlayingWhyDesignIntro(true);
     setWhyDesignStep('intro');
+    setIsPlayingWhyDesignIntro(true);
+    hasAutoPlayedWhyDesignIntro.current = true;
+    resetGame();
+  }, [resetGame]);
+
+  const navigateToWhyDesignStep = useCallback((itemName) => {
+    setWhyDesignStep('game');
+    setWhyDesignIntroCompleted(true);
+
+    if (itemName.startsWith('Case')) {
+      const caseNum = parseInt(itemName.split(' ')[1], 10);
+      setGameCaseIndex(caseNum - 1);
+      setGamePartIndex(0);
+      setGameStatus('playing');
+    } else if (itemName === 'Bonus') {
+      setGameStatus('bonus');
+    } else if (itemName === 'Results') {
+      setGameStatus('end');
+    }
   }, []);
 
-  useEffect(() => {
-    if (designView !== DESIGN_VIEWS.WHY_DESIGN) {
-      setIsPlayingWhyDesignIntro(false);
-      setWhyDesignIntroCompleted(false);
-      setWhyDesignStep('intro');
-    }
-  }, [designView]);
+  const handleGameOptionClick = useCallback((option) => {
+    const questionId = `${gameCaseIndex}-${gamePartIndex}`;
+    const question = WHY_DESIGN_GAME_CONTENT[gameCaseIndex].parts[gamePartIndex];
+    const currentState = gameQuestionStates[questionId] || {};
 
-  useEffect(() => {
-    if (previousDesignStageKey !== null) {
-      const timer = setTimeout(() => {
-        setPreviousDesignStageKey(null);
-      }, 400);
-      return () => clearTimeout(timer);
-    }
-  }, [previousDesignStageKey]);
+    if (currentState.completed || (currentState.revealedOptions?.includes(option.text))) return;
 
+    if (question.type === 'singleChoice') {
+      if (option.isCorrect) {
+        if (!currentState.completed) setGameScore(s => s + 100);
+        setGameQuestionStates(prev => ({ ...prev, [questionId]: { ...currentState, completed: true } }));
+      } else {
+        const newRevealed = [...(currentState.revealedOptions || []), option.text];
+        setGameQuestionStates(prev => ({ ...prev, [questionId]: { ...currentState, revealedOptions: newRevealed } }));
+      }
+    } else {
+      setGameSelectedAnswers(prev => prev.includes(option.text) ? prev.filter(t => t !== option.text) : [...prev, option.text]);
+    }
+  }, [gameCaseIndex, gamePartIndex, gameQuestionStates]);
+
+  const handleGameSubmitSelectAll = useCallback(() => {
+    const questionId = `${gameCaseIndex}-${gamePartIndex}`;
+    if (gameQuestionStates[questionId]?.completed) return;
+    
+    const question = WHY_DESIGN_GAME_CONTENT[gameCaseIndex].parts[gamePartIndex];
+    const correctOptions = question.options.filter(o => o.isCorrect).map(o => o.text);
+    let awardedScore = 0;
+    gameSelectedAnswers.forEach(answer => {
+      if (correctOptions.includes(answer)) awardedScore += (100 / correctOptions.length);
+    });
+    
+    setGameScore(s => s + awardedScore);
+    setGameQuestionStates(prev => ({ ...prev, [questionId]: { completed: true, selected: gameSelectedAnswers } }));
+    setGameSelectedAnswers([]);
+  }, [gameCaseIndex, gamePartIndex, gameQuestionStates, gameSelectedAnswers]);
+
+  const handleGameNext = useCallback(() => {
+    setGameSelectedAnswers([]);
+    const MAIN_CASES_COUNT = 3;
+    const isLastPart = gamePartIndex >= WHY_DESIGN_GAME_CONTENT[gameCaseIndex].parts.length - 1;
+    const isMainFlowComplete = gameCaseIndex < MAIN_CASES_COUNT && gameCaseIndex === MAIN_CASES_COUNT - 1 && isLastPart;
+    const isBonusCase = gameCaseIndex >= MAIN_CASES_COUNT;
+
+    if (!isLastPart) setGamePartIndex(p => p + 1);
+    else if (isMainFlowComplete) setGameStatus('bonus');
+    else if (isBonusCase && isLastPart) setGameStatus('bonus');
+    else if (gameCaseIndex < WHY_DESIGN_GAME_CONTENT.length - 1) {
+      setGameCaseIndex(c => c + 1);
+      setGamePartIndex(0);
+    } else setGameStatus('end');
+  }, [gameCaseIndex, gamePartIndex]);
+  
+  const startBonusCase = useCallback((index) => {
+    setGameCaseIndex(index);
+    setGamePartIndex(0);
+    setGameSelectedAnswers([]);
+    setGameStatus('playing');
+  }, []);
+
+  const whyDesignNavItems = [
+    ...WHY_DESIGN_NAV_ITEMS,
+    { name: "Case 1" },
+    { name: "Case 2" },
+    { name: "Case 3" },
+    { name: "Bonus" },
+    { name: "Results" },
+  ];
+
+  let whyDesignActiveIndex = 0;
+  if (whyDesignStep === 'intro') {
+    whyDesignActiveIndex = 0;
+  } else if (whyDesignStep === 'game') {
+    if (gameStatus === 'playing' && gameCaseIndex < 3) {
+      whyDesignActiveIndex = gameCaseIndex + 1;
+    } else if (gameStatus === 'bonus') {
+      whyDesignActiveIndex = 4;
+    } else if (gameStatus === 'end') {
+      whyDesignActiveIndex = 5;
+    }
+  }
+  
   const resetForStage = useCallback((stageKey, startPlaying = true) => {
     const stageData = DESIGN_CONTENT[stageKey];
     if (!stageData || !stageData.steps || stageData.steps.length === 0) {
@@ -82,9 +180,7 @@ export const useDesignChapter = (currentChapter) => {
     }
 
     setError(null);
-    const firstStep = stageData.steps[0];
-
-    if (firstStep) {
+    if (stageData.steps[0]) {
       setActiveDesignStageKey(stageKey);
       setCurrentDesignStepIndex(0);
       setDisplayedDesignTitleChars('');
@@ -110,7 +206,7 @@ export const useDesignChapter = (currentChapter) => {
       setIsFadingOut(false);
     }
   }, []);
-
+  
   const navigateToStage = useCallback((stageKey) => {
     setNavigationMode('automatic');
     resetForStage(stageKey, true);
@@ -163,7 +259,7 @@ export const useDesignChapter = (currentChapter) => {
 
     return 'success';
   }, [activeDesignStageKey, currentDesignStepIndex, setStepContent]);
-
+  
   const nextDesignStage = useCallback(() => {
     const currentIndex = WHAT_DESIGN_NAV_ITEMS.findIndex(item => item.name === activeDesignStageKey);
     if (currentIndex < WHAT_DESIGN_NAV_ITEMS.length - 1) {
@@ -183,12 +279,10 @@ export const useDesignChapter = (currentChapter) => {
       setActiveDesignStageKey(prevStageKey);
     }
   }, [activeDesignStageKey]);
-
+  
   const togglePlayPause = useCallback(() => {
     setIsPlayingDesign(prev => {
-      if (!prev) {
-        setNavigationMode('automatic');
-      }
+      if (!prev) setNavigationMode('automatic');
       return !prev;
     });
   }, []);
@@ -204,40 +298,39 @@ export const useDesignChapter = (currentChapter) => {
     setIsPlayingDesign(false);
   }, []);
 
-  // Main effect for handling chapter and view changes
+  useEffect(() => {
+    const isOnWhyDesignView = currentChapter === 'design' && designView === DESIGN_VIEWS.WHY_DESIGN;
+    
+    if (isOnWhyDesignView) {
+      if (!hasAutoPlayedWhyDesignIntro.current) {
+        setIsPlayingWhyDesignIntro(true);
+        hasAutoPlayedWhyDesignIntro.current = true;
+      }
+    } else {
+      setIsPlayingWhyDesignIntro(false);
+      hasAutoPlayedWhyDesignIntro.current = false;
+    }
+  }, [currentChapter, designView]);
+  
   useEffect(() => {
     const justEnteredDesign = prevChapterRef.current !== 'design' && currentChapter === 'design';
 
     if (currentChapter !== 'design') {
       wasPlayingRef.current = isPlayingDesign;
       setIsPlayingDesign(false);
-      setIsPlayingWhyDesignIntro(false);
-      setWhyDesignIntroCompleted(false);
-      setWhyDesignIntroResetKey(0); 
     } else {
       if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
-        setIsPlayingWhyDesignIntro(false);
         if (justEnteredDesign && documentView === 'Slideshow' && !isDesignChapterFinished) {
-            // FIX: If we just entered the chapter, reset the current stage from the top
             resetForStage(activeDesignStageKey, true);
         } else if (!isDesignChapterFinished && documentView === 'Slideshow') {
-            // Otherwise, just ensure it's playing (handles view switching)
             setIsPlayingDesign(true);
-        }
-      } else if (designView === DESIGN_VIEWS.WHY_DESIGN) {
-        setIsPlayingDesign(false);
-        if (!whyDesignIntroCompleted) {
-          setIsPlayingWhyDesignIntro(true);
         }
       }
     }
 
-    // Update the ref for the next render
     prevChapterRef.current = currentChapter;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChapter, designView, documentView]);
+  }, [currentChapter, designView, documentView, activeDesignStageKey, isDesignChapterFinished, resetForStage, isPlayingDesign]);
 
-  // Effect for auto-advancing stages in "What Design"
   useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete' || documentView !== 'Slideshow') {
       return;
@@ -263,7 +356,6 @@ export const useDesignChapter = (currentChapter) => {
     return () => clearTimeout(timer);
   }, [currentChapter, isPlayingDesign, designStepAnimationPhase, activeDesignStageKey, resetForStage, navigationMode, documentView]);
 
-  // Effect for typewriter animation in "What Design"
   useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingDesign || documentView !== 'Slideshow' || designView !== DESIGN_VIEWS.WHAT_DESIGN) return;
 
@@ -286,57 +378,52 @@ export const useDesignChapter = (currentChapter) => {
           setDesignStepAnimationPhase('typing-maintext');
         }
         break;
-
       case 'typing-maintext':
-        if (displayedDesignMainTextChars.length < currentStepData.mainText.length) {
-          timer = setTimeout(() => {
-            setDisplayedDesignMainTextChars(currentStepData.mainText.substring(0, displayedDesignMainTextChars.length + 1));
-          }, TYPEWRITER_SPEED);
-        } else {
-          setDesignStepAnimationPhase('pausing-after-maintext');
-        }
-        break;
-
-      case 'pausing-after-maintext':
-        timer = setTimeout(() => {
-          if (currentDesignStepIndex < currentStageData.steps.length - 1) {
-            const nextStepData = currentStageData.steps[currentDesignStepIndex + 1];
-            setCurrentDesignStepIndex(prev => prev + 1);
-
-            if (nextStepData.mainText === currentStepData.mainText) {
-              setDesignStepAnimationPhase('backspacing-title');
-            } else if (nextStepData.title === currentStepData.title) {
-              setDisplayedDesignMainTextChars('');
-              setDesignStepAnimationPhase('typing-maintext');
-            } else {
-              setDisplayedDesignTitleChars('');
-              setDisplayedDesignMainTextChars('');
-              setDesignStepAnimationPhase('typing-title');
-            }
+          if (displayedDesignMainTextChars.length < currentStepData.mainText.length) {
+            timer = setTimeout(() => {
+              setDisplayedDesignMainTextChars(currentStepData.mainText.substring(0, displayedDesignMainTextChars.length + 1));
+            }, TYPEWRITER_SPEED);
           } else {
-            setDesignStepAnimationPhase('all-steps-complete');
+            setDesignStepAnimationPhase('pausing-after-maintext');
           }
-        }, currentStepData.pause || LONG_PAUSE_DURATION);
-        break;
-
-      case 'backspacing-title':
-        if (displayedDesignTitleChars.length > 0) {
+          break;
+      case 'pausing-after-maintext':
           timer = setTimeout(() => {
-            setDisplayedDesignTitleChars(prev => prev.slice(0, -1));
-          }, BACKSPACE_SPEED);
-        } else {
-          setDesignStepAnimationPhase('typing-title');
-        }
-        break;
-
+            if (currentDesignStepIndex < currentStageData.steps.length - 1) {
+              const nextStepData = currentStageData.steps[currentDesignStepIndex + 1];
+              setCurrentDesignStepIndex(prev => prev + 1);
+  
+              if (nextStepData.mainText === currentStepData.mainText) {
+                setDesignStepAnimationPhase('backspacing-title');
+              } else if (nextStepData.title === currentStepData.title) {
+                setDisplayedDesignMainTextChars('');
+                setDesignStepAnimationPhase('typing-maintext');
+              } else {
+                setDisplayedDesignTitleChars('');
+                setDisplayedDesignMainTextChars('');
+                setDesignStepAnimationPhase('typing-title');
+              }
+            } else {
+              setDesignStepAnimationPhase('all-steps-complete');
+            }
+          }, currentStepData.pause || LONG_PAUSE_DURATION);
+          break;
+      case 'backspacing-title':
+          if (displayedDesignTitleChars.length > 0) {
+            timer = setTimeout(() => {
+              setDisplayedDesignTitleChars(prev => prev.slice(0, -1));
+            }, BACKSPACE_SPEED);
+          } else {
+            setDesignStepAnimationPhase('typing-title');
+          }
+          break;
       default:
         break;
     }
 
     return () => clearTimeout(timer);
   }, [currentChapter, isPlayingDesign, activeDesignStageKey, currentDesignStepIndex, designStepAnimationPhase, displayedDesignTitleChars, displayedDesignMainTextChars, documentView, designView]);
-
-
+  
   return {
     error,
     activeDesignStageKey,
@@ -350,14 +437,6 @@ export const useDesignChapter = (currentChapter) => {
     designView,
     setDesignView,
     documentView,
-    whyDesignStep,
-    isPlayingWhyDesignIntro,
-    whyDesignIntroCompleted,
-    whyDesignIntroResetKey,
-    handleStartWhyDesignGame,
-    togglePlayPauseWhyDesignIntro,
-    whyDesignIntroAnimationCompleted,
-    replayWhyDesignIntro,
     previousDesignStageKey,
     designAnimationDirection,
     navigateToStage,
@@ -368,5 +447,28 @@ export const useDesignChapter = (currentChapter) => {
     toggleDocumentView,
     nextDesignStage,
     prevDesignStage,
+    whyDesignStep,
+    whyDesignIntroCompleted,
+    whyDesignIntroResetKey,
+    whyDesignIntroAnimationCompleted,
+    replayWhyDesignIntro,
+    isPlayingWhyDesignIntro,
+    togglePlayPauseWhyDesignIntro,
+    handleStartWhyDesignGame,
+    gameStatus,
+    gameScore,
+    gameCaseIndex,
+    gamePartIndex,
+    gameQuestionStates,
+    gameSelectedAnswers,
+    handleGameOptionClick,
+    handleGameSubmitSelectAll,
+    handleGameNext,
+    resetGame,
+    startBonusCase,
+    setGameStatus,
+    whyDesignNavItems,
+    whyDesignActiveIndex,
+    navigateToWhyDesignStep,
   };
 };
