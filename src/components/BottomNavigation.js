@@ -9,6 +9,8 @@ import {
   ViewSwitcherButton,
 } from './uiElements';
 import { DESIGN_CONTENT, QUIZZES, WHAT_DESIGN_NAV_ITEMS, DESIGN_VIEWS } from '../content';
+import PropTypes from 'prop-types';
+
 
 const BottomNavigation = ({
     navItems,
@@ -44,16 +46,42 @@ const BottomNavigation = ({
             !isPlaying &&
             design.isDesignChapterFinished;
 
-        const isWhyDesignFinished = currentChapter === 'design' &&
+        // **THE FIX IS HERE**: Updated logic for "Why Design" states
+        const isWhyDesignIntroDone = currentChapter === 'design' &&
             design.designView === DESIGN_VIEWS.WHY_DESIGN &&
-            design.whyDesignIntroCompleted;
+            design.whyDesignIntroCompleted &&
+            design.whyDesignStep === 'intro';
 
-        const showReplayButtonForChapters = isMainChapterFinalState || isWhatDesignFinished || isWhyDesignFinished;
+        const isWhyDesignGameActive = currentChapter === 'design' &&
+            design.designView === DESIGN_VIEWS.WHY_DESIGN &&
+            design.whyDesignStep === 'game' &&
+            design.gameStatus === 'playing';
+
+        const isWhyDesignResults = currentChapter === 'design' &&
+            design.designView === DESIGN_VIEWS.WHY_DESIGN &&
+            design.gameStatus === 'end';
+
+
+        const showReplayButtonForChapters = isMainChapterFinalState || isWhatDesignFinished || isWhyDesignResults;
         const allQuizzesAnswered = QUIZZES.every(quiz => work.quizAnswers[quiz.id]?.correct);
         const isOnResultsPage = work.workView === 'Quiz' && work.workStepIndex > QUIZZES.length;
 
         const nonAnimatedButtonClasses = "group h-12 w-12 sm:h-[3.75rem] sm:w-[3.75rem] flex-shrink-0 flex items-center justify-center rounded-full shadow-md transition-all duration-200 focus:outline-none transform hover:scale-105 active:scale-95 bg-bg-base text-icon-interactive hover:text-icon-base ring-1 ring-gray-500 dark:ring-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-slate-800";
         const iconAnimationClass = isClicked ? 'animate-click-bounce' : '';
+        
+        // Handle "Why Design" game's "Skip" state
+        if (isWhyDesignGameActive) {
+            const questionId = `${design.gameCaseIndex}-${design.gamePartIndex}`;
+            const questionState = design.gameQuestionStates[questionId];
+            if (!questionState?.completed) {
+                return <button onClick={handleStaticButtonClick} className={nonAnimatedButtonClasses} aria-label="Skip question"><SkipIcon className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105 ${iconAnimationClass}`} /></button>;
+            }
+        }
+        
+        // Handle "Why Design" intro's "Play" state after animation
+        if (isWhyDesignIntroDone) {
+             return <button onClick={handleStaticButtonClick} className={nonAnimatedButtonClasses} aria-label="Start Game"><PlayIcon className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105 ${iconAnimationClass}`} /></button>;
+        }
 
         if (currentChapter === 'work' && work.workView === 'Quiz' && !showReplayButtonForChapters) {
             let icon;
@@ -189,6 +217,25 @@ const BottomNavigation = ({
             </div>
         </div>
     );
+};
+
+BottomNavigation.propTypes = {
+  navItems: PropTypes.array.isRequired,
+  activeNavItem: PropTypes.string,
+  isPlaying: PropTypes.bool.isRequired,
+  isFadingOut: PropTypes.bool,
+  isDarkMode: PropTypes.bool.isRequired,
+  showLeftFade: PropTypes.bool.isRequired,
+  showRightFade: PropTypes.bool.isRequired,
+  onCentralButtonClick: PropTypes.func.isRequired,
+  onNavItemClick: PropTypes.func.isRequired,
+  scrollContainerRef: PropTypes.object.isRequired,
+  itemNavRefs: PropTypes.object.isRequired,
+  containerClass: PropTypes.string.isRequired,
+  navItemsFlexClass: PropTypes.string.isRequired,
+  currentChapter: PropTypes.string.isRequired,
+  design: PropTypes.object.isRequired,
+  work: PropTypes.object.isRequired,
 };
 
 export default BottomNavigation;

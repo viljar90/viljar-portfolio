@@ -5,7 +5,6 @@ import {
   MAIN_STAGES,
   MAIN_NAV_ITEMS,
   WHAT_DESIGN_NAV_ITEMS,
-  // WHY_DESIGN_NAV_ITEMS is no longer needed here
   DESIGN_CONTENT,
   QUIZZES,
   DESIGN_STAGE_KEYS,
@@ -353,11 +352,19 @@ function App() {
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) ||
     (currentChapter === 'work' && work.workView === 'Overview');
 
-  const currentPlayPauseButtonState = 
-    currentChapter === 'main' ? landing.isPlaying 
-    : (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN) ? design.isPlayingDesign
-    : (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN) ? design.isPlayingWhyDesignIntro
-    : false;
+  const currentPlayPauseButtonState = useMemo(() => {
+    if (currentChapter === 'main') return landing.isPlaying;
+    if (currentChapter === 'design') {
+      if (design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
+        return design.isPlayingDesign;
+      }
+      if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
+        if (design.whyDesignIntroCompleted) return false; // Show Play icon
+        return design.isPlayingWhyDesignIntro;
+      }
+    }
+    return false;
+  }, [currentChapter, landing.isPlaying, design.designView, design.isPlayingDesign, design.isPlayingWhyDesignIntro, design.whyDesignIntroCompleted]);
 
   let activeNavStepOrStage = '';
   if (currentChapter === 'main') {
@@ -402,6 +409,7 @@ function App() {
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) ||
     (currentChapter === 'work' && work.workView === 'Overview');
     
+  // **THE FIX**: This logic is now updated to handle all game states correctly
   const handleCentralButtonClick = () => {
     if (currentChapter === 'work') {
       work.handleWorkChapterCentralButtonClick();
@@ -413,8 +421,10 @@ function App() {
           design.togglePlayPause();
         }
       } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-        if (design.whyDesignIntroCompleted) {
-          design.replayWhyDesignIntro();
+        if (design.whyDesignStep === 'game' && design.gameStatus !== 'end') {
+          design.handleGameNext();
+        } else if (design.whyDesignIntroCompleted) {
+          design.handleStartWhyDesignGame();
         } else {
           design.togglePlayPauseWhyDesignIntro();
         }
