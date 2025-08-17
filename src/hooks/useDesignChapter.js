@@ -1,6 +1,6 @@
 // src/hooks/useDesignChapter.js
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { WHAT_DESIGN_NAV_ITEMS, DESIGN_CONTENT, DESIGN_VIEWS, WHY_DESIGN_GAME_CONTENT, WHY_DESIGN_NAV_ITEMS, WHY_DESIGN_CONTENT } from '../content';
 
 const TYPEWRITER_SPEED = 25;
@@ -203,14 +203,21 @@ export const useDesignChapter = (currentChapter) => {
     }
   }, [gameQuestionStates, startBonusCase]);
 
-  const whyDesignNavItems = [
-    ...WHY_DESIGN_NAV_ITEMS,
-    { name: "Case 1" },
-    { name: "Case 2" },
-    { name: "Case 3" },
-    { name: "Bonus" },
-    { name: "Results" },
-  ];
+  const whyDesignNavItems = useMemo(() => {
+    const caseItems = ["Case 1", "Case 2", "Case 3"].map((name, index) => {
+        const isCompleted =
+            gameQuestionStates[`${index}-0`]?.completed &&
+            gameQuestionStates[`${index}-1`]?.completed;
+        return { name: isCompleted ? `${name} ✓` : name };
+    });
+
+    return [
+        ...WHY_DESIGN_NAV_ITEMS,
+        ...caseItems,
+        { name: "Bonus" },
+        { name: "Results" },
+    ];
+}, [gameQuestionStates]);
 
   let whyDesignActiveIndex = 0;
   if (whyDesignStep === 'intro') {
