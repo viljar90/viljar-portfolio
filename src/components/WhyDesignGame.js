@@ -6,7 +6,7 @@ import { PrimaryButton, SecondaryButton } from './uiElements';
 
 const CheckmarkIcon = () => (
     <svg 
-        className="absolute top-4 right-4 h-5 w-5 text-primary dark:text-secondary"
+        className="absolute top-4 right-4 h-5 w-5 text-primary dark:text-secondary" 
         viewBox="0 0 24 24" 
         fill="none" 
         stroke="currentColor" 
@@ -17,6 +17,21 @@ const CheckmarkIcon = () => (
         <polyline points="20 6 9 17 4 12"></polyline>
     </svg>
 );
+
+const BonusCheckmarkIcon = () => (
+    <svg 
+        className="h-5 w-5 text-primary dark:text-secondary" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="3" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+    >
+        <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+);
+
 
 const WhyDesignGame = ({
   gameStatus,
@@ -60,20 +75,23 @@ const WhyDesignGame = ({
             const isSelected = isSelectAll ? gameSelectedAnswers.includes(option.text) : false;
             const wasSelected = isCompleted && state.selected && state.selected.includes(option.text);
 
-            let cardClasses = 'relative option-card p-4 rounded-lg border-2 cursor-pointer bg-bg-base dark:bg-bg-muted ';
+            let cardClasses = 'option-card rounded-lg border-2 cursor-pointer bg-bg-base dark:bg-bg-muted ';
             let isDisabled = false;
 
             if (isSelectAll) {
               isDisabled = isCompleted;
               if (isCompleted) {
-  if (option.isCorrect) {
-    cardClasses += 'correct border-green-500 bg-green-50 dark:bg-green-900/50 ';
-  } else if (state && state.selected && state.selected.includes(option.text)) {
-    cardClasses += 'incorrect border-red-500 bg-red-50 dark:bg-red-900/50 ';
-  } else {
-    cardClasses += 'border-border-interactive opacity-70 ';
-  }
-}
+                if(option.isCorrect) {
+                    cardClasses += 'correct border-green-500 bg-green-50 dark:bg-green-900/50 ';
+                } else if (state && state.selected && state.selected.includes(option.text)) {
+                    cardClasses += 'incorrect border-red-500 bg-red-50 dark:bg-red-900/50 ';
+                } else {
+                    cardClasses += 'border-border-interactive opacity-70 ';
+                }
+              } else {
+                if (isSelected) cardClasses += 'selected border-primary dark:border-secondary ';
+                else cardClasses += 'border-border-interactive hover:border-primary dark:hover:border-secondary hover:bg-primary/10 dark:hover:bg-secondary/10 ';
+              }
             } else { // singleChoice
               isDisabled = isCompleted || isRevealed;
               if (isCompleted) {
@@ -89,18 +107,25 @@ const WhyDesignGame = ({
             const showRationale = isCompleted || isRevealed;
 
             return (
-              <div key={option.text} className={cardClasses} onClick={() => handleGameOptionClick(option)}>
-                {isSelectAll && (isSelected || wasSelected) && <CheckmarkIcon />}
-                <p className="text-text-base font-medium">{option.text}</p>
-                {showRationale && (
-                  <p className="rationale visible text-sm text-text-muted">{option.rationale}</p>
-                )}
-              </div>
+              <button
+                key={option.text}
+                onClick={() => handleGameOptionClick(option)}
+                className={`relative w-full text-left p-4 rounded-lg border-2 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-slate-800 flex items-start ${cardClasses}`}
+                disabled={isDisabled}
+              >
+                <div className="w-full">
+                    {isSelectAll && (isSelected || wasSelected) && <CheckmarkIcon />}
+                    <p className="text-text-base font-medium pr-8">{option.text}</p>
+                    
+                    <div className={`overflow-hidden transition-[max-height,margin-top] duration-500 ease-in-out ${showRationale ? 'max-h-96 mt-3' : 'max-h-0 mt-0'}`}>
+                        <p className="text-sm text-text-muted">{option.rationale}</p>
+                    </div>
+                </div>
+              </button>
             );
           })}
         </div>
         <div className="mt-8 text-center flex justify-center gap-4 min-h-[48px]">
-          {/* **THE FIX**: All in-game buttons are now removed to prevent redundancy with the BottomNavigation central button */}
           {state?.completed && (
             <PrimaryButton onClick={handleGameNext}>
               {gamePartIndex >= currentCase.parts.length - 1 ? 'Continue' : 'Part 2'}
@@ -130,9 +155,9 @@ const WhyDesignGame = ({
                      const isCompleted = gameQuestionStates[`${caseIndex}-0`]?.completed && gameQuestionStates[`${caseIndex}-1`]?.completed;
                      return (
                         <button key={bonusCase.caseTitle} onClick={() => startBonusCase(caseIndex)}
-                            className={`relative bonus-card py-4 px-12 rounded-full border-2 bg-bg-base dark:bg-bg-muted text-center transition-all ${isCompleted ? 'completed border-green-500' : 'border-border-interactive'}`}>
+                            className={`relative bonus-card py-4 px-12 rounded-full border-2 bg-bg-base dark:bg-bg-muted text-center transition-all flex items-center justify-center space-x-2 ${isCompleted ? 'completed border-green-500' : 'border-border-interactive'}`}>
                             <h3 className="text-lg font-bold text-text-base">{bonusCase.caseTitle}</h3>
-                            {isCompleted && <CheckmarkIcon />}
+                            {isCompleted && <BonusCheckmarkIcon />}
                         </button>
                      )
                 })}

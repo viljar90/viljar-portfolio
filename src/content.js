@@ -74,7 +74,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
             },
             {
                 type: 'selectAll',
-                context: "Simply by adding a 'Continue As Guest' button led to a 45% increase in purchasing customers for Best Buy.",
+                context: "Simply adding a 'Continue As Guest' button led to a 45% increase in purchasing customers for Best Buy.",
                 question: "Guess which design lessons the original design ignored?",
                 options: [
                     { text: "User Control and Freedom", isCorrect: true, rationale: "The design removed the user's freedom to simply purchase an item, offering no easy 'emergency exit.' Good design empowers users, it doesn't trap them." },
@@ -161,7 +161,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
                     { text: "Visibility of System Status", isCorrect: true, rationale: "The system completely failed to communicate to users how it arrived at its conclusions. It left both caseworkers and citizens in the dark about the logic behind critical financial decisions." },
                     { text: "Authority Bias", isCorrect: false, rationale: "This bias relates to our tendency to attribute greater accuracy to the opinion of an authority figure. While a factor in how users might have initially trusted the system's outputs, it wasn't the core design failure itself." },
                     { text: "Tesler's Law", isCorrect: true, rationale: "Also known as The Law of Conservation of Complexity. By hiding how it reached its financial conclusions, the system didn't remove complexity, it just transferred the burden of figuring out the opaque result onto workers and clients." },
-                    { text: "The Efficiency Tax", isCorrect: true, rationale: "This refers to the enormous waste in resources when employees fight with clunky software. A difficult-to-use tool creates an ongoing, compounding effect on efficiency, wasting time and resources. The inefficacy of a widely used tool can, over time, dwarf the billions that went into creating it." }
+                    { text: "The Efficiency Tax", isCorrect: true, rationale: "This refers to the enormous waste in resources when workers fight with clunky software. A difficult-to-use tool creates an ongoing, compounding effect on efficiency, wasting time and resources. The inefficacy of a widely used tool can, over time, dwarf the billions that went into creating it." }
                 ]
             }
         ]
