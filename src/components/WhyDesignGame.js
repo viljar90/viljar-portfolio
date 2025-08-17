@@ -6,7 +6,7 @@ import { PrimaryButton, SecondaryButton } from './uiElements';
 
 const CheckmarkIcon = () => (
     <svg 
-        className="absolute top-1/2 -translate-y-1/2 right-4 h-5 w-5 text-primary dark:text-secondary"
+        className="absolute top-4 right-4 h-5 w-5 text-primary dark:text-secondary"
         viewBox="0 0 24 24" 
         fill="none" 
         stroke="currentColor" 
@@ -58,6 +58,7 @@ const WhyDesignGame = ({
             const isCompleted = state?.completed;
             const isRevealed = state?.revealedOptions?.includes(option.text);
             const isSelected = isSelectAll ? gameSelectedAnswers.includes(option.text) : false;
+            const wasSelected = isCompleted && state.selected && state.selected.includes(option.text);
 
             let cardClasses = 'relative option-card p-4 rounded-lg border-2 cursor-pointer bg-bg-base dark:bg-bg-muted ';
             let isDisabled = false;
@@ -65,13 +66,14 @@ const WhyDesignGame = ({
             if (isSelectAll) {
               isDisabled = isCompleted;
               if (isCompleted) {
-                if(option.isCorrect) cardClasses += 'correct border-green-500 bg-green-50 dark:bg-green-900/50 ';
-                else if (state.selected?.includes(option.text)) cardClasses += 'incorrect border-red-500 bg-red-50 dark:bg-red-900/50 ';
-                else cardClasses += 'border-border-interactive opacity-70 ';
-              } else {
-                if (isSelected) cardClasses += 'selected border-primary dark:border-secondary ';
-                else cardClasses += 'border-border-interactive hover:border-primary dark:hover:border-secondary hover:bg-primary/10 dark:hover:bg-secondary/10 ';
-              }
+  if (option.isCorrect) {
+    cardClasses += 'correct border-green-500 bg-green-50 dark:bg-green-900/50 ';
+  } else if (state && state.selected && state.selected.includes(option.text)) {
+    cardClasses += 'incorrect border-red-500 bg-red-50 dark:bg-red-900/50 ';
+  } else {
+    cardClasses += 'border-border-interactive opacity-70 ';
+  }
+}
             } else { // singleChoice
               isDisabled = isCompleted || isRevealed;
               if (isCompleted) {
@@ -88,7 +90,7 @@ const WhyDesignGame = ({
 
             return (
               <div key={option.text} className={cardClasses} onClick={() => handleGameOptionClick(option)}>
-                {isSelectAll && isSelected && <CheckmarkIcon />}
+                {isSelectAll && (isSelected || wasSelected) && <CheckmarkIcon />}
                 <p className="text-text-base font-medium">{option.text}</p>
                 {showRationale && (
                   <p className="rationale visible text-sm text-text-muted">{option.rationale}</p>
