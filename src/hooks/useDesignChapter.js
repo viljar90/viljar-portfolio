@@ -82,6 +82,18 @@ export const useDesignChapter = (currentChapter) => {
     resetGame();
   }, [resetGame]);
 
+  const returnToIntro = useCallback(() => {
+    setWhyDesignIntroCompleted(false);
+    setWhyDesignIntroStepIndex(0);
+    setWhyDesignIntroResetKey(prevKey => prevKey + 1);
+    setWhyDesignStep('intro');
+    setIsPlayingWhyDesignIntro(true);
+    hasAutoPlayedWhyDesignIntro.current = true;
+    setDisplayedWhyDesignTitleChars('');
+    setDisplayedWhyDesignMainTextChars('');
+    setWhyDesignAnimationPhase('typing-title');
+}, []);
+
   const navigateToWhyDesignStep = useCallback((itemName) => {
     setWhyDesignStep('game');
     setWhyDesignIntroCompleted(true);
@@ -579,6 +591,7 @@ export const useDesignChapter = (currentChapter) => {
     whyDesignIntroStepIndex,
     whyDesignIntroResetKey,
     replayWhyDesignIntro,
+    returnToIntro,
     isPlayingWhyDesignIntro,
     togglePlayPauseWhyDesignIntro,
     handleStartWhyDesignGame,

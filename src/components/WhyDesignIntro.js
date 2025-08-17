@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PrimaryButton, BlinkingCursor } from './uiElements';
+import { PrimaryButton, BlinkingCursor, PlayIcon } from './uiElements';
 
 const WhyDesignIntro = ({
   onStart,
@@ -23,8 +23,11 @@ const WhyDesignIntro = ({
               {showCursorMainText && <BlinkingCursor sizeClass="h-8 md:h-9" />}
             </p>
             {showPlayButton && (
-                <div className="mt-12 animate-fadeIn">
-                    <PrimaryButton onClick={onStart}>
+                <div className="mt-12">
+                    <PrimaryButton
+                        onClick={onStart}
+                        icon={PlayIcon}
+                    >
                         Play
                     </PrimaryButton>
                 </div>

@@ -34,7 +34,7 @@ const ChapterContent = ({
     if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
       if (design.whyDesignStep === 'intro') {
         const currentStep = WHY_DESIGN_CONTENT.intro.steps[design.whyDesignIntroStepIndex];
-        const showPlayButton = design.whyDesignIntroCompleted || design.whyDesignIntroStepIndex === WHY_DESIGN_CONTENT.intro.steps.length - 1;
+        const showPlayButton = true;
 
         return (
           <WhyDesignIntro 

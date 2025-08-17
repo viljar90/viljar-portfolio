@@ -296,9 +296,9 @@ function App() {
         if (design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
             handleDesignStepperItemClick(itemId);
         } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-            if (itemId === 'Start') {
-                design.replayWhyDesignIntro();
-            } else {
+          if (itemId === 'Start') {
+          design.returnToIntro();
+          } else {
                 design.navigateToWhyDesignStep(itemId);
             }
         }
