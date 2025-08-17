@@ -1,7 +1,7 @@
 // src/hooks/useDesignChapter.js
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { WHAT_DESIGN_NAV_ITEMS, DESIGN_CONTENT, DESIGN_VIEWS, WHY_DESIGN_GAME_CONTENT, WHY_DESIGN_NAV_ITEMS } from '../content';
+import { WHAT_DESIGN_NAV_ITEMS, DESIGN_CONTENT, DESIGN_VIEWS, WHY_DESIGN_GAME_CONTENT, WHY_DESIGN_NAV_ITEMS, WHY_DESIGN_CONTENT } from '../content';
 
 const TYPEWRITER_SPEED = 25;
 const BACKSPACE_SPEED = 20;
@@ -29,9 +29,14 @@ export const useDesignChapter = (currentChapter) => {
   // --- "Why Design" States ---
   const [whyDesignStep, setWhyDesignStep] = useState('intro');
   const [whyDesignIntroCompleted, setWhyDesignIntroCompleted] = useState(false);
+  const [whyDesignIntroStepIndex, setWhyDesignIntroStepIndex] = useState(0);
   const [whyDesignIntroResetKey, setWhyDesignIntroResetKey] = useState(0);
   const [isPlayingWhyDesignIntro, setIsPlayingWhyDesignIntro] = useState(false);
   const hasAutoPlayedWhyDesignIntro = useRef(false);
+  const [whyDesignAnimationPhase, setWhyDesignAnimationPhase] = useState('typing-title');
+  const [displayedWhyDesignTitleChars, setDisplayedWhyDesignTitleChars] = useState('');
+  const [displayedWhyDesignMainTextChars, setDisplayedWhyDesignMainTextChars] = useState('');
+
 
   // --- Game States ---
   const [gameScore, setGameScore] = useState(0);
@@ -49,7 +54,6 @@ export const useDesignChapter = (currentChapter) => {
   const whyDesignIntroAnimationCompleted = useCallback(() => {
     setIsPlayingWhyDesignIntro(false);
     setWhyDesignIntroCompleted(true);
-    // Game no longer auto-starts
   }, []);
 
   const resetGame = useCallback(() => {
@@ -67,10 +71,14 @@ export const useDesignChapter = (currentChapter) => {
 
   const replayWhyDesignIntro = useCallback(() => {
     setWhyDesignIntroCompleted(false);
+    setWhyDesignIntroStepIndex(0);
     setWhyDesignIntroResetKey(prevKey => prevKey + 1);
     setWhyDesignStep('intro');
     setIsPlayingWhyDesignIntro(true);
     hasAutoPlayedWhyDesignIntro.current = true;
+    setDisplayedWhyDesignTitleChars('');
+    setDisplayedWhyDesignMainTextChars('');
+    setWhyDesignAnimationPhase('typing-title');
     resetGame();
   }, [resetGame]);
 
@@ -89,6 +97,30 @@ export const useDesignChapter = (currentChapter) => {
       setGameStatus('end');
     }
   }, []);
+
+  const handleNextWhyDesignIntroLine = useCallback(() => {
+      setIsPlayingWhyDesignIntro(false);
+      const currentStep = WHY_DESIGN_CONTENT.intro.steps[whyDesignIntroStepIndex];
+      setDisplayedWhyDesignTitleChars(currentStep.title);
+      setDisplayedWhyDesignMainTextChars(currentStep.mainText);
+
+      if (whyDesignIntroStepIndex < WHY_DESIGN_CONTENT.intro.steps.length - 1) {
+          setWhyDesignIntroStepIndex(prev => prev + 1);
+      } else {
+          handleStartWhyDesignGame();
+      }
+  }, [whyDesignIntroStepIndex, handleStartWhyDesignGame]);
+
+  const handlePrevWhyDesignIntroLine = useCallback(() => {
+      setIsPlayingWhyDesignIntro(false);
+      if (whyDesignIntroStepIndex > 0) {
+          const newIndex = whyDesignIntroStepIndex - 1;
+          const prevStep = WHY_DESIGN_CONTENT.intro.steps[newIndex];
+          setWhyDesignIntroStepIndex(newIndex);
+          setDisplayedWhyDesignTitleChars(prevStep.title);
+          setDisplayedWhyDesignMainTextChars(prevStep.mainText);
+      }
+  }, [whyDesignIntroStepIndex]);
 
   const handleGameOptionClick = useCallback((option) => {
     const questionId = `${gameCaseIndex}-${gamePartIndex}`;
@@ -142,6 +174,16 @@ export const useDesignChapter = (currentChapter) => {
     } else setGameStatus('end');
   }, [gameCaseIndex, gamePartIndex]);
   
+    const handleGamePrev = useCallback(() => {
+    if (gamePartIndex > 0) {
+      setGamePartIndex(p => p - 1);
+    } else if (gameCaseIndex > 0) {
+      const prevCaseParts = WHY_DESIGN_GAME_CONTENT[gameCaseIndex - 1].parts;
+      setGameCaseIndex(c => c - 1);
+      setGamePartIndex(prevCaseParts.length - 1);
+    }
+  }, [gameCaseIndex, gamePartIndex]);
+
   const startBonusCase = useCallback((index) => {
     setGameCaseIndex(index);
     setGamePartIndex(0);
@@ -325,6 +367,72 @@ export const useDesignChapter = (currentChapter) => {
   }, [currentChapter, designView]);
   
   useEffect(() => {
+    if (currentChapter !== 'design' || !isPlayingWhyDesignIntro || whyDesignStep !== 'intro') return;
+
+    let timer;
+    const currentStepData = WHY_DESIGN_CONTENT.intro.steps[whyDesignIntroStepIndex];
+
+    if (!currentStepData) {
+        whyDesignIntroAnimationCompleted();
+        return;
+    }
+
+    switch (whyDesignAnimationPhase) {
+        case 'typing-title':
+            if (displayedWhyDesignTitleChars.length < currentStepData.title.length) {
+                timer = setTimeout(() => {
+                    setDisplayedWhyDesignTitleChars(currentStepData.title.substring(0, displayedWhyDesignTitleChars.length + 1));
+                }, TYPEWRITER_SPEED);
+            } else {
+                setWhyDesignAnimationPhase('typing-main');
+            }
+            break;
+        case 'typing-main':
+            if (displayedWhyDesignMainTextChars.length < currentStepData.mainText.length) {
+                timer = setTimeout(() => {
+                    setDisplayedWhyDesignMainTextChars(currentStepData.mainText.substring(0, displayedWhyDesignMainTextChars.length + 1));
+                }, TYPEWRITER_SPEED);
+            } else {
+                setWhyDesignAnimationPhase('pausing');
+            }
+            break;
+        case 'pausing':
+            timer = setTimeout(() => {
+                if (whyDesignIntroStepIndex < WHY_DESIGN_CONTENT.intro.steps.length - 1) {
+                    const nextStepData = WHY_DESIGN_CONTENT.intro.steps[whyDesignIntroStepIndex + 1];
+                    setWhyDesignIntroStepIndex(prev => prev + 1);
+
+                    if (nextStepData.title === currentStepData.title) {
+                        setDisplayedWhyDesignMainTextChars('');
+                        setWhyDesignAnimationPhase('typing-main');
+                    } else {
+                        setDisplayedWhyDesignTitleChars('');
+                        setDisplayedWhyDesignMainTextChars('');
+                        setWhyDesignAnimationPhase('typing-title');
+                    }
+                } else {
+                    whyDesignIntroAnimationCompleted();
+                }
+            }, 1500);
+            break;
+        default:
+            break;
+    }
+
+    return () => clearTimeout(timer);
+  }, [
+      currentChapter, 
+      designView, 
+      whyDesignStep, 
+      isPlayingWhyDesignIntro, 
+      whyDesignIntroStepIndex, 
+      whyDesignAnimationPhase, 
+      displayedWhyDesignTitleChars, 
+      displayedWhyDesignMainTextChars, 
+      whyDesignIntroAnimationCompleted
+  ]);
+  
+  useEffect(() => {
     const justEnteredDesign = prevChapterRef.current !== 'design' && currentChapter === 'design';
 
     if (currentChapter !== 'design') {
@@ -461,12 +569,14 @@ export const useDesignChapter = (currentChapter) => {
     prevDesignStage,
     whyDesignStep,
     whyDesignIntroCompleted,
+    whyDesignIntroStepIndex,
     whyDesignIntroResetKey,
-    whyDesignIntroAnimationCompleted,
     replayWhyDesignIntro,
     isPlayingWhyDesignIntro,
     togglePlayPauseWhyDesignIntro,
     handleStartWhyDesignGame,
+    handleNextWhyDesignIntroLine,
+    handlePrevWhyDesignIntroLine,
     gameStatus,
     gameScore,
     gameCaseIndex,
@@ -476,6 +586,7 @@ export const useDesignChapter = (currentChapter) => {
     handleGameOptionClick,
     handleGameSubmitSelectAll,
     handleGameNext,
+    handleGamePrev,
     resetGame,
     startBonusCase,
     startRandomBonusCase, 
@@ -483,5 +594,8 @@ export const useDesignChapter = (currentChapter) => {
     whyDesignNavItems,
     whyDesignActiveIndex,
     navigateToWhyDesignStep,
+    displayedWhyDesignTitleChars,
+    displayedWhyDesignMainTextChars,
+    whyDesignAnimationPhase,
   };
 };

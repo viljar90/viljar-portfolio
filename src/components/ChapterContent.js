@@ -8,7 +8,7 @@ import WorkChapter from './WorkChapter';
 import QuizIntro from './QuizIntro';
 import QuizResults from './QuizResults';
 import ProjectOverview from './ProjectOverview';
-import { QUIZZES, PROJECTS, DESIGN_VIEWS } from '../content';
+import { QUIZZES, PROJECTS, DESIGN_VIEWS, WHY_DESIGN_CONTENT } from '../content';
 import WhyDesignIntro from './WhyDesignIntro';
 import WhyDesignGame from './WhyDesignGame';
 
@@ -32,14 +32,23 @@ const ChapterContent = ({
 
   const renderDesignContent = () => {
     if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-      // **THE FIX**: The view is now determined by the `whyDesignStep` state
       if (design.whyDesignStep === 'intro') {
+        const currentStep = WHY_DESIGN_CONTENT.intro.steps[design.whyDesignIntroStepIndex];
+        const showPlayButton = design.whyDesignIntroCompleted || design.whyDesignIntroStepIndex === WHY_DESIGN_CONTENT.intro.steps.length - 1;
+
         return (
           <WhyDesignIntro 
             key={design.whyDesignIntroResetKey}
-            onStart={design.handleStartWhyDesignGame} // Use the correct handler
+            onStart={design.handleStartWhyDesignGame}
             isPlaying={design.isPlayingWhyDesignIntro} 
-            onAnimationComplete={design.whyDesignIntroAnimationCompleted}
+            onAnimationComplete={design.handleNextWhyDesignIntroLine}
+            whyDesignIntroStepIndex={design.whyDesignIntroStepIndex}
+            resetKey={design.whyDesignIntroResetKey}
+            displayedTitle={!design.isPlayingWhyDesignIntro ? currentStep.title : design.displayedWhyDesignTitleChars}
+            displayedMainText={!design.isPlayingWhyDesignIntro ? currentStep.mainText : design.displayedWhyDesignMainTextChars}
+            showCursorTitle={design.isPlayingWhyDesignIntro && design.whyDesignAnimationPhase === 'typing-title'}
+            showCursorMainText={design.isPlayingWhyDesignIntro && design.whyDesignAnimationPhase === 'typing-main'}
+            showPlayButton={showPlayButton}
           />
         );
       } else { // 'game' step
@@ -75,7 +84,7 @@ const ChapterContent = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-4xl text-center relative px-4 sm:px-16">
+    <div className="flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-5xl text-center relative px-4 sm:px-16">
        {currentChapter === 'main' && (
         <LandingChapter
           darkMode={darkMode}

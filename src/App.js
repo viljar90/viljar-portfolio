@@ -120,7 +120,7 @@ function App() {
         refs = workItemRefs;
     }
      else {
-        return; 
+        return;
     }
     if (!Array.isArray(refs.current)) refs.current = [];
     refs.current = refs.current.slice(0, items.length);
@@ -229,7 +229,13 @@ function App() {
         navigateToChapter('design');
       }
     } else if (currentChapter === 'design') {
-      if (design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document') {
+      if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
+        if (design.whyDesignStep === 'intro') {
+          design.handleNextWhyDesignIntroLine();
+        } else if (design.gameStatus === 'playing') {
+          design.handleGameNext();
+        }
+      } else if (design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document') {
         design.nextDesignStage();
       } else if (design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
         design.nextStep();
@@ -259,7 +265,13 @@ function App() {
     } else if (currentChapter === 'main') {
       landing.handlePrevLine();
     } else if (currentChapter === 'design') {
-      if (design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document') {
+      if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
+          if (design.whyDesignStep === 'intro') {
+              design.handlePrevWhyDesignIntroLine();
+          } else if (design.gameStatus === 'playing') {
+              design.handleGamePrev();
+          }
+      } else if (design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document') {
         const result = design.prevDesignStage();
         if (result === 'navigate-to-main') {
           navigateToChapter('main');
@@ -347,10 +359,13 @@ function App() {
 
   const showPrevArrow =
     (currentChapter === 'main' && (landing.activeMainStep !== MAIN_STAGES.INSULTS || landing.currentSubLineIndex !== 0)) ||
+    (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN && design.whyDesignStep === 'intro' && design.whyDesignIntroStepIndex > 0) ||
+    (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN && design.gameStatus === 'playing' && (design.gameCaseIndex > 0 || design.gamePartIndex > 0)) ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Slideshow' && (design.activeDesignStageKey !== DESIGN_STAGE_KEYS.ABOUT_DESIGN || design.currentDesignStepIndex !== 0)) ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document' && !isFirstDesignStage) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) ||
     (currentChapter === 'work' && work.workView === 'Overview');
+    
 
   const currentPlayPauseButtonState = useMemo(() => {
     if (currentChapter === 'main') return landing.isPlaying;
@@ -404,6 +419,8 @@ function App() {
 
   const showNextArrow =
     (currentChapter === 'main' && landing.activeMainStep !== MAIN_STAGES.HOME) ||
+    (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN && design.whyDesignStep === 'intro' && !design.isPlayingWhyDesignIntro) ||
+    (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN && design.gameStatus === 'playing') ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Slideshow' && !design.isDesignChapterFinished) ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document' && !isLastDesignStage) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) ||
@@ -423,11 +440,11 @@ function App() {
           design.togglePlayPause();
         }
       } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-        // V V V PASTE THE NEW SNIPPET HERE V V V
+        // V V V PASTE THE NEW SNIPpet HERE V V V
         if (design.gameStatus === 'bonus') {
           design.startRandomBonusCase();
         } 
-        // ^ ^ ^ END OF NEW SNIPPET ^ ^ ^
+        // ^ ^ ^ END OF NEW SNIPpet ^ ^ ^
         else if (design.whyDesignStep === 'game' && design.gameStatus !== 'end') {
           design.handleGameNext();
         } else if (design.whyDesignIntroCompleted) {
