@@ -410,6 +410,8 @@ function App() {
     (currentChapter === 'work' && work.workView === 'Overview');
     
   // **THE FIX**: This logic is now updated to handle all game states correctly
+  // ... inside App.js
+
   const handleCentralButtonClick = () => {
     if (currentChapter === 'work') {
       work.handleWorkChapterCentralButtonClick();
@@ -421,7 +423,12 @@ function App() {
           design.togglePlayPause();
         }
       } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-        if (design.whyDesignStep === 'game' && design.gameStatus !== 'end') {
+        // V V V PASTE THE NEW SNIPPET HERE V V V
+        if (design.gameStatus === 'bonus') {
+          design.startRandomBonusCase();
+        } 
+        // ^ ^ ^ END OF NEW SNIPPET ^ ^ ^
+        else if (design.whyDesignStep === 'game' && design.gameStatus !== 'end') {
           design.handleGameNext();
         } else if (design.whyDesignIntroCompleted) {
           design.handleStartWhyDesignGame();

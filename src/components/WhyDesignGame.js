@@ -6,7 +6,7 @@ import { PrimaryButton, SecondaryButton } from './uiElements';
 
 const CheckmarkIcon = () => (
     <svg 
-        className="absolute top-4 right-4 h-5 w-5 text-primary dark:text-secondary" 
+        className="absolute top-1/2 -translate-y-1/2 right-4 h-5 w-5 text-primary dark:text-secondary"
         viewBox="0 0 24 24" 
         fill="none" 
         stroke="currentColor" 
@@ -128,7 +128,7 @@ const WhyDesignGame = ({
                      const isCompleted = gameQuestionStates[`${caseIndex}-0`]?.completed && gameQuestionStates[`${caseIndex}-1`]?.completed;
                      return (
                         <button key={bonusCase.caseTitle} onClick={() => startBonusCase(caseIndex)}
-                            className={`bonus-card py-4 px-6 rounded-full border-2 bg-bg-base dark:bg-bg-muted text-center transition-all ${isCompleted ? 'completed border-green-500' : 'border-border-interactive'}`}>
+                            className={`relative bonus-card py-4 px-12 rounded-full border-2 bg-bg-base dark:bg-bg-muted text-center transition-all ${isCompleted ? 'completed border-green-500' : 'border-border-interactive'}`}>
                             <h3 className="text-lg font-bold text-text-base">{bonusCase.caseTitle}</h3>
                             {isCompleted && <CheckmarkIcon />}
                         </button>
@@ -136,9 +136,6 @@ const WhyDesignGame = ({
                 })}
             </div>
             <div className="mt-8 flex justify-center gap-4">
-                <SecondaryButton onClick={() => startBonusCase(MAIN_CASES_COUNT + Math.floor(Math.random() * availableBonusCases.length))} disabled={availableBonusCases.length === 0}>
-                    Select Random
-                </SecondaryButton>
                 <PrimaryButton onClick={() => setGameStatus('end')}>Finish Game</PrimaryButton>
             </div>
         </div>

@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ConfettiExplosion from 'react-confetti-explosion';
-import { ReplayIcon } from './uiElements';
+import { ReplayIcon, NewTabIcon } from './uiElements';
 
 const QuizResultCard = ({ quiz, onReplayQuestion }) => (
   <div className="relative w-full max-w-xl p-6 md:p-8 bg-bg-base dark:border dark:border-gray-700 rounded-xl shadow-2xl animate-fadeIn text-left">
@@ -33,8 +33,9 @@ const QuizResultCard = ({ quiz, onReplayQuestion }) => (
 
     <div className="mt-6 pt-4 border-t border-gray-200 dark:border-slate-700">
       <p className="text-sm text-text-muted dark:text-slate-400">Check out my work on this</p>
-      <button className="mt-2 text-lg font-semibold text-primary dark:text-sky-400 hover:text-secondary dark:hover:text-sky-300 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-        {quiz.projectButtonText} ↗
+      <button className="mt-2 text-lg font-semibold text-primary dark:text-sky-400 hover:text-secondary dark:hover:text-sky-300 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary flex items-center space-x-2">
+        <span>{quiz.projectButtonText}</span>
+        <NewTabIcon className="w-5 h-5" />
       </button>
     </div>
   </div>

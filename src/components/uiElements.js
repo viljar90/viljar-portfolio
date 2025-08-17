@@ -22,10 +22,17 @@ export const PlayIcon = ({ className = "w-6 h-6" }) => (
   );
 
   export const SkipIcon = ({ className = "w-6 h-6" }) => (
-      <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 18l8.5-6L4 6v12zM13 6v12l8.5-6L13 6z"/>
-      </svg>
-  );
+    <svg className={className} width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 17.035C6 17.4404 6.45713 17.6773 6.78834 17.4435L13.9213 12.4085C14.2035 12.2093 14.2035 11.7907 13.9213 11.5915L6.78834 6.55648C6.45713 6.32268 6 6.55955 6 6.96496V17.035Z" fill="currentColor"/>
+      <path d="M17 16.7738L17 7.21094" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+);
+
+  export const SelectRandomIcon = ({ className = "w-6 h-6" }) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <path d="M18.0166 14.2465L21.3183 17.5482M21.3183 17.5482L18.0166 20.8499M21.3183 17.5482H18.6427C15.8203 17.5482 13.4021 18.004 11.948 15.2205M18.0982 3.15234L21.3999 6.45402M21.3999 6.45402L18.0982 9.7557M21.3999 6.45402H18.7192C15.1147 6.45402 12.6506 6.27989 10.5451 11.8145L10.0837 12.8912C7.89507 17.8839 5.61023 18.1761 2.60059 18.6413M9.24269 8.76326C8.57042 6.81007 5.96712 4.32758 2.62224 4.32758" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
 
   export const SunIcon = ({ className = "w-6 h-6" }) => (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -51,6 +58,21 @@ export const PlayIcon = ({ className = "w-6 h-6" }) => (
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
     </svg>
   );
+
+  export const NewTabIcon = ({ className = "w-6 h-6" }) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <g clipPath="url(#clip0_12495_15028)">
+      <path d="M9.00628 6H6C5.46957 6 4.96086 6.21071 4.58579 6.58579C4.21071 6.96086 4 7.46957 4 8V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H16C16.5304 20 17.0391 19.7893 17.4142 19.4142C17.7893 19.0391 18 18.5304 18 18V14.9943" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M11.005 12.995L18.0002 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M13 6H18V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </g>
+    <defs>
+      <clipPath id="clip0_12495_15028">
+        <rect width="24" height="24" fill="white"/>
+      </clipPath>
+    </defs>
+  </svg>
+);
 
   export const PuzzleIcon = ({ className = "w-12 h-12 text-icon-static" }) => (
     <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

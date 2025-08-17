@@ -4,6 +4,7 @@ import {
   PlayIcon,
   ReplayIcon,
   SkipIcon,
+  SelectRandomIcon,
   InteractiveOblongNavItem,
   AnimatedBorderButton,
   ViewSwitcherButton,
@@ -40,7 +41,7 @@ const BottomNavigation = ({
 
     const renderCentralButton = () => {
         const isMainChapterFinalState = currentChapter === 'main' && activeNavItem === 'Home' && !isPlaying;
-        
+
         const isWhatDesignFinished = currentChapter === 'design' &&
             design.designView === DESIGN_VIEWS.WHAT_DESIGN &&
             !isPlaying &&
@@ -56,6 +57,10 @@ const BottomNavigation = ({
             design.designView === DESIGN_VIEWS.WHY_DESIGN &&
             design.whyDesignStep === 'game' &&
             design.gameStatus === 'playing';
+
+        const isWhyDesignBonus = currentChapter === 'design' &&
+            design.designView === DESIGN_VIEWS.WHY_DESIGN &&
+            design.gameStatus === 'bonus';
 
         const isWhyDesignResults = currentChapter === 'design' &&
             design.designView === DESIGN_VIEWS.WHY_DESIGN &&
@@ -76,6 +81,11 @@ const BottomNavigation = ({
             if (!questionState?.completed) {
                 return <button onClick={handleStaticButtonClick} className={nonAnimatedButtonClasses} aria-label="Skip question"><SkipIcon className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105 ${iconAnimationClass}`} /></button>;
             }
+        }
+
+         // Handle "Why Design" bonus cases
+        if (isWhyDesignBonus) {
+            return <button onClick={handleStaticButtonClick} className={nonAnimatedButtonClasses} aria-label="Select Random Bonus Case"><SelectRandomIcon className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:scale-105 ${iconAnimationClass}`} /></button>;
         }
         
         // Handle "Why Design" intro's "Play" state after animation

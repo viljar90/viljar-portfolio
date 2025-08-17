@@ -149,6 +149,18 @@ export const useDesignChapter = (currentChapter) => {
     setGameStatus('playing');
   }, []);
 
+  const startRandomBonusCase = useCallback(() => {
+    const MAIN_CASES_COUNT = 3;
+    const availableBonusCases = WHY_DESIGN_GAME_CONTENT
+      .map((_, index) => index)
+      .slice(MAIN_CASES_COUNT)
+      .filter(caseIndex => !(gameQuestionStates[`${caseIndex}-0`]?.completed && gameQuestionStates[`${caseIndex}-1`]?.completed));
+
+    if (availableBonusCases.length > 0) {
+      startBonusCase(availableBonusCases[Math.floor(Math.random() * availableBonusCases.length)]);
+    }
+  }, [gameQuestionStates, startBonusCase]);
+
   const whyDesignNavItems = [
     ...WHY_DESIGN_NAV_ITEMS,
     { name: "Case 1" },
@@ -466,6 +478,7 @@ export const useDesignChapter = (currentChapter) => {
     handleGameNext,
     resetGame,
     startBonusCase,
+    startRandomBonusCase, 
     setGameStatus,
     whyDesignNavItems,
     whyDesignActiveIndex,
