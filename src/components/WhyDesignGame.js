@@ -128,7 +128,7 @@ const WhyDesignGame = ({
         <div className="mt-8 text-center flex justify-center gap-4 min-h-[48px]">
           {state?.completed && (
             <PrimaryButton onClick={handleGameNext}>
-              {gamePartIndex >= currentCase.parts.length - 1 ? 'Continue' : 'Part 2'}
+              {gamePartIndex >= currentCase.parts.length - 1 ? 'Next Case' : 'Part 2'}
             </PrimaryButton>
           )}
           {!state?.completed && isSelectAll && (

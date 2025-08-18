@@ -140,7 +140,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
         ]
     },
     {
-        caseTitle: "NAV Case: Confused Calculations",
+        caseTitle: "NAV Case: Hidden Calculations",
         parts: [
              {
                 type: 'singleChoice',
@@ -344,7 +344,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
             },
             {
                 type: 'selectAll',
-                context: "The project was stopped after massive opposition from its intended users (GPs), who argued that a single, monolithic system could never meet their diverse needs.",
+                context: "The project was stopped after massive opposition from doctors, who argued that a single, monolithic system could never meet their diverse needs.",
                 question: "Which strategic errors and biases led to this conceptual failure?",
                 options: [
                     { text: "False Consensus Effect", isCorrect: true, rationale: "This bias describes the tendency to assume others share our beliefs. The project's proponents likely overestimated how much GPs agreed with their top-down vision." },
