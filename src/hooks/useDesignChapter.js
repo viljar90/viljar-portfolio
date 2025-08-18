@@ -66,6 +66,7 @@ export const useDesignChapter = (currentChapter) => {
   }, []);
   
   const handleStartWhyDesignGame = useCallback(() => {
+    setIsPlayingWhyDesignIntro(false);
     setWhyDesignStep('game');
   }, []);
 
