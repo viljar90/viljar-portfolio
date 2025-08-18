@@ -60,7 +60,7 @@ const WhyDesignGame = ({
     const canSubmit = gameSelectedAnswers.length === correctAnswersCount;
 
     return (
-      <div className="bg-bg-base dark:bg-bg-overlay p-6 sm:p-8 rounded-xl shadow-lg animate-scale-in">
+      <div className="bg-bg-base dark:border dark:border-gray-700 p-6 sm:p-8 rounded-xl shadow-lg animate-scale-in">
         <div className="flex justify-between items-center mb-4">
           <div className="text-sm font-semibold text-text-muted">{currentCase.caseTitle} - Part {gamePartIndex + 1}</div>
           <div className="text-sm font-semibold text-text-muted">Score: {Math.round(gameScore)}</div>
@@ -142,12 +142,8 @@ const WhyDesignGame = ({
   }
 
   if (gameStatus === 'bonus') {
-    const availableBonusCases = WHY_DESIGN_GAME_CONTENT.slice(MAIN_CASES_COUNT).filter((_, index) => {
-        const caseIndex = MAIN_CASES_COUNT + index;
-        return !(gameQuestionStates[`${caseIndex}-0`]?.completed && gameQuestionStates[`${caseIndex}-1`]?.completed);
-    });
     return (
-        <div className="text-center p-8 bg-bg-base dark:bg-bg-overlay rounded-xl shadow-lg animate-scale-in">
+        <div className="text-center p-8 bg-bg-base dark:border dark:border-grey-700 rounded-xl shadow-lg animate-scale-in">
             <h1 className="text-4xl font-bold text-text-base mb-4">Want Bonus Rounds?</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {WHY_DESIGN_GAME_CONTENT.slice(MAIN_CASES_COUNT).map((bonusCase, index) => {
@@ -155,7 +151,7 @@ const WhyDesignGame = ({
                      const isCompleted = gameQuestionStates[`${caseIndex}-0`]?.completed && gameQuestionStates[`${caseIndex}-1`]?.completed;
                      return (
                         <button key={bonusCase.caseTitle} onClick={() => startBonusCase(caseIndex)}
-                            className={`relative bonus-card py-4 px-12 rounded-full border-2 bg-bg-base dark:bg-bg-muted text-center transition-all flex items-center justify-center space-x-2 ${isCompleted ? 'completed border-green-500' : 'border-border-interactive'}`}>
+                            className={`relative bonus-card py-4 px-4 rounded-full border-2 bg-bg-base dark:bg-bg-muted text-center transition-all flex items-center justify-center space-x-2 ${isCompleted ? 'completed border-green-500' : 'border-border-interactive'}`}>
                             <h3 className="text-lg font-bold text-text-base">{bonusCase.caseTitle}</h3>
                             {isCompleted && <BonusCheckmarkIcon />}
                         </button>
@@ -171,7 +167,7 @@ const WhyDesignGame = ({
 
   if (gameStatus === 'end') {
     return (
-      <div className="text-center p-8 bg-bg-base dark:bg-bg-overlay rounded-xl shadow-lg animate-scale-in">
+      <div className="text-center p-8 bg-bg-base dark:border dark:border-grey-700 rounded-xl shadow-lg animate-scale-in">
         <h1 className="text-4xl font-bold text-text-base mb-2">Quiz Complete!</h1>
         <p className="text-xl text-text-muted mb-6">Here's your final score:</p>
         <div className="text-6xl font-bold text-primary dark:text-secondary my-8">{Math.round(gameScore)}</div>

@@ -296,9 +296,9 @@ function App() {
         if (design.designView === DESIGN_VIEWS.WHAT_DESIGN) {
             handleDesignStepperItemClick(itemId);
         } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-          if (itemId === 'Start') {
-          design.returnToIntro();
-          } else {
+            if (itemId === 'Start') {
+                design.returnToIntro();
+            } else {
                 design.navigateToWhyDesignStep(itemId);
             }
         }
@@ -440,11 +440,11 @@ function App() {
           design.togglePlayPause();
         }
       } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-        // V V V PASTE THE NEW SNIPpet HERE V V V
+        // V V V PASTE THE NEW SNIPPET HERE V V V
         if (design.gameStatus === 'bonus') {
           design.startRandomBonusCase();
         } 
-        // ^ ^ ^ END OF NEW SNIPpet ^ ^ ^
+        // ^ ^ ^ END OF NEW SNIPPET ^ ^ ^
         else if (design.whyDesignStep === 'game' && design.gameStatus !== 'end') {
           design.handleGameNext();
         } else if (design.whyDesignIntroCompleted) {
@@ -569,7 +569,9 @@ function App() {
           itemNavRefs={itemNavRefs}
           containerClass={`flex items-center space-x-4 sm:space-x-3 ${
             currentChapter === 'design'
-              ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl'
+              ? design.designView === DESIGN_VIEWS.WHAT_DESIGN
+                ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl' // What Design
+                : 'w-auto sm:max-w-xl md:max-w-3xl lg:max-w-4xl' // Why Design
               : (currentChapter === 'work' && work.workView === 'Overview')
               ? 'w-full'
               : currentChapter === 'work' && work.workView === 'Quiz'

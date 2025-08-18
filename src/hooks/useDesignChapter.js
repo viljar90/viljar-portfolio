@@ -83,16 +83,16 @@ export const useDesignChapter = (currentChapter) => {
   }, [resetGame]);
 
   const returnToIntro = useCallback(() => {
-    setWhyDesignIntroCompleted(false);
-    setWhyDesignIntroStepIndex(0);
-    setWhyDesignIntroResetKey(prevKey => prevKey + 1);
-    setWhyDesignStep('intro');
-    setIsPlayingWhyDesignIntro(true);
-    hasAutoPlayedWhyDesignIntro.current = true;
-    setDisplayedWhyDesignTitleChars('');
-    setDisplayedWhyDesignMainTextChars('');
-    setWhyDesignAnimationPhase('typing-title');
-}, []);
+      setWhyDesignIntroCompleted(false);
+      setWhyDesignIntroStepIndex(0);
+      setWhyDesignIntroResetKey(prevKey => prevKey + 1);
+      setWhyDesignStep('intro');
+      setIsPlayingWhyDesignIntro(true);
+      hasAutoPlayedWhyDesignIntro.current = true;
+      setDisplayedWhyDesignTitleChars('');
+      setDisplayedWhyDesignMainTextChars('');
+      setWhyDesignAnimationPhase('typing-title');
+  }, []);
 
   const navigateToWhyDesignStep = useCallback((itemName) => {
     setWhyDesignStep('game');
@@ -105,17 +105,13 @@ export const useDesignChapter = (currentChapter) => {
       setGameStatus('playing');
     } else if (itemName === 'Bonus') {
       setGameStatus('bonus');
-    } else if (itemName === 'Results') {
+    } else if (itemName === 'Your Score') {
       setGameStatus('end');
     }
   }, []);
 
   const handleNextWhyDesignIntroLine = useCallback(() => {
       setIsPlayingWhyDesignIntro(false);
-      const currentStep = WHY_DESIGN_CONTENT.intro.steps[whyDesignIntroStepIndex];
-      setDisplayedWhyDesignTitleChars(currentStep.title);
-      setDisplayedWhyDesignMainTextChars(currentStep.mainText);
-
       if (whyDesignIntroStepIndex < WHY_DESIGN_CONTENT.intro.steps.length - 1) {
           setWhyDesignIntroStepIndex(prev => prev + 1);
       } else {
@@ -126,11 +122,7 @@ export const useDesignChapter = (currentChapter) => {
   const handlePrevWhyDesignIntroLine = useCallback(() => {
       setIsPlayingWhyDesignIntro(false);
       if (whyDesignIntroStepIndex > 0) {
-          const newIndex = whyDesignIntroStepIndex - 1;
-          const prevStep = WHY_DESIGN_CONTENT.intro.steps[newIndex];
-          setWhyDesignIntroStepIndex(newIndex);
-          setDisplayedWhyDesignTitleChars(prevStep.title);
-          setDisplayedWhyDesignMainTextChars(prevStep.mainText);
+          setWhyDesignIntroStepIndex(prev => prev - 1);
       }
   }, [whyDesignIntroStepIndex]);
 
@@ -216,27 +208,31 @@ export const useDesignChapter = (currentChapter) => {
   }, [gameQuestionStates, startBonusCase]);
 
   const whyDesignNavItems = useMemo(() => {
-    const caseItems = ["Case 1", "Case 2", "Case 3"].map((name, index) => {
-        const isCompleted =
-            gameQuestionStates[`${index}-0`]?.completed &&
-            gameQuestionStates[`${index}-1`]?.completed;
-        return { name: isCompleted ? `${name} ✓` : name };
-    });
+      const caseItems = ["Case 1", "Case 2", "Case 3"].map((name, index) => {
+          const isCompleted =
+              gameQuestionStates[`${index}-0`]?.completed &&
+              gameQuestionStates[`${index}-1`]?.completed;
+          return { name: isCompleted ? `${name} ✓` : name };
+      });
 
-    return [
-        ...WHY_DESIGN_NAV_ITEMS,
-        ...caseItems,
-        { name: "Bonus" },
-        { name: "Results" },
-    ];
-}, [gameQuestionStates]);
+      return [
+          ...WHY_DESIGN_NAV_ITEMS,
+          ...caseItems,
+          { name: "Bonus" },
+          { name: "Your Score" },
+      ];
+  }, [gameQuestionStates]);
 
   let whyDesignActiveIndex = 0;
   if (whyDesignStep === 'intro') {
     whyDesignActiveIndex = 0;
   } else if (whyDesignStep === 'game') {
-    if (gameStatus === 'playing' && gameCaseIndex < 3) {
-      whyDesignActiveIndex = gameCaseIndex + 1;
+    if (gameStatus === 'playing') {
+        if (gameCaseIndex >= 3) { // Check if it's a bonus case
+            whyDesignActiveIndex = 4; // "Bonus"
+        } else {
+            whyDesignActiveIndex = gameCaseIndex + 1; // "Case 1, 2, or 3"
+        }
     } else if (gameStatus === 'bonus') {
       whyDesignActiveIndex = 4;
     } else if (gameStatus === 'end') {
@@ -384,7 +380,7 @@ export const useDesignChapter = (currentChapter) => {
       hasAutoPlayedWhyDesignIntro.current = false;
     }
   }, [currentChapter, designView]);
-  
+
   useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingWhyDesignIntro || whyDesignStep !== 'intro') return;
 
@@ -432,7 +428,7 @@ export const useDesignChapter = (currentChapter) => {
                 } else {
                     whyDesignIntroAnimationCompleted();
                 }
-            }, 1500);
+            }, 1600);
             break;
         default:
             break;

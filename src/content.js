@@ -68,7 +68,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
                 options: [
                     { text: "$150,000,000", isCorrect: false, rationale: "The actual cost was significantly higher." },
                     { text: "$75,000,000", isCorrect: false, rationale: "The actual cost was significantly higher." },
-                    { text: "$300,000,000", isCorrect: true, rationale: "This case illustrates how a single point of friction can lead to massive revenue loss." },
+                    { text: "$300,000,000", isCorrect: true, rationale: "This case illustrates how one single point of friction can lead to massive revenue loss." },
                     { text: "$5,000,000", isCorrect: false, rationale: "The actual cost was significantly higher." }
                 ]
             },
