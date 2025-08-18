@@ -25,6 +25,7 @@ const ANIMATION_DURATION_CHAPTER = "0.5s";
 function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [currentChapter, setCurrentChapter] = useState('main');
+  const [snappedChapter, setSnappedChapter] = useState(null);
   const [showLeftFade, setShowLeftFade] = useState(false);
   const [showRightFade, setShowRightFade] = useState(false);
   const [isThemeToggleClicked, setIsThemeToggleClicked] = useState(false);
@@ -37,7 +38,6 @@ function App() {
   const designItemRefs = useRef([]);
   const workItemRefs = useRef([]);
   const navigatedManually = useRef(false);
-  const scrollTimeoutRef = useRef(null);
   const isProgrammaticScrollRef = useRef(false);
 
   const landing = useLandingChapter(currentChapter, navigatedManually);
@@ -74,8 +74,18 @@ function App() {
           if (entry.target === mainChapterRef.current) newChapter = 'main';
           else if (entry.target === designChapterRef.current) newChapter = 'design';
           else if (entry.target === workChapterRef.current) newChapter = 'work';
+
           if (newChapter && currentChapter !== newChapter) {
             setCurrentChapter(newChapter);
+            // Snap only if it's a new chapter that hasn't been snapped yet
+            if (newChapter !== snappedChapter) {
+              isProgrammaticScrollRef.current = true;
+              entry.target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              setSnappedChapter(newChapter);
+              setTimeout(() => {
+                  isProgrammaticScrollRef.current = false;
+              }, 1000);
+            }
           }
         }
       });
@@ -92,7 +102,7 @@ function App() {
       if (designRefCurrent) observer.unobserve(designRefCurrent);
       if (workRefCurrent) observer.unobserve(workRefCurrent);
     };
-  }, [currentChapter]);
+  }, [currentChapter, snappedChapter]);
 
   useEffect(() => {
     let items;
@@ -135,43 +145,6 @@ function App() {
       return () => observer.disconnect();
     }
   }, [landing.activeMainStep, design.activeDesignStageKey, work.workStepIndex, currentChapter, work.workView, work.WORK_NAV_ITEMS, work.currentProjectIndex, work.PROJECT_NAV_ITEMS, design.designView, design.whyDesignNavItems, design.whyDesignActiveIndex]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-        if (isProgrammaticScrollRef.current) return;
-        if (scrollTimeoutRef.current) {
-            clearTimeout(scrollTimeoutRef.current);
-        }
-        scrollTimeoutRef.current = setTimeout(() => {
-            const chapterRefs = [mainChapterRef, designChapterRef, workChapterRef];
-            let closestRef = null;
-            let minDistance = Infinity;
-            chapterRefs.forEach(ref => {
-                if (ref.current) {
-                    const distance = Math.abs(ref.current.getBoundingClientRect().top);
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        closestRef = ref;
-                    }
-                }
-            });
-            if (closestRef) {
-                isProgrammaticScrollRef.current = true;
-                closestRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                setTimeout(() => {
-                    isProgrammaticScrollRef.current = false;
-                }, 1000);
-            }
-        }, 150);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-        window.removeEventListener('scroll', handleScroll);
-        if (scrollTimeoutRef.current) {
-            clearTimeout(scrollTimeoutRef.current);
-        }
-    };
-  }, []);
 
   const navItemsToDisplay = useMemo(() => {
     if (currentChapter === 'main') return MAIN_NAV_ITEMS;

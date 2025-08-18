@@ -311,7 +311,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
                 options: [
                     { text: "A 50% loss in stock value", isCorrect: false, rationale: "The outcome was far more severe." },
                     { text: "A government bailout", isCorrect: false, rationale: "No, this went beyond a bailout." },
-                    { text: "Bankruptcy", isCorrect: true, rationale: "Correct. The failed project led directly to the company's bankruptcy in 1996." },
+                    { text: "Bankruptcy", isCorrect: true, rationale: "The $65 million dollar system investment and $34 million dollars in lost revenue proved to big to overcome." },
                     { text: "A hostile takeover", isCorrect: false, rationale: "It went beyond this." }
                 ]
             },
