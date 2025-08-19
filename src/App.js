@@ -242,7 +242,13 @@ function App() {
           if (design.whyDesignStep === 'intro') {
               design.handlePrevWhyDesignIntroLine();
           } else if (design.gameStatus === 'playing') {
-              design.handleGamePrev();
+              // --- FIX STARTS HERE ---
+              if (design.gameCaseIndex === 0 && design.gamePartIndex === 0) {
+                  design.goBackToIntro();
+              } else {
+                  design.handleGamePrev();
+              }
+              // --- FIX ENDS HERE ---
           }
       } else if (design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document') {
         const result = design.prevDesignStage();
@@ -330,15 +336,16 @@ function App() {
   const isFirstDesignStage = design.activeDesignStageKey === WHAT_DESIGN_NAV_ITEMS[0].name;
   const isLastDesignStage = design.activeDesignStageKey === WHAT_DESIGN_NAV_ITEMS[WHAT_DESIGN_NAV_ITEMS.length - 1].name;
 
+  // --- FIX STARTS HERE ---
   const showPrevArrow =
     (currentChapter === 'main' && (landing.activeMainStep !== MAIN_STAGES.INSULTS || landing.currentSubLineIndex !== 0)) ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN && design.whyDesignStep === 'intro' && design.whyDesignIntroStepIndex > 0) ||
-    (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN && design.gameStatus === 'playing' && (design.gameCaseIndex > 0 || design.gamePartIndex > 0)) ||
+    (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN && design.gameStatus === 'playing') ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Slideshow' && (design.activeDesignStageKey !== DESIGN_STAGE_KEYS.ABOUT_DESIGN || design.currentDesignStepIndex !== 0)) ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document' && !isFirstDesignStage) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) ||
     (currentChapter === 'work' && work.workView === 'Overview');
-    
+  // --- FIX ENDS HERE ---
 
   const currentPlayPauseButtonState = useMemo(() => {
     if (currentChapter === 'main') return landing.isPlaying;

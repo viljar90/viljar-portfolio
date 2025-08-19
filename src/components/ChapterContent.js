@@ -8,7 +8,7 @@ import WorkChapter from './WorkChapter';
 import QuizIntro from './QuizIntro';
 import QuizResults from './QuizResults';
 import ProjectOverview from './ProjectOverview';
-import { QUIZZES, PROJECTS, DESIGN_VIEWS, WHY_DESIGN_CONTENT } from '../content';
+import { QUIZZES, PROJECTS, DESIGN_VIEWS } from '../content';
 import WhyDesignIntro from './WhyDesignIntro';
 import WhyDesignGame from './WhyDesignGame';
 
@@ -33,7 +33,6 @@ const ChapterContent = ({
   const renderDesignContent = () => {
     if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
       if (design.whyDesignStep === 'intro') {
-        const currentStep = WHY_DESIGN_CONTENT.intro.steps[design.whyDesignIntroStepIndex];
         const showPlayButton = true;
 
         return (
@@ -44,8 +43,8 @@ const ChapterContent = ({
             onAnimationComplete={design.handleNextWhyDesignIntroLine}
             whyDesignIntroStepIndex={design.whyDesignIntroStepIndex}
             resetKey={design.whyDesignIntroResetKey}
-            displayedTitle={!design.isPlayingWhyDesignIntro ? currentStep.title : design.displayedWhyDesignTitleChars}
-            displayedMainText={!design.isPlayingWhyDesignIntro ? currentStep.mainText : design.displayedWhyDesignMainTextChars}
+            displayedTitle={design.displayedWhyDesignTitleChars}
+            displayedMainText={design.displayedWhyDesignMainTextChars}
             showCursorTitle={design.isPlayingWhyDesignIntro && design.whyDesignAnimationPhase === 'typing-title'}
             showCursorMainText={design.isPlayingWhyDesignIntro && design.whyDesignAnimationPhase === 'typing-main'}
             showPlayButton={showPlayButton}

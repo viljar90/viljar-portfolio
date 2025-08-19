@@ -94,6 +94,18 @@ export const useDesignChapter = (currentChapter) => {
       setDisplayedWhyDesignMainTextChars('');
       setWhyDesignAnimationPhase('typing-title');
   }, []);
+  
+  // --- NEW FUNCTION ---
+  const goBackToIntro = useCallback(() => {
+    setIsPlayingWhyDesignIntro(false);
+    setWhyDesignStep('intro');
+    const lastIntroIndex = WHY_DESIGN_CONTENT.intro.steps.length - 1;
+    setWhyDesignIntroStepIndex(lastIntroIndex);
+    const lastStepData = WHY_DESIGN_CONTENT.intro.steps[lastIntroIndex];
+    setDisplayedWhyDesignTitleChars(lastStepData.title);
+    setDisplayedWhyDesignMainTextChars(lastStepData.mainText);
+  }, []);
+
 
   const navigateToWhyDesignStep = useCallback((itemName) => {
     setWhyDesignStep('game');
@@ -114,7 +126,11 @@ export const useDesignChapter = (currentChapter) => {
   const handleNextWhyDesignIntroLine = useCallback(() => {
       setIsPlayingWhyDesignIntro(false);
       if (whyDesignIntroStepIndex < WHY_DESIGN_CONTENT.intro.steps.length - 1) {
-          setWhyDesignIntroStepIndex(prev => prev + 1);
+          const nextIndex = whyDesignIntroStepIndex + 1;
+          const nextStepData = WHY_DESIGN_CONTENT.intro.steps[nextIndex];
+          setDisplayedWhyDesignTitleChars(nextStepData.title);
+          setDisplayedWhyDesignMainTextChars(nextStepData.mainText);
+          setWhyDesignIntroStepIndex(nextIndex);
       } else {
           handleStartWhyDesignGame();
       }
@@ -123,7 +139,11 @@ export const useDesignChapter = (currentChapter) => {
   const handlePrevWhyDesignIntroLine = useCallback(() => {
       setIsPlayingWhyDesignIntro(false);
       if (whyDesignIntroStepIndex > 0) {
-          setWhyDesignIntroStepIndex(prev => prev - 1);
+          const prevIndex = whyDesignIntroStepIndex - 1;
+          const prevStepData = WHY_DESIGN_CONTENT.intro.steps[prevIndex];
+          setDisplayedWhyDesignTitleChars(prevStepData.title);
+          setDisplayedWhyDesignMainTextChars(prevStepData.mainText);
+          setWhyDesignIntroStepIndex(prevIndex);
       }
   }, [whyDesignIntroStepIndex]);
 
@@ -589,6 +609,8 @@ export const useDesignChapter = (currentChapter) => {
     whyDesignIntroResetKey,
     replayWhyDesignIntro,
     returnToIntro,
+    // Add the new function to the returned object
+    goBackToIntro,
     isPlayingWhyDesignIntro,
     togglePlayPauseWhyDesignIntro,
     handleStartWhyDesignGame,
