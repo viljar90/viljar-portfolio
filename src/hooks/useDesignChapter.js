@@ -478,7 +478,7 @@ export const useDesignChapter = (currentChapter) => {
       if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
         if (justEnteredDesign && documentView === 'Slideshow' && !isDesignChapterFinished) {
             resetForStage(activeDesignStageKey, true);
-        } else if (!isDesignChapterFinished && documentView === 'Slideshow') {
+        } else if (wasPlayingRef.current && !isDesignChapterFinished && documentView === 'Slideshow') {
             setIsPlayingDesign(true);
         }
       }
