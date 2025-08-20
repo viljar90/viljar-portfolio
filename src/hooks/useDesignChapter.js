@@ -25,6 +25,8 @@ export const useDesignChapter = (currentChapter) => {
   const [previousDesignStageKey, setPreviousDesignStageKey] = useState(null);
   const [designAnimationDirection, setDesignAnimationDirection] = useState('next');
   const prevChapterRef = useRef(currentChapter);
+  const prevDesignViewRef = useRef(designView);
+
 
   // --- "Why Design" States ---
   const [whyDesignStep, setWhyDesignStep] = useState('intro');
@@ -95,7 +97,6 @@ export const useDesignChapter = (currentChapter) => {
       setWhyDesignAnimationPhase('typing-title');
   }, []);
   
-  // --- NEW FUNCTION ---
   const goBackToIntro = useCallback(() => {
     setIsPlayingWhyDesignIntro(false);
     setWhyDesignStep('intro');
@@ -387,6 +388,14 @@ export const useDesignChapter = (currentChapter) => {
     setDocumentView(prevView => (prevView === 'Slideshow' ? 'Document' : 'Slideshow'));
     setIsPlayingDesign(false);
   }, []);
+  
+  useEffect(() => {
+    const justSwitchedToWhatDesign = prevDesignViewRef.current === DESIGN_VIEWS.WHY_DESIGN && designView === DESIGN_VIEWS.WHAT_DESIGN;
+    if (justSwitchedToWhatDesign) {
+      resetForStage(WHAT_DESIGN_NAV_ITEMS[0].name, true);
+    }
+    prevDesignViewRef.current = designView;
+  }, [designView, resetForStage]);
 
   useEffect(() => {
     const isOnWhyDesignView = currentChapter === 'design' && designView === DESIGN_VIEWS.WHY_DESIGN;
@@ -477,15 +486,16 @@ export const useDesignChapter = (currentChapter) => {
     } else {
       if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
         if (justEnteredDesign && documentView === 'Slideshow' && !isDesignChapterFinished) {
-            resetForStage(activeDesignStageKey, true);
+          resetForStage(activeDesignStageKey, true);
         } else if (wasPlayingRef.current && !isDesignChapterFinished && documentView === 'Slideshow') {
-            setIsPlayingDesign(true);
+          setIsPlayingDesign(true);
         }
       }
     }
 
     prevChapterRef.current = currentChapter;
-  }, [currentChapter, designView, documentView, activeDesignStageKey, isDesignChapterFinished, resetForStage, isPlayingDesign]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentChapter, designView, documentView, activeDesignStageKey, isDesignChapterFinished, resetForStage]);
 
   useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete' || documentView !== 'Slideshow') {
@@ -609,7 +619,6 @@ export const useDesignChapter = (currentChapter) => {
     whyDesignIntroResetKey,
     replayWhyDesignIntro,
     returnToIntro,
-    // Add the new function to the returned object
     goBackToIntro,
     isPlayingWhyDesignIntro,
     togglePlayPauseWhyDesignIntro,
