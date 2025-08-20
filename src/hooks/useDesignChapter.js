@@ -26,6 +26,7 @@ export const useDesignChapter = (currentChapter) => {
   const [designAnimationDirection, setDesignAnimationDirection] = useState('next');
   const prevChapterRef = useRef(currentChapter);
   const prevDesignViewRef = useRef(designView);
+  const hasVisitedWhatDesign = useRef(false);
 
 
   // --- "Why Design" States ---
@@ -391,11 +392,20 @@ export const useDesignChapter = (currentChapter) => {
   
   useEffect(() => {
     const justSwitchedToWhatDesign = prevDesignViewRef.current === DESIGN_VIEWS.WHY_DESIGN && designView === DESIGN_VIEWS.WHAT_DESIGN;
+    
     if (justSwitchedToWhatDesign) {
-      resetForStage(WHAT_DESIGN_NAV_ITEMS[0].name, true);
+      if (!hasVisitedWhatDesign.current) {
+        // First time visiting What Design, start from the absolute beginning.
+        resetForStage(WHAT_DESIGN_NAV_ITEMS[0].name, true);
+        hasVisitedWhatDesign.current = true;
+      } else {
+        // It's a return visit, so restart animation on the current stage.
+        resetForStage(activeDesignStageKey, true);
+      }
     }
+    
     prevDesignViewRef.current = designView;
-  }, [designView, resetForStage]);
+  }, [designView, resetForStage, activeDesignStageKey]);
 
   useEffect(() => {
     const isOnWhyDesignView = currentChapter === 'design' && designView === DESIGN_VIEWS.WHY_DESIGN;
