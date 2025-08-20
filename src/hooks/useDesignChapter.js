@@ -9,7 +9,7 @@ const LONG_PAUSE_DURATION = 2700;
 
 export const useDesignChapter = (currentChapter) => {
   // --- "What Design" States ---
-  const [designView, setDesignView] = useState(DESIGN_VIEWS.WHAT_DESIGN);
+  const [designView, setDesignView] = useState(DESIGN_VIEWS.WHY_DESIGN);
   const [activeDesignStageKey, setActiveDesignStageKey] = useState(WHAT_DESIGN_NAV_ITEMS[0].name);
   const [currentDesignStepIndex, setCurrentDesignStepIndex] = useState(0);
   const [displayedDesignTitleChars, setDisplayedDesignTitleChars] = useState('');

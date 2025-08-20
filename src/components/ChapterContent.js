@@ -65,7 +65,7 @@ const ChapterContent = ({
             resetGame={design.resetGame}
             startBonusCase={design.startBonusCase}
             setGameStatus={design.setGameStatus}
-            onGameComplete={design.replayWhyDesignIntro}
+            onSwitchView={() => design.setDesignView(DESIGN_VIEWS.WHAT_DESIGN)}
           />
         );
       }

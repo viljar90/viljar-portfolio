@@ -52,7 +52,7 @@ export const WHY_DESIGN_CONTENT = {
       { title: "Why Design", mainText: "Probably because quantifying it is difficult, as design involves many intangible factors." },
       { title: "Why Design", mainText: "The whole is greater than the sum of its parts." },
       { title: "Why Design", mainText: "But bad parts can destroy the whole." },
-      { title: "Why Design", mainText: "Play the game to learn why design can make or break the bank." },
+      { title: "Why Design", mainText: "Play the game to see why design can make or break the bank." },
     ]
   }
 };

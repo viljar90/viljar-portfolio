@@ -1,4 +1,5 @@
 // src/components/WhyDesignGame.js
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WHY_DESIGN_GAME_CONTENT } from '../content';
@@ -46,7 +47,7 @@ const WhyDesignGame = ({
   resetGame,
   startBonusCase,
   setGameStatus,
-  onGameComplete,
+  onSwitchView,
 }) => {
   const MAIN_CASES_COUNT = 3;
   const currentCase = WHY_DESIGN_GAME_CONTENT[gameCaseIndex];
@@ -176,7 +177,7 @@ const WhyDesignGame = ({
         </p>
         <div className="flex justify-center gap-4">
           <SecondaryButton onClick={resetGame}>Play Again</SecondaryButton>
-          <PrimaryButton onClick={onGameComplete}>Back to Intro</PrimaryButton>
+          <PrimaryButton onClick={onSwitchView}>What Design</PrimaryButton>
         </div>
       </div>
     );
@@ -198,7 +199,7 @@ WhyDesignGame.propTypes = {
   resetGame: PropTypes.func.isRequired,
   startBonusCase: PropTypes.func.isRequired,
   setGameStatus: PropTypes.func.isRequired,
-  onGameComplete: PropTypes.func.isRequired,
+  onSwitchView: PropTypes.func.isRequired,
 };
 
 export default WhyDesignGame;
