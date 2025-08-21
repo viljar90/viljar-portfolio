@@ -7,9 +7,9 @@ import QuizOptionCardButton from './QuizOptionCardButton'; // Import the renamed
 const QuizView = ({ quiz, onAnswer, answerState, onReplayQuestion }) => (
     <>
         {!answerState?.correct && (
-             <div className="text-left text-1xl md:text-2xl mb-8 animate-fadeIn">
+             <div className="w-full text-left text-1xl md:text-2xl mb-8 animate-fadeIn">
                 <p className="text-primary dark:text-secondary mb-2">{quiz.question.split('\n')[0]}</p>
-                <p className="text-text-base">{quiz.question.split('\n')[1]}</p>
+                <p className="text-text-base font-bold">{quiz.question.split('\n')[1]}</p>
             </div>
         )}
         <div className={`w-full transition-all duration-300 ${answerState?.correct ? 'flex justify-center mt-8' : 'space-y-4 md:space-y-0 md:grid md:grid-cols-2 md:gap-4'}`}>
