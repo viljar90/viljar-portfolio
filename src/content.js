@@ -64,7 +64,8 @@ export const WHY_DESIGN_CONTENT = {
 
 export const WHY_DESIGN_GAME_CONTENT = [
     {
-        caseTitle: "Case 1/3: Best Buy - The Expensive Button",
+        slug: 'best-buy',
+        caseTitle: "Best Buy - The Expensive Button",
         parts: [
             {
                 type: 'singleChoice',
@@ -91,7 +92,8 @@ export const WHY_DESIGN_GAME_CONTENT = [
         ]
     },
     {
-        caseTitle: "Case 2/3: Helseplattformen - The Rejected System",
+        slug: 'helseplattformen',
+        caseTitle: "Helseplattformen - The Rejected System",
         parts: [
              {
                 type: 'singleChoice',
@@ -118,7 +120,8 @@ export const WHY_DESIGN_GAME_CONTENT = [
         ]
     },
     {
-        caseTitle: "Case 3/3: Citibank - Big Small Mistake",
+        slug: 'citibank',
+        caseTitle: "Citibank - Big Small Mistake",
         parts: [
              {
                 type: 'singleChoice',
@@ -145,6 +148,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
         ]
     },
     {
+        slug: 'nav',
         caseTitle: "NAV Case: Hidden Calculations",
         parts: [
              {
@@ -172,6 +176,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
         ]
     },
     {
+        slug: 'police',
         caseTitle: "Norwegian Police Case: PEN Scandal",
         parts: [
             {
@@ -199,6 +204,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
         ]
     },
      {
+        slug: 'lidl',
         caseTitle: "Lidl Case: Mismatched System",
         parts: [
             {
@@ -226,6 +232,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
         ]
     },
     {
+        slug: 'us-census',
         caseTitle: "US Census Case: Ignoring users",
         parts: [
             {
@@ -253,6 +260,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
         ]
     },
     {
+        slug: 'walmart',
         caseTitle: "Walmart Case: Expensive Question",
         parts: [
             {
@@ -280,6 +288,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
         ]
     },
     {
+        slug: 'us-navy',
         caseTitle: "USS McCain Case: Deadly Design",
         parts: [
             {
@@ -307,6 +316,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
         ]
     },
     {
+        slug: 'foxmeyer',
         caseTitle: "FoxMeyer Case: Internal Rebellion",
         parts: [
             {
@@ -334,6 +344,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
         ]
     },
     {
+        slug: 'e-helse-direktoratet',
         caseTitle: "E-helse Direktoratet Case: Akson",
         parts: [
             {
@@ -842,8 +853,8 @@ export const PROJECTS = [
   {
     id: 'aiDashboard',
     navText: 'AI Dashboard',
-    cardTitle: 'AI Insights Dashboard for NAV',
-    description: "Designed a user-friendly dashboard for NAV, visualizing AI-driven insights on user needs. This empowered product teams to prioritize services based on real-time data of what users struggled with the most.",
+    cardTitle: 'AI Insights Dashboard',
+    description: "Designed a user-friendly dashboard for NAV, visualizing AI-driven insights on user needs. This empowered product teams to prioritize services based on real-time data of what users need the most.",
     tags: ['UX', 'UI', 'Data Visualization'],
     icon: <PieChartIcon />,
   },

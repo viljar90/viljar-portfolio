@@ -51,6 +51,40 @@ export const useDesignChapter = (currentChapter) => {
   const [gameStatus, setGameStatus] = useState('playing');
 
   // --- Logic ---
+  const navigateToGameCase = useCallback((slug) => {
+    const caseIndex = WHY_DESIGN_GAME_CONTENT.findIndex(c => c.slug === slug);
+    if (caseIndex !== -1) {
+      setWhyDesignStep('game');
+      setGameCaseIndex(caseIndex);
+      setGamePartIndex(0);
+      setWhyDesignIntroCompleted(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (currentChapter === 'design') {
+      if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
+        const navItem = WHAT_DESIGN_NAV_ITEMS.find(item => item.name === activeDesignStageKey);
+        if (navItem && navItem.title) {
+          const sectionSlug = navItem.title.toLowerCase().replace(/\s+/g, '-');
+          window.history.replaceState(null, '', `#design/what/${sectionSlug}`);
+        }
+      } else { // Handle "Why Design" URL updates
+        let whySlug = 'start';
+        if (whyDesignStep === 'game') {
+          const currentCase = WHY_DESIGN_GAME_CONTENT[gameCaseIndex];
+          if (gameStatus === 'end') {
+            whySlug = 'score';
+          } else if (currentCase) {
+            whySlug = `case/${currentCase.slug}`;
+          }
+        }
+        window.history.replaceState(null, '', `#design/why/${whySlug}`);
+      }
+    }
+  }, [designView, activeDesignStageKey, currentChapter, whyDesignStep, gameCaseIndex, gameStatus]);
+
+
   const togglePlayPauseWhyDesignIntro = useCallback(() => {
     setIsPlayingWhyDesignIntro(prev => !prev);
   }, []);
@@ -548,22 +582,6 @@ export const useDesignChapter = (currentChapter) => {
   }, [currentChapter, isPlayingDesign, designStepAnimationPhase, activeDesignStageKey, resetForStage, navigationMode, documentView]);
 
   useEffect(() => {
-    if (currentChapter === 'design') {
-        if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
-            // Find the nav item that corresponds to the active stage's key
-            const navItem = WHAT_DESIGN_NAV_ITEMS.find(item => item.name === activeDesignStageKey);
-            if (navItem) {
-                // Convert the user-friendly title (e.g., "UX Researcher") to a URL slug
-                const sectionSlug = navItem.title.toLowerCase().replace(/\s+/g, '-');
-                window.history.replaceState(null, '', `#design/what/${sectionSlug}`);
-            }
-          } else { // This handles the "Why Design" view
-              window.history.replaceState(null, '', '#design/why');
-          }
-        }
-    }, [designView, activeDesignStageKey, currentChapter]);
-
-  useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingDesign || documentView !== 'Slideshow' || designView !== DESIGN_VIEWS.WHAT_DESIGN) return;
 
     let timer;
@@ -686,5 +704,6 @@ export const useDesignChapter = (currentChapter) => {
     displayedWhyDesignTitleChars,
     displayedWhyDesignMainTextChars,
     whyDesignAnimationPhase,
+    navigateToGameCase
   };
 };
