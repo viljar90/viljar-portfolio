@@ -548,6 +548,13 @@ export const useDesignChapter = (currentChapter) => {
   }, [currentChapter, isPlayingDesign, designStepAnimationPhase, activeDesignStageKey, resetForStage, navigationMode, documentView]);
 
   useEffect(() => {
+    if (currentChapter === 'design') {
+      const subChapter = designView === DESIGN_VIEWS.WHAT_DESIGN ? 'what' : 'why';
+      window.history.replaceState(null, '', `#design/${subChapter}`);
+    }
+  }, [designView, currentChapter]);
+
+  useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingDesign || documentView !== 'Slideshow' || designView !== DESIGN_VIEWS.WHAT_DESIGN) return;
 
     let timer;

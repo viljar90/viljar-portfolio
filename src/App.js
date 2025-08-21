@@ -54,13 +54,24 @@ function App() {
     setDarkMode(isNight);
     document.documentElement.classList.toggle('dark', isNight);
   }, []);
-
+  
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
-    if (hash && ['main', 'design', 'work'].includes(hash)) {
-      setCurrentChapter(hash);
+    const [chapter, subChapter] = hash.split('/');
+  
+    if (chapter && ['main', 'design', 'work'].includes(chapter)) {
+      setCurrentChapter(chapter);
+      if (chapter === 'design' && subChapter) {
+        if (subChapter === 'what') {
+          design.setDesignView(DESIGN_VIEWS.WHAT_DESIGN);
+        } else {
+          design.setDesignView(DESIGN_VIEWS.WHY_DESIGN);
+        }
+      }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   useEffect(() => {
     const duration = ANIMATION_DURATION_CHAPTER;
@@ -84,7 +95,11 @@ function App() {
 
           if (newChapter && currentChapter !== newChapter) {
             setCurrentChapter(newChapter);
-            window.history.replaceState(null, '', `#${newChapter}`);
+            if (newChapter === 'design') {
+              window.history.replaceState(null, '', `#design/${design.designView === DESIGN_VIEWS.WHAT_DESIGN ? 'what' : 'why'}`);
+            } else {
+              window.history.replaceState(null, '', `#${newChapter}`);
+            }
             if (newChapter !== snappedChapter) {
               isProgrammaticScrollRef.current = true;
               entry.target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -109,7 +124,7 @@ function App() {
       if (designRefCurrent) observer.unobserve(designRefCurrent);
       if (workRefCurrent) observer.unobserve(workRefCurrent);
     };
-  }, [currentChapter, snappedChapter]);
+  }, [currentChapter, snappedChapter, design]);
 
   useEffect(() => {
     let items;
@@ -195,7 +210,11 @@ function App() {
     setTimeout(() => {
       if (targetRef && targetRef.current) {
         targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        window.location.hash = chapterName;
+        if (chapterName === 'design') {
+          window.location.hash = `design/${design.designView === DESIGN_VIEWS.WHAT_DESIGN ? 'what' : 'why'}`;
+        } else {
+          window.location.hash = chapterName;
+        }
       }
     }, 50);
     setTimeout(() => {
