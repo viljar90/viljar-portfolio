@@ -57,7 +57,8 @@ function App() {
   
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
-    const [chapter, subChapter, section, bonusSlug] = hash.split('/');
+    const parts = hash.split('/');
+    const [chapter, subChapter, section, ...rest] = parts;
 
     if (chapter && ['main', 'design', 'work'].includes(chapter)) {
       setCurrentChapter(chapter);
@@ -71,12 +72,20 @@ function App() {
               design.navigateToStage(targetStageItem.name, false);
             }
           }
-        } else {
+        } else if (subChapter === 'why') {
           design.setDesignView(DESIGN_VIEWS.WHY_DESIGN);
-          if (section === 'case' && bonusSlug) {
-            design.navigateToGameCase(bonusSlug);
-          } else if (section === 'score') {
+          
+          if (section === 'score') {
             design.setGameStatus('end');
+          } else if (section === 'bonus') {
+            design.setGameStatus('bonus');
+            if (rest[0] === 'case' && rest[1]) {
+                design.navigateToGameCase(rest[1]);
+            }
+          } else if (section === 'case' && rest[0]) {
+            design.navigateToGameCase(rest[0]);
+          } else if (section === 'start') {
+            design.returnToIntro();
           }
         }
       } else if (chapter === 'work' && subChapter) {
@@ -446,9 +455,6 @@ function App() {
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) ||
     (currentChapter === 'work' && work.workView === 'Overview');
     
-  // **THE FIX**: This logic is now updated to handle all game states correctly
-  // ... inside App.js
-
   const handleCentralButtonClick = () => {
     if (currentChapter === 'work') {
       work.handleWorkChapterCentralButtonClick();
@@ -460,11 +466,9 @@ function App() {
           design.togglePlayPause();
         }
       } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
-        // V V V PASTE THE NEW SNIPPET HERE V V V
         if (design.gameStatus === 'bonus') {
           design.startRandomBonusCase();
         } 
-        // ^ ^ ^ END OF NEW SNIPPET ^ ^ ^
         else if (design.whyDesignStep === 'game' && design.gameStatus !== 'end') {
           design.handleGameNext();
         } else if (design.whyDesignIntroCompleted) {

@@ -187,17 +187,17 @@ export const WHY_DESIGN_GAME_CONTENT = [
                     { text: "250 million NOK", isCorrect: false, rationale: "The loss was higher." },
                     { text: "728 million NOK", isCorrect: false, rationale: "The loss was lower." },
                     { text: "1.2 billion NOK", isCorrect: false, rationale: "The loss was lower." },
-                    { text: "485 million NOK", isCorrect: true, rationale: "The project was cancelled after consuming 485 million NOK, a significant loss for a system that failed the most basic contextual needs of its users." }
+                    { text: "485 million NOK", isCorrect: true, rationale: "The project was cancelled after wasting 485 million NOK, a significant loss for a system that failed the most basic contextual needs of its users." }
                 ]
             },
             {
                 type: 'selectAll',
                 context: "The system forced officers to return to the station to do administrative tasks instead of on-the-go, wasting time",
-                question: "Which core UX principles were violated by designing a system completely disconnected from the user's real-world context?",
+                question: "Which core ignored UX lessons led to the failure?",
                 options: [
                     { text: "Match Between System and the Real World", isCorrect: true, rationale: "The design was based on an office environment, completely failing to match the real-world context of a police officer on patrol." },
-                    { text: "Flexibility and Efficiency of Use", isCorrect: true, rationale: "The system was not flexible enough to be used efficiently in the field. It lacked the accelerators needed for expert, mobile use, forcing an inefficient workflow." },
-                    { text: "Outdated Mental Model", isCorrect: true, rationale: "The developers of the system had a preconceived mental model how police work. With good qualitative research the PEN project would probably been a success." },
+                    { text: "Flexibility and Efficiency of Use", isCorrect: true, rationale: "The system was not flexible enough to be used efficiently in the field. It failed on the contextual requirement needed for mobile use, forcing a costly and inefficient workflow." },
+                    { text: "Outdated Mental Model", isCorrect: true, rationale: "The developers of the system had a preconceived mental model how police work is done. With good qualitative research the PEN project would probably been a success." },
                     { text: "Consistency and Standards", isCorrect: false, rationale: "Refers in simple terms to don't reinvent the wheel unless necessary. However, in this case not just another desktop solution was not enough." }
                 ]
             }

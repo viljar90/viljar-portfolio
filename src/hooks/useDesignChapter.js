@@ -6,6 +6,7 @@ import { WHAT_DESIGN_NAV_ITEMS, DESIGN_CONTENT, DESIGN_VIEWS, WHY_DESIGN_GAME_CO
 const TYPEWRITER_SPEED = 25;
 const BACKSPACE_SPEED = 20;
 const LONG_PAUSE_DURATION = 2700;
+const MAIN_CASES_COUNT = 3; // Define this as a constant
 
 export const useDesignChapter = (currentChapter) => {
   // --- "What Design" States ---
@@ -58,29 +59,41 @@ export const useDesignChapter = (currentChapter) => {
       setGameCaseIndex(caseIndex);
       setGamePartIndex(0);
       setWhyDesignIntroCompleted(true);
+      setGameStatus('playing'); // Ensure status is correct
     }
   }, []);
 
   useEffect(() => {
     if (currentChapter === 'design') {
-      if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
-        const navItem = WHAT_DESIGN_NAV_ITEMS.find(item => item.name === activeDesignStageKey);
-        if (navItem && navItem.title) {
-          const sectionSlug = navItem.title.toLowerCase().replace(/\s+/g, '-');
-          window.history.replaceState(null, '', `#design/what/${sectionSlug}`);
+        if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
+            const navItem = WHAT_DESIGN_NAV_ITEMS.find(item => item.name === activeDesignStageKey);
+            if (navItem && navItem.title) {
+                const sectionSlug = navItem.title.toLowerCase().replace(/\s+/g, '-');
+                window.history.replaceState(null, '', `#design/what/${sectionSlug}`);
+            }
+        } else { // Handle "Why Design" URL updates
+            let whySlug = 'start'; // Default slug
+
+            if (whyDesignStep === 'game') {
+                if (gameStatus === 'end') {
+                    whySlug = 'score';
+                } else if (gameStatus === 'bonus') {
+                    whySlug = 'bonus'; // For the bonus menu
+                } else if (gameStatus === 'playing') {
+                    const currentCase = WHY_DESIGN_GAME_CONTENT[gameCaseIndex];
+                    const isBonusCase = gameCaseIndex >= MAIN_CASES_COUNT;
+
+                    if (currentCase) {
+                        if (isBonusCase) {
+                            whySlug = `bonus/case/${currentCase.slug}`;
+                        } else {
+                            whySlug = `case/${currentCase.slug}`;
+                        }
+                    }
+                }
+            }
+            window.history.replaceState(null, '', `#design/why/${whySlug}`);
         }
-      } else { // Handle "Why Design" URL updates
-        let whySlug = 'start';
-        if (whyDesignStep === 'game') {
-          const currentCase = WHY_DESIGN_GAME_CONTENT[gameCaseIndex];
-          if (gameStatus === 'end') {
-            whySlug = 'score';
-          } else if (currentCase) {
-            whySlug = `case/${currentCase.slug}`;
-          }
-        }
-        window.history.replaceState(null, '', `#design/why/${whySlug}`);
-      }
     }
   }, [designView, activeDesignStageKey, currentChapter, whyDesignStep, gameCaseIndex, gameStatus]);
 
@@ -222,7 +235,6 @@ export const useDesignChapter = (currentChapter) => {
 
   const handleGameNext = useCallback(() => {
     setGameSelectedAnswers([]);
-    const MAIN_CASES_COUNT = 3;
     const isLastPart = gamePartIndex >= WHY_DESIGN_GAME_CONTENT[gameCaseIndex].parts.length - 1;
     const isMainFlowComplete = gameCaseIndex < MAIN_CASES_COUNT && gameCaseIndex === MAIN_CASES_COUNT - 1 && isLastPart;
     const isBonusCase = gameCaseIndex >= MAIN_CASES_COUNT;
@@ -254,7 +266,6 @@ export const useDesignChapter = (currentChapter) => {
   }, []);
 
   const startRandomBonusCase = useCallback(() => {
-    const MAIN_CASES_COUNT = 3;
     const availableBonusCases = WHY_DESIGN_GAME_CONTENT
       .map((_, index) => index)
       .slice(MAIN_CASES_COUNT)
