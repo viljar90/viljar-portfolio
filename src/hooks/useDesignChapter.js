@@ -300,9 +300,9 @@ export const useDesignChapter = (currentChapter) => {
     }
   }, []);
   
-  const navigateToStage = useCallback((stageKey) => {
-    setNavigationMode('automatic');
-    resetForStage(stageKey, true);
+  const navigateToStage = useCallback((stageKey, shouldPlay = true) => {
+    setNavigationMode(shouldPlay ? 'automatic' : 'manual');
+    resetForStage(stageKey, shouldPlay);
   }, [resetForStage]);
 
   const nextStep = useCallback(() => {
@@ -549,10 +549,19 @@ export const useDesignChapter = (currentChapter) => {
 
   useEffect(() => {
     if (currentChapter === 'design') {
-      const subChapter = designView === DESIGN_VIEWS.WHAT_DESIGN ? 'what' : 'why';
-      window.history.replaceState(null, '', `#design/${subChapter}`);
-    }
-  }, [designView, currentChapter]);
+        if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
+            // Find the nav item that corresponds to the active stage's key
+            const navItem = WHAT_DESIGN_NAV_ITEMS.find(item => item.name === activeDesignStageKey);
+            if (navItem) {
+                // Convert the user-friendly title (e.g., "UX Researcher") to a URL slug
+                const sectionSlug = navItem.title.toLowerCase().replace(/\s+/g, '-');
+                window.history.replaceState(null, '', `#design/what/${sectionSlug}`);
+            }
+          } else { // This handles the "Why Design" view
+              window.history.replaceState(null, '', '#design/why');
+          }
+        }
+    }, [designView, activeDesignStageKey, currentChapter]);
 
   useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingDesign || documentView !== 'Slideshow' || designView !== DESIGN_VIEWS.WHAT_DESIGN) return;

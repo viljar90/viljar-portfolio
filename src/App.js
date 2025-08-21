@@ -56,27 +56,39 @@ function App() {
   }, []);
   
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    const [chapter, subChapter] = hash.split('/');
+  const hash = window.location.hash.replace('#', '');
+  const [chapter, subChapter, section] = hash.split('/'); // Gets all three parts
 
-    if (chapter && ['main', 'design', 'work'].includes(chapter)) {
-      setCurrentChapter(chapter);
-      if (chapter === 'design' && subChapter) {
-        if (subChapter === 'what') {
-          design.setDesignView(DESIGN_VIEWS.WHAT_DESIGN);
-        } else {
-          design.setDesignView(DESIGN_VIEWS.WHY_DESIGN);
-        }
-      } else if (chapter === 'work' && subChapter) {
-        if (subChapter === 'overview') {
-          work.setWorkView('Overview');
-        } else {
-          work.setWorkView('Quiz');
+  if (chapter && ['main', 'design', 'work'].includes(chapter)) {
+    setCurrentChapter(chapter); // Set the main chapter (e.g., 'design')
+
+    if (chapter === 'design') {
+      // Set the view ('what' or 'why')
+      if (subChapter === 'what') {
+        design.setDesignView(DESIGN_VIEWS.WHAT_DESIGN);
+      } else {
+        design.setDesignView(DESIGN_VIEWS.WHY_DESIGN);
+      }
+
+      // If there's a specific section for 'what' design (e.g., 'what-i-do')
+      if (subChapter === 'what' && section) {
+        // Find the nav item by matching its title (converted to a slug) with the URL section
+      const targetStageItem = WHAT_DESIGN_NAV_ITEMS.find(item => item.title && item.title.toLowerCase().replace(/\s+/g, '-') === section);
+        if (targetStageItem) {
+          // Navigate to that stage using its internal name/key
+          design.navigateToStage(targetStageItem.name, false);
         }
       }
+    } else if (chapter === 'work' && subChapter) {
+      if (subChapter === 'overview') {
+        work.setWorkView('Overview');
+      } else {
+        work.setWorkView('Quiz');
+      }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 
 
   useEffect(() => {

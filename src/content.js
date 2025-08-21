@@ -366,21 +366,21 @@ export const WHY_DESIGN_NAV_ITEMS = [
 ];
 
 export const DESIGN_STAGE_KEYS = {
-  ABOUT_DESIGN: "ABOUT_DESIGN_KEY",
-  WHAT: "WHAT_KEY",
-  PRODUCT_DESIGNER: "PRODUCT_DESIGNER_KEY",
-  UX_RESEARCHER: "UX_RESEARCHER_KEY",
-  UX_DESIGNER: "UX_DESIGNER_KEY",
-  UI_DESIGNER: "UI_DESIGNER_KEY",
+  ABOUT_DESIGN: 'about_design_key',
+  WHAT_I_DO: 'what_i_do_key',
+  PRODUCT_DESIGNER: 'product_designer_key',
+  UX_RESEARCHER: 'ux_researcher_key',
+  UX_DESIGNER: 'ux_designer_key',
+  UI_DESIGNER: 'ui_designer_key',
 };
 
 export const WHAT_DESIGN_NAV_ITEMS = [
-  { name: DESIGN_STAGE_KEYS.ABOUT_DESIGN },
-  { name: DESIGN_STAGE_KEYS.WHAT },
-  { name: DESIGN_STAGE_KEYS.PRODUCT_DESIGNER },
-  { name: DESIGN_STAGE_KEYS.UX_RESEARCHER },
-  { name: DESIGN_STAGE_KEYS.UX_DESIGNER },
-  { name: DESIGN_STAGE_KEYS.UI_DESIGNER },
+  { name: DESIGN_STAGE_KEYS.ABOUT_DESIGN, title: "Why Design" },
+  { name: DESIGN_STAGE_KEYS.WHAT_I_DO, title: "What I Do" },
+  { name: DESIGN_STAGE_KEYS.PRODUCT_DESIGNER, title: "Product Designer" },
+  { name: DESIGN_STAGE_KEYS.UX_RESEARCHER, title: "UX Researcher" },
+  { name: DESIGN_STAGE_KEYS.UX_DESIGNER, title: "UX designer" },
+  { name: DESIGN_STAGE_KEYS.UI_DESIGNER, title: "UI designer" },
 ];
 
 export const DESIGN_CONTENT = {
@@ -452,7 +452,7 @@ export const DESIGN_CONTENT = {
   ]
   */
 },
-  [DESIGN_STAGE_KEYS.WHAT]: {
+  [DESIGN_STAGE_KEYS.WHAT_I_DO]: {
   navText: "What I do",
   steps: [
     {
@@ -494,7 +494,7 @@ export const DESIGN_CONTENT = {
     },
     {
       title: "As a Designer",
-      mainText: "The following roles show how my skills help to create tangible value."
+      mainText: "The following roles show how my skills create tangible value."
     }
 ]
   /*
