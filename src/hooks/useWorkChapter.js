@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback } from 'react';
 import { QUIZZES, PROJECTS } from '../content';
 
-export const useWorkChapter = () => {
+export const useWorkChapter = (currentChapter) => {
   const [workView, setWorkView] = useState('Quiz');
   const [workStepIndex, setWorkStepIndex] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState({});

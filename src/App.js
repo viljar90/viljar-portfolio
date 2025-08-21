@@ -42,7 +42,7 @@ function App() {
 
   const landing = useLandingChapter(currentChapter, navigatedManually);
   const design = useDesignChapter(currentChapter);
-  const work = useWorkChapter();
+  const work = useWorkChapter(currentChapter);
 
   const [mainChapterAnimClass, setMainChapterAnimClass] = useState(`animate-[slideUpIn_${ANIMATION_DURATION_CHAPTER}_ease-out_forwards]`);
   const [designChapterAnimClass, setDesignChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
@@ -53,6 +53,13 @@ function App() {
     const isNight = hour >= 18 || hour < 6;
     setDarkMode(isNight);
     document.documentElement.classList.toggle('dark', isNight);
+  }, []);
+
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && ['main', 'design', 'work'].includes(hash)) {
+      setCurrentChapter(hash);
+    }
   }, []);
 
   useEffect(() => {
@@ -77,7 +84,7 @@ function App() {
 
           if (newChapter && currentChapter !== newChapter) {
             setCurrentChapter(newChapter);
-            // Snap only if it's a new chapter that hasn't been snapped yet
+            window.history.replaceState(null, '', `#${newChapter}`);
             if (newChapter !== snappedChapter) {
               isProgrammaticScrollRef.current = true;
               entry.target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -188,6 +195,7 @@ function App() {
     setTimeout(() => {
       if (targetRef && targetRef.current) {
         targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.location.hash = chapterName;
       }
     }, 50);
     setTimeout(() => {
