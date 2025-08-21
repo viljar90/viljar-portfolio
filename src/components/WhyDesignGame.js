@@ -176,7 +176,7 @@ const WhyDesignGame = ({
           Understanding the common pitfalls is the first step to avoiding them. Good design is about mitigating risk and creating real value.
         </p>
         <div className="flex justify-center gap-4">
-          <SecondaryButton onClick={resetGame}>Play Again</SecondaryButton>
+          <SecondaryButton onClick={resetGame}>Start over</SecondaryButton>
           <PrimaryButton onClick={onSwitchView}>What Design</PrimaryButton>
         </div>
       </div>

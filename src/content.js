@@ -65,7 +65,7 @@ export const WHY_DESIGN_CONTENT = {
 export const WHY_DESIGN_GAME_CONTENT = [
     {
         slug: 'best-buy',
-        caseTitle: "Best Buy - The Expensive Button",
+        caseTitle: "Best Buy: The Expensive Button",
         parts: [
             {
                 type: 'singleChoice',
@@ -93,7 +93,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
     },
     {
         slug: 'helseplattformen',
-        caseTitle: "Helseplattformen - The Rejected System",
+        caseTitle: "Helseplattformen: The Rejected System",
         parts: [
              {
                 type: 'singleChoice',
@@ -121,7 +121,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
     },
     {
         slug: 'citibank',
-        caseTitle: "Citibank - Big Small Mistake",
+        caseTitle: "Citibank: Big Small Mistake",
         parts: [
              {
                 type: 'singleChoice',
