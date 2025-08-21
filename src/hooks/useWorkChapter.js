@@ -1,6 +1,6 @@
 // src/hooks/useWorkChapter.js
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { QUIZZES, PROJECTS } from '../content';
 
 export const useWorkChapter = (currentChapter) => {
@@ -14,6 +14,11 @@ export const useWorkChapter = (currentChapter) => {
   const [previousWorkStepIndex, setPreviousWorkStepIndex] = useState(null);
   const [workAnimationDirection, setWorkAnimationDirection] = useState('next');
 
+  useEffect(() => {
+  if (currentChapter === 'work') {
+    window.history.replaceState(null, '', `#work/${workView.toLowerCase()}`);
+  }
+}, [workView, currentChapter]);
 
   const WORK_NAV_ITEMS = useMemo(() => [
     { name: 'Start' },

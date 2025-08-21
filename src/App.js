@@ -58,7 +58,7 @@ function App() {
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     const [chapter, subChapter] = hash.split('/');
-  
+
     if (chapter && ['main', 'design', 'work'].includes(chapter)) {
       setCurrentChapter(chapter);
       if (chapter === 'design' && subChapter) {
@@ -66,6 +66,12 @@ function App() {
           design.setDesignView(DESIGN_VIEWS.WHAT_DESIGN);
         } else {
           design.setDesignView(DESIGN_VIEWS.WHY_DESIGN);
+        }
+      } else if (chapter === 'work' && subChapter) {
+        if (subChapter === 'overview') {
+          work.setWorkView('Overview');
+        } else {
+          work.setWorkView('Quiz');
         }
       }
     }
@@ -212,6 +218,8 @@ function App() {
         targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         if (chapterName === 'design') {
           window.location.hash = `design/${design.designView === DESIGN_VIEWS.WHAT_DESIGN ? 'what' : 'why'}`;
+        } else if (chapterName === 'work') {
+          window.location.hash = `work/${work.workView.toLowerCase()}`;
         } else {
           window.location.hash = chapterName;
         }
