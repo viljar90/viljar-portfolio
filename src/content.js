@@ -49,7 +49,7 @@ export const WHY_DESIGN_CONTENT = {
   intro: {
     steps: [
       { title: "Why Design", mainText: "Every design choice has a price tag." },
-      { title: "Why Design", mainText: "Great design choices can build fortunes." },
+      { title: "Why Design", mainText: "Great design can build fortunes." },
       { title: "Why Design", mainText: "Bad design can ruin them." },
       { title: "Why Design", mainText: "The line between them is thinner than you think." },
       { title: "Why Design", mainText: "Play to see why design will make or break the bank." }
@@ -417,7 +417,7 @@ export const DESIGN_CONTENT = {
     },
     {
       title: "The Real Cost",
-      mainText: "...and an investment that fails."
+      mainText: "...and an investment that ultimately fails."
     },
     {
       title: "The Value",
