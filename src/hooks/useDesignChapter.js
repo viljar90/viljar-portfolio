@@ -39,6 +39,7 @@ export const useDesignChapter = (currentChapter) => {
   const [whyDesignAnimationPhase, setWhyDesignAnimationPhase] = useState('typing-title');
   const [displayedWhyDesignTitleChars, setDisplayedWhyDesignTitleChars] = useState('');
   const [displayedWhyDesignMainTextChars, setDisplayedWhyDesignMainTextChars] = useState('');
+  const wasWhyDesignIntroIncompleteOnExit = useRef(false);
 
 
   // --- Game States ---
@@ -392,26 +393,36 @@ export const useDesignChapter = (currentChapter) => {
   
   useEffect(() => {
     const justSwitchedToWhatDesign = prevDesignViewRef.current === DESIGN_VIEWS.WHY_DESIGN && designView === DESIGN_VIEWS.WHAT_DESIGN;
-    
+    const justSwitchedToWhyDesign = prevDesignViewRef.current === DESIGN_VIEWS.WHAT_DESIGN && designView === DESIGN_VIEWS.WHY_DESIGN;
+
     if (justSwitchedToWhatDesign) {
       if (!hasVisitedWhatDesign.current) {
-        // First time visiting What Design, start from the absolute beginning.
         resetForStage(WHAT_DESIGN_NAV_ITEMS[0].name, true);
         hasVisitedWhatDesign.current = true;
       } else {
-        // It's a return visit, so restart animation on the current stage.
         resetForStage(activeDesignStageKey, true);
       }
+    } else if (justSwitchedToWhyDesign) {
+      if (wasWhyDesignIntroIncompleteOnExit.current) {
+        replayWhyDesignIntro();
+      }
+    }
+
+    if (designView === DESIGN_VIEWS.WHY_DESIGN) {
+      wasWhyDesignIntroIncompleteOnExit.current = !whyDesignIntroCompleted;
     }
     
     prevDesignViewRef.current = designView;
-  }, [designView, resetForStage, activeDesignStageKey]);
+  }, [designView, resetForStage, activeDesignStageKey, replayWhyDesignIntro, whyDesignIntroCompleted]);
 
   useEffect(() => {
     const isOnWhyDesignView = currentChapter === 'design' && designView === DESIGN_VIEWS.WHY_DESIGN;
     
     if (isOnWhyDesignView) {
-      if (!hasAutoPlayedWhyDesignIntro.current) {
+      if (wasWhyDesignIntroIncompleteOnExit.current) {
+        replayWhyDesignIntro();
+        wasWhyDesignIntroIncompleteOnExit.current = false; 
+      } else if (!hasAutoPlayedWhyDesignIntro.current) {
         setIsPlayingWhyDesignIntro(true);
         hasAutoPlayedWhyDesignIntro.current = true;
       }
@@ -419,6 +430,7 @@ export const useDesignChapter = (currentChapter) => {
       setIsPlayingWhyDesignIntro(false);
       hasAutoPlayedWhyDesignIntro.current = false;
     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChapter, designView]);
 
   useEffect(() => {
@@ -493,6 +505,9 @@ export const useDesignChapter = (currentChapter) => {
     if (currentChapter !== 'design') {
       wasPlayingRef.current = isPlayingDesign;
       setIsPlayingDesign(false);
+      if (designView === DESIGN_VIEWS.WHY_DESIGN) {
+        wasWhyDesignIntroIncompleteOnExit.current = !whyDesignIntroCompleted;
+      }
     } else {
       if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
         if (justEnteredDesign && documentView === 'Slideshow' && !isDesignChapterFinished) {
@@ -505,7 +520,7 @@ export const useDesignChapter = (currentChapter) => {
 
     prevChapterRef.current = currentChapter;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentChapter, designView, documentView, activeDesignStageKey, isDesignChapterFinished, resetForStage]);
+  }, [currentChapter, designView, documentView, activeDesignStageKey, isDesignChapterFinished, resetForStage, whyDesignIntroCompleted]);
 
   useEffect(() => {
     if (currentChapter !== 'design' || !isPlayingDesign || navigationMode !== 'automatic' || designStepAnimationPhase !== 'all-steps-complete' || documentView !== 'Slideshow') {

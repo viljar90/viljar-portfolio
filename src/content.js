@@ -48,11 +48,16 @@ export const DESIGN_VIEWS = {
 export const WHY_DESIGN_CONTENT = {
   intro: {
     steps: [
-      { title: "Why Design", mainText: "Money is not talked about enough in design." },
-      { title: "Why Design", mainText: "Probably because quantifying it is difficult, as design involves many intangible factors." },
-      { title: "Why Design", mainText: "The whole is greater than the sum of its parts." },
-      { title: "Why Design", mainText: "But bad parts can destroy the whole." },
-      { title: "Why Design", mainText: "Play the game to see why design can make or break the bank." },
+      { title: "Why Design", mainText: "Every design choice has a price tag." },
+      { title: "Why Design", mainText: "Great design choices can build fortunes." },
+      { title: "Why Design", mainText: "Bad design can ruin them." },
+      { title: "Why Design", mainText: "The line between them is thinner than you think." },
+      { title: "Why Design", mainText: "Play to see why design will make or break the bank." }
+      //{ title: "Why Design", mainText: "Money is not talked about enough in design." },
+      //{ title: "Why Design", mainText: "Probably because quantifying it is difficult, as design involves many intangible factors." },
+      //{ title: "Why Design", mainText: "The whole is greater than the sum of its parts." },
+      //{ title: "Why Design", mainText: "But bad parts can destroy the whole." },
+      //{ title: "Why Design", mainText: "Play the game to see why design can make or break the bank." },
     ]
   }
 };
@@ -380,50 +385,174 @@ export const WHAT_DESIGN_NAV_ITEMS = [
 
 export const DESIGN_CONTENT = {
   [DESIGN_STAGE_KEYS.ABOUT_DESIGN]: {
-    navText: "What Design",
-    steps: [
-      { title: "What is design", mainText: "Most people don't understand design.", pause: 3000 },
-      { title: "What is design", mainText: "Lets look at some classic mistakes." },
-      { title: "Mistake 1", mainText: "Those who don't know design think it is all about what something looks like." },
-      { title: "Mistake 2", mainText: "So some decision makers think they can skip it to cut cost." },
-      { title: "Mistake 3", mainText: "Or far too often, designers are brought on way too late just to fix the visuals..." },
-      { title: "Mistake 3", mainText: "...too late to let design be the critical driver as it always should be." },
-      { title: "Back to No. 1", mainText: "Making a nice looking design is just one small part of what designers actually do." },
-      { title: "Back to No. 1", mainText: "And we don't do it for the reason you think." },
-      { title: "You probably know", mainText: "People often perceive attractive people to be more intelligent, more successful and more trustworthy." },
-      { title: "Bias", mainText: "This human bias is called the attractiveness halo." },
-      { title: "Bias Leverage", mainText: "The aesthetic-usability effect is a very similar human bias designers leverage." },
-      { title: "Bias Leverage", mainText: "When comparing two products with identical functionality the more visually appealing UI is... ", pause: 3000 },
-      { title: "Bias Leverage", mainText: "...perceived to be more useful, effective and simple to use.", pause: 2000 },
-      { title: "Bias Leverage", mainText: "Even when the ugly UI has better functionality, the pretty can come out on top." },
-      { title: "Not form over function", mainText: "As with everything designers do, form serves function." },
-      { title: "Form serves function", mainText: "It is thousends of big and small intentional decisions that make a product or service great.  " },
-      { title: "Invest in design", mainText: "Developing a product or service is expensive..." },
-      { title: "Invest in design", mainText: "...but not having someone design your product or service is even more expensive." },
-      { title: "Mistake 4", mainText: "You risk your whole investment by developing..." },
-      { title: "Mistake 4", mainText: "something nobody needs..." },
-      { title: "Mistake 4", mainText: "nobody wants..." },
-      { title: "Mistake 4", mainText: "nobody will use..." },
-      { title: "Mistake 4", mainText: "and something that probably should be made all over again." },
-    ]
-  },
+  navText: "What Design",
+  steps: [
+    {
+      title: "What is Design",
+      mainText: "A beautiful interface is often mistaken as the goal of design."
+    },
+    {
+      title: "What is Design",
+      mainText: "It's simply the strategic result of a problem solved correctly."
+    },
+    {
+      title: "The Winning Combination",
+      mainText: "Solving real customer needs in an aesthetic and functional form isn't just a goal..."
+    },
+    {
+      title: "The Winning Combination",
+      mainText: "...it's the winning strategy of every market leader."
+    },
+    {
+      title: "The Real Cost",
+      mainText: "Ignoring design is the most expensive mistake you can make."
+    },
+    {
+      title: "The Real Cost",
+      mainText: "It’s how you build a product nobody wants..."
+    },
+    {
+      title: "The Real Cost",
+      mainText: "a service nobody uses..."
+    },
+    {
+      title: "The Real Cost",
+      mainText: "...and an investment that fails."
+    },
+    {
+      title: "The Value",
+      mainText: "Good design isn't just another cost. It's your core competitive advantage."
+    }
+  ],
+  /*
+  steps: [
+    { title: "What is design", mainText: "Most people don't understand design.", pause: 3000 },
+    { title: "What is design", mainText: "Lets look at some classic mistakes." },
+    { title: "Mistake 1", mainText: "Those who don't know design think it is all about what something looks like." },
+    { title: "Mistake 2", mainText: "So some decision makers think they can skip it to cut cost." },
+    { title: "Mistake 3", mainText: "Or far too often, designers are brought on way too late just to fix the visuals..." },
+    { title: "Mistake 3", mainText: "...too late to let design be the critical driver as it always should be." },
+    { title: "Back to No. 1", mainText: "Making a nice looking design is just one small part of what designers actually do." },
+    { title: "Back to No. 1", mainText: "And we don't do it for the reason you think." },
+    { title: "You probably know", mainText: "People often perceive attractive people to be more intelligent, more successful and more trustworthy." },
+    { title: "Bias", mainText: "This human bias is called the attractiveness halo." },
+    { title: "Bias Leverage", mainText: "The aesthetic-usability effect is a very similar human bias designers leverage." },
+    { title: "Bias Leverage", mainText: "When comparing two products with identical functionality the more visually appealing UI is... ", pause: 3000 },
+    { title: "Bias Leverage", mainText: "...perceived to be more useful, effective and simple to use.", pause: 2000 },
+    { title: "Bias Leverage", mainText: "Even when the ugly UI has better functionality, the pretty can come out on top." },
+    { title: "Not form over function", mainText: "As with everything designers do, form serves function." },
+    { title: "Form serves function", mainText: "It is thousends of big and small intentional decisions that make a product or service great.  " },
+    { title: "Invest in design", mainText: "Developing a product or service is expensive..." },
+    { title: "Invest in design", mainText: "...but not having someone design your product or service is even more expensive." },
+    { title: "Mistake 4", mainText: "You risk your whole investment by developing..." },
+    { title: "Mistake 4", mainText: "something nobody needs..." },
+    { title: "Mistake 4", mainText: "nobody wants..." },
+    { title: "Mistake 4", mainText: "nobody will use..." },
+    { title: "Mistake 4", mainText: "and something that probably should be made all over again." },
+  ]
+  */
+},
   [DESIGN_STAGE_KEYS.WHAT]: {
-    navText: "What I do",
-    steps: [
-      { title: "What I do", mainText: "Developers create logical and rational systems in computers." },
-      { title: "What I do", mainText: "As a designer I create logical and rational systems in human minds." },
-      { title: "What I do", mainText: "Human minds are far more complex than computers." },
-      { title: "What I do", mainText: "But unlike computers, minds get bored and easily frustrated..."},
-      { title: "What I do", mainText: "...they reject needless complexity." },
-      { title: "What I do", mainText: "The most important skill of a designer is to distill complexity..." },
-      { title: "What I do", mainText: "...into something that is useful, intuitive and deceptively simple." },
-      { title: "What I do", mainText: "Explore the design roles where i demonstrate this skill..." },
-      { title: "What I do", mainText: "...by making complicated things seem simple." },
-      //{ title: "What I do", mainText: "Understand what I do in an engaging and simple to follow way." }
-    ]
-  },
+  navText: "What I do",
+  steps: [
+    {
+      title: "What I do",
+      mainText: "Developers build logical systems for computers."
+    },
+    {
+      title: "What I do",
+      mainText: "As a designer, I build intuitive solutions for human minds."
+    },
+    {
+      title: "The Challenge",
+      mainText: "Minds are infinitely more complex than computers..."
+    },
+    {
+      title: "The Challenge",
+      mainText: "But unlike computers, minds get distracted, bored and tired."
+    },
+    {
+      title: "The Challenge",
+      mainText: "It’s a survival machine, not a fan club."
+    },
+    {
+      title: "The Challenge",
+      mainText: "It's hardwired to focus on flaws, not what works well."
+    },
+    {
+      title: "The fuel",
+      // Your excellent, concise, and powerful line.
+      mainText: "For me, that's not frustration — it's motivation."
+    },
+    {
+      title: "As a Designer",
+      mainText: "My work honors that instinct, distilling messy real-world complexity..."
+    },
+    {
+      title: "As a Designer",
+      mainText: "...into an experience that feels effortless."
+    },
+    {
+      title: "As a Designer",
+      mainText: "The following roles show how my skills help to create tangible value."
+    }
+]
+  /*
+  steps: [
+    { title: "What I do", mainText: "Developers create logical and rational systems in computers." },
+    { title: "What I do", mainText: "As a designer I create logical and rational systems in human minds." },
+    { title: "What I do", mainText: "Human minds are far more complex than computers." },
+    { title: "What I do", mainText: "But unlike computers, minds get bored and easily frustrated..."},
+    { title: "What I do", mainText: "...they reject needless complexity." },
+    { title: "What I do", mainText: "The most important skill of a designer is to distill complexity..." },
+    { title: "What I do", mainText: "...into something that is useful, intuitive and deceptively simple." },
+    { title: "What I do", mainText: "Explore the design roles where i demonstrate this skill..." },
+    { title: "What I do", mainText: "...by making complicated things seem simple." },
+    //{ title: "What I do", mainText: "Understand what I do in an engaging and simple to follow way." }
+  ]
+  */
+},
   [DESIGN_STAGE_KEYS.PRODUCT_DESIGNER]: {
     navText: "Product Designer",
+    steps: [
+      {
+        title: "Product Designer",
+        mainText: "Think of me as the architect of the product's strategic and creative vision."
+      },
+      {
+        title: "Product Designer",
+        mainText: "Before a single blueprint is drawn, my work is to answer the fundamental question..."
+      },
+      {
+        title: "Product Designer",
+        mainText: "What is the right thing to build, and why?"
+      },
+      {
+        title: "Product Designer",
+        mainText: "The right answer must always satisfy three truths."
+      },
+      {
+        title: "Product Designer",
+        mainText: "It must be desirable for the customer..."
+      },
+      {
+        title: "Product Designer",
+        mainText: "valuable for the business..."
+      },
+      {
+        title: "Product Designer",
+        mainText: "and technologically feasible."
+      },
+      {
+        title: "Product Designer",
+        mainText: "Within a product trio I collaborate with product manager, and senior tech advisor to find the balance."
+      },
+      {
+        title: "Product Designer",
+        mainText: "This way ensure the right product gets built from day one with a solid foundation."
+      }
+    ],
+    /*
     steps: [
       { title: "Product Designer", mainText: "is kind of like the the visionary architect of a product." },
       { title: "Product Designer", mainText: "Imagine a company has a prime plot of land and a new business opportunity or challange." },
@@ -441,32 +570,151 @@ export const DESIGN_CONTENT = {
       { title: "Product Designer", mainText: "Their visionary plan is born from balancing these competing, critical forces." },
       { title: "Product Designer", mainText: "Ensuring the right building, for the right purpose, for the right people gets built." },
     ]
+    */
   },
   
   [DESIGN_STAGE_KEYS.UX_RESEARCHER]: {
     navText: "UX Researcher",
     steps: [
+      {
+        title: "UX Researcher",
+        mainText: "Think of my role as an investigator."
+      },
+      {
+        title: "UX Researcher",
+        mainText: "But my job isn't to solve a crime — it's to prevent one. "
+      },
+      {
+        title: "UX Researcher",
+        mainText: "The crime? A failed product built on faulty assumptions."
+      },
+      {
+        title: "UX Researcher",
+        mainText: "My investigation starts by interviewing your real customers..."
+      },
+      {
+        title: "UX Researcher",
+        mainText: "...to uncover their unspoken needs and hidden frustrations."
+      },
+      {
+        title: "UX Researcher",
+        mainText: "These insights become testable hypotheses, validated by real-world experiments."
+      },
+      {
+        title: "UX Researcher",
+        mainText: "This process replaces costly assumptions with the evidence needed to build with confidence."
+      }
+    ],
+    /*
+    steps: [
       { title: "The UX Researcher", mainText: "Before drawing a single line, we need to know: Is there a market for this building?" },
       { title: "The UX Researcher", mainText: "The Commercial Market Researcher answers this crucial question." },
       { title: "The UX Researcher", mainText: "Their data on potential tenants and their critical needs makes my design commercially sound." },
     ]
+    */
   },
   [DESIGN_STAGE_KEYS.UX_DESIGNER]: {
     navText: "UX Designer",
+    steps: [
+      {
+        title: "UX Designer",
+        mainText: "If the Product Designer is the architect of the strategic vision..."
+      },
+      {
+        title: "UX Designer",
+        mainText: "...then the UX Designer is the architect who creates the actual blueprints."
+      },
+      {
+        title: "UX Designer",
+        mainText: "I focus on the user's journey throughout the product..."
+      },
+      {
+        title: "UX Designer",
+        mainText: "...ensuring every step is tailored to achieve specific needs and goals."
+      },
+      {
+        title: "UX Designer",
+        mainText: "This involves a relentless cycle of research, ideas, sketching, prototyping and testing..."
+      },
+      {
+        title: "UX Designer",
+        mainText: "...until every flaw is eliminated and only a deceptively simple workflow remains."
+      },
+      {
+        title: "UX Designer",
+        mainText: "The result is a product blueprint that doesn't just work..."
+      },
+      {
+        title: "UX Designer",
+        mainText: "...but feels effortless to use. No manual needed."
+      }
+    ],
+    /*
     steps: [
       { title: "The UX Designer", mainText: "With my UX Designer hat on, I architect the building's internal logic and flow." },
       { title: "The UX Designer", mainText: "I become the Process Engineer, designing the most logical pathways for people to accomplish their goals." },
       { title: "The UX Designer", mainText: "My focus is on making the space functional and effortless to navigate." },
     ]
+    */
   },
+
   [DESIGN_STAGE_KEYS.UI_DESIGNER]: {
     navText: "UI Designer",
     steps: [
-      { title: "The UI Designer", mainText: "My work as a UI Designer makes the resulting space intuitive and understandable." },
-      { title: "The UI Designer", mainText: "I am the Interior and Signage Designer, responsible for the look, feel, and clarity of the space." },
-      { title: "The UI Designer", mainText: "I ensure that all controls and interactive elements are clear, accessible, and simple to use." },
+      {
+        title: "UI Designer",
+        mainText: "While the UX Designer draws the structural blueprints, the UI Designer constructs the final build."
+      },
+      {
+        title: "UI Designer",
+        mainText: "My role is to translate the system's logic into a visual language the user already speaks."
+      },
+      {
+        title: "UI Designer",
+        mainText: "By grounding this language in your brand, the entire experience feels cohesive and trustworthy."
+      },
+      {
+        title: "UI Designer",
+        mainText: "Every color, font, state and icon is a deliberate choice, scrutinized to communicate function instantly."
+      },
+      {
+        title: "UI Designer",
+        mainText: "My work ensures the user doesn't just see the interface, they feel like they already know it."
+      },
+      {
+        title: "UI Designer",
+        mainText: "The result is a polished, professional product that builds trust and is a pleasure to use."
+      }
+    ],
+    /*
+    steps: [
+      {
+        title: "UI Designer",
+        mainText: "With the blueprint for the experience complete, my role as the UI Designer is to bring it to life."
+      },
+      {
+        title: "UI Designer",
+        mainText: "I am the architect of the product's look, feel, and final finish."
+      },
+      {
+        title: "UI Designer",
+        mainText: "My work is to craft the visual language that communicates the underlying logic."
+      },
+      {
+        title: "UI Designer",
+        mainText: "Every color, font, icon, and interaction is a deliberate choice..."
+      },
+      {
+        title: "UI Designer",
+        mainText: "...designed to make the intuitive workflow feel obvious."
+      },
+      {
+        title: "UI Designer",
+        mainText: "The result is a polished, professional interface that builds trust, creates delight, and feels cohesive."
+      }
     ]
-  },
+    */
+  }
 };
 
 export const QUIZZES = [
