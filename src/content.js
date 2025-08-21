@@ -81,7 +81,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
             {
                 type: 'selectAll',
                 context: "Simply adding a 'Continue As Guest' button led to a 45% increase in purchasing customers for Best Buy.",
-                question: "Guess which design lessons the original design ignored?",
+                question: "Guess which design lessons the original design ignore?",
                 options: [
                     { text: "User Control and Freedom", isCorrect: true, rationale: "The design removed the user's freedom to simply purchase an item, offering no easy 'emergency exit.' Good design empowers users, it doesn't trap them." },
                     { text: "Visibility of System Status", isCorrect: false, rationale: "While important, this wasn't the primary failure. The system was clear about what it wanted (registration); the problem was that the requirement itself was flawed." },
