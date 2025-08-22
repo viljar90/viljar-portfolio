@@ -876,3 +876,14 @@ export const PROJECTS = [
     icon: <VideoEditorIcon />,
   },
 ];
+
+export const ME_CONTENT = {
+  title: "About Me",
+  paragraphs: [
+    "Hello! I'm Viljar, a designer and problem-solver with a passion for creating intuitive digital experiences. My journey into design started with a simple observation: technology is often frustrating, and it doesn't have to be.",
+    "I thrive on untangling complex challenges and turning them into simple, elegant solutions that bridge the gap between human needs and business goals.",
+    "When I'm not designing, you can find me exploring the outdoors, diving into a good sci-fi novel, or experimenting with new recipes in the kitchen. I believe that creativity is a muscle that needs to be exercised in all areas of life.",
+    "Feel free to reach out if you'd like to chat about design, technology, or the best hiking trails in Norway!"
+  ],
+  imageUrl: "https://via.placeholder.com/150" // This is a placeholder image
+};

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import LandingChapter from './LandingChapter';
 import DesignChapter from './DesignChapter';
 import WorkChapter from './WorkChapter';
+import MeChapter from './MeChapter'; // 1. IMPORT THE NEW COMPONENT
 import QuizIntro from './QuizIntro';
 import QuizResults from './QuizResults';
 import ProjectOverview from './ProjectOverview';
@@ -18,6 +19,7 @@ const ChapterContent = ({
   landing,
   design,
   work,
+  me, // Add 'me' here
   navigateToChapter,
   currentDesignStepData,
   showCursorInsults,
@@ -27,6 +29,7 @@ const ChapterContent = ({
   showCursorHomeQuestion,
   showCursorDesignTitle,
   showCursorDesignMainText,
+  onWorkViewChange, // Added this prop to be complete
 }) => {
   const isLastStep = work.workStepIndex === QUIZZES.length + 1;
 
@@ -148,6 +151,11 @@ const ChapterContent = ({
             <div className="absolute top-0 bottom-0 right-0 w-16 md:w-24 bg-gradient-to-l from-bg-base to-transparent pointer-events-none hidden md:block" />
           </div>
         ))}
+        
+      {/* 2. RENDER THE NEW COMPONENT */}
+      {currentChapter === 'me' && (
+        <MeChapter darkMode={darkMode} me={me} />
+      )}
     </div>
   );
 };
@@ -158,6 +166,7 @@ ChapterContent.propTypes = {
     landing: PropTypes.object.isRequired,
     design: PropTypes.object.isRequired,
     work: PropTypes.object.isRequired,
+    me: PropTypes.object, // 3. ADD 'me' TO PROP TYPES
     navigateToChapter: PropTypes.func.isRequired,
     currentDesignStepData: PropTypes.object,
     showCursorInsults: PropTypes.bool.isRequired,
@@ -167,6 +176,7 @@ ChapterContent.propTypes = {
     showCursorHomeQuestion: PropTypes.bool.isRequired,
     showCursorDesignTitle: PropTypes.bool.isRequired,
     showCursorDesignMainText: PropTypes.bool.isRequired,
+    onWorkViewChange: PropTypes.func,
 };
 
 export default ChapterContent;

@@ -26,16 +26,14 @@ const LandingChapter = ({
     const genMainTextStyle = "text-4xl md:text-5xl lg:text-6xl font-semibold text-center min-h-[1.5em]";
     const genNameTextStyle = `font-semibold text-4xl md:text-5xl lg:text-6xl text-primary dark:text-secondary pt-2 min-h-[3.5rem] md:min-h-[4.5rem] lg:min-h-[5.5rem]`;
     const genTitleSubTextStyle = `font-semibold text-2xl md:text-3xl lg:text-4xl text-text-base min-h-[1.5em]`;
-    const SLIDE_DURATION = 300; // This is needed for the animation class
+    const SLIDE_DURATION = 300;
 
     if (activeMainStep === MAIN_STAGES.INSULTS) {
         return <p className={`${genMainTextStyle} text-text-base`}>{displayedChars}{showCursorInsults && <BlinkingCursor sizeClass="h-8 md:h-10 lg:h-12" />}</p>;
     }
     if (activeMainStep === MAIN_STAGES.INTRO) {
-        // FIX: This guard condition prevents the flash of old content during the transition.
         const isIntroPhase = ['intro-greeting', 'typing-title', 'typing-maintext', 'pausing', 'backspacing-title', 'intro-done'].includes(mainAnimationPhase);
         if (!isIntroPhase) {
-            // Render a placeholder that matches the layout to prevent content shifting
             return (
                 <div className="text-center">
                     <p className={genNameTextStyle}>&nbsp;</p>
@@ -105,7 +103,7 @@ const LandingChapter = ({
                                     onClick={() => {
                                         if (btnText === "Design") onNavigateToChapter('design');
                                         else if (btnText === "My Work") onNavigateToChapter('work');
-                                        else console.log(`${btnText} clicked!`);
+                                        else if (btnText === "Me") onNavigateToChapter('me'); // This is the change
                                     }}
                                 >
                                     {btnText}

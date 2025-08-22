@@ -10,9 +10,11 @@ const ChapterManager = ({
   mainChapterRef,
   designChapterRef,
   workChapterRef,
+  meChapterRef, // Added
   mainChapterAnimClass,
   designChapterAnimClass,
   workChapterAnimClass,
+  meChapterAnimClass, // Added
   currentChapter,
   showPrevArrow,
   showNextArrow,
@@ -22,6 +24,7 @@ const ChapterManager = ({
   landing,
   design,
   work,
+  me, // Added
   navigateToChapter,
   currentDesignStepData,
   showCursorInsults,
@@ -105,6 +108,21 @@ const ChapterManager = ({
           />
         )}
       </Chapter>
+      {/* --- This is the new section --- */}
+      <Chapter ref={meChapterRef} className={meChapterAnimClass}>
+        {currentChapter === 'me' && (
+          <ChapterContent
+            currentChapter="me"
+            darkMode={darkMode}
+            landing={landing}
+            design={design}
+            work={work}
+            me={me}
+            navigateToChapter={navigateToChapter}
+          />
+        )}
+      </Chapter>
+      {/* --- End of new section --- */}
     </div>
   );
 };
