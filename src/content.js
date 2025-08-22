@@ -407,6 +407,10 @@ export const DESIGN_CONTENT = {
       mainText: "It's simply the strategic result of a problem solved correctly."
     },
     {
+      title: "What is Design",
+      mainText: "Design is about making solutions fit humans, not trying to make humans fit solutions."
+    },
+    {
       title: "The Winning Combination",
       mainText: "Solving real customer needs in an aesthetic and functional form isn't just a goal..."
     },
@@ -416,7 +420,7 @@ export const DESIGN_CONTENT = {
     },
     {
       title: "The Real Cost",
-      mainText: "Ignoring design is the most expensive mistake you can make."
+      mainText: "Ignoring design is an expensive mistake to make..."
     },
     {
       title: "The Real Cost",
@@ -432,7 +436,7 @@ export const DESIGN_CONTENT = {
     },
     {
       title: "The Value",
-      mainText: "Good design isn't just another cost. It's your core competitive advantage."
+      mainText: "Good design isn't just another cost. It's the insurance policy for your investment."
     }
   ],
   /*
@@ -731,6 +735,7 @@ export const DESIGN_CONTENT = {
 export const QUIZZES = [
   {
     id: 'aiPlatform',
+    slug: 'question-1',
     title: 'AI Platform',
     question: "Your large Norwegian company wants to leverage GenAI but is unsure where to start in a rapidly evolving market.\nWhat is the best approach maintain flexibility and secure company data?",
     options: [
@@ -750,6 +755,7 @@ export const QUIZZES = [
   },
   {
     id: 'designSystem',
+    slug: 'question-2',
     title: 'Design System',
     question: "Your product teams are struggling with inefficient frontend development and a misaligned product portfolio.\nWhat's the most effective first step to solve this?",
     options: [
@@ -769,6 +775,7 @@ export const QUIZZES = [
   },
   {
     id: 'dataCatalogue',
+    slug: 'question-3',
     title: 'Data Catalogue',
     question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented – working data-driven is diffucult.\nHow do you empower your employees to discover and trust your data?",
     options: [
@@ -787,6 +794,7 @@ export const QUIZZES = [
   },
   {
     id: 'aiDashboard',
+    slug: 'question-4',
     title: 'AI Dashboard',
     question: "Your product teams are unsure which services to improve digitally in a huge organization with vast amounts of data.\nHow can they best prioritize what digital service to focus on next?",
     options: [
@@ -805,6 +813,7 @@ export const QUIZZES = [
   },
   {
     id: 'aiVideoProduction',
+    slug: 'question-5',
     title: 'AI Video Production',
     question: "Your company delivers digital products towards large tv broadcasters.\nHow do you leverage AI to get an advantage towards your client base?",
     options: [

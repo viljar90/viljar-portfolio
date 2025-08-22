@@ -54,7 +54,7 @@ function App() {
     setDarkMode(isNight);
     document.documentElement.classList.toggle('dark', isNight);
   }, []);
-  
+
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     const parts = hash.split('/');
@@ -74,7 +74,7 @@ function App() {
           }
         } else if (subChapter === 'why') {
           design.setDesignView(DESIGN_VIEWS.WHY_DESIGN);
-          
+
           if (section === 'score') {
             design.setGameStatus('end');
           } else if (section === 'bonus') {
@@ -88,11 +88,23 @@ function App() {
             design.returnToIntro();
           }
         }
-      } else if (chapter === 'work' && subChapter) {
+      } else if (chapter === 'work') {
         if (subChapter === 'overview') {
-          work.setWorkView('Overview');
-        } else {
-          work.setWorkView('Quiz');
+            work.setWorkView('Overview');
+        } else { // Handles 'quiz' and defaults to quiz
+            work.setWorkView('Quiz');
+            if (section) {
+                if (section === 'start') {
+                    work.setWorkStepIndex(0);
+                } else if (section === 'results') {
+                    work.setWorkStepIndex(QUIZZES.length + 1);
+                } else {
+                    const quizIndex = QUIZZES.findIndex(q => q.slug === section);
+                    if (quizIndex !== -1) {
+                        work.setWorkStepIndex(quizIndex + 1);
+                    }
+                }
+            }
         }
       }
     }
@@ -123,8 +135,11 @@ function App() {
           if (newChapter && currentChapter !== newChapter) {
             setCurrentChapter(newChapter);
             if (newChapter !== 'design') {
-              const url = newChapter === 'work' ? `#work/${work.workView.toLowerCase()}` : `#${newChapter}`;
-              window.history.replaceState(null, '', url);
+              if (newChapter === 'work') {
+                // This is now handled by the useWorkChapter hook, so we don't need to set the URL here.
+              } else {
+                window.history.replaceState(null, '', `#${newChapter}`);
+              }
             }
             if (newChapter !== snappedChapter) {
               isProgrammaticScrollRef.current = true;
@@ -150,7 +165,7 @@ function App() {
       if (designRefCurrent) observer.unobserve(designRefCurrent);
       if (workRefCurrent) observer.unobserve(workRefCurrent);
     };
-  }, [currentChapter, snappedChapter, design, work.workView]);
+  }, [currentChapter, snappedChapter, design]);
 
   useEffect(() => {
     let items;
@@ -236,9 +251,8 @@ function App() {
     setTimeout(() => {
       if (targetRef && targetRef.current) {
         targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        if (chapterName !== 'design') {
-           const url = chapterName === 'work' ? `#work/${work.workView.toLowerCase()}` : `#${chapterName}`;
-           window.location.hash = url;
+        if (chapterName !== 'design' && chapterName !== 'work') {
+           window.location.hash = chapterName;
         }
       }
     }, 50);
@@ -317,7 +331,7 @@ function App() {
   const handleWorkStepperItemClick = (index) => {
     work.handleWorkNavItemClick(index);
   };
-  
+
   const handleNavItemClick = (itemId) => {
     if (currentChapter === 'main') {
         handleMainStepperItemClick(itemId);
@@ -348,7 +362,7 @@ function App() {
         work.handleProjectNavItemClick(itemId);
     }
   };
-  
+
   const handleMainStepperItemClick = useCallback((itemName) => {
     if (currentChapter !== 'main') return;
     navigatedManually.current = false;
@@ -368,7 +382,7 @@ function App() {
     design.navigateToStage(stageKey);
   }, [currentChapter, design]);
 
-  
+
   const toggleDarkMode = () => {
     setIsThemeToggleClicked(true);
     setDarkMode(prevMode => {
@@ -382,7 +396,7 @@ function App() {
   const handleWorkViewChange = (newView) => {
     work.setWorkView(newView);
   };
-  
+
   const isFirstDesignStage = design.activeDesignStageKey === WHAT_DESIGN_NAV_ITEMS[0].name;
   const isLastDesignStage = design.activeDesignStageKey === WHAT_DESIGN_NAV_ITEMS[WHAT_DESIGN_NAV_ITEMS.length - 1].name;
 
@@ -394,7 +408,7 @@ function App() {
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document' && !isFirstDesignStage) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) ||
     (currentChapter === 'work' && work.workView === 'Overview');
-    
+
 
   const currentPlayPauseButtonState = useMemo(() => {
     if (currentChapter === 'main') return landing.isPlaying;
@@ -441,7 +455,7 @@ function App() {
   const showCursorIntroName = currentChapter === 'main' && landing.isPlaying && (landing.mainAnimationPhase === 'typing-title' || landing.mainAnimationPhase === 'backspacing-title');
   const showCursorIntroTitle = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'typing-maintext';
   const showCursorHomeQuestion = currentChapter === 'main' && landing.isPlaying && landing.mainAnimationPhase === 'typing-home-question';
-  
+
   const currentDesignStepData = DESIGN_CONTENT[design.activeDesignStageKey]?.steps[design.currentDesignStepIndex];
   const showCursorDesignTitle = currentChapter === 'design' && design.isPlayingDesign && (design.designStepAnimationPhase === 'typing-title' || design.designStepAnimationPhase === 'backspacing-title');
   const showCursorDesignMainText = currentChapter === 'design' && design.isPlayingDesign && design.stepAnimationPhase === 'typing-maintext';
@@ -454,7 +468,7 @@ function App() {
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document' && !isLastDesignStage) ||
     (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex < work.WORK_NAV_ITEMS.length - 1) ||
     (currentChapter === 'work' && work.workView === 'Overview');
-    
+
   const handleCentralButtonClick = () => {
     if (currentChapter === 'work') {
       work.handleWorkChapterCentralButtonClick();
@@ -547,7 +561,7 @@ function App() {
             />
           ))}
         </div>
-        
+
         <ErrorBoundary>
           <ChapterManager
             mainChapterRef={mainChapterRef}

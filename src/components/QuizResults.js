@@ -82,15 +82,15 @@ const QuizResults = ({ quizAnswers, onReset, onSwitchView }) => {
         <StatBox title="">
           <div className="w-full text-xl md:text-2xl lg:text-3xl">
             <div className="flex justify-between">
-              <span className="font-semibold text-text-muted">Correct</span>
+              <span className="font-semibold text-text-muted">Hits</span>
               <span className="font-bold text-green-500">{correctAnswers}</span>
             </div>
             <div className="flex justify-between my-2">
-              <span className="font-semibold text-text-muted">Misclicks</span>
+              <span className="font-semibold text-text-muted">Misses</span>
               <span className="font-bold text-error">{wrongAttempts}</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-semibold text-text-muted">Skipped</span>
+              <span className="font-semibold text-text-muted">Skips</span>
               <span className="font-bold text-text-muted">{skippedQuestions}</span>
             </div>
           </div>
@@ -111,15 +111,15 @@ const QuizResults = ({ quizAnswers, onReset, onSwitchView }) => {
           <hr className="border-gray-200 dark:border-gray-700 my-4" />
           <div className="text-lg">
             <div className="flex justify-between">
-              <span className="font-semibold text-text-muted">Correct</span>
+              <span className="font-semibold text-text-muted">Hits</span>
               <span className="font-bold text-green-500">{correctAnswers}</span>
             </div>
             <div className="flex justify-between my-2">
-              <span className="font-semibold text-text-muted">Misclicks</span>
+              <span className="font-semibold text-text-muted">Misses</span>
               <span className="font-bold text-error">{wrongAttempts}</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-semibold text-text-muted">Skipped</span>
+              <span className="font-semibold text-text-muted">Skips</span>
               <span className="font-bold text-text-muted">{skippedQuestions}</span>
             </div>
           </div>

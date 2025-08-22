@@ -15,10 +15,23 @@ export const useWorkChapter = (currentChapter) => {
   const [workAnimationDirection, setWorkAnimationDirection] = useState('next');
 
   useEffect(() => {
-  if (currentChapter === 'work') {
-    window.history.replaceState(null, '', `#work/${workView.toLowerCase()}`);
-  }
-}, [workView, currentChapter]);
+    if (currentChapter === 'work') {
+      let url = `#work/${workView.toLowerCase()}`;
+      if (workView === 'Quiz') {
+        let quizSlug = 'start'; // Default for the intro screen (index 0)
+        if (workStepIndex > 0 && workStepIndex <= QUIZZES.length) {
+          // This is a question
+          quizSlug = QUIZZES[workStepIndex - 1]?.slug || `question-${workStepIndex}`;
+        } else if (workStepIndex > QUIZZES.length) {
+          // This is the results page
+          quizSlug = 'results';
+        }
+        url += `/${quizSlug}`;
+      }
+      window.history.replaceState(null, '', url);
+    }
+  }, [workView, workStepIndex, currentChapter]);
+
 
   const WORK_NAV_ITEMS = useMemo(() => [
     { name: 'Start' },
@@ -38,7 +51,7 @@ export const useWorkChapter = (currentChapter) => {
   const handleQuizAnswer = (quizId, option) => {
     setQuizAnswers(prev => {
       const existingAnswer = prev[quizId] || { attempts: 0 };
-      
+
       if (existingAnswer.correct) {
         return prev;
       }
@@ -165,6 +178,6 @@ export const useWorkChapter = (currentChapter) => {
     handleNextQuestion,
     handlePrevQuestion,
     handleWorkNavItemClick,
-    handleWorkChapterCentralButtonClick, // Export the new handler
+    handleWorkChapterCentralButtonClick,
   };
 };
