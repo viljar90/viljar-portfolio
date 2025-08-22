@@ -64,7 +64,12 @@ function App() {
     if (chapter && ['main', 'design', 'work'].includes(chapter)) {
       setCurrentChapter(chapter);
 
-      if (chapter === 'design') {
+      if (chapter === 'main') {
+        const mainNavItem = MAIN_NAV_ITEMS.find(item => item.slug === subChapter);
+        if (mainNavItem) {
+          landing.setActiveMainStep(mainNavItem.name);
+        }
+      } else if (chapter === 'design') {
         if (subChapter === 'what') {
           design.setDesignView(DESIGN_VIEWS.WHAT_DESIGN);
           if (section) {
@@ -141,7 +146,7 @@ function App() {
 
           if (newChapter && currentChapter !== newChapter) {
             setCurrentChapter(newChapter);
-            if (newChapter !== 'design' && newChapter !== 'work') {
+            if (newChapter !== 'design' && newChapter !== 'work' && newChapter !== 'main') {
               window.history.replaceState(null, '', `#${newChapter}`);
             }
             if (newChapter !== snappedChapter) {
@@ -254,7 +259,7 @@ function App() {
     setTimeout(() => {
       if (targetRef && targetRef.current) {
         targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        if (chapterName !== 'design' && chapterName !== 'work') {
+        if (chapterName !== 'design' && chapterName !== 'work' && chapterName !== 'main') {
            window.location.hash = chapterName;
         }
       }

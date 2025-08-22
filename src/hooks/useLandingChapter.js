@@ -24,6 +24,15 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
   const [isLandingChapterFinished, setIsLandingChapterFinished] = useState(false);
   const wasPlayingRef = useRef(true);
 
+  useEffect(() => {
+    if (currentChapter === 'main') {
+      const navItem = MAIN_NAV_ITEMS.find(item => item.name === activeMainStep);
+      if (navItem && navItem.slug) {
+        window.history.replaceState(null, '', `#main/${navItem.slug}`);
+      }
+    }
+  }, [activeMainStep, currentChapter]);
+
   const togglePlayPause = useCallback(() => {
     setIsPlaying(p => !p);
   }, []);
@@ -118,8 +127,7 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChapter]);
-  
-  // Effect 1 (previously Effect 3 in App.js): Resets content when active step changes
+
   useEffect(() => {
     if (currentChapter !== 'main' || navigatedManually.current) {
         if (navigatedManually.current) navigatedManually.current = false;
@@ -148,7 +156,6 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     }
   }, [activeMainStep, currentChapter, navigatedManually]);
 
-  // Effect 2 (previously Effect 4 in App.js): Auto-play for chapter
   useEffect(() => {
     if (currentChapter !== 'main' || !isPlaying) return;
     if (mainAnimationPhase === 'insults-done' || mainAnimationPhase === 'intro-done') {
@@ -177,7 +184,6 @@ export const useLandingChapter = (currentChapter, navigatedManually) => {
     }
   }, [mainAnimationPhase, isPlaying, currentChapter, activeMainStep, navigatedManually]);
 
-  // Effect 3 (previously Effect 5 in App.js): Typewriter and animation logic
   useEffect(() => {
     if (currentChapter !== 'main' || !isPlaying) return () => { };
     let timer;

@@ -6,9 +6,9 @@ import { PuzzleIcon, ChartIcon, MagicIcon, PieChartIcon, VideoEditorIcon } from 
 export const MAIN_STAGES = { INSULTS: 'Insults', INTRO: 'Intro', HOME: 'Home' };
 
 export const MAIN_NAV_ITEMS = [
-  { name: MAIN_STAGES.INSULTS, colorScheme: 'black', pauseAfter: 200 },
-  { name: MAIN_STAGES.INTRO, colorScheme: 'black', pauseAfter: 200 },
-  { name: MAIN_STAGES.HOME, colorScheme: 'black' },
+  { name: MAIN_STAGES.INSULTS, slug: 'insults', colorScheme: 'black', pauseAfter: 200 },
+  { name: MAIN_STAGES.INTRO, slug: 'intro', colorScheme: 'black', pauseAfter: 200 },
+  { name: MAIN_STAGES.HOME, slug: 'home', colorScheme: 'black' },
 ];
 
 export const CONTENT = {
