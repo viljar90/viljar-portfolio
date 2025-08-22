@@ -8,7 +8,8 @@ import {
   DESIGN_CONTENT,
   QUIZZES,
   DESIGN_STAGE_KEYS,
-  DESIGN_VIEWS
+  DESIGN_VIEWS,
+  PROJECTS
 } from './content';
 import ChapterManager from './components/ChapterManager';
 import { useLandingChapter } from './hooks/useLandingChapter';
@@ -91,6 +92,12 @@ function App() {
       } else if (chapter === 'work') {
         if (subChapter === 'overview') {
             work.setWorkView('Overview');
+            if (section) {
+                const projectIndex = PROJECTS.findIndex(p => p.id === section);
+                if (projectIndex !== -1) {
+                    work.setCurrentProjectIndex(projectIndex);
+                }
+            }
         } else { // Handles 'quiz' and defaults to quiz
             work.setWorkView('Quiz');
             if (section) {
@@ -134,12 +141,8 @@ function App() {
 
           if (newChapter && currentChapter !== newChapter) {
             setCurrentChapter(newChapter);
-            if (newChapter !== 'design') {
-              if (newChapter === 'work') {
-                // This is now handled by the useWorkChapter hook, so we don't need to set the URL here.
-              } else {
-                window.history.replaceState(null, '', `#${newChapter}`);
-              }
+            if (newChapter !== 'design' && newChapter !== 'work') {
+              window.history.replaceState(null, '', `#${newChapter}`);
             }
             if (newChapter !== snappedChapter) {
               isProgrammaticScrollRef.current = true;

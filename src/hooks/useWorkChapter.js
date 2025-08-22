@@ -18,19 +18,22 @@ export const useWorkChapter = (currentChapter) => {
     if (currentChapter === 'work') {
       let url = `#work/${workView.toLowerCase()}`;
       if (workView === 'Quiz') {
-        let quizSlug = 'start'; // Default for the intro screen (index 0)
+        let quizSlug = 'start';
         if (workStepIndex > 0 && workStepIndex <= QUIZZES.length) {
-          // This is a question
           quizSlug = QUIZZES[workStepIndex - 1]?.slug || `question-${workStepIndex}`;
         } else if (workStepIndex > QUIZZES.length) {
-          // This is the results page
           quizSlug = 'results';
         }
         url += `/${quizSlug}`;
+      } else if (workView === 'Overview') {
+        const projectSlug = PROJECTS[currentProjectIndex]?.id;
+        if (projectSlug) {
+          url += `/${projectSlug}`;
+        }
       }
       window.history.replaceState(null, '', url);
     }
-  }, [workView, workStepIndex, currentChapter]);
+  }, [workView, workStepIndex, currentProjectIndex, currentChapter]);
 
 
   const WORK_NAV_ITEMS = useMemo(() => [
@@ -135,18 +138,15 @@ export const useWorkChapter = (currentChapter) => {
   }, []);
 
   const handleWorkChapterCentralButtonClick = useCallback(() => {
-    // If we're on the results page, reset the quiz.
     if (workStepIndex > QUIZZES.length) {
         resetWorkChapter();
     } else {
-        // Otherwise, the button's action is to skip to the next question.
         handleNextQuestion();
     }
   }, [workStepIndex, handleNextQuestion, resetWorkChapter]);
 
 
   return {
-    // State values
     workView,
     workStepIndex,
     quizAnswers,
@@ -158,16 +158,12 @@ export const useWorkChapter = (currentChapter) => {
     PROJECT_NAV_ITEMS,
     previousWorkStepIndex,
     workAnimationDirection,
-
-
-    // State setters
     setWorkView,
     setWorkStepIndex,
+    setCurrentProjectIndex, // Exposing this for direct navigation
     setQuizAnswers,
     setPreviousProjectIndex,
     setPreviousWorkStepIndex,
-
-    // Handlers
     handleQuizAnswer,
     handleReplayQuestion,
     resetWorkChapter,
