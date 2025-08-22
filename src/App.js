@@ -15,7 +15,7 @@ import ChapterManager from './components/ChapterManager';
 import { useLandingChapter } from './hooks/useLandingChapter';
 import { useDesignChapter } from './hooks/useDesignChapter';
 import { useWorkChapter } from './hooks/useWorkChapter';
-import { useMeChapter } from './hooks/useMeChapter'; // Import the new hook
+import { useMeChapter } from './hooks/useMeChapter';
 import BottomNavigation from './components/BottomNavigation';
 import ErrorBoundary from './components/ErrorBoundary';
 import ViewSwitcher from './components/ViewSwitcher';
@@ -35,7 +35,7 @@ function App() {
   const mainChapterRef = useRef(null);
   const designChapterRef = useRef(null);
   const workChapterRef = useRef(null);
-  const meChapterRef = useRef(null); // 1. Add ref for the new chapter
+  const meChapterRef = useRef(null);
   const scrollContainerRef = useRef(null);
   const mainItemRefs = useRef([]);
   const designItemRefs = useRef([]);
@@ -46,12 +46,12 @@ function App() {
   const landing = useLandingChapter(currentChapter, navigatedManually);
   const design = useDesignChapter(currentChapter);
   const work = useWorkChapter(currentChapter);
-  const me = useMeChapter(currentChapter); // Initialize the new hook
+  const me = useMeChapter(currentChapter);
 
   const [mainChapterAnimClass, setMainChapterAnimClass] = useState(`animate-[slideUpIn_${ANIMATION_DURATION_CHAPTER}_ease-out_forwards]`);
   const [designChapterAnimClass, setDesignChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
   const [workChapterAnimClass, setWorkChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
-  const [meChapterAnimClass, setMeChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none'); // 2. Animation state for "Me"
+  const [meChapterAnimClass, setMeChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -137,7 +137,7 @@ function App() {
     setMainChapterAnimClass(mainAnim);
     setDesignChapterAnimClass(designAnim);
     setWorkChapterAnimClass(workAnim);
-    setMeChapterAnimClass(meAnim); // Set animation for "Me"
+    setMeChapterAnimClass(meAnim);
   }, [currentChapter]);
 
   useEffect(() => {
@@ -149,7 +149,7 @@ function App() {
           if (entry.target === mainChapterRef.current) newChapter = 'main';
           else if (entry.target === designChapterRef.current) newChapter = 'design';
           else if (entry.target === workChapterRef.current) newChapter = 'work';
-          else if (entry.target === meChapterRef.current) newChapter = 'me'; // 4. Detect "Me" chapter
+          else if (entry.target === meChapterRef.current) newChapter = 'me';
 
           if (newChapter && currentChapter !== newChapter) {
             setCurrentChapter(newChapter);
@@ -172,16 +172,16 @@ function App() {
     const mainRefCurrent = mainChapterRef.current;
     const designRefCurrent = designChapterRef.current;
     const workRefCurrent = workChapterRef.current;
-    const meRefCurrent = meChapterRef.current; // Get ref for "Me"
+    const meRefCurrent = meChapterRef.current;
     if (mainRefCurrent) observer.observe(mainRefCurrent);
     if (designRefCurrent) observer.observe(designRefCurrent);
     if (workRefCurrent) observer.observe(workRefCurrent);
-    if (meRefCurrent) observer.observe(meRefCurrent); // Observe "Me"
+    if (meRefCurrent) observer.observe(meRefCurrent);
     return () => {
       if (mainRefCurrent) observer.unobserve(mainRefCurrent);
       if (designRefCurrent) observer.unobserve(designRefCurrent);
       if (workRefCurrent) observer.unobserve(workRefCurrent);
-      if (meRefCurrent) observer.unobserve(meRefCurrent); // Unobserve "Me"
+      if (meRefCurrent) observer.unobserve(meRefCurrent);
     };
   }, [currentChapter, snappedChapter, design]);
 
@@ -236,7 +236,7 @@ function App() {
     }
     if (currentChapter === 'work' && work.workView === 'Quiz') return work.WORK_NAV_ITEMS;
     if (currentChapter === 'work' && work.workView === 'Overview') return work.PROJECT_NAV_ITEMS;
-    if (currentChapter === 'me') return []; // 6. Hide bottom nav on "Me" page
+    if (currentChapter === 'me') return [];
     return [];
   }, [currentChapter, work.workView, work.WORK_NAV_ITEMS, work.PROJECT_NAV_ITEMS, design.designView, design.whyDesignNavItems]);
 
@@ -267,7 +267,7 @@ function App() {
     if (chapterName === 'main') targetRef = mainChapterRef;
     else if (chapterName === 'design') targetRef = designChapterRef;
     else if (chapterName === 'work') targetRef = workChapterRef;
-    else if (chapterName === 'me') targetRef = meChapterRef; // 3. Add "Me" chapter target
+    else if (chapterName === 'me') targetRef = meChapterRef;
     setTimeout(() => {
       if (targetRef && targetRef.current) {
         targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -310,7 +310,7 @@ function App() {
 
   const handlePrevLine = () => {
     if (currentChapter === 'me') {
-      navigateToChapter('work'); // Go from "Me" to "Work" when pressing back
+      navigateToChapter('work');
     } else if (currentChapter === 'work') {
       if (work.workView === 'Quiz') {
         if (work.workStepIndex > 0) {
@@ -428,8 +428,7 @@ function App() {
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN && design.whyDesignStep === 'game') ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Slideshow' && (design.activeDesignStageKey !== DESIGN_STAGE_KEYS.ABOUT_DESIGN || design.currentDesignStepIndex !== 0)) ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document' && !isFirstDesignStage) ||
-    (currentChapter === 'work') || // Show on all "Work" views
-    (currentChapter === 'me'); // Show on "Me" view
+    (currentChapter === 'work');
     
 
   const currentPlayPauseButtonState = useMemo(() => {
@@ -493,7 +492,7 @@ function App() {
     
   const handleCentralButtonClick = () => {
     if (currentChapter === 'me') {
-        // No action for now on "Me" page, but we could add one later (e.g., contact link)
+        // No action for now on "Me" page
     } else if (currentChapter === 'work') {
       work.handleWorkChapterCentralButtonClick();
     } else if (currentChapter === 'design') {
@@ -571,7 +570,7 @@ function App() {
         </div>
 
         <div className="fixed right-4 md:right-6 lg:right-10 top-1/2 transform -translate-y-1/2 z-30 space-y-4">
-          {[{ name: 'main', label: 'Main Intro' }, { name: 'design', label: 'Design Insights' }, { name: 'work', label: 'My Work' }, { name: 'me', label: 'About Me' }].map(dot => ( // 5. Add "Me" to side-dots
+          {[{ name: 'main', label: 'Main Intro' }, { name: 'design', label: 'Design Insights' }, { name: 'work', label: 'My Work' }, { name: 'me', label: 'About Me' }].map(dot => (
             <button
               key={dot.name}
               onClick={() => navigateToChapter(dot.name)}
@@ -591,11 +590,11 @@ function App() {
             mainChapterRef={mainChapterRef}
             designChapterRef={designChapterRef}
             workChapterRef={workChapterRef}
-            meChapterRef={meChapterRef} // Pass the ref
+            meChapterRef={meChapterRef}
             mainChapterAnimClass={mainChapterAnimClass}
             designChapterAnimClass={designChapterAnimClass}
             workChapterAnimClass={workChapterAnimClass}
-            meChapterAnimClass={meChapterAnimClass} // Pass the animation class
+            meChapterAnimClass={meChapterAnimClass}
             currentChapter={currentChapter}
             showPrevArrow={showPrevArrow}
             showNextArrow={showNextArrow}
@@ -605,7 +604,7 @@ function App() {
             landing={landing}
             design={design}
             work={work}
-            me={me} // Pass the hook's return value
+            me={me}
             navigateToChapter={navigateToChapter}
             currentDesignStepData={currentDesignStepData}
             showCursorInsults={showCursorInsults}
@@ -620,34 +619,36 @@ function App() {
           />
         </ErrorBoundary>
 
-         <BottomNavigation
-          navItems={navItemsToDisplay}
-          activeNavItem={activeNavStepOrStage}
-          isPlaying={currentPlayPauseButtonState}
-          isFadingOut={(currentChapter === 'main' && landing.isFadingOut) || (currentChapter === 'design' && design.isFadingOut)}
-          isDarkMode={darkMode}
-          showLeftFade={showLeftFade}
-          showRightFade={showRightFade}
-          onCentralButtonClick={handleCentralButtonClick}
-          onNavItemClick={handleNavItemClick}
-          scrollContainerRef={scrollContainerRef}
-          itemNavRefs={itemNavRefs}
-          containerClass={`flex items-center space-x-4 sm:space-x-3 ${
-            currentChapter === 'design'
-              ? design.designView === DESIGN_VIEWS.WHAT_DESIGN
-                ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl' // What Design
-                : 'w-auto sm:max-w-xl md:max-w-3xl lg:max-w-4xl' // Why Design
-              : (currentChapter === 'work' && work.workView === 'Overview')
-              ? 'w-full'
-              : currentChapter === 'work' && work.workView === 'Quiz'
-              ? 'w-full md:max-w-3xl lg:auto xl:max-w-3.5xl'
-              : 'w-auto'
-          }`}
-          navItemsFlexClass={'flex-1 min-w-0'}
-          currentChapter={currentChapter}
-          design={design}
-          work={work}
-        />
+        {currentChapter !== 'me' && (
+          <BottomNavigation
+            navItems={navItemsToDisplay}
+            activeNavItem={activeNavStepOrStage}
+            isPlaying={currentPlayPauseButtonState}
+            isFadingOut={(currentChapter === 'main' && landing.isFadingOut) || (currentChapter === 'design' && design.isFadingOut)}
+            isDarkMode={darkMode}
+            showLeftFade={showLeftFade}
+            showRightFade={showRightFade}
+            onCentralButtonClick={handleCentralButtonClick}
+            onNavItemClick={handleNavItemClick}
+            scrollContainerRef={scrollContainerRef}
+            itemNavRefs={itemNavRefs}
+            containerClass={`flex items-center space-x-4 sm:space-x-3 ${
+              currentChapter === 'design'
+                ? design.designView === DESIGN_VIEWS.WHAT_DESIGN
+                  ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl' // What Design
+                  : 'w-auto sm:max-w-xl md:max-w-3xl lg:max-w-4xl' // Why Design
+                : (currentChapter === 'work' && work.workView === 'Overview')
+                ? 'w-full'
+                : currentChapter === 'work' && work.workView === 'Quiz'
+                ? 'w-full md:max-w-3xl lg:auto xl:max-w-3.5xl'
+                : 'w-auto'
+            }`}
+            navItemsFlexClass={'flex-1 min-w-0'}
+            currentChapter={currentChapter}
+            design={design}
+            work={work}
+          />
+        )}
       </div>
     </>
   );

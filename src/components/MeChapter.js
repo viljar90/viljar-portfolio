@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { ME_CONTENT } from '../content';
 import ProfilePicture from '../assets/profile.png';
-import PixarProfilePicture from '../assets/pixar-profile.jpg';
+import PixarProfilePicture from '../assets/pixar-profile.png';
 
 const MeChapter = ({ darkMode }) => {
   const [showPixar, setShowPixar] = useState(false);
