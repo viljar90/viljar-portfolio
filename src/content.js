@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { PuzzleIcon, ChartIcon, MagicIcon, PieChartIcon, VideoEditorIcon } from './components/uiElements';
+import ProfilePicture from './assets/profile.png';
+import PixarProfilePicture from './assets/pixar-profile.png';
 
 export const MAIN_STAGES = { INSULTS: 'Insults', INTRO: 'Intro', HOME: 'Home' };
 
@@ -878,12 +880,16 @@ export const PROJECTS = [
 ];
 
 export const ME_CONTENT = {
-  title: "About Me",
+  name: "Viljar Tornøe",
   paragraphs: [
     "My journey into design started with a simple observation: technology is often frustrating, and it doesn't have to be.",
     "I thrive on untangling complex challenges and turning them into simple, elegant solutions that bridge the gap between human needs and business goals, with a growing focus on how to create real value with AI.",
     "When I'm not designing, you'll likely find me lost in a good movie, learning to sew, or working on a creative writing piece. I'm also getting into CrossFit, but I'll admit my creative muscles are far stronger at the moment.",
     "Feel free to reach out if you'd like to chat about design, technology, or your favorite film!"
   ],
-  imageUrl: "https://via.placeholder.com/150" // This is a placeholder image
+  imageUrl: ProfilePicture,
+  pixarUrl: PixarProfilePicture,
+  email: "vito@netlight.com",
+  phone: "+47 45 45 29 52",
+  linkedinUrl: "www.linkedin.com/in/viljar-tornøe-872b2b15b"
 };
