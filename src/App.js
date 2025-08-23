@@ -156,14 +156,15 @@ function App() {
             if (newChapter !== 'design' && newChapter !== 'work' && newChapter !== 'main') {
               window.history.replaceState(null, '', `#${newChapter}`);
             }
-            if (newChapter !== snappedChapter) {
-              isProgrammaticScrollRef.current = true;
-              entry.target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              setSnappedChapter(newChapter);
-              setTimeout(() => {
-                  isProgrammaticScrollRef.current = false;
-              }, 1000);
-            }
+          }
+          
+          if (isProgrammaticScrollRef.current) {
+            return;
+          }
+
+          if (newChapter && newChapter !== snappedChapter) {
+            entry.target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setSnappedChapter(newChapter);
           }
         }
       });
@@ -268,17 +269,17 @@ function App() {
     else if (chapterName === 'design') targetRef = designChapterRef;
     else if (chapterName === 'work') targetRef = workChapterRef;
     else if (chapterName === 'me') targetRef = meChapterRef;
-    setTimeout(() => {
-      if (targetRef && targetRef.current) {
-        targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        if (chapterName !== 'design' && chapterName !== 'work' && chapterName !== 'main') {
-           window.location.hash = chapterName;
-        }
+    
+    if (targetRef && targetRef.current) {
+      targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (chapterName !== 'design' && chapterName !== 'work' && chapterName !== 'main') {
+          window.location.hash = chapterName;
       }
-    }, 50);
+    }
+    
     setTimeout(() => {
         isProgrammaticScrollRef.current = false;
-    }, 1000);
+    }, 1000); // Allow ample time for smooth scroll to finish
   };
 
   const handleNextLine = () => {
@@ -614,7 +615,6 @@ function App() {
             showCursorHomeQuestion={showCursorHomeQuestion}
             showCursorDesignTitle={showCursorDesignTitle}
             showCursorDesignMainText={showCursorDesignMainText}
-            onWorkViewChange={handleWorkViewChange}
             QUIZZES={QUIZZES}
           />
         </ErrorBoundary>
