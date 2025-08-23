@@ -7,7 +7,7 @@ import ContactCard from './ContactCard'; // Import the new component
 const MeChapter = ({ darkMode }) => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center text-center p-4">
-      <div className="max-w-4xl xl:max-w-6xl w-full">
+      <div className="max-w-4xl lg:max-w-5xl xl:max-w-6xl w-full">
         {/* Mobile Layout: Card on top, then all text */}
         <div className="md:hidden">
           <div className="flex justify-center mb-8">
@@ -30,7 +30,7 @@ const MeChapter = ({ darkMode }) => {
         {/* Tablet and Desktop Layout */}
         <div className="hidden md:flex md:flex-wrap md:items-start">
           {/* Left Column: Text Content */}
-          <div className="w-full md:w-1/2 xl:w-3/5 text-left pr-0 md:pr-6">
+          <div className="w-full md:w-1/2 lg:w-3/5 xl:w-3/5 text-left pr-0 md:pr-6">
             <div className="text-lg text-text-base mt-8 md:mt-0">
               {/* Shows first two paragraphs ONLY on medium screens */}
               <div className="lg:hidden space-y-4">
@@ -48,7 +48,7 @@ const MeChapter = ({ darkMode }) => {
           </div>
 
           {/* Right Column: Contact Card */}
-          <div className="w-full md:w-1/2 xl:w-2/5 mt-8 md:mt-0 flex justify-center">
+          <div className="w-full md:w-1/2 lg:w-2/5 xl:w-2/5 mt-8 md:mt-0 flex justify-center">
             <div className="lg:scale-110 transition-transform duration-300">
               <ContactCard
                 name={ME_CONTENT.name}

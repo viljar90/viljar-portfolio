@@ -10,10 +10,10 @@
 
 /* Classes to apply the repeating animations */
 .animate-nudge-loop {
-    animation: gentle-nudge-loop 6s ease-in-out infinite;
+    animation: gentle-nudge-loop 3s ease-in-out infinite;
 }
 .animate-bob-loop {
-    animation: subtle-bob-loop 6s ease-in-out infinite;
+    animation: subtle-bob-loop 3s ease-in-out infinite;
 }
 
 /* Main card styles */
