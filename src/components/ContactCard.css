@@ -24,7 +24,6 @@
     border-radius: 1.5rem; /* 24px */
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease-out;
-    margin-top: 2rem; /* Added to move the card down */
 }
 
 .dark .contact-card {
