@@ -10,10 +10,10 @@
 
 /* Classes to apply the repeating animations */
 .animate-nudge-loop {
-    animation: gentle-nudge-loop 3s ease-in-out infinite;
+    animation: gentle-nudge-loop 6s ease-in-out infinite;
 }
 .animate-bob-loop {
-    animation: subtle-bob-loop 3s ease-in-out infinite;
+    animation: subtle-bob-loop 6s ease-in-out infinite;
 }
 
 /* Main card styles */
@@ -30,7 +30,6 @@
     background-color: #1e293b; /* slate-800 */
     border: 1px solid #334155; /* slate-700 */
 }
-
 
 .card-content {
     padding: 1.5rem; /* 24px */
@@ -114,7 +113,6 @@
     object-fit: cover;
 }
 
-/* --- NEW STYLES --- */
 .details-section {
     margin-top: 1.5rem; /* 24px */
     padding-top: 1.5rem; /* 24px */
@@ -153,4 +151,69 @@
 .contact-icon {
     width: 1.25rem; /* 20px */
     height: 1.25rem; /* 20px */
+}
+
+/* --- NEW MOBILE-SPECIFIC STYLES --- */
+@media (max-width: 767px) {
+    .contact-card {
+        max-width: none;
+    }
+
+    .card-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem;
+    }
+
+    .header-section {
+        order: 2; /* Puts avatar on the right */
+    }
+    
+    .title-container {
+        height: 6rem; /* 96px */
+        width: 6rem; /* 96px */
+        margin-bottom: 0;
+    }
+
+    .title-text {
+        font-size: 1.25rem; /* 20px */
+        transform: translateY(0.5rem);
+    }
+
+    .avatar-container {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    .details-section {
+        order: 1; /* Puts details on the left */
+        margin-top: 0;
+        padding-top: 0;
+        padding-right: 1.5rem; /* Increased padding */
+        border-top: none;
+        position: relative;
+        gap: 0.75rem;
+        margin-right: 1rem; /* Added space between details and image */
+    }
+
+    /* Vertical Divider */
+    .details-section::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 80%;
+        background-color: #e5e7eb; /* gray-200 */
+    }
+
+    .dark .details-section::after {
+        background-color: #334155; /* slate-700 */
+    }
+
+    .contact-link span {
+        font-size: 0.875rem; /* 14px */
+    }
 }
