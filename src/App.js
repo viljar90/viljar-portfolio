@@ -429,7 +429,7 @@ function App() {
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN && design.whyDesignStep === 'game') ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Slideshow' && (design.activeDesignStageKey !== DESIGN_STAGE_KEYS.ABOUT_DESIGN || design.currentDesignStepIndex !== 0)) ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document' && !isFirstDesignStage) ||
-    (currentChapter === 'work');
+    (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0);
     
 
   const currentPlayPauseButtonState = useMemo(() => {

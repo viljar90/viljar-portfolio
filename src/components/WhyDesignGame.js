@@ -63,7 +63,7 @@ const WhyDesignGame = ({
     return (
       <div className="bg-bg-base dark:border dark:border-gray-700 p-6 sm:p-8 rounded-xl shadow-lg animate-scale-in">
         <div className="flex justify-between items-center mb-4">
-          <div className="text-sm font-semibold text-text-muted">{currentCase.caseTitle} - Part {gamePartIndex + 1}</div>
+          <div className="text-sm font-semibold text-text-muted">{currentCase.caseTitle} {gamePartIndex + 1}/2</div>
           <div className="text-sm font-semibold text-text-muted">Score: {Math.round(gameScore)}</div>
         </div>
         <h2 className="text-xl sm:text-2xl mb-6 text-text-base leading-relaxed text-left">
