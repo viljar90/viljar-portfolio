@@ -50,10 +50,9 @@ export const DESIGN_VIEWS = {
 export const WHY_DESIGN_CONTENT = {
   intro: {
     steps: [
-      { title: "Why Design", mainText: "Every design choice has a price tag." },
-      { title: "Why Design", mainText: "Great design can build fortunes." },
-      { title: "Why Design", mainText: "Bad design can ruin them." },
-      { title: "Why Design", mainText: "The line between them is thinner than you think." },
+      { title: "Why Design", mainText: "Every design has a price." },
+      { title: "Why Design", mainText: "Good design can build fortunes." },
+      { title: "Why Design", mainText: "One bad design choice lead to ruin." },
       { title: "Why Design", mainText: "Play to see why design can make or break the bank." }
       //{ title: "Why Design", mainText: "Money is not talked about enough in design." },
       //{ title: "Why Design", mainText: "Probably because quantifying it is difficult, as design involves many intangible factors." },
@@ -566,7 +565,11 @@ export const DESIGN_CONTENT = {
       },
       {
         title: "Product Designer",
-        mainText: "This way ensure the right product gets built from day one with a solid foundation."
+        mainText: "The product designer chart the correct course to steer the product on a good parth."
+      },
+      {
+        title: "Product Designer",
+        mainText: "This ensures the right product gets built from day."
       }
     ],
     /*
