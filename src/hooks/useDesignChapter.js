@@ -144,6 +144,7 @@ export const useDesignChapter = (currentChapter) => {
       setDisplayedWhyDesignTitleChars('');
       setDisplayedWhyDesignMainTextChars('');
       setWhyDesignAnimationPhase('typing-title');
+      setGameStatus('playing');
   }, []);
   
   const goBackToIntro = useCallback(() => {

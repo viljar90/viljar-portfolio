@@ -66,10 +66,10 @@ const WhyDesignGame = ({
           <div className="text-sm font-semibold text-text-muted">{currentCase.caseTitle} {gamePartIndex + 1}/2</div>
           <div className="text-sm font-semibold text-text-muted">Score: {Math.round(gameScore)}</div>
         </div>
-        <h2 className="text-xl sm:text-2xl mb-6 text-text-base leading-relaxed text-left">
+        <h2 className="text-xl lg:text-2xl mb-6 text-text-base leading-relaxed text-left">
           <span className="font-normal">{currentQuestion.context}</span><br /><br /><span className="font-bold">{currentQuestion.question}</span>
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {currentQuestion.options.map(option => {
             const isCompleted = state?.completed;
             const isRevealed = state?.revealedOptions?.includes(option.text);
@@ -116,10 +116,11 @@ const WhyDesignGame = ({
               >
                 <div className="w-full">
                     {isSelectAll && (isSelected || wasSelected) && <CheckmarkIcon />}
-                    <p className="text-text-base font-medium pr-8">{option.text}</p>
+                    <p className="text-base lg:text-lg font-medium pr-8">{option.text}</p>
+
                     
                     <div className={`overflow-hidden transition-[max-height,margin-top] duration-500 ease-in-out ${showRationale ? 'max-h-96 mt-3' : 'max-h-0 mt-0'}`}>
-                        <p className="text-sm text-text-muted">{option.rationale}</p>
+                        <p className="text-sm lg:text-base text-text-muted">{option.rationale}</p>
                     </div>
                 </div>
               </button>
