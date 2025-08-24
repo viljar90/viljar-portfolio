@@ -23,7 +23,7 @@ const WhyDesignIntro = ({
               {showCursorMainText && <BlinkingCursor sizeClass="h-8 md:h-9" />}
             </p>
             {showPlayButton && (
-                <div className="mt-12">
+                <div className="mt-12 w-full">
                     <PrimaryButton
                         onClick={onStart}
                         icon={PlayIcon}

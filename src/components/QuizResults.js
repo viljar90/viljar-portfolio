@@ -86,7 +86,7 @@ const QuizResults = ({ quizAnswers, onReset, onSwitchView }) => {
               <span className="font-bold text-green-500">{correctAnswers}</span>
             </div>
             <div className="flex justify-between my-2">
-              <span className="font-semibold text-text-muted">Misses</span>
+              <span className="font-semibold text-text-muted">Missed</span>
               <span className="font-bold text-error">{wrongAttempts}</span>
             </div>
             <div className="flex justify-between">
@@ -115,7 +115,7 @@ const QuizResults = ({ quizAnswers, onReset, onSwitchView }) => {
               <span className="font-bold text-green-500">{correctAnswers}</span>
             </div>
             <div className="flex justify-between my-2">
-              <span className="font-semibold text-text-muted">Misses</span>
+              <span className="font-semibold text-text-muted">Missed</span>
               <span className="font-bold text-error">{wrongAttempts}</span>
             </div>
             <div className="flex justify-between">

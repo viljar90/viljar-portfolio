@@ -504,6 +504,8 @@ function App() {
           design.togglePlayPause();
         }
       } else if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
+        if (design.gameStatus === 'end')
+          design.replayWhyDesignIntro();
         if (design.gameStatus === 'bonus') {
           design.startRandomBonusCase();
         } 

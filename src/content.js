@@ -52,7 +52,7 @@ export const WHY_DESIGN_CONTENT = {
     steps: [
       { title: "Why Design", mainText: "Every design has a price." },
       { title: "Why Design", mainText: "Good design can build fortunes." },
-      { title: "Why Design", mainText: "One bad design choice lead to ruin." },
+      { title: "Why Design", mainText: "One bad design choice turn to ruin." },
       { title: "Why Design", mainText: "Play to see why design can make or break the bank." }
       //{ title: "Why Design", mainText: "Money is not talked about enough in design." },
       //{ title: "Why Design", mainText: "Probably because quantifying it is difficult, as design involves many intangible factors." },
