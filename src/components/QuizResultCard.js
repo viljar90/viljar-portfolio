@@ -33,10 +33,17 @@ const QuizResultCard = ({ quiz, onReplayQuestion }) => (
 
     <div className="mt-6 pt-4 border-t border-gray-200 dark:border-slate-700">
       <p className="text-sm text-text-muted dark:text-slate-400">Check out my work on this</p>
-      <button className="mt-2 text-lg font-semibold text-primary dark:text-sky-400 hover:text-secondary dark:hover:text-sky-300 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary flex items-center space-x-2">
+      
+      {/* THIS IS THE ONLY CHANGE: The button is now a link */}
+      <a 
+        href={quiz.projectUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-2 text-lg font-semibold text-primary dark:text-sky-400 hover:text-secondary dark:hover:text-sky-300 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary flex items-center space-x-2"
+      >
         <span>{quiz.projectButtonText}</span>
         <NewTabIcon className="w-5 h-5" />
-      </button>
+      </a>
     </div>
   </div>
 );
@@ -47,6 +54,7 @@ QuizResultCard.propTypes = {
     resultText: PropTypes.string.isRequired,
     summaryPoints: PropTypes.arrayOf(PropTypes.string).isRequired,
     projectButtonText: PropTypes.string.isRequired,
+    projectUrl: PropTypes.string, // Added prop type for the URL
   }).isRequired,
   onReplayQuestion: PropTypes.func.isRequired,
 };

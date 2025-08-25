@@ -8,7 +8,7 @@ const BACKSPACE_SPEED = 20;
 const LONG_PAUSE_DURATION = 2700;
 const MAIN_CASES_COUNT = 3; // Define this as a constant
 
-export const useDesignChapter = (currentChapter) => {
+export const useDesignChapter = (currentChapter, isAppReady) => { // CHANGE 1: isAppReady is added
   // --- "What Design" States ---
   const [designView, setDesignView] = useState(DESIGN_VIEWS.WHY_DESIGN);
   const [activeDesignStageKey, setActiveDesignStageKey] = useState(WHAT_DESIGN_NAV_ITEMS[0].name);
@@ -50,6 +50,7 @@ export const useDesignChapter = (currentChapter) => {
   const [gameQuestionStates, setGameQuestionStates] = useState({});
   const [gameSelectedAnswers, setGameSelectedAnswers] = useState([]);
   const [gameStatus, setGameStatus] = useState('playing');
+  
 
   // --- Logic ---
   const navigateToGameCase = useCallback((slug) => {
@@ -64,6 +65,11 @@ export const useDesignChapter = (currentChapter) => {
   }, []);
 
   useEffect(() => {
+    // CHANGE 2: The hook now waits for the isAppReady signal from App.js
+    if (!isAppReady) {
+      return;
+    }
+
     if (currentChapter === 'design') {
         if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
             const navItem = WHAT_DESIGN_NAV_ITEMS.find(item => item.name === activeDesignStageKey);
@@ -95,7 +101,7 @@ export const useDesignChapter = (currentChapter) => {
             window.history.replaceState(null, '', `#design/why/${whySlug}`);
         }
     }
-  }, [designView, activeDesignStageKey, currentChapter, whyDesignStep, gameCaseIndex, gameStatus]);
+  }, [designView, activeDesignStageKey, currentChapter, whyDesignStep, gameCaseIndex, gameStatus, isAppReady]); // isAppReady is added
 
 
   const togglePlayPauseWhyDesignIntro = useCallback(() => {
@@ -585,7 +591,7 @@ export const useDesignChapter = (currentChapter) => {
       setTimeout(() => {
         setIsFadingOut(false);
         const nextIndex = currentIndex + 1;
-        const nextStageKey = WHAT_DESIGN_NAV_ITEMS[nextIndex].name;
+        const nextStageKey = WHAT_DESIGN_NAV_ITEMS[nextIndex + 1].name;
         resetForStage(nextStageKey, true);
       }, 1500);
     }, 1500);

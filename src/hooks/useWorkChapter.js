@@ -3,8 +3,9 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { QUIZZES, PROJECTS } from '../content';
 
-export const useWorkChapter = (currentChapter) => {
+export const useWorkChapter = (currentChapter, isAppReady) => { // ADD isAppReady
   const [workView, setWorkView] = useState('Quiz');
+  const [activeProjectId, setActiveProjectId] = useState(null);
   const [workStepIndex, setWorkStepIndex] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [introCompleted, setIntroCompleted] = useState(false);
@@ -15,6 +16,11 @@ export const useWorkChapter = (currentChapter) => {
   const [workAnimationDirection, setWorkAnimationDirection] = useState('next');
 
   useEffect(() => {
+    // ADD THIS CHECK
+    if (!isAppReady) {
+      return;
+    }
+
     if (currentChapter === 'work') {
       let url = `#work/${workView.toLowerCase()}`;
       if (workView === 'Quiz') {
@@ -30,11 +36,17 @@ export const useWorkChapter = (currentChapter) => {
         if (projectSlug) {
           url += `/${projectSlug}`;
         }
+      } else if (workView === 'Project') {
+        if (activeProjectId) {
+          url = `#work/project/${activeProjectId}`;
+        }
       }
       window.history.replaceState(null, '', url);
     }
-  }, [workView, workStepIndex, currentProjectIndex, currentChapter]);
+  }, [workView, workStepIndex, currentProjectIndex, currentChapter, activeProjectId, isAppReady]); // ADD isAppReady
 
+  // (The rest of the file is unchanged)
+  // ...
 
   const WORK_NAV_ITEMS = useMemo(() => [
     { name: 'Start' },
@@ -158,12 +170,14 @@ export const useWorkChapter = (currentChapter) => {
     PROJECT_NAV_ITEMS,
     previousWorkStepIndex,
     workAnimationDirection,
+    activeProjectId,
     setWorkView,
     setWorkStepIndex,
-    setCurrentProjectIndex, // Exposing this for direct navigation
+    setCurrentProjectIndex,
     setQuizAnswers,
     setPreviousProjectIndex,
     setPreviousWorkStepIndex,
+    setActiveProjectId,
     handleQuizAnswer,
     handleReplayQuestion,
     resetWorkChapter,

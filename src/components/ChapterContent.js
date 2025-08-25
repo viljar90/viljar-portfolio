@@ -5,13 +5,14 @@ import PropTypes from 'prop-types';
 import LandingChapter from './LandingChapter';
 import DesignChapter from './DesignChapter';
 import WorkChapter from './WorkChapter';
-import MeChapter from './MeChapter'; // 1. IMPORT THE NEW COMPONENT
+import MeChapter from './MeChapter';
 import QuizIntro from './QuizIntro';
 import QuizResults from './QuizResults';
 import ProjectOverview from './ProjectOverview';
 import { QUIZZES, PROJECTS, DESIGN_VIEWS } from '../content';
 import WhyDesignIntro from './WhyDesignIntro';
 import WhyDesignGame from './WhyDesignGame';
+import GenericProjectPage from './GenericProjectPage'; // Corrected import path
 
 const ChapterContent = ({
   currentChapter,
@@ -19,7 +20,7 @@ const ChapterContent = ({
   landing,
   design,
   work,
-  me, // Add 'me' here
+  me,
   navigateToChapter,
   currentDesignStepData,
   showCursorInsults,
@@ -29,7 +30,7 @@ const ChapterContent = ({
   showCursorHomeQuestion,
   showCursorDesignTitle,
   showCursorDesignMainText,
-  onWorkViewChange, // Added this prop to be complete
+  onWorkViewChange,
 }) => {
   const isLastStep = work.workStepIndex === QUIZZES.length + 1;
 
@@ -107,6 +108,7 @@ const ChapterContent = ({
         />
       )}
       {currentChapter === 'design' && renderDesignContent()}
+      
       {currentChapter === 'work' &&
         (work.workView === 'Quiz' ? (
             <>
@@ -138,7 +140,7 @@ const ChapterContent = ({
                 />
               )}
             </>
-          ) : (
+        ) : work.workView === 'Overview' ? (
           <div className="w-full overflow-hidden h-96 flex items-center justify-center relative">
             <ProjectOverview
               projects={PROJECTS}
@@ -150,9 +152,14 @@ const ChapterContent = ({
             <div className="absolute top-0 bottom-0 left-0 w-16 md:w-24 bg-gradient-to-r from-bg-base to-transparent pointer-events-none hidden md:block" />
             <div className="absolute top-0 bottom-0 right-0 w-16 md:w-24 bg-gradient-to-l from-bg-base to-transparent pointer-events-none hidden md:block" />
           </div>
-        ))}
+        ) : work.workView === 'Project' ? (
+          (() => {
+            const project = PROJECTS.find(p => p.id === work.activeProjectId);
+            return project ? <GenericProjectPage project={project} darkMode={darkMode} /> : <div>Project not found.</div>;
+          })()
+        ) : null
+      )}
         
-      {/* 2. RENDER THE NEW COMPONENT */}
       {currentChapter === 'me' && (
         <MeChapter darkMode={darkMode} me={me} />
       )}
@@ -166,7 +173,7 @@ ChapterContent.propTypes = {
     landing: PropTypes.object.isRequired,
     design: PropTypes.object.isRequired,
     work: PropTypes.object.isRequired,
-    me: PropTypes.object, // 3. ADD 'me' TO PROP TYPES
+    me: PropTypes.object,
     navigateToChapter: PropTypes.func.isRequired,
     currentDesignStepData: PropTypes.object,
     showCursorInsults: PropTypes.bool.isRequired,

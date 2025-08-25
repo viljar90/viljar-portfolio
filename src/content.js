@@ -642,7 +642,7 @@ export const DESIGN_CONTENT = {
       },
       {
         title: "UX Designer",
-        mainText: "...then the UX Designer is the architect who creates the actual blueprints."
+        mainText: "...then the UX Designer is the architect who creates the structural blueprints."
       },
       {
         title: "UX Designer",
@@ -654,7 +654,7 @@ export const DESIGN_CONTENT = {
       },
       {
         title: "UX Designer",
-        mainText: "This involves a relentless cycle of research, ideas, sketching, prototyping and testing..."
+        mainText: "This involves a relentless cycle of research, ideas, sketching, prototyping and user testing..."
       },
       {
         title: "UX Designer",
@@ -683,7 +683,11 @@ export const DESIGN_CONTENT = {
     steps: [
       {
         title: "UI Designer",
-        mainText: "While the UX Designer draws the structural blueprints, the UI Designer constructs the final build."
+        mainText: "The UX Designer draws the structural blueprints, but blueprints are never the final result."
+      },
+      {
+        title: "UI Designer",
+        mainText: "A UI Designer takes the blueprints to build the final look of the product."
       },
       {
         title: "UI Designer",
@@ -703,7 +707,7 @@ export const DESIGN_CONTENT = {
       },
       {
         title: "UI Designer",
-        mainText: "The result is a polished, professional product that builds trust and is a pleasure to use."
+        mainText: "The result is a polished, professional product that builds trust and is intuitive to use."
       }
     ],
     /*
@@ -756,7 +760,8 @@ export const QUIZZES = [
         "Secures your company data and GDPR compliance",
         "Guide in best practices and a safe space to experiment with AI",
     ],
-    projectButtonText: "The AI Platform"
+    projectButtonText: "The AI Platform",
+    projectUrl: "#work/project/aiPlatform"
   },
   {
     id: 'designSystem',
@@ -847,6 +852,14 @@ export const PROJECTS = [
     description: 'FortelVia is an internal platform where employees can chat with the best AI models on the market in a secure and compliant way.',
     tags: ['Product','UX', 'UI'],
     icon: <MagicIcon />,
+    url: '#work/project/aiPlatform',
+    details: {
+      problem: "A large Norwegian company needed to leverage generative AI without being locked into a single provider, while also ensuring the security of their internal data.",
+      role: "As the lead product designer in a cross-functional team, I was responsible for the entire design process, from initial user research and concept development to creating high-fidelity, interactive prototypes and conducting usability testing.",
+      solution: "The solution was 'FortelVia,' a secure, internal platform that acts as a gateway to multiple leading AI models. It allows employees to experiment safely and provides a centralized point for managing access and ensuring compliance.",
+      impact: "The platform successfully decoupled the company from any single AI vendor, providing crucial flexibility. It established a secure environment for AI experimentation, which led to the development of three new internal tools within the first six months.",
+      reflections: "This project underscored the importance of a modular architecture in a rapidly evolving field like AI. If I were to do it again, I would push for even earlier integration with the security team to streamline the compliance process from day one."
+    }
   },
   {
     id: 'design-system',

@@ -21,16 +21,76 @@ import ErrorBoundary from './components/ErrorBoundary';
 import ViewSwitcher from './components/ViewSwitcher';
 import { SunIcon, MoonIcon, PotatoIcon } from './components/uiElements';
 import InteractivePillNav from './components/InteractivePillNav';
+import GenericProjectPage from './components/GenericProjectPage';
 
 const ANIMATION_DURATION_CHAPTER = "0.5s";
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
+  const [activeProject, setActiveProject] = useState(null);
+
+  // This logic now runs once to decide which "mode" the app should be in.
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    const parts = hash.split('/');
+    const [chapter, subChapter, section] = parts;
+
+    if (chapter === 'work' && subChapter === 'project' && section) {
+      const projectData = PROJECTS.find(p => p.id === section);
+      if (projectData) {
+        setActiveProject(projectData);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    const isNight = hour >= 18 || hour < 6;
+    setDarkMode(isNight);
+    document.documentElement.classList.toggle('dark', isNight);
+  }, []);
+
+  const toggleDarkMode = () => {
+    setDarkMode(prevMode => {
+      const newMode = !prevMode;
+      document.documentElement.classList.toggle('dark', newMode);
+      return newMode;
+    });
+  };
+
+  // If we found a project from the URL, render ONLY the project page.
+  if (activeProject) {
+    return (
+      <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen`}>
+        <div className="fixed top-4 right-4 z-50">
+           <button
+            onClick={toggleDarkMode}
+            className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-transparent text-icon-interactive hover:text-icon-base transform hover:scale-105 active:scale-95 shadow-md`}
+            aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          >
+            <span>
+              {darkMode ? <SunIcon /> : <MoonIcon />}
+            </span>
+          </button>
+        </div>
+        <GenericProjectPage project={activeProject} darkMode={darkMode} />
+      </div>
+    );
+  }
+
+  // Otherwise, render the full scrolling portfolio app.
+  return <PortfolioApp darkMode={darkMode} toggleDarkMode={toggleDarkMode} />;
+}
+
+// I've moved your original App component into its own component called PortfolioApp
+// to keep the logic clean and isolated.
+const PortfolioApp = ({ darkMode, toggleDarkMode }) => {
   const [currentChapter, setCurrentChapter] = useState('main');
   const [snappedChapter, setSnappedChapter] = useState(null);
   const [showLeftFade, setShowLeftFade] = useState(false);
   const [showRightFade, setShowRightFade] = useState(false);
   const [isThemeToggleClicked, setIsThemeToggleClicked] = useState(false);
+  const [isAppReady, setIsAppReady] = useState(false);
 
   const mainChapterRef = useRef(null);
   const designChapterRef = useRef(null);
@@ -43,9 +103,9 @@ function App() {
   const navigatedManually = useRef(false);
   const isProgrammaticScrollRef = useRef(false);
 
-  const landing = useLandingChapter(currentChapter, navigatedManually);
-  const design = useDesignChapter(currentChapter);
-  const work = useWorkChapter(currentChapter);
+  const landing = useLandingChapter(currentChapter, navigatedManually, isAppReady);
+  const design = useDesignChapter(currentChapter, isAppReady);
+  const work = useWorkChapter(currentChapter, isAppReady);
   const me = useMeChapter(currentChapter);
 
   const [mainChapterAnimClass, setMainChapterAnimClass] = useState(`animate-[slideUpIn_${ANIMATION_DURATION_CHAPTER}_ease-out_forwards]`);
@@ -53,13 +113,6 @@ function App() {
   const [workChapterAnimClass, setWorkChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
   const [meChapterAnimClass, setMeChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
 
-  useEffect(() => {
-    const hour = new Date().getHours();
-    const isNight = hour >= 18 || hour < 6;
-    setDarkMode(isNight);
-    document.documentElement.classList.toggle('dark', isNight);
-  }, []);
-  
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     const parts = hash.split('/');
@@ -100,33 +153,33 @@ function App() {
         }
       } else if (chapter === 'work') {
         if (subChapter === 'overview') {
-            work.setWorkView('Overview');
-            if (section) {
-                const projectIndex = PROJECTS.findIndex(p => p.id === section);
-                if (projectIndex !== -1) {
-                    work.setCurrentProjectIndex(projectIndex);
-                }
+          work.setWorkView('Overview');
+          if (section) {
+            const projectIndex = PROJECTS.findIndex(p => p.id === section);
+            if (projectIndex !== -1) {
+              work.setCurrentProjectIndex(projectIndex);
             }
-        } else { // Handles 'quiz' and defaults to quiz
-            work.setWorkView('Quiz');
-            if (section) {
-                if (section === 'start') {
-                    work.setWorkStepIndex(0);
-                } else if (section === 'results') {
-                    work.setWorkStepIndex(QUIZZES.length + 1);
-                } else {
-                    const quizIndex = QUIZZES.findIndex(q => q.slug === section);
-                    if (quizIndex !== -1) {
-                        work.setWorkStepIndex(quizIndex + 1);
-                    }
-                }
+          }
+        } else {
+          work.setWorkView('Quiz');
+          if (section) {
+            if (section === 'start') {
+              work.setWorkStepIndex(0);
+            } else if (section === 'results') {
+              work.setWorkStepIndex(QUIZZES.length + 1);
+            } else {
+              const quizIndex = QUIZZES.findIndex(q => q.slug === section);
+              if (quizIndex !== -1) {
+                work.setWorkStepIndex(quizIndex + 1);
+              }
             }
+          }
         }
       }
     }
+    setIsAppReady(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   useEffect(() => {
     const duration = ANIMATION_DURATION_CHAPTER;
@@ -406,16 +459,6 @@ function App() {
   }, [currentChapter, design]);
 
   
-  const toggleDarkMode = () => {
-    setIsThemeToggleClicked(true);
-    setDarkMode(prevMode => {
-      const newMode = !prevMode;
-      document.documentElement.classList.toggle('dark', newMode);
-      return newMode;
-    });
-    setTimeout(() => setIsThemeToggleClicked(false), 400);
-  };
-
   const handleWorkViewChange = (newView) => {
     work.setWorkView(newView);
   };
@@ -526,6 +569,12 @@ function App() {
     }
   };
 
+  const aToggleDarkMode = () => {
+    setIsThemeToggleClicked(true);
+    toggleDarkMode();
+    setTimeout(() => setIsThemeToggleClicked(false), 400);
+  };
+
   return (
     <>
        <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen overflow-x-hidden`}>
@@ -562,7 +611,7 @@ function App() {
             />
           )}
           <button
-            onClick={toggleDarkMode}
+            onClick={aToggleDarkMode}
             className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-transparent text-icon-interactive hover:text-icon-base transform hover:scale-105 active:scale-95 shadow-md`}
             aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
           >
@@ -621,7 +670,7 @@ function App() {
           />
         </ErrorBoundary>
 
-        {currentChapter !== 'me' && (
+        {currentChapter !== 'me' && !(currentChapter === 'work' && work.workView === 'Project') && (
           <BottomNavigation
             navItems={navItemsToDisplay}
             activeNavItem={activeNavStepOrStage}

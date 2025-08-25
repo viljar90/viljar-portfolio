@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ProjectCard = ({ project }) => {
-  return (
+  const cardContent = (
     <div className="w-full max-w-md md:max-w-lg xl:max-w-xl bg-bg-base rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out overflow-hidden hover:scale-105 dark:border dark:border-gray-700">
       <div className="flex flex-col-reverse md:flex-row">
         {/* Icon Section */}
@@ -35,6 +35,18 @@ const ProjectCard = ({ project }) => {
       </div>
     </div>
   );
+
+  // If the project has a URL, wrap the card in a link that opens a new tab.
+  if (project.url) {
+    return (
+      <a href={project.url} target="_blank" rel="noopener noreferrer" className="block">
+        {cardContent}
+      </a>
+    );
+  }
+
+  // Otherwise, just render the non-clickable card.
+  return cardContent;
 };
 
 ProjectCard.propTypes = {
@@ -43,6 +55,7 @@ ProjectCard.propTypes = {
     description: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,
     icon: PropTypes.node.isRequired,
+    url: PropTypes.string, // Added the url prop
   }).isRequired,
 };
 
