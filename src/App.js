@@ -472,7 +472,8 @@ const PortfolioApp = ({ darkMode, toggleDarkMode }) => {
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHY_DESIGN && design.whyDesignStep === 'game') ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Slideshow' && (design.activeDesignStageKey !== DESIGN_STAGE_KEYS.ABOUT_DESIGN || design.currentDesignStepIndex !== 0)) ||
     (currentChapter === 'design' && design.designView === DESIGN_VIEWS.WHAT_DESIGN && design.documentView === 'Document' && !isFirstDesignStage) ||
-    (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0);
+    (currentChapter === 'work' && work.workView === 'Quiz' && work.workStepIndex > 0) ||
+    (currentChapter === 'work' && work.workView === 'Overview');
     
 
   const currentPlayPauseButtonState = useMemo(() => {
