@@ -761,7 +761,7 @@ export const QUIZZES = [
         "Guide in best practices and a safe space to experiment with AI",
     ],
     projectButtonText: "The AI Platform",
-    projectUrl: "#work/project/aiPlatform"
+    projectUrl: "#work/project/aiPlatform?from=quiz"
   },
   {
     id: 'designSystem',
@@ -852,7 +852,7 @@ export const PROJECTS = [
     description: 'FortelVia is an internal platform where employees can chat with the best AI models on the market in a secure and compliant way.',
     tags: ['Product','UX', 'UI'],
     icon: <MagicIcon />,
-    url: '#work/project/aiPlatform',
+    url: '#work/project/aiPlatform?from=overview',
     details: {
       problem: "A large Norwegian company needed to leverage generative AI without being locked into a single provider, while also ensuring the security of their internal data.",
       role: "As the lead product designer in a cross-functional team, I was responsible for the entire design process, from initial user research and concept development to creating high-fidelity, interactive prototypes and conducting usability testing.",

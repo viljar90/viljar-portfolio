@@ -30,18 +30,34 @@ function App() {
   const [activeProject, setActiveProject] = useState(null);
 
   // This logic now runs once to decide which "mode" the app should be in.
-  useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    const parts = hash.split('/');
-    const [chapter, subChapter, section] = parts;
 
-    if (chapter === 'work' && subChapter === 'project' && section) {
-      const projectData = PROJECTS.find(p => p.id === section);
-      if (projectData) {
-        setActiveProject(projectData);
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      const [hashPath] = hash.split('?'); // This separates the main path from parameters
+      const parts = hashPath.split('/');
+      const [chapter, subChapter, section] = parts;
+
+      if (chapter === 'work' && subChapter === 'project' && section) {
+        const projectData = PROJECTS.find(p => p.id === section);
+        if (projectData) {
+          setActiveProject(projectData);
+          // When we are on a project page, we are NOT showing the portfolio.
+          // This will be handled by the main return statement.
+        }
+      } else {
+        // If the URL is anything else, ensure we are not in project view
+        setActiveProject(null);
       }
-    }
-  }, []);
+    };
+
+    window.addEventListener('hashchange', handleUrlChange);
+    handleUrlChange(); // Run on initial load
+
+    return () => {
+      window.removeEventListener('hashchange', handleUrlChange);
+    };
+  }, []); // The empty array ensures this setup only runs once
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -115,9 +131,10 @@ const PortfolioApp = ({ darkMode, toggleDarkMode }) => {
 
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
-    const parts = hash.split('/');
+    const [hashPath] = hash.split('?'); // This separates the main path from parameters
+    const parts = hashPath.split('/');
     const [chapter, subChapter, section, ...rest] = parts;
-
+    
     if (chapter && ['main', 'design', 'work', 'me'].includes(chapter)) {
       setCurrentChapter(chapter);
 
@@ -581,8 +598,8 @@ const PortfolioApp = ({ darkMode, toggleDarkMode }) => {
        <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen overflow-x-hidden`}>
         {currentChapter === 'work' && work.workView === 'Quiz' && (
           <>
-            <div className="hidden md:block fixed top-0 bottom-0 left-0 w-16 md:w-24 lg:w-40 xl:w-60 bg-gradient-to-r from-bg-base via-bg-base to-transparent pointer-events-none z-20" />
-            <div className="hidden md:block fixed top-0 bottom-0 right-0 w-16 md:w-24 lg:w-40 xl:w-60 bg-gradient-to-l from-bg-base via-bg-base to-transparent pointer-events-none z-20" />
+            <div className="hidden md:block fixed top-0 bottom-0 left-0 w-16 md:w-24 lg:w-30 xl:w-60 bg-gradient-to-r from-bg-base via-bg-base to-transparent pointer-events-none z-20" />
+            <div className="hidden md:block fixed top-0 bottom-0 right-0 w-16 md:w-24 lg:w-30 xl:w-60 bg-gradient-to-l from-bg-base via-bg-base to-transparent pointer-events-none z-20" />
           </>
         )}
 

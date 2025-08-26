@@ -1,20 +1,33 @@
 // src/components/GenericProjectPage.js
 
-import React, { useState, useCallback, useMemo } from 'react'; // 1. Import useMemo
+import React, { useState, useCallback, useMemo, useEffect } from 'react'; // 1. Import useEffect
 import ProjectBottomNav from './ProjectBottomNav';
 import { PrevArrowIcon, NextArrowIcon } from './uiElements';
+import BackButton from './BackButton';
 
 const GenericProjectPage = ({ project, darkMode }) => {
   const [activeSection, setActiveSection] = useState('problem');
+  const [backPath, setBackPath] = useState('#'); // 2. Add state for the back path
 
-  // 2. Wrap the sections array in a useMemo hook
+  // 3. Add logic to read the URL parameter on load
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.hash.split('?')[1]);
+    const from = params.get('from');
+    if (from === 'quiz') {
+      setBackPath('#work/quiz/results');
+    } else if (from === 'overview') {
+      // We link back to the specific project in the overview
+      setBackPath(`#work/overview/${project.id}`);
+    }
+  }, [project.id]);
+
   const sections = useMemo(() => [
-    { id: 'problem', title: 'Problem' },
+    { id: 'problem', title: 'The Problem' },
     { id: 'role', title: 'My Role' },
-    { id: 'solution', title: 'Solution' },
+    { id: 'solution', title: 'The Solution' },
     { id: 'impact', title: 'Impact' },
     { id: 'reflections', title: 'Reflections' },
-  ], []); // The empty dependency array [] means it will only be created once.
+  ], []);
 
   const handleNextSection = useCallback(() => {
     const currentIndex = sections.findIndex(s => s.id === activeSection);
@@ -33,8 +46,11 @@ const GenericProjectPage = ({ project, darkMode }) => {
   const content = project.details[activeSection];
 
   return (
-    <div className="project-page-container w-full min-h-screen flex flex-col items-center justify-center px-24 md:px-40 lg:px-56 py-8 sm:py-16 relative">
+    <div className="project-page-container w-full min-h-screen flex flex-col items-center justify-center px-24 md:px-32 lg:px-40 xl:px-64 py-8 sm:py-16 relative">
       
+      {/* 4. Pass the back path to the BackButton */}
+      <BackButton href={backPath} />
+
       <button
         onClick={handlePrevSection}
         className="fixed z-20 p-2 rounded-full text-text-muted hover:text-text-base hover:bg-bg-muted/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-all opacity-40 hover:opacity-100 left-4 md:left-12 lg:left-20 xl:left-48 top-1/2 -translate-y-1/2"
@@ -52,7 +68,7 @@ const GenericProjectPage = ({ project, darkMode }) => {
 
       <div 
         key={activeSection}
-          className="content-area w-full max-w-3xl flex-grow flex flex-col justify-center text-left mb-24 animate-fadeIn"
+        className="content-area w-full max-w-3xl flex-grow flex flex-col justify-center text-left mb-24 animate-fadeIn"
       >
         <h2 className="text-4xl sm:text-5xl font-bold text-primary dark:text-secondary mb-6">
           {activeSectionData.title}
