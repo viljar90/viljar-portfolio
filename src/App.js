@@ -688,7 +688,7 @@ const PortfolioApp = ({ darkMode, toggleDarkMode }) => {
               currentChapter === 'design'
                 ? design.designView === DESIGN_VIEWS.WHAT_DESIGN
                   ? 'w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl' // What Design
-                  : 'w-full sm:max-w-xl md:max-w-3xl lg:w-auto' // Why Design
+                  : 'w-full sm:max-w-xl md:max-w-2xl lg:w-auto' // Why Design
                 : (currentChapter === 'work' && work.workView === 'Overview')
                 ? 'w-full'
                 : currentChapter === 'work' && work.workView === 'Quiz'

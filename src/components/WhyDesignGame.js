@@ -153,8 +153,8 @@ const WhyDesignGame = ({
                      const isCompleted = gameQuestionStates[`${caseIndex}-0`]?.completed && gameQuestionStates[`${caseIndex}-1`]?.completed;
                      return (
                         <button key={bonusCase.caseTitle} onClick={() => startBonusCase(caseIndex)}
-                            className={`relative bonus-card py-4 px-4 rounded-full border-2 bg-bg-base dark:bg-bg-muted text-center transition-all flex items-center justify-center space-x-2 ${isCompleted ? 'completed border-green-500' : 'border-border-interactive'}`}>
-                            <h3 className="text-lg font-bold text-text-base">{bonusCase.caseTitle}</h3>
+                            className={`relative bonus-card py-4 px-4 rounded-full border-2 bg-bg-base dark:bg-bg-muted text-center transition-all flex items-center justify-center space-x-2 ${isCompleted ? 'completed border-green-500' : 'border-border-interactive hover:border-black dark:hover:border-secondary'}`}>
+                            <h3 className="text-sm sm:text-base font-bold text-text-base">{bonusCase.caseTitle}</h3>
                             {isCompleted && <BonusCheckmarkIcon />}
                         </button>
                      )

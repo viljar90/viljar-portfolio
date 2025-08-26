@@ -47,7 +47,7 @@ const ProjectBottomNav = ({ sections, activeSection, onNavItemClick, isDarkMode 
 
   return (
     <div className="fixed bottom-0 left-0 w-full px-4 mb-6 z-20 flex justify-center">
-      <div className="relative w-full md:w-auto transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden">
+      <div className="relative w-auto transform transition-transform duration-200 hover:scale-[1.02] bg-bg-muted dark:bg-slate-950 rounded-full shadow-lg border border-gray-500 dark:border-gray-700 overflow-hidden">
         <div
           ref={scrollContainerRef}
           className="py-1.5 px-2.5 flex items-center justify-start space-x-2 transition-colors duration-300 overflow-x-auto no-scrollbar"

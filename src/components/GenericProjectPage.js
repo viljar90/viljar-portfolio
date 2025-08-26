@@ -9,9 +9,9 @@ const GenericProjectPage = ({ project, darkMode }) => {
 
   // 2. Wrap the sections array in a useMemo hook
   const sections = useMemo(() => [
-    { id: 'problem', title: 'The Problem' },
+    { id: 'problem', title: 'Problem' },
     { id: 'role', title: 'My Role' },
-    { id: 'solution', title: 'The Solution' },
+    { id: 'solution', title: 'Solution' },
     { id: 'impact', title: 'Impact' },
     { id: 'reflections', title: 'Reflections' },
   ], []); // The empty dependency array [] means it will only be created once.
@@ -33,7 +33,7 @@ const GenericProjectPage = ({ project, darkMode }) => {
   const content = project.details[activeSection];
 
   return (
-    <div className="project-page-container w-full min-h-screen flex flex-col items-center justify-center px-24 md:px-32 lg:px-40 xl:px-64 py-8 sm:py-16 relative">
+    <div className="project-page-container w-full min-h-screen flex flex-col items-center justify-center px-24 md:px-40 lg:px-56 py-8 sm:py-16 relative">
       
       <button
         onClick={handlePrevSection}
