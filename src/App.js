@@ -130,73 +130,92 @@ const PortfolioApp = ({ darkMode, toggleDarkMode }) => {
   const [meChapterAnimClass, setMeChapterAnimClass] = useState('opacity-0 translate-y-full pointer-events-none');
 
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    const [hashPath] = hash.split('?'); // This separates the main path from parameters
-    const parts = hashPath.split('/');
-    const [chapter, subChapter, section, ...rest] = parts;
-    
-    if (chapter && ['main', 'design', 'work', 'me'].includes(chapter)) {
-      setCurrentChapter(chapter);
+    // This function handles reading the URL and setting the app state.
+    const handleUrlChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      const [hashPath] = hash.split('?'); // This separates the main path from parameters
+      const parts = hashPath.split('/');
+      const [chapter, subChapter, section, ...rest] = parts;
 
-      if (chapter === 'main') {
-        const mainNavItem = MAIN_NAV_ITEMS.find(item => item.slug === subChapter);
-        if (mainNavItem) {
-          landing.setActiveMainStep(mainNavItem.name);
-        }
-      } else if (chapter === 'design') {
-        if (subChapter === 'what') {
-          design.setDesignView(DESIGN_VIEWS.WHAT_DESIGN);
-          if (section) {
-            const targetStageItem = WHAT_DESIGN_NAV_ITEMS.find(item => item.title && item.title.toLowerCase().replace(/\s+/g, '-') === section);
-            if (targetStageItem) {
-              design.navigateToStage(targetStageItem.name, false);
+      // Only proceed if the URL has a valid chapter
+      if (chapter && ['main', 'design', 'work', 'me'].includes(chapter)) {
+        setCurrentChapter(chapter);
+
+        // Logic for the 'main' chapter
+        if (chapter === 'main') {
+          const mainNavItem = MAIN_NAV_ITEMS.find(item => item.slug === subChapter);
+          if (mainNavItem) {
+            landing.setActiveMainStep(mainNavItem.name);
+          }
+        // Logic for the 'design' chapter
+        } else if (chapter === 'design') {
+          if (subChapter === 'what') {
+            design.setDesignView(DESIGN_VIEWS.WHAT_DESIGN);
+            if (section) {
+              const targetStageItem = WHAT_DESIGN_NAV_ITEMS.find(item => item.title && item.title.toLowerCase().replace(/\s+/g, '-') === section);
+              if (targetStageItem) {
+                design.navigateToStage(targetStageItem.name, false);
+              }
+            }
+          } else if (subChapter === 'why') {
+            design.setDesignView(DESIGN_VIEWS.WHY_DESIGN);
+            if (section === 'score') {
+              design.setGameStatus('end');
+            } else if (section === 'bonus') {
+              design.setGameStatus('bonus');
+              if (rest[0] === 'case' && rest[1]) {
+                  design.navigateToGameCase(rest[1]);
+              }
+            } else if (section === 'case' && rest[0]) {
+              design.navigateToGameCase(rest[0]);
+            } else if (section === 'start') {
+              design.returnToIntro();
             }
           }
-        } else if (subChapter === 'why') {
-          design.setDesignView(DESIGN_VIEWS.WHY_DESIGN);
-          
-          if (section === 'score') {
-            design.setGameStatus('end');
-          } else if (section === 'bonus') {
-            design.setGameStatus('bonus');
-            if (rest[0] === 'case' && rest[1]) {
-                design.navigateToGameCase(rest[1]);
+        // Logic for the 'work' chapter
+        } else if (chapter === 'work') {
+          if (subChapter === 'overview') {
+            work.setWorkView('Overview');
+            if (section) {
+              const projectIndex = PROJECTS.findIndex(p => p.id === section);
+              if (projectIndex !== -1) {
+                work.setCurrentProjectIndex(projectIndex);
+              }
             }
-          } else if (section === 'case' && rest[0]) {
-            design.navigateToGameCase(rest[0]);
-          } else if (section === 'start') {
-            design.returnToIntro();
-          }
-        }
-      } else if (chapter === 'work') {
-        if (subChapter === 'overview') {
-          work.setWorkView('Overview');
-          if (section) {
-            const projectIndex = PROJECTS.findIndex(p => p.id === section);
-            if (projectIndex !== -1) {
-              work.setCurrentProjectIndex(projectIndex);
-            }
-          }
-        } else {
-          work.setWorkView('Quiz');
-          if (section) {
-            if (section === 'start') {
-              work.setWorkStepIndex(0);
-            } else if (section === 'results') {
-              work.setWorkStepIndex(QUIZZES.length + 1);
-            } else {
-              const quizIndex = QUIZZES.findIndex(q => q.slug === section);
-              if (quizIndex !== -1) {
-                work.setWorkStepIndex(quizIndex + 1);
+          } else { // Default to 'Quiz' view for work chapter
+            work.setWorkView('Quiz');
+            if (section) {
+              if (section === 'start') {
+                work.setWorkStepIndex(0);
+              } else if (section === 'results') {
+                work.setWorkStepIndex(QUIZZES.length + 1);
+              } else {
+                const quizIndex = QUIZZES.findIndex(q => q.slug === section);
+                if (quizIndex !== -1) {
+                  work.setWorkStepIndex(quizIndex + 1);
+                }
               }
             }
           }
         }
       }
-    }
-    setIsAppReady(true);
+      // Signal that the app is ready after the first URL parse
+      if (!isAppReady) {
+        setIsAppReady(true);
+      }
+    };
+
+    // Run the handler once on initial load
+    handleUrlChange();
+    // Add an event listener to run the handler on every subsequent URL change
+    window.addEventListener('hashchange', handleUrlChange);
+
+    // Cleanup: remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('hashchange', handleUrlChange);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []); // The empty array ensures this setup runs only once, which is correct
 
   useEffect(() => {
     const duration = ANIMATION_DURATION_CHAPTER;

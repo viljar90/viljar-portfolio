@@ -8,7 +8,7 @@ const BACKSPACE_SPEED = 20;
 const LONG_PAUSE_DURATION = 2600;
 const SLIDE_DURATION = 300;
 
-export const useLandingChapter = (currentChapter, navigatedManually, isAppReady) => { // CHANGE 1: isAppReady is added
+export const useLandingChapter = (currentChapter, navigatedManually, isAppReady) => {
   const [activeMainStep, setActiveMainStep] = useState(MAIN_STAGES.INSULTS);
   const [isPlaying, setIsPlaying] = useState(true);
   const [currentSubLineIndex, setCurrentSubLineIndex] = useState(0);
@@ -25,7 +25,6 @@ export const useLandingChapter = (currentChapter, navigatedManually, isAppReady)
   const wasPlayingRef = useRef(true);
 
   useEffect(() => {
-    // CHANGE 2: The hook now waits for the isAppReady signal from App.js
     if (!isAppReady) {
       return;
     }
@@ -36,7 +35,7 @@ export const useLandingChapter = (currentChapter, navigatedManually, isAppReady)
         window.history.replaceState(null, '', `#main/${navItem.slug}`);
       }
     }
-  }, [activeMainStep, currentChapter, isAppReady]); // isAppReady is added to dependencies
+  }, [activeMainStep, currentChapter, isAppReady]);
 
   const togglePlayPause = useCallback(() => {
     setIsPlaying(p => !p);

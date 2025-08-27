@@ -8,7 +8,7 @@ const BACKSPACE_SPEED = 20;
 const LONG_PAUSE_DURATION = 2700;
 const MAIN_CASES_COUNT = 3; // Define this as a constant
 
-export const useDesignChapter = (currentChapter, isAppReady) => { // CHANGE 1: isAppReady is added
+export const useDesignChapter = (currentChapter, isAppReady) => {
   // --- "What Design" States ---
   const [designView, setDesignView] = useState(DESIGN_VIEWS.WHY_DESIGN);
   const [activeDesignStageKey, setActiveDesignStageKey] = useState(WHAT_DESIGN_NAV_ITEMS[0].name);
