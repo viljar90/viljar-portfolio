@@ -591,7 +591,7 @@ export const useDesignChapter = (currentChapter, isAppReady) => { // CHANGE 1: i
       setTimeout(() => {
         setIsFadingOut(false);
         const nextIndex = currentIndex + 1;
-        const nextStageKey = WHAT_DESIGN_NAV_ITEMS[nextIndex + 1].name;
+        const nextStageKey = WHAT_DESIGN_NAV_ITEMS[nextIndex].name;
         resetForStage(nextStageKey, true);
       }, 1500);
     }, 1500);
