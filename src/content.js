@@ -781,7 +781,8 @@ export const QUIZZES = [
         "Consistent user experience across your products",
         "Scalable and maintainable - making updates cheap and easy"
     ],
-    projectButtonText: 'The Design System'
+    projectButtonText: 'The Design System',
+    projectUrl: "#work/project/design-system?from=quiz"
   },
   {
     id: 'dataCatalogue',
@@ -800,7 +801,8 @@ export const QUIZZES = [
         "Increased trust in data",
         "Fosters a data-driven culture"
     ],
-    projectButtonText: "The Data Catalogue"
+    projectButtonText: "The Data Catalogue",
+    projectUrl: "#work/project/dataCatalogue?from=quiz"
   },
   {
     id: 'aiDashboard',
@@ -819,7 +821,8 @@ export const QUIZZES = [
         "Allows product teams to prioritize effectively",
         "Makes complex data accessible and understandable",
     ],
-    projectButtonText: "The AI Dashboard"
+    projectButtonText: "The AI Dashboard",
+    projectUrl: "#work/project/aiDashboard?from=quiz"
   },
   {
     id: 'aiVideoProduction',
@@ -839,7 +842,8 @@ export const QUIZZES = [
         "Aligns the team around a clear, user-centric purpose",
         "Uncovers opportunities for true innovation beyond the obvious"
     ],
-    projectButtonText: "The AI Video Production Tool"
+    projectButtonText: "The AI Video Production Tool",
+    projectUrl: "#work/project/aiVideoProduction?from=quiz"
   }
 ];
 
@@ -853,6 +857,7 @@ export const PROJECTS = [
     tags: ['Product','UX', 'UI'],
     icon: <MagicIcon />,
     url: '#work/project/aiPlatform?from=overview',
+    isWIP: true,
     details: {
       problem: "A large Norwegian company needed to leverage generative AI without being locked into a single provider, while also ensuring the security of their internal data.",
       role: "As the lead product designer in a cross-functional team, I was responsible for the entire design process, from initial user research and concept development to creating high-fidelity, interactive prototypes and conducting usability testing.",
@@ -868,6 +873,15 @@ export const PROJECTS = [
     description: 'Co-led the UX strategy and development of a comprehensive design system that streamlined product creation and ensured brand consistency.',
     tags: ['UX', 'UI', 'Figma'],
     icon: <PuzzleIcon />,
+    url: '#work/project/design-system?from=overview',
+    isWIP: true,
+    details: {
+        problem: "Product teams were working in silos, leading to inconsistent user experiences across the product portfolio and duplicated design and development efforts, which slowed down time-to-market.",
+        role: "I co-led the UX strategy and component design, working closely with developers to translate design concepts into reusable code. My role involved establishing a governance model, documenting usage guidelines, and advocating for adoption across the organization.",
+        solution: "We developed a comprehensive design system with a shared library of reusable components, clear design guidelines, and robust documentation. This created a single source of truth for both designers and developers.",
+        impact: "The design system reduced design and development time for new features by an estimated 30%. It also significantly improved UI consistency and quality across all digital products.",
+        reflections: "The biggest challenge was not building the system, but fostering its adoption. In the future, I'd involve more teams in the initial component selection process to create a stronger sense of shared ownership from the start."
+    }
   },
   {
     id: 'dataCatalogue',
@@ -876,6 +890,15 @@ export const PROJECTS = [
     description: 'Designing a user-centric data catalogue makes data discoverable and drives a data-driven culture.',
     tags: ['UX Research', 'UX', 'UI'],
     icon: <ChartIcon />,
+    url: '#work/project/dataCatalogue?from=overview',
+    isWIP: true,
+    details: {
+        problem: "Valuable data was fragmented across the organization, making it difficult for employees to find, trust, and utilize it effectively. This hindered the company's ability to become truly data-driven.",
+        role: "I led the user research to understand the pain points of data consumers and producers. Based on these insights, I designed the information architecture, wireframes, and final UI for a centralized data catalogue.",
+        solution: "The data catalogue provides a single, searchable interface for all company data, complete with clear documentation, data lineage, and quality metrics. It's designed to be intuitive for both technical and non-technical users.",
+        impact: "The platform increased data discovery by 60% in the first quarter after launch and significantly improved employee trust in the available data, as measured by internal surveys.",
+        reflections: "Early on, we underestimated the complexity of data lineage. A deeper initial collaboration with data engineers would have allowed us to present this information even more intuitively from the first version."
+    }
   },
   {
     id: 'aiDashboard',
@@ -884,6 +907,15 @@ export const PROJECTS = [
     description: "Designed a user-friendly dashboard for NAV, visualizing AI-driven insights on user needs. This empowered product teams to prioritize services based on real-time data of what users need the most.",
     tags: ['UX', 'UI', 'Data Visualization'],
     icon: <PieChartIcon />,
+    url: '#work/project/aiDashboard?from=overview',
+    isWIP: true,
+    details: {
+        problem: "With millions of customer interactions, NAV's product teams lacked a clear, data-driven way to identify and prioritize the most pressing user needs for digitalization.",
+        role: "My role was to translate complex AI-driven data into an accessible and actionable dashboard. I conducted user interviews with product managers, designed the data visualizations, and created an interactive prototype that served as the blueprint for development.",
+        solution: "The AI Insights Dashboard uses natural language processing to analyze customer service logs and surfaces the most common user struggles in real-time. Its intuitive interface allows product teams to filter by theme, urgency, and volume.",
+        impact: "The dashboard enabled product teams to shift from a reactive to a proactive approach, leading to a 25% faster identification of high-impact digitalization opportunities.",
+        reflections: "Initially, some visualizations were too complex. Iterating on the design based on user feedback was key to finding the right balance between data richness and clarity. Simpler is almost always better."
+    }
   },
   {
     id: 'aiVideoProduction',
@@ -892,6 +924,15 @@ export const PROJECTS = [
     description: "Led a product discovery for a major TV network to find how AI could optimize video production. The result was MAI – a tool that automates metadata creation to drastically speed up post-production.",
     tags: ['Product','UX', 'UI'],
     icon: <VideoEditorIcon />,
+    url: '#work/project/aiVideoProduction?from=overview',
+    isWIP: true,
+    details: {
+        problem: "A major TV network was struggling with a slow and manual post-production workflow. Editors spent countless hours logging footage and searching for specific clips, which delayed content delivery.",
+        role: "As the lead product designer, I conducted in-depth interviews and observation sessions with video editors to map their workflow. I then led the ideation and prototyping of an AI-powered solution, culminating in a proof-of-concept that secured stakeholder buy-in.",
+        solution: "MAI (Media AI) is a tool that uses AI to automatically analyze video footage, generating rich metadata such as speaker identification, topic detection, and scene descriptions. This makes the entire library searchable and dramatically accelerates the editing process.",
+        impact: "The proof-of-concept demonstrated that MAI could reduce the time spent on logging and searching for footage by up to 70%, allowing editors to focus on the creative aspects of their work.",
+        reflections: "The biggest learning was the importance of a human-in-the-loop design. While the AI is powerful, we quickly realized that giving editors the ability to easily review and correct AI-generated metadata was crucial for building trust and ensuring accuracy."
+    }
   },
 ];
 

@@ -7,6 +7,9 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      rotate: {
+        '11': '11deg',
+      },
       maxWidth: {
         '3.5xl': '53rem',
       },

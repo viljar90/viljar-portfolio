@@ -1,22 +1,20 @@
 // src/components/GenericProjectPage.js
 
-import React, { useState, useCallback, useMemo, useEffect } from 'react'; // 1. Import useEffect
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import ProjectBottomNav from './ProjectBottomNav';
 import { PrevArrowIcon, NextArrowIcon } from './uiElements';
 import BackButton from './BackButton';
 
 const GenericProjectPage = ({ project, darkMode }) => {
   const [activeSection, setActiveSection] = useState('problem');
-  const [backPath, setBackPath] = useState('#'); // 2. Add state for the back path
+  const [backPath, setBackPath] = useState('#');
 
-  // 3. Add logic to read the URL parameter on load
   useEffect(() => {
     const params = new URLSearchParams(window.location.hash.split('?')[1]);
     const from = params.get('from');
     if (from === 'quiz') {
       setBackPath('#work/quiz/results');
     } else if (from === 'overview') {
-      // We link back to the specific project in the overview
       setBackPath(`#work/overview/${project.id}`);
     }
   }, [project.id]);
@@ -44,11 +42,19 @@ const GenericProjectPage = ({ project, darkMode }) => {
 
   const activeSectionData = sections.find(s => s.id === activeSection);
   const content = project.details[activeSection];
+  const { isWIP } = project;
 
   return (
     <div className="project-page-container w-full min-h-screen flex flex-col items-center justify-center px-24 md:px-32 lg:px-40 xl:px-64 py-8 sm:py-16 relative">
       
-      {/* 4. Pass the back path to the BackButton */}
+      {isWIP && (
+        <div className="absolute top-40 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
+          <span className="inline-block text-white bg-black dark:text-black dark:bg-white text-4xl font-bold px-6 py-3 rounded transform -rotate-11">
+            Under Construction
+          </span>
+        </div>
+      )}
+
       <BackButton href={backPath} />
 
       <button
