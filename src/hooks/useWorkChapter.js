@@ -3,9 +3,10 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { QUIZZES, PROJECTS } from '../content';
 
-export const useWorkChapter = (currentChapter, isAppReady) => { // ADD isAppReady
+export const useWorkChapter = (currentChapter, isAppReady) => {
   const [workView, setWorkView] = useState('Quiz');
   const [activeProjectId, setActiveProjectId] = useState(null);
+  const [activeProjectSection, setActiveProjectSection] = useState('problem'); // New state for the project section
   const [workStepIndex, setWorkStepIndex] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [introCompleted, setIntroCompleted] = useState(false);
@@ -15,38 +16,56 @@ export const useWorkChapter = (currentChapter, isAppReady) => { // ADD isAppRead
   const [previousWorkStepIndex, setPreviousWorkStepIndex] = useState(null);
   const [workAnimationDirection, setWorkAnimationDirection] = useState('next');
 
+  // New Effect: Read the URL on initial load to enable deep-linking
   useEffect(() => {
-    // ADD THIS CHECK
-    if (!isAppReady) {
-      return;
-    }
+    if (!isAppReady) return;
 
-    if (currentChapter === 'work') {
-      let url = `#work/${workView.toLowerCase()}`;
-      if (workView === 'Quiz') {
-        let quizSlug = 'start';
-        if (workStepIndex > 0 && workStepIndex <= QUIZZES.length) {
-          quizSlug = QUIZZES[workStepIndex - 1]?.slug || `question-${workStepIndex}`;
-        } else if (workStepIndex > QUIZZES.length) {
-          quizSlug = 'results';
-        }
-        url += `/${quizSlug}`;
-      } else if (workView === 'Overview') {
-        const projectSlug = PROJECTS[currentProjectIndex]?.id;
-        if (projectSlug) {
-          url += `/${projectSlug}`;
-        }
-      } else if (workView === 'Project') {
-        if (activeProjectId) {
-          url = `#work/project/${activeProjectId}`;
+    const hash = window.location.hash;
+    const hashParts = hash.split('/'); // Example: #/work/project/aiPlatform/solution -> ["#", "work", "project", "aiPlatform", "solution"]
+
+    if (hash.startsWith('#work/project/')) {
+      const projectId = hashParts[3];
+      const sectionId = hashParts[4];
+
+      if (projectId && PROJECTS.find(p => p.id === projectId)) {
+        setWorkView('Project');
+        setActiveProjectId(projectId);
+        if (sectionId) {
+          setActiveProjectSection(sectionId);
         }
       }
+    }
+  }, [isAppReady]);
+
+
+  // Existing Effect: Update the URL when state changes
+  useEffect(() => {
+    if (!isAppReady || currentChapter !== 'work') return;
+
+    let url = `#work/${workView.toLowerCase()}`;
+    if (workView === 'Quiz') {
+      let quizSlug = 'start';
+      if (workStepIndex > 0 && workStepIndex <= QUIZZES.length) {
+        quizSlug = QUIZZES[workStepIndex - 1]?.slug || `question-${workStepIndex}`;
+      } else if (workStepIndex > QUIZZES.length) {
+        quizSlug = 'results';
+      }
+      url += `/${quizSlug}`;
+    } else if (workView === 'Overview') {
+      const projectSlug = PROJECTS[currentProjectIndex]?.id;
+      if (projectSlug) {
+        url += `/${projectSlug}`;
+      }
+    } else if (workView === 'Project' && activeProjectId) {
+      // Update URL to include the active section
+      url = `#work/project/${activeProjectId}/${activeProjectSection}`;
+    }
+    // Only update the URL if it's different to prevent loops
+    if (window.location.hash !== url) {
       window.history.replaceState(null, '', url);
     }
-  }, [workView, workStepIndex, currentProjectIndex, currentChapter, activeProjectId, isAppReady]); // ADD isAppReady
+  }, [workView, workStepIndex, currentProjectIndex, currentChapter, activeProjectId, activeProjectSection, isAppReady]);
 
-  // (The rest of the file is unchanged)
-  // ...
 
   const WORK_NAV_ITEMS = useMemo(() => [
     { name: 'Start' },
@@ -171,6 +190,7 @@ export const useWorkChapter = (currentChapter, isAppReady) => { // ADD isAppRead
     previousWorkStepIndex,
     workAnimationDirection,
     activeProjectId,
+    activeProjectSection, // Return new state
     setWorkView,
     setWorkStepIndex,
     setCurrentProjectIndex,
@@ -178,6 +198,7 @@ export const useWorkChapter = (currentChapter, isAppReady) => { // ADD isAppRead
     setPreviousProjectIndex,
     setPreviousWorkStepIndex,
     setActiveProjectId,
+    setActiveProjectSection, // Return new setter
     handleQuizAnswer,
     handleReplayQuestion,
     resetWorkChapter,

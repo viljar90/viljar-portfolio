@@ -27,37 +27,41 @@ const ANIMATION_DURATION_CHAPTER = "0.5s";
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
-  const [activeProject, setActiveProject] = useState(null);
+  const [activeProjectInfo, setActiveProjectInfo] = useState({ project: null, initialSection: null });
 
   // This logic now runs once to decide which "mode" the app should be in.
 
   useEffect(() => {
-    const handleUrlChange = () => {
-      const hash = window.location.hash.replace('#', '');
-      const [hashPath] = hash.split('?'); // This separates the main path from parameters
-      const parts = hashPath.split('/');
-      const [chapter, subChapter, section] = parts;
+  const handleUrlChange = () => {
+    const hash = window.location.hash.replace('#', ''); // result: "work/project/aiPlatform/solution"
+    const [hashPath] = hash.split('?');
+    const parts = hashPath.split('/'); // result: ["work", "project", "aiPlatform", "solution"]
 
-      if (chapter === 'work' && subChapter === 'project' && section) {
-        const projectData = PROJECTS.find(p => p.id === section);
-        if (projectData) {
-          setActiveProject(projectData);
-          // When we are on a project page, we are NOT showing the portfolio.
-          // This will be handled by the main return statement.
-        }
+    const chapter = parts[0];
+    const subChapter = parts[1];
+    const projectId = parts[2];
+    const sectionId = parts[3]; 
+
+    if (chapter === 'work' && subChapter === 'project' && projectId) {
+      const projectData = PROJECTS.find(p => p.id === projectId);
+      if (projectData) {
+        setActiveProjectInfo({ project: projectData, initialSection: sectionId });
       } else {
-        // If the URL is anything else, ensure we are not in project view
-        setActiveProject(null);
+        // If project ID is invalid, clear the state
+        setActiveProjectInfo({ project: null, initialSection: null });
       }
-    };
+    } else {
+      setActiveProjectInfo({ project: null, initialSection: null });
+    }
+  };
 
-    window.addEventListener('hashchange', handleUrlChange);
-    handleUrlChange(); // Run on initial load
+  window.addEventListener('hashchange', handleUrlChange);
+  handleUrlChange();
 
-    return () => {
-      window.removeEventListener('hashchange', handleUrlChange);
-    };
-  }, []); // The empty array ensures this setup only runs once
+  return () => {
+    window.removeEventListener('hashchange', handleUrlChange);
+  };
+}, []);
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -75,7 +79,7 @@ function App() {
   };
 
   // If we found a project from the URL, render ONLY the project page.
-  if (activeProject) {
+  if (activeProjectInfo.project) {
     return (
       <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen`}>
         <div className="fixed top-4 right-4 z-50">
@@ -89,7 +93,7 @@ function App() {
             </span>
           </button>
         </div>
-        <GenericProjectPage project={activeProject} darkMode={darkMode} />
+        <GenericProjectPage project={activeProjectInfo.project} darkMode={darkMode} />
       </div>
     );
   }
