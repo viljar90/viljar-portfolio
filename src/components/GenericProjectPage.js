@@ -1,6 +1,6 @@
 // src/components/GenericProjectPage.js
 
-import React, { useCallback, useMemo, useEffect, useState, useRef } from 'react'; // 1. Import useRef
+import React, { useCallback, useMemo, useEffect, useState, useRef } from 'react';
 import ProjectBottomNav from './ProjectBottomNav';
 import { PrevArrowIcon, NextArrowIcon } from './uiElements';
 import BackButton from './BackButton';
@@ -8,23 +8,26 @@ import BackButton from './BackButton';
 const GenericProjectPage = ({ project, darkMode, initialSection }) => {
   const [activeSection, setActiveSection] = useState('problem');
   const [backPath, setBackPath] = useState('#');
-  const isInitialMount = useRef(true); // 2. Add a ref to track the initial render
 
-  // This effect synchronizes the state FROM the URL prop.
-  // It runs when the component mounts or when the user navigates (e.g., browser back/forward).
+  // --- THIS IS THE FIX ---
+  // This logic now reads the full, specific "from" parameter to build the correct back link.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.hash.split('?')[1]);
+    const from = params.get('from'); // e.g., "work/quiz/question-1" or "work/overview/aiPlatform"
+    
+    if (from) {
+      setBackPath(`#${from}`); // Sets the href to "#work/quiz/question-1", etc.
+    } else {
+      setBackPath('#'); // Fallback to home if the 'from' parameter is missing.
+    }
+  }, [project.id]); // Reruns if the project changes
+
   useEffect(() => {
     const isValidSection = sections.some(s => s.id === initialSection);
     setActiveSection(isValidSection ? initialSection : 'problem');
-  }, [initialSection]); // Removed 'sections' from dependency array for simplicity
+  }, [initialSection]); // Removed 'sections' for stability
 
-  // This effect synchronizes the state TO the URL.
   useEffect(() => {
-    // 3. This is the key fix: We skip this effect on the very first render.
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-
     const params = new URLSearchParams(window.location.hash.split('?')[1]);
     const fromQuery = params.get('from');
     const newHash = `#work/project/${project.id}/${activeSection}${fromQuery ? `?from=${fromQuery}` : ''}`;
@@ -33,16 +36,6 @@ const GenericProjectPage = ({ project, darkMode, initialSection }) => {
       window.history.replaceState(null, '', newHash);
     }
   }, [activeSection, project.id]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.hash.split('?')[1]);
-    const from = params.get('from');
-    if (from === 'quiz') {
-      setBackPath('#work/quiz/results');
-    } else {
-      setBackPath('#');
-    }
-  }, []);
 
   const sections = useMemo(() => [
     { id: 'problem', title: 'The Problem' },
@@ -67,7 +60,7 @@ const GenericProjectPage = ({ project, darkMode, initialSection }) => {
 
   const activeSectionData = sections.find(s => s.id === activeSection);
   if (!activeSectionData) {
-    return null; // Return null briefly while state corrects itself
+    return null; 
   }
   const content = project.details[activeSection];
   const { isWIP } = project;

@@ -39,7 +39,9 @@ const ProjectCard = ({ project }) => {
   // If the project has a URL, wrap the card in a link that opens a new tab.
   if (project.url) {
     return (
-      <a href={project.url} target="_blank" rel="noopener noreferrer" className="block">
+      // --- THIS IS THE FIX ---
+      // The href is now constructed dynamically to include the specific project ID for the overview.
+      <a href={`#work/project/${project.id}/problem?from=work/overview/${project.id}`} target="_blank" rel="noopener noreferrer" className="block">
         {cardContent}
       </a>
     );
@@ -51,11 +53,12 @@ const ProjectCard = ({ project }) => {
 
 ProjectCard.propTypes = {
   project: PropTypes.shape({
+    id: PropTypes.string.isRequired, // Ensure id is part of the project object
     cardTitle: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,
     icon: PropTypes.node.isRequired,
-    url: PropTypes.string, // Added the url prop
+    url: PropTypes.string,
   }).isRequired,
 };
 

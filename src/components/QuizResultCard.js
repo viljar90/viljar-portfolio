@@ -34,9 +34,10 @@ const QuizResultCard = ({ quiz, onReplayQuestion }) => (
     <div className="mt-6 pt-4 border-t border-gray-200 dark:border-slate-700">
       <p className="text-sm text-text-muted dark:text-slate-400">Check out my work on this</p>
       
-      {/* THIS IS THE ONLY CHANGE: The button is now a link */}
+      {/* --- THIS IS THE FIX --- */}
+      {/* The href is now constructed dynamically to include the specific quiz question slug. */}
       <a 
-        href={quiz.projectUrl}
+        href={`#work/project/${quiz.id}/problem?from=work/quiz/${quiz.slug}`}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-2 text-lg font-semibold text-primary dark:text-sky-400 hover:text-secondary dark:hover:text-sky-300 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary flex items-center space-x-2"
@@ -51,10 +52,11 @@ const QuizResultCard = ({ quiz, onReplayQuestion }) => (
 QuizResultCard.propTypes = {
   quiz: PropTypes.shape({
     id: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired, // Ensure slug is part of the quiz object
     resultText: PropTypes.string.isRequired,
     summaryPoints: PropTypes.arrayOf(PropTypes.string).isRequired,
     projectButtonText: PropTypes.string.isRequired,
-    projectUrl: PropTypes.string, // Added prop type for the URL
+    projectUrl: PropTypes.string,
   }).isRequired,
   onReplayQuestion: PropTypes.func.isRequired,
 };
