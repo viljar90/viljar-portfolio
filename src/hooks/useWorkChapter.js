@@ -1,12 +1,12 @@
 // src/hooks/useWorkChapter.js
 
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { QUIZZES, PROJECTS } from '../content';
 
 export const useWorkChapter = (currentChapter, isAppReady) => {
   const [workView, setWorkView] = useState('Quiz');
   const [activeProjectId, setActiveProjectId] = useState(null);
-  const [activeProjectSection, setActiveProjectSection] = useState('problem'); // New state for the project section
+  const [activeProjectSection, setActiveProjectSection] = useState('problem');
   const [workStepIndex, setWorkStepIndex] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [introCompleted, setIntroCompleted] = useState(false);
@@ -15,8 +15,6 @@ export const useWorkChapter = (currentChapter, isAppReady) => {
   const [animationDirection, setAnimationDirection] = useState('next');
   const [previousWorkStepIndex, setPreviousWorkStepIndex] = useState(null);
   const [workAnimationDirection, setWorkAnimationDirection] = useState('next');
-
-  // This hook no longer updates the URL. App.js is now responsible for that.
 
   const WORK_NAV_ITEMS = useMemo(() => [
     { name: 'Start' },
@@ -141,15 +139,15 @@ export const useWorkChapter = (currentChapter, isAppReady) => {
     previousWorkStepIndex,
     workAnimationDirection,
     activeProjectId,
-    activeProjectSection, // Return new state
+    activeProjectSection,
     setWorkView,
     setWorkStepIndex,
     setCurrentProjectIndex,
-    setQuizAnswers,
+    setQuizAnswers, // <-- Keep this for restoring state
     setPreviousProjectIndex,
     setPreviousWorkStepIndex,
     setActiveProjectId,
-    setActiveProjectSection, // Return new setter
+    setActiveProjectSection,
     handleQuizAnswer,
     handleReplayQuestion,
     resetWorkChapter,

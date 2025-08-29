@@ -1,6 +1,6 @@
 // src/components/GenericProjectPage.js
 
-import React, { useCallback, useMemo, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import ProjectBottomNav from './ProjectBottomNav';
 import { PrevArrowIcon, NextArrowIcon } from './uiElements';
 import BackButton from './BackButton';
@@ -9,28 +9,49 @@ const GenericProjectPage = ({ project, darkMode, initialSection }) => {
   const [activeSection, setActiveSection] = useState('problem');
   const [backPath, setBackPath] = useState('#');
 
-  // --- THIS IS THE FIX ---
-  // This logic now reads the full, specific "from" parameter to build the correct back link.
   useEffect(() => {
-    const params = new URLSearchParams(window.location.hash.split('?')[1]);
-    const from = params.get('from'); // e.g., "work/quiz/question-1" or "work/overview/aiPlatform"
+    const hashParts = window.location.hash.split('?');
+    const params = new URLSearchParams(hashParts[1]);
+    const from = params.get('from');
+    const state = params.get('state'); // <-- Get the saved state
     
+    let path = '#';
     if (from) {
-      setBackPath(`#${from}`); // Sets the href to "#work/quiz/question-1", etc.
-    } else {
-      setBackPath('#'); // Fallback to home if the 'from' parameter is missing.
+      path = `#${from}`;
+      // --- THIS IS THE FIX ---
+      // If there's a saved state, add it back to the return URL.
+      if (state) {
+        path += `?state=${state}`;
+      }
     }
-  }, [project.id]); // Reruns if the project changes
+    setBackPath(path);
+  }, [project.id]);
 
   useEffect(() => {
+    const sections = [
+      { id: 'problem', title: 'The Problem' },
+      { id: 'role', title: 'My Role' },
+      { id: 'solution', title: 'The Solution' },
+      { id: 'impact', title: 'Impact' },
+      { id: 'reflections', title: 'Reflections' },
+    ];
     const isValidSection = sections.some(s => s.id === initialSection);
     setActiveSection(isValidSection ? initialSection : 'problem');
-  }, [initialSection]); // Removed 'sections' for stability
+  }, [initialSection]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.hash.split('?')[1]);
+    const hashParts = window.location.hash.split('?');
+    const params = new URLSearchParams(hashParts[1]);
     const fromQuery = params.get('from');
-    const newHash = `#work/project/${project.id}/${activeSection}${fromQuery ? `?from=${fromQuery}` : ''}`;
+    const stateQuery = params.get('state');
+
+    let newHash = `#work/project/${project.id}/${activeSection}`;
+    if (fromQuery) {
+      newHash += `?from=${fromQuery}`;
+      if (stateQuery) {
+        newHash += `&state=${stateQuery}`;
+      }
+    }
 
     if (window.location.hash !== newHash) {
       window.history.replaceState(null, '', newHash);

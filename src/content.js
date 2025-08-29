@@ -19,7 +19,7 @@ export const CONTENT = {
       { text: "You're dumb...", pause: 1200 },
       { text: "You're lazy...", pause: 1200 },
       { text: "You're impatient...", pause: 1400 },
-      { text: "...when using technology.", pause: 1600 },
+      { text: "...when using technology.", pause: 2400 },
       { text: "Me too!", pause: 1200 },
       { text: "Everyone is...", pause: 1500 },
       { text: "...that's where I come in.", pause: 1400 }
@@ -565,7 +565,7 @@ export const DESIGN_CONTENT = {
       },
       {
         title: "Product Designer",
-        mainText: "The product designer chart the correct course to steer the product on a good parth."
+        mainText: "The product designer chart the correct course to steer the product on a good path."
       },
       {
         title: "Product Designer",

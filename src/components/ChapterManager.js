@@ -10,11 +10,11 @@ const ChapterManager = ({
   mainChapterRef,
   designChapterRef,
   workChapterRef,
-  meChapterRef, // Added
+  meChapterRef,
   mainChapterAnimClass,
   designChapterAnimClass,
   workChapterAnimClass,
-  meChapterAnimClass, // Added
+  meChapterAnimClass,
   currentChapter,
   showPrevArrow,
   showNextArrow,
@@ -24,7 +24,7 @@ const ChapterManager = ({
   landing,
   design,
   work,
-  me, // Added
+  me,
   navigateToChapter,
   currentDesignStepData,
   showCursorInsults,
@@ -34,7 +34,7 @@ const ChapterManager = ({
   showCursorHomeQuestion,
   showCursorDesignTitle,
   showCursorDesignMainText,
-  onWorkViewChange,
+  quizAnswers, // <-- Accept the prop
 }) => {
   const isQuizView = currentChapter === 'work' && work.workView === 'Quiz';
 
@@ -74,7 +74,6 @@ const ChapterManager = ({
             showCursorIntroName={showCursorIntroName}
             showCursorIntroTitle={showCursorIntroTitle}
             showCursorHomeQuestion={showCursorHomeQuestion}
-            QUIZZES={QUIZZES}
           />
         )}
       </Chapter>
@@ -90,7 +89,6 @@ const ChapterManager = ({
             currentDesignStepData={currentDesignStepData}
             showCursorDesignTitle={showCursorDesignTitle}
             showCursorDesignMainText={showCursorDesignMainText}
-            QUIZZES={QUIZZES}
           />
         )}
       </Chapter>
@@ -103,12 +101,10 @@ const ChapterManager = ({
             design={design}
             work={work}
             navigateToChapter={navigateToChapter}
-            QUIZZES={QUIZZES}
-            onWorkViewChange={onWorkViewChange}
+            quizAnswers={quizAnswers} // <-- Pass the prop down
           />
         )}
       </Chapter>
-      {/* --- This is the new section --- */}
       <Chapter ref={meChapterRef} className={meChapterAnimClass}>
         {currentChapter === 'me' && (
           <ChapterContent
@@ -122,7 +118,6 @@ const ChapterManager = ({
           />
         )}
       </Chapter>
-      {/* --- End of new section --- */}
     </div>
   );
 };

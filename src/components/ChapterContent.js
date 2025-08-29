@@ -12,7 +12,7 @@ import ProjectOverview from './ProjectOverview';
 import { QUIZZES, PROJECTS, DESIGN_VIEWS } from '../content';
 import WhyDesignIntro from './WhyDesignIntro';
 import WhyDesignGame from './WhyDesignGame';
-import GenericProjectPage from './GenericProjectPage'; // Corrected import path
+import GenericProjectPage from './GenericProjectPage';
 
 const ChapterContent = ({
   currentChapter,
@@ -30,9 +30,8 @@ const ChapterContent = ({
   showCursorHomeQuestion,
   showCursorDesignTitle,
   showCursorDesignMainText,
-  onWorkViewChange,
+  quizAnswers, // <-- Accept the prop
 }) => {
-  const isLastStep = work.workStepIndex === QUIZZES.length + 1;
 
   const renderDesignContent = () => {
     if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
@@ -85,6 +84,65 @@ const ChapterContent = ({
       />
     );
   };
+  
+  // --- THIS IS THE FIX ---
+  // Restore the logic to correctly render different parts of the work chapter.
+  const renderWorkContent = () => {
+    const isLastStep = work.workStepIndex === QUIZZES.length + 1;
+
+    if (work.workView === 'Quiz') {
+      return (
+        <>
+          {work.workStepIndex === 0 && (
+            <QuizIntro
+              onStart={() => work.handleNextQuestion()}
+              isCompleted={work.introCompleted}
+              onIntroViewed={work.markIntroAsCompleted}
+            />
+          )}
+          {work.workStepIndex > 0 && work.workStepIndex <= QUIZZES.length && (
+            <WorkChapter
+              darkMode={darkMode}
+              quiz={QUIZZES[work.workStepIndex - 1]}
+              previousQuiz={work.previousWorkStepIndex !== null ? QUIZZES[work.previousWorkStepIndex - 1] : null}
+              onAnswer={work.handleQuizAnswer}
+              answerState={work.quizAnswers[QUIZZES[work.workStepIndex - 1]?.id]}
+              onReplayQuestion={work.handleReplayQuestion}
+              workAnimationDirection={work.workAnimationDirection}
+              onAnimationEnd={() => work.setPreviousWorkStepIndex(null)}
+              quizAnswers={quizAnswers}
+            />
+          )}
+          {isLastStep && (
+            <QuizResults
+              quizAnswers={work.quizAnswers}
+              onReplay={work.handleReplayQuestion}
+              onReset={work.resetWorkChapter}
+              onSwitchView={work.setWorkView} 
+            />
+          )}
+        </>
+      );
+    }
+
+    if (work.workView === 'Overview') {
+      return (
+        <div className="w-full overflow-hidden h-96 flex items-center justify-center relative">
+          <ProjectOverview
+            projects={PROJECTS}
+            currentProjectIndex={work.currentProjectIndex}
+            previousProjectIndex={work.previousProjectIndex}
+            animationDirection={work.animationDirection}
+            setPreviousProjectIndex={work.setPreviousProjectIndex}
+          />
+          <div className="absolute top-0 bottom-0 left-0 w-16 md:w-24 bg-gradient-to-r from-bg-base to-transparent pointer-events-none hidden md:block" />
+          <div className="absolute top-0 bottom-0 right-0 w-16 md:w-24 bg-gradient-to-l from-bg-base to-transparent pointer-events-none hidden md:block" />
+        </div>
+      );
+    }
+    
+    return null;
+  };
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-2xl md:max-w-3xl lg:max-w-5xl text-center relative px-4 sm:px-16">
@@ -109,56 +167,7 @@ const ChapterContent = ({
       )}
       {currentChapter === 'design' && renderDesignContent()}
       
-      {currentChapter === 'work' &&
-        (work.workView === 'Quiz' ? (
-            <>
-              {work.workStepIndex === 0 && (
-                <QuizIntro
-                  onStart={() => work.handleNextQuestion()}
-                  isCompleted={work.introCompleted}
-                  onIntroViewed={work.markIntroAsCompleted}
-                />
-              )}
-              {work.workStepIndex > 0 && work.workStepIndex <= QUIZZES.length && (
-                <WorkChapter
-                  darkMode={darkMode}
-                  quiz={QUIZZES[work.workStepIndex - 1]}
-                  previousQuiz={work.previousWorkStepIndex !== null ? QUIZZES[work.previousWorkStepIndex - 1] : null}
-                  onAnswer={work.handleQuizAnswer}
-                  answerState={work.quizAnswers[QUIZZES[work.workStepIndex - 1]?.id]}
-                  onReplayQuestion={work.handleReplayQuestion}
-                  workAnimationDirection={work.workAnimationDirection}
-                  onAnimationEnd={() => work.setPreviousWorkStepIndex(null)}
-                />
-              )}
-              {isLastStep && (
-                <QuizResults
-                  quizAnswers={work.quizAnswers}
-                  onReplay={work.handleReplayQuestion}
-                  onReset={work.resetWorkChapter}
-                  onSwitchView={work.setWorkView} 
-                />
-              )}
-            </>
-        ) : work.workView === 'Overview' ? (
-          <div className="w-full overflow-hidden h-96 flex items-center justify-center relative">
-            <ProjectOverview
-              projects={PROJECTS}
-              currentProjectIndex={work.currentProjectIndex}
-              previousProjectIndex={work.previousProjectIndex}
-              animationDirection={work.animationDirection}
-              setPreviousProjectIndex={work.setPreviousProjectIndex}
-            />
-            <div className="absolute top-0 bottom-0 left-0 w-16 md:w-24 bg-gradient-to-r from-bg-base to-transparent pointer-events-none hidden md:block" />
-            <div className="absolute top-0 bottom-0 right-0 w-16 md:w-24 bg-gradient-to-l from-bg-base to-transparent pointer-events-none hidden md:block" />
-          </div>
-        ) : work.workView === 'Project' ? (
-          (() => {
-            const project = PROJECTS.find(p => p.id === work.activeProjectId);
-            return project ? <GenericProjectPage project={project} darkMode={darkMode} /> : <div>Project not found.</div>;
-          })()
-        ) : null
-      )}
+      {currentChapter === 'work' && renderWorkContent()}
         
       {currentChapter === 'me' && (
         <MeChapter darkMode={darkMode} me={me} />
@@ -183,7 +192,7 @@ ChapterContent.propTypes = {
     showCursorHomeQuestion: PropTypes.bool.isRequired,
     showCursorDesignTitle: PropTypes.bool.isRequired,
     showCursorDesignMainText: PropTypes.bool.isRequired,
-    onWorkViewChange: PropTypes.func,
+    quizAnswers: PropTypes.object,
 };
 
 export default ChapterContent;

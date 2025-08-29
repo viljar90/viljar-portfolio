@@ -2,9 +2,10 @@
 
 import React, {useEffect} from 'react';
 import QuizResultCard from './QuizResultCard';
-import QuizOptionCardButton from './QuizOptionCardButton'; // Import the renamed component
+import QuizOptionCardButton from './QuizOptionCardButton';
 
-const QuizView = ({ quiz, onAnswer, answerState, onReplayQuestion }) => (
+// --- FIX: Accept quizAnswers as a prop ---
+const QuizView = ({ quiz, onAnswer, answerState, onReplayQuestion, quizAnswers }) => (
     <>
         {!answerState?.correct && (
              <div className="w-full text-left text-1xl md:text-2xl mb-8 animate-fadeIn">
@@ -18,7 +19,8 @@ const QuizView = ({ quiz, onAnswer, answerState, onReplayQuestion }) => (
                 const isTheCorrectlySelectedOption = answerState?.correct && isSelected;
 
                 if (isTheCorrectlySelectedOption) {
-                    return <QuizResultCard key={option.text} quiz={quiz} onReplayQuestion={onReplayQuestion} />;
+                    // --- FIX: Pass quizAnswers down to the result card ---
+                    return <QuizResultCard key={option.text} quiz={quiz} onReplayQuestion={onReplayQuestion} quizAnswers={quizAnswers} />;
                 }
                 if (answerState?.correct) {
                     return null;
@@ -37,7 +39,8 @@ const QuizView = ({ quiz, onAnswer, answerState, onReplayQuestion }) => (
 )
 
 
-const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion, previousQuiz, workAnimationDirection, onAnimationEnd }) => {
+// --- FIX: Accept quizAnswers as a prop ---
+const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion, previousQuiz, workAnimationDirection, onAnimationEnd, quizAnswers }) => {
 
     useEffect(() => {
         if (previousQuiz) {
@@ -71,6 +74,7 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion, 
                         onAnswer={onAnswer}
                         answerState={answerState}
                         onReplayQuestion={onReplayQuestion}
+                        quizAnswers={quizAnswers} // --- FIX: Pass prop down ---
                     />
                 </div>
 
@@ -89,6 +93,7 @@ const WorkChapter = ({ darkMode, quiz, onAnswer, answerState, onReplayQuestion, 
                             onAnswer={onAnswer}
                             answerState={answerState}
                             onReplayQuestion={onReplayQuestion}
+                            quizAnswers={quizAnswers} // --- FIX: Pass prop down ---
                         />
                     </div>
                 )}
