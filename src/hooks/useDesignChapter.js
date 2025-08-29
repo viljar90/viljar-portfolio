@@ -64,45 +64,7 @@ export const useDesignChapter = (currentChapter, isAppReady) => {
     }
   }, []);
 
-  useEffect(() => {
-    // CHANGE 2: The hook now waits for the isAppReady signal from App.js
-    if (!isAppReady) {
-      return;
-    }
-
-    if (currentChapter === 'design') {
-        if (designView === DESIGN_VIEWS.WHAT_DESIGN) {
-            const navItem = WHAT_DESIGN_NAV_ITEMS.find(item => item.name === activeDesignStageKey);
-            if (navItem && navItem.title) {
-                const sectionSlug = navItem.title.toLowerCase().replace(/\s+/g, '-');
-                window.history.replaceState(null, '', `#design/what/${sectionSlug}`);
-            }
-        } else { // Handle "Why Design" URL updates
-            let whySlug = 'start'; // Default slug
-
-            if (whyDesignStep === 'game') {
-                if (gameStatus === 'end') {
-                    whySlug = 'score';
-                } else if (gameStatus === 'bonus') {
-                    whySlug = 'bonus'; // For the bonus menu
-                } else if (gameStatus === 'playing') {
-                    const currentCase = WHY_DESIGN_GAME_CONTENT[gameCaseIndex];
-                    const isBonusCase = gameCaseIndex >= MAIN_CASES_COUNT;
-
-                    if (currentCase) {
-                        if (isBonusCase) {
-                            whySlug = `bonus/case/${currentCase.slug}`;
-                        } else {
-                            whySlug = `case/${currentCase.slug}`;
-                        }
-                    }
-                }
-            }
-            window.history.replaceState(null, '', `#design/why/${whySlug}`);
-        }
-    }
-  }, [designView, activeDesignStageKey, currentChapter, whyDesignStep, gameCaseIndex, gameStatus, isAppReady]); // isAppReady is added
-
+  // This hook no longer updates the URL. App.js is now responsible for that.
 
   const togglePlayPauseWhyDesignIntro = useCallback(() => {
     setIsPlayingWhyDesignIntro(prev => !prev);
@@ -722,6 +684,7 @@ export const useDesignChapter = (currentChapter, isAppReady) => {
     displayedWhyDesignTitleChars,
     displayedWhyDesignMainTextChars,
     whyDesignAnimationPhase,
-    navigateToGameCase
+    navigateToGameCase,
+    WHY_DESIGN_GAME_CONTENT
   };
 };

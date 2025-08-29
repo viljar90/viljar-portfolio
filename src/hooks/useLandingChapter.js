@@ -24,18 +24,7 @@ export const useLandingChapter = (currentChapter, navigatedManually, isAppReady)
   const [isLandingChapterFinished, setIsLandingChapterFinished] = useState(false);
   const wasPlayingRef = useRef(true);
 
-  useEffect(() => {
-    if (!isAppReady) {
-      return;
-    }
-
-    if (currentChapter === 'main') {
-      const navItem = MAIN_NAV_ITEMS.find(item => item.name === activeMainStep);
-      if (navItem && navItem.slug) {
-        window.history.replaceState(null, '', `#main/${navItem.slug}`);
-      }
-    }
-  }, [activeMainStep, currentChapter, isAppReady]);
+  // This hook no longer updates the URL. App.js is now responsible for that.
 
   const togglePlayPause = useCallback(() => {
     setIsPlaying(p => !p);
