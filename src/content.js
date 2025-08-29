@@ -764,7 +764,7 @@ export const QUIZZES = [
     projectUrl: "#work/project/aiPlatform?from=quiz"
   },
   {
-    id: 'designSystem',
+    id: 'design-system',
     slug: 'question-2',
     title: 'Design System',
     question: "Your product teams are struggling with inefficient frontend development and a misaligned product portfolio.\nWhat's the most effective first step to solve this?",
