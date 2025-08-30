@@ -940,8 +940,8 @@ export const ME_CONTENT = {
   name: "Viljar Tornøe",
   paragraphs: [
     "My journey into design started with a simple observation: technology is often frustrating, and it doesn't have to be.",
-    "I thrive on untangling complex challenges and turning them into simple, elegant solutions that bridge the gap between human needs and business goals, with a growing focus on how to crate business value with AI.",
-    "When I'm not designing, you'll likely find me lost in a good movie, learning to sew, or working on a creative writing piece. I'm also getting into CrossFit, but I'll admit my creative muscles are far stronger at the moment.",
+    "Every innovation begins with an idea, and design is what gives an idea form, function, and life. From the initial spark to the final product, I can help at every step.",
+    "When I'm not designing, you'll likely find me lost in a good movie, learning to sew, or working on a creative writing piece. Lately I've also gotten into CrossFit, but for now my creative muscles are far stronger.",
     "Feel free to reach out if you'd like to chat about design, technology, or your favorite film!"
   ],
   imageUrl: ProfilePicture,

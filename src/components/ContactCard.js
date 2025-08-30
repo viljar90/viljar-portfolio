@@ -15,11 +15,13 @@ const MailIcon = ({ className }) => (
     </svg>
 );
 
+/*
 const PhoneIcon = ({ className }) => (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
     </svg>
 );
+*/
 
 const LinkedInIcon = ({ className }) => (
      <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -109,23 +111,23 @@ function ContactCard({ name, email, phone, imageUrl, pixarUrl, linkedinUrl }) {
                     <div className="header-section">
                         <div className="title-container">
                             <h2 className="title-text text-gradient">
-                                Coin Flip
+                                Flip Me!
                             </h2>
                             <div className={`avatar-container ${!hasInteracted ? 'animate-bob-loop' : ''}`}>
                                 <div className="flip-card-inner" style={flipStyle}>
                                     <div className="flip-card-front">
                                         <img
-                                            className="avatar-image"
+                                            className="avatar"
                                             src={pixarUrl}
-                                            alt={`${name}'s Pixar-style picture`}
+                                            alt={`${name}'s Pixar-style`}
                                             onError={handleImageError}
                                         />
                                     </div>
                                     <div className="flip-card-back">
                                         <img
-                                            className="avatar-image"
+                                            className="avatar"
                                             src={imageUrl}
-                                            alt={`${name}'s profile picture`}
+                                            alt={`${name}'s profile`}
                                             onError={handleImageError}
                                         />
                                     </div>
