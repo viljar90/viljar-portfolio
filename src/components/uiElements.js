@@ -148,12 +148,15 @@ export const PrimaryButton = ({ onClick, children, icon: Icon, className = '' })
     setTimeout(() => setIsClicked(false), 300);
   };
 
-  const baseClasses = `font-semibold py-2.5 px-7 rounded-full shadow-md hover:shadow-lg dark:shadow-none dark:hover:shadow-glow-primary transition-all duration-200 ease-in-out transform hover:scale-105 w-full sm:w-auto text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary dark:focus-visible:ring-offset-bg-base border border-primary`;
+  // --- THE FIX: Added hover:scale-105 for consistent interaction ---
+  const baseClasses = `font-semibold px-7 rounded-full shadow-md hover:shadow-lg dark:shadow-none dark:hover:shadow-glow-primary transition-all duration-200 ease-in-out transform hover:scale-105 w-full sm:w-auto text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary dark:focus-visible:ring-offset-bg-base border border-primary`;
+  
+  const paddingClasses = Icon ? 'py-2.5' : 'py-3';
   const themeClasses = `bg-transparent hover:bg-primary dark:hover:bg-primary text-base hover:text-white dark:hover:text-white`;
   const contentClasses = `inline-flex items-center justify-center ${isClicked ? 'animate-text-bounce' : ''} ${Icon ? 'space-x-2 relative top-[2px]' : ''}`;
 
   return (
-    <button onClick={handleClick} className={`${baseClasses} ${themeClasses} ${className}`}>
+    <button onClick={handleClick} className={`${baseClasses} ${paddingClasses} ${themeClasses} ${className}`}>
       <span className={contentClasses}>
         {Icon && <Icon className="w-5 h-5" />}
         <span>{children}</span>
@@ -174,12 +177,16 @@ export const SecondaryButton = ({ onClick, children, icon: Icon, className = '' 
     setTimeout(() => setIsClicked(false), 300);
   };
 
-  const baseClasses = `font-semibold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full sm:w-auto text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary dark:focus-visible:ring-offset-bg-base`;
-  const themeClasses = `bg-transparent border border-text-muted dark:border-gray-700 text-text-muted hover:border-text-base dark:hover:border-white hover:text-text-base dark:hover:text-white`;
+  const baseClasses = `font-semibold px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105 w-full sm:w-auto text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary dark:focus-visible:ring-offset-bg-base`;
+  
+  const paddingClasses = Icon ? 'py-2.5' : 'py-3';
+
+  // --- THE FIX: Updated border color for light mode ---
+  const themeClasses = `bg-transparent border border-interactive dark:border-gray-700 text-text-muted hover:border-text-base dark:hover:border-white hover:text-text-base dark:hover:text-white`;
   const contentClasses = `inline-flex items-center justify-center ${isClicked ? 'animate-text-bounce' : ''} ${Icon ? 'space-x-2 relative top-[2px]' : ''}`;
 
   return (
-    <button onClick={handleClick} className={`${baseClasses} ${themeClasses} ${className}`}>
+    <button onClick={handleClick} className={`${baseClasses} ${paddingClasses} ${themeClasses} ${className}`}>
       <span className={contentClasses}>
         {Icon && <Icon className="w-5 h-5" />}
         <span>{children}</span>

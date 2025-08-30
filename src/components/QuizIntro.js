@@ -1,10 +1,10 @@
 // src/components/QuizIntro.js
 
 import React, { useState, useEffect } from 'react';
-import { BlinkingCursor, PlayIcon, PrimaryButton } from './uiElements';
+import { BlinkingCursor, PlayIcon, PrimaryButton, SecondaryButton } from './uiElements';
 import PropTypes from 'prop-types';
 
-const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
+const QuizIntro = ({ onStart, isCompleted, onIntroViewed, onSwitchView }) => {
     const title = "My Work";
     const mainText = "Get to know my work in this game \n or check out the overview";
     const TYPEWRITER_SPEED = 35;
@@ -13,12 +13,12 @@ const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
     const [displayedMainText, setDisplayedMainText] = useState(isCompleted ? mainText : '');
     const [phase, setPhase] = useState(isCompleted ? 'done' : 'typing-title');
 
-    // This effect runs only once when the component is first displayed
     useEffect(() => {
-        onIntroViewed();
-    }, [onIntroViewed]);
+        if (phase === 'done') {
+            onIntroViewed();
+        }
+    }, [phase, onIntroViewed]);
 
-    // This effect handles the animation
     useEffect(() => {
         if (isCompleted || phase === 'done') {
             setDisplayedTitle(title);
@@ -59,16 +59,19 @@ const QuizIntro = ({ onStart, isCompleted, onIntroViewed }) => {
               {displayedMainText}
               {phase === 'typing-main' && <BlinkingCursor sizeClass="h-8 md:h-9" />}
             </p>
-            {phase === 'done' && (
-                <div className="mt-12 animate-fadeIn">
-                    <PrimaryButton
-                        onClick={onStart}
-                        icon={PlayIcon}
-                    >
-                        Play
-                    </PrimaryButton>
-                </div>
-            )}
+            {/* --- THE FIX: Removed the conditional rendering wrapper and the fade-in animation --- */}
+            <div className="mt-12 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <PrimaryButton
+                    onClick={onStart}
+                    icon={PlayIcon}
+                >
+                    Play
+                </PrimaryButton>
+                <div className="h-8 w-px bg-gray-400 dark:bg-gray-600 hidden sm:block"></div>
+                <SecondaryButton onClick={() => onSwitchView('Overview')}>
+                    Work Overview
+                </SecondaryButton>
+            </div>
         </div>
     );
 };
@@ -77,6 +80,7 @@ QuizIntro.propTypes = {
   onStart: PropTypes.func.isRequired,
   isCompleted: PropTypes.bool,
   onIntroViewed: PropTypes.func.isRequired,
+  onSwitchView: PropTypes.func.isRequired,
 };
 
 QuizIntro.defaultProps = {

@@ -19,7 +19,7 @@ export const CONTENT = {
       { text: "You're dumb...", pause: 1200 },
       { text: "You're lazy...", pause: 1200 },
       { text: "You're impatient...", pause: 1400 },
-      { text: "...when using technology.", pause: 2400 },
+      { text: "...when using technology.", pause: 2600 },
       { text: "Me too!", pause: 1200 },
       { text: "Everyone is...", pause: 1500 },
       { text: "...that's where I come in.", pause: 1400 }

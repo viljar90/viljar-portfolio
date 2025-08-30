@@ -2,10 +2,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PrimaryButton, BlinkingCursor, PlayIcon } from './uiElements';
+// --- THE FIX: 'BlinkingCursor' was added to this line ---
+import { PrimaryButton, SecondaryButton, PlayIcon, BlinkingCursor } from './uiElements';
 
 const WhyDesignIntro = ({
   onStart,
+  onSwitchView,
   displayedTitle,
   displayedMainText,
   showCursorTitle,
@@ -23,13 +25,19 @@ const WhyDesignIntro = ({
               {showCursorMainText && <BlinkingCursor sizeClass="h-8 md:h-9" />}
             </p>
             {showPlayButton && (
-                <div className="mt-12 w-full">
+                <div className="mt-12 w-full flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                     <PrimaryButton
                         onClick={onStart}
                         icon={PlayIcon}
                     >
                         Play
                     </PrimaryButton>
+                    <div className="h-8 w-px bg-gray-400 dark:bg-gray-600 hidden sm:block"></div>
+                    <SecondaryButton
+                        onClick={() => onSwitchView('What Design')}
+                    >
+                        What Design
+                    </SecondaryButton>
                 </div>
             )}
         </div>
@@ -38,6 +46,7 @@ const WhyDesignIntro = ({
 
 WhyDesignIntro.propTypes = {
   onStart: PropTypes.func.isRequired,
+  onSwitchView: PropTypes.func.isRequired,
   displayedTitle: PropTypes.string.isRequired,
   displayedMainText: PropTypes.string.isRequired,
   showCursorTitle: PropTypes.bool.isRequired,

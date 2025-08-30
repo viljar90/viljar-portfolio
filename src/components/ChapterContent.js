@@ -12,7 +12,6 @@ import ProjectOverview from './ProjectOverview';
 import { QUIZZES, PROJECTS, DESIGN_VIEWS } from '../content';
 import WhyDesignIntro from './WhyDesignIntro';
 import WhyDesignGame from './WhyDesignGame';
-import GenericProjectPage from './GenericProjectPage';
 
 const ChapterContent = ({
   currentChapter,
@@ -30,9 +29,8 @@ const ChapterContent = ({
   showCursorHomeQuestion,
   showCursorDesignTitle,
   showCursorDesignMainText,
-  quizAnswers, // <-- Accept the prop
+  quizAnswers, // Prop for state restoration
 }) => {
-
   const renderDesignContent = () => {
     if (design.designView === DESIGN_VIEWS.WHY_DESIGN) {
       if (design.whyDesignStep === 'intro') {
@@ -42,6 +40,7 @@ const ChapterContent = ({
           <WhyDesignIntro 
             key={design.whyDesignIntroResetKey}
             onStart={design.handleStartWhyDesignGame}
+            onSwitchView={design.setDesignView}
             isPlaying={design.isPlayingWhyDesignIntro} 
             onAnimationComplete={design.handleNextWhyDesignIntroLine}
             whyDesignIntroStepIndex={design.whyDesignIntroStepIndex}
@@ -84,9 +83,7 @@ const ChapterContent = ({
       />
     );
   };
-  
-  // --- THIS IS THE FIX ---
-  // Restore the logic to correctly render different parts of the work chapter.
+
   const renderWorkContent = () => {
     const isLastStep = work.workStepIndex === QUIZZES.length + 1;
 
@@ -98,6 +95,7 @@ const ChapterContent = ({
               onStart={() => work.handleNextQuestion()}
               isCompleted={work.introCompleted}
               onIntroViewed={work.markIntroAsCompleted}
+              onSwitchView={work.setWorkView} 
             />
           )}
           {work.workStepIndex > 0 && work.workStepIndex <= QUIZZES.length && (
@@ -141,6 +139,7 @@ const ChapterContent = ({
       );
     }
     
+    // Fallback for any other work view like 'Project', though it's handled by App.js
     return null;
   };
 
