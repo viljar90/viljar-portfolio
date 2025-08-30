@@ -221,13 +221,13 @@ export const WHY_DESIGN_GAME_CONTENT = [
             },
             {
                 type: 'selectAll',
-                context: "The project failed because the chosen software could not be adapted to fit Lidl's core business logic, proving that even a popular, standard solution can be the wrong one if it doesn't serve the user's needs.",
-                question: "Which principles or biases explain this failure?",
+                context: "The industry standard was cheaper, but in the end led to a large financial loss",
+                question: "Which design teachings is relevant regarding this failure?",
                 options: [
-                    { text: "Match Between System and the Real World", isCorrect: true, rationale: "A tool must serve the user's reality. The system's logic was fundamentally opposed to Lidl's business logic, making it a bad fit from the start." },
-                    { text: "Sunk Cost Effect", isCorrect: true, rationale: "As costs mounted into the hundreds of millions, this psychological bias made it harder for leadership to abandon the failing project, as they were too focused on the money already 'sunk' into it." },
+                    { text: "Match Between System and the Real World", isCorrect: true, rationale: "A tool must serve the business and user's reality. The system's logic was fundamentally opposed to Lidl's business model, making it a bad fit from the start." },
+                    { text: "Sunk Cost Effect", isCorrect: true, rationale: "As costs mounts, this psychological bias makes it harder for leadership to abandon a failing project, because of the the money already 'sunk' into it. This is why design and testing is so important." },
                     { text: "Occam's Razor", isCorrect: false, rationale: "This principle suggests simpler solutions are better. While a better-fitting system would have been a 'simpler' solution in hindsight, the core failure was the mismatch, not just a failure to choose the simplest path." },
-                    { text: "Status Quo Bias", isCorrect: true, rationale: "The organization was unwilling to change its established behavior and internal processes (the status quo), leading them to make the irrational decision to spend a fortune on unsustainable customization rather than adapt." }
+                    { text: "Status Quo Bias", isCorrect: false, rationale: "Status quo bias means a preferance for things to stay the the way they are, even if they are bad. In this case this bias was underestimated, and some core things should could not be changed." }
                 ]
             }
         ]
