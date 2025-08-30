@@ -1,6 +1,4 @@
-// src/hooks/useWorkChapter.js
-
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { QUIZZES, PROJECTS } from '../content';
 
 export const useWorkChapter = (currentChapter, isAppReady) => {
@@ -15,6 +13,20 @@ export const useWorkChapter = (currentChapter, isAppReady) => {
   const [animationDirection, setAnimationDirection] = useState('next');
   const [previousWorkStepIndex, setPreviousWorkStepIndex] = useState(null);
   const [workAnimationDirection, setWorkAnimationDirection] = useState('next');
+  
+  const [workIntroResetKey, setWorkIntroResetKey] = useState(0);
+
+  // --- START: SIMPLIFIED LOGIC ---
+  // This single useEffect replaces all previous tracking logic.
+  useEffect(() => {
+    // When the user navigates TO the work chapter, always reset the intro animation.
+    // This forces it to replay from the top every time.
+    if (currentChapter === 'work') {
+      setIntroCompleted(false);
+      setWorkIntroResetKey(prev => prev + 1);
+    }
+  }, [currentChapter]);
+  // --- END: SIMPLIFIED LOGIC ---
 
   const WORK_NAV_ITEMS = useMemo(() => [
     { name: 'Start' },
@@ -115,6 +127,7 @@ export const useWorkChapter = (currentChapter, isAppReady) => {
     setCurrentProjectIndex(0);
     setPreviousProjectIndex(null);
     setPreviousWorkStepIndex(null);
+    setWorkIntroResetKey(prev => prev + 1);
   }, []);
 
   const handleWorkChapterCentralButtonClick = useCallback(() => {
@@ -140,10 +153,11 @@ export const useWorkChapter = (currentChapter, isAppReady) => {
     workAnimationDirection,
     activeProjectId,
     activeProjectSection,
+    workIntroResetKey,
     setWorkView,
     setWorkStepIndex,
     setCurrentProjectIndex,
-    setQuizAnswers, // <-- Keep this for restoring state
+    setQuizAnswers,
     setPreviousProjectIndex,
     setPreviousWorkStepIndex,
     setActiveProjectId,

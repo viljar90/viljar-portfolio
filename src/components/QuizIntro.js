@@ -1,32 +1,25 @@
-// src/components/QuizIntro.js
-
 import React, { useState, useEffect } from 'react';
 import { BlinkingCursor, PlayIcon, PrimaryButton, SecondaryButton } from './uiElements';
 import PropTypes from 'prop-types';
 
-const QuizIntro = ({ onStart, isCompleted, onIntroViewed, onSwitchView }) => {
+const QuizIntro = ({ onStart, onIntroViewed, onSwitchView }) => {
     const title = "My Work";
     const mainText = "Get to know my work in this game \n or check out the overview";
     const TYPEWRITER_SPEED = 35;
 
-    const [displayedTitle, setDisplayedTitle] = useState(isCompleted ? title : '');
-    const [displayedMainText, setDisplayedMainText] = useState(isCompleted ? mainText : '');
-    const [phase, setPhase] = useState(isCompleted ? 'done' : 'typing-title');
+    const [displayedTitle, setDisplayedTitle] = useState('');
+    const [displayedMainText, setDisplayedMainText] = useState('');
+    const [phase, setPhase] = useState('typing-title');
 
+    // This effect calls onIntroViewed once the animation is complete.
     useEffect(() => {
         if (phase === 'done') {
             onIntroViewed();
         }
     }, [phase, onIntroViewed]);
 
+    // This is the core typewriter animation logic. It runs on mount.
     useEffect(() => {
-        if (isCompleted || phase === 'done') {
-            setDisplayedTitle(title);
-            setDisplayedMainText(mainText);
-            setPhase('done');
-            return;
-        }
-
         let timer;
         if (phase === 'typing-title') {
             if (displayedTitle.length < title.length) {
@@ -47,7 +40,7 @@ const QuizIntro = ({ onStart, isCompleted, onIntroViewed, onSwitchView }) => {
         }
 
         return () => clearTimeout(timer);
-    }, [isCompleted, phase, displayedTitle, displayedMainText, title, mainText]);
+    }, [phase, displayedTitle, displayedMainText]);
 
     return (
         <div className="text-center">
@@ -59,18 +52,17 @@ const QuizIntro = ({ onStart, isCompleted, onIntroViewed, onSwitchView }) => {
               {displayedMainText}
               {phase === 'typing-main' && <BlinkingCursor sizeClass="h-8 md:h-9" />}
             </p>
-            {/* --- THE FIX: Removed the conditional rendering wrapper and the fade-in animation --- */}
             <div className="mt-12 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <SecondaryButton onClick={() => onSwitchView('Overview')}>
+                    Work Overview
+                </SecondaryButton>
+                <div className="h-8 w-px bg-gray-400 dark:bg-gray-600 hidden sm:block"></div>
                 <PrimaryButton
                     onClick={onStart}
                     icon={PlayIcon}
                 >
                     Play
                 </PrimaryButton>
-                <div className="h-8 w-px bg-gray-400 dark:bg-gray-600 hidden sm:block"></div>
-                <SecondaryButton onClick={() => onSwitchView('Overview')}>
-                    Work Overview
-                </SecondaryButton>
             </div>
         </div>
     );
@@ -78,13 +70,8 @@ const QuizIntro = ({ onStart, isCompleted, onIntroViewed, onSwitchView }) => {
 
 QuizIntro.propTypes = {
   onStart: PropTypes.func.isRequired,
-  isCompleted: PropTypes.bool,
   onIntroViewed: PropTypes.func.isRequired,
   onSwitchView: PropTypes.func.isRequired,
-};
-
-QuizIntro.defaultProps = {
-    isCompleted: false,
 };
 
 export default QuizIntro;

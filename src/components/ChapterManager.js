@@ -3,7 +3,6 @@
 import React from 'react';
 import Chapter from './Chapter';
 import ChapterContent from './ChapterContent';
-import { QUIZZES } from '../content';
 import { PrevArrowIcon, NextArrowIcon } from './uiElements';
 
 const ChapterManager = ({
@@ -34,7 +33,7 @@ const ChapterManager = ({
   showCursorHomeQuestion,
   showCursorDesignTitle,
   showCursorDesignMainText,
-  quizAnswers, // <-- Accept the prop
+  quizAnswers,
 }) => {
   const isQuizView = currentChapter === 'work' && work.workView === 'Quiz';
 
@@ -61,62 +60,58 @@ const ChapterManager = ({
         </button>
       )}
       <Chapter ref={mainChapterRef} className={mainChapterAnimClass}>
-        {currentChapter === 'main' && (
-          <ChapterContent
-            currentChapter="main"
-            darkMode={darkMode}
-            landing={landing}
-            design={design}
-            work={work}
-            navigateToChapter={navigateToChapter}
-            showCursorInsults={showCursorInsults}
-            showCursorIntroGreeting={showCursorIntroGreeting}
-            showCursorIntroName={showCursorIntroName}
-            showCursorIntroTitle={showCursorIntroTitle}
-            showCursorHomeQuestion={showCursorHomeQuestion}
-          />
-        )}
+        {/* --- FIX: Removed conditional rendering --- */}
+        <ChapterContent
+          currentChapter="main"
+          darkMode={darkMode}
+          landing={landing}
+          design={design}
+          work={work}
+          navigateToChapter={navigateToChapter}
+          showCursorInsults={showCursorInsults}
+          showCursorIntroGreeting={showCursorIntroGreeting}
+          showCursorIntroName={showCursorIntroName}
+          showCursorIntroTitle={showCursorIntroTitle}
+          showCursorHomeQuestion={showCursorHomeQuestion}
+        />
       </Chapter>
       <Chapter ref={designChapterRef} className={designChapterAnimClass}>
-        {currentChapter === 'design' && (
-          <ChapterContent
-            currentChapter="design"
-            darkMode={darkMode}
-            landing={landing}
-            design={design}
-            work={work}
-            navigateToChapter={navigateToChapter}
-            currentDesignStepData={currentDesignStepData}
-            showCursorDesignTitle={showCursorDesignTitle}
-            showCursorDesignMainText={showCursorDesignMainText}
-          />
-        )}
+        {/* --- FIX: Removed conditional rendering --- */}
+        <ChapterContent
+          currentChapter="design"
+          darkMode={darkMode}
+          landing={landing}
+          design={design}
+          work={work}
+          navigateToChapter={navigateToChapter}
+          currentDesignStepData={currentDesignStepData}
+          showCursorDesignTitle={showCursorDesignTitle}
+          showCursorDesignMainText={showCursorDesignMainText}
+        />
       </Chapter>
       <Chapter ref={workChapterRef} className={workChapterAnimClass}>
-        {currentChapter === 'work' && (
-          <ChapterContent
-            currentChapter="work"
-            darkMode={darkMode}
-            landing={landing}
-            design={design}
-            work={work}
-            navigateToChapter={navigateToChapter}
-            quizAnswers={quizAnswers} // <-- Pass the prop down
-          />
-        )}
+        {/* --- FIX: Removed conditional rendering --- */}
+        <ChapterContent
+          currentChapter="work"
+          darkMode={darkMode}
+          landing={landing}
+          design={design}
+          work={work}
+          navigateToChapter={navigateToChapter}
+          quizAnswers={quizAnswers}
+        />
       </Chapter>
       <Chapter ref={meChapterRef} className={meChapterAnimClass}>
-        {currentChapter === 'me' && (
-          <ChapterContent
-            currentChapter="me"
-            darkMode={darkMode}
-            landing={landing}
-            design={design}
-            work={work}
-            me={me}
-            navigateToChapter={navigateToChapter}
-          />
-        )}
+        {/* --- FIX: Removed conditional rendering --- */}
+        <ChapterContent
+          currentChapter="me"
+          darkMode={darkMode}
+          landing={landing}
+          design={design}
+          work={work}
+          me={me}
+          navigateToChapter={navigateToChapter}
+        />
       </Chapter>
     </div>
   );

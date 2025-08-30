@@ -1,5 +1,3 @@
-// src/components/ChapterContent.js
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import LandingChapter from './LandingChapter';
@@ -92,10 +90,12 @@ const ChapterContent = ({
         <>
           {work.workStepIndex === 0 && (
             <QuizIntro
+              key={work.workIntroResetKey}
               onStart={() => work.handleNextQuestion()}
               isCompleted={work.introCompleted}
               onIntroViewed={work.markIntroAsCompleted}
-              onSwitchView={work.setWorkView} 
+              onSwitchView={work.setWorkView}
+              isChapterActive={currentChapter === 'work'} 
             />
           )}
           {work.workStepIndex > 0 && work.workStepIndex <= QUIZZES.length && (
