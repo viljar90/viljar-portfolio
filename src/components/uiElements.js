@@ -299,7 +299,7 @@ export const InteractiveOblongNavItem = React.forwardRef(({ text, onClick, class
 });
 InteractiveOblongNavItem.displayName = 'InteractiveOblongNavItem';
 
-// SegmentedControl remains the same
+// SegmentedControl
 export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkMode }) => {
     const [clickedOption, setClickedOption] = useState(null);
 
@@ -319,7 +319,11 @@ export const SegmentedControl = ({ options, activeOption, onOptionClick, isDarkM
             {options.map((option) => {
                 const isActive = activeOption === option;
                 const isClicked = clickedOption === option;
-                const activeClasses = `bg-bg-base text-text-base dark:text-white ring-1 ring-gray-500 dark:ring-gray-700`;
+
+                // --- THIS IS THE CHANGE ---
+                // Light Mode: Black background, white text
+                // Dark Mode: White background, black text
+                const activeClasses = `bg-black text-white dark:bg-gray-300 dark:text-black`;
                 const inactiveClasses = `text-text-interactive-muted hover:text-text-base dark:hover:text-white`;
 
                 return (

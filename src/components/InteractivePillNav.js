@@ -153,13 +153,13 @@ const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
         style={{ maxWidth: '778px' }}
       >
         <div 
-          className="p-1 border border-gray-300 dark:border-gray-700 rounded-full bg-white shadow-lg"
+          className="p-1 border border-gray-300 dark:border-gray-700 rounded-full bg-transparent shadow-lg"
         >
           <div className="relative rounded-full overflow-hidden">
             <ul ref={scrollContainerRef} className="relative flex items-center justify-start whitespace-nowrap overflow-x-auto no-scrollbar" role="tablist">
               {isMounted && (
                 <div
-                  className={`animated-pill absolute top-0 bottom-0 z-0 bg-black dark:bg-gray-700 rounded-full ${isReady ? 'animated-pill--visible' : ''}`}
+                  className={`animated-pill absolute top-0 bottom-0 z-0 bg-black dark:bg-gray-300 rounded-full ${isReady ? 'animated-pill--visible' : ''}`}
                   style={{
                     left: `${pillStyle.left}px`,
                     width: `${pillStyle.width}px`,
@@ -185,7 +185,7 @@ const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
                     role="tab"
                     aria-selected={isSelected}
                     className={`block w-full cursor-pointer px-4 py-1.5 rounded-full transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-base font-semibold text-sm sm:text-base ${
-                      isSelected ? 'text-white dark:text-white' : 'text-gray-500 hover:text-black dark:hover:text-white'
+                      isSelected ? 'text-white dark:text-black' : 'text-gray-500 hover:text-black dark:hover:text-white'
                     }`}
                   >
                     <span className={`inline-block ${isClicked ? 'animate-text-bounce' : ''}`}>
