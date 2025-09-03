@@ -23,6 +23,7 @@ import ViewSwitcher from './components/ViewSwitcher';
 import { SunIcon, MoonIcon, PotatoIcon } from './components/uiElements';
 import InteractivePillNav from './components/InteractivePillNav';
 import GenericProjectPage from './components/GenericProjectPage';
+import ProjectHeader from './components/ProjectHeader'; // <-- ADDITION: Import the new component
 
 const ANIMATION_DURATION_CHAPTER = "0.5s";
 
@@ -71,17 +72,14 @@ function App() {
   };
 
   if (activeProjectInfo.project) {
+    // --- THE FIX: The entire header logic is now cleanly handled by the ProjectHeader component ---
     return (
       <div className={`AppContainer bg-bg-base text-text-base transition-colors duration-300 min-h-screen`}>
-        <div className="fixed top-4 right-4 z-50">
-           <button
-            onClick={toggleDarkMode}
-            className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-transparent text-icon-interactive hover:text-icon-base transform hover:scale-105 active:scale-95 shadow-md`}
-            aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          >
-            <span>{darkMode ? <SunIcon /> : <MoonIcon />}</span>
-          </button>
-        </div>
+        <ProjectHeader
+          project={activeProjectInfo.project}
+          darkMode={darkMode}
+          toggleDarkMode={toggleDarkMode}
+        />
         <GenericProjectPage project={activeProjectInfo.project} darkMode={darkMode} initialSection={activeProjectInfo.initialSection}/>
       </div>
     );
@@ -89,6 +87,8 @@ function App() {
 
   return <PortfolioApp darkMode={darkMode} toggleDarkMode={toggleDarkMode} />;
 }
+
+// --- NO CHANGES BELOW THIS LINE ---
 
 const PortfolioApp = ({ darkMode, toggleDarkMode }) => {
     const [currentChapter, setCurrentChapter] = useState(null);
@@ -196,7 +196,7 @@ const PortfolioApp = ({ darkMode, toggleDarkMode }) => {
       syncStateFromUrl();
       window.addEventListener('hashchange', syncStateFromUrl);
       return () => window.removeEventListener('hashchange', syncStateFromUrl);
-    }, []); // <-- FIX: Removed dependencies to prevent infinite loop.
+    }, []);
 
     useEffect(() => {
       if (!isReady || isInitialLoad.current) return;
