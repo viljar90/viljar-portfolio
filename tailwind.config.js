@@ -35,6 +35,7 @@ module.exports = {
         'bg-base': 'var(--color-bg-base)',
         'bg-overlay': 'var(--color-bg-overlay)',
         'bg-muted': 'var(--color-bg-muted)',
+        'bg-element': 'var(--color-bg-element)',
         'anim-1': 'var(--color-anim-1)',
         'anim-2': 'var(--color-anim-2)',
         'anim-3': 'var(--color-anim-3)',

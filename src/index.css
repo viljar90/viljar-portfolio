@@ -18,6 +18,7 @@
     --color-icon-base: #111827; /* Add this: Same as text-base for light mode */
     --color-icon-interactive: #696c71; /* Add this: Same as text-interactive-muted for light mode */
     --color-bg-base: #FFFFFF;        /* Pure white for the main background */
+    --color-bg-element: #111827; 
     --color-bg-overlay: #eeeff0;   /* White for light mode overlay */
     --color-bg-muted: #F9FAFB;      /* A very light off-white for cards/contrast */
 
@@ -49,6 +50,7 @@
     --color-icon-base: #f8fafc; /* Add this: Same as text-base for dark mode */
     --color-icon-interactive: #6a6d70; /* Add this: Same as text-interactive-muted for dark mode */
     --color-bg-base: #020617;
+    --color-bg-element: #e3e3e3;
     --color-bg-overlay: #1e293b;
     --color-bg-muted: #04070c;
 

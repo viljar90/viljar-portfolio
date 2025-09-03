@@ -159,7 +159,7 @@ const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
             <ul ref={scrollContainerRef} className="relative flex items-center justify-start whitespace-nowrap overflow-x-auto no-scrollbar" role="tablist">
               {isMounted && (
                 <div
-                  className={`animated-pill absolute top-0 bottom-0 z-0 bg-black dark:bg-gray-300 rounded-full ${isReady ? 'animated-pill--visible' : ''}`}
+                  className={`animated-pill absolute top-0 bottom-0 z-0 bg-bg-element rounded-full ${isReady ? 'animated-pill--visible' : ''}`}
                   style={{
                     left: `${pillStyle.left}px`,
                     width: `${pillStyle.width}px`,
