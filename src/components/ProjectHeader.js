@@ -27,14 +27,20 @@ const ProjectHeader = ({ project, darkMode, toggleDarkMode }) => {
 
   return (
     <div className="fixed top-4 left-0 right-0 w-full px-4 z-50 flex items-center h-12">
-      <BackButton href={backPath} />
+      {/* Back button with flex-shrink-0 to prevent squishing */}
+      <div className="flex-shrink-0">
+        <BackButton href={backPath} />
+      </div>
+      
+      {/* Minimum spacing after back button */}
+      <div className="w-4 sm:w-6 md:w-8 flex-shrink-0" />
       
       {/* Spacer to push the right group to the right */}
-      <div className="flex-1" />
+      <div className="flex-1 min-w-0" />
       
       {/* Group the pill nav and toggle button together */}
-      <div className="flex items-center space-x-4 min-w-0">
-        <div className="min-w-0">
+      <div className="flex items-center space-x-4 min-w-0 max-w-full">
+        <div className="min-w-0 max-w-full">
           <InteractivePillNav
             menuItems={PROJECTS.map(p => p.navText)}
             selected={project.navText}
