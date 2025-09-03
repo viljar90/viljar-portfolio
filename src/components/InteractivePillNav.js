@@ -149,7 +149,7 @@ const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
         }
       `}</style> 
       <div
-        className="w-full transform transition-transform duration-200 hover:scale-103"
+        className="transform transition-transform duration-200 hover:scale-103"
         style={{ maxWidth: '778px' }}
       >
         <div 

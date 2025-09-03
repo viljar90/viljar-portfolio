@@ -26,36 +26,24 @@ const ProjectHeader = ({ project, darkMode, toggleDarkMode }) => {
   }
 
   return (
-    // This is the main header container. It separates the left and right sides.
     <div className="fixed top-4 left-0 right-0 w-full px-4 z-50 flex items-center justify-between space-x-4 h-12">
-      
-      {/* Left side: The Back Button. It will not shrink. */}
-      <div className="flex-shrink-0">
-        <BackButton href={backPath} />
-      </div>
+      <BackButton href={backPath} />
 
-      {/* --- THE FIX: This is the new sub-parent for the right side --- */}
-      {/* It takes up the remaining space but can shrink (`flex-1 min-w-0`). */}
-      <div className="flex-1 min-w-0 flex items-center justify-end space-x-4">
-
-        {/* The Pill Navigation. It will now shrink and scroll inside this container. */}
+      <div className="flex-1 min-w-0">
         <InteractivePillNav
           menuItems={PROJECTS.map(p => p.navText)}
           selected={project.navText}
           setSelected={handleProjectSwitch}
         />
-
-        {/* The Theme Toggle. It will not shrink. */}
-        <div className="flex-shrink-0">
-          <button
-            onClick={toggleDarkMode}
-            className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-transparent text-icon-interactive hover:text-icon-base transform hover:scale-105 active:scale-95 shadow-md`}
-            aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          >
-            <span>{darkMode ? <SunIcon /> : <MoonIcon />}</span>
-          </button>
-        </div>
       </div>
+
+      <button
+        onClick={toggleDarkMode}
+        className={`w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-transparent text-icon-interactive hover:text-icon-base transform hover:scale-105 active:scale-95 shadow-md`}
+        aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+      >
+        <span>{darkMode ? <SunIcon /> : <MoonIcon />}</span>
+      </button>
     </div>
   );
 };

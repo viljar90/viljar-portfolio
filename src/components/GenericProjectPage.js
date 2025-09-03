@@ -3,29 +3,9 @@
 import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import ProjectBottomNav from './ProjectBottomNav';
 import { PrevArrowIcon, NextArrowIcon } from './uiElements';
-import BackButton from './BackButton';
 
 const GenericProjectPage = ({ project, darkMode, initialSection }) => {
   const [activeSection, setActiveSection] = useState('problem');
-  const [backPath, setBackPath] = useState('#');
-
-  useEffect(() => {
-    const hashParts = window.location.hash.split('?');
-    const params = new URLSearchParams(hashParts[1]);
-    const from = params.get('from');
-    const state = params.get('state'); // <-- Get the saved state
-    
-    let path = '#';
-    if (from) {
-      path = `#${from}`;
-      // --- THIS IS THE FIX ---
-      // If there's a saved state, add it back to the return URL.
-      if (state) {
-        path += `?state=${state}`;
-      }
-    }
-    setBackPath(path);
-  }, [project.id]);
 
   useEffect(() => {
     const sections = [
@@ -96,8 +76,6 @@ const GenericProjectPage = ({ project, darkMode, initialSection }) => {
           </span>
         </div>
       )}
-
-      <BackButton href={backPath} />
 
       <button
         onClick={handlePrevSection}
