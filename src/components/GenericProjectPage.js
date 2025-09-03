@@ -71,7 +71,7 @@ const GenericProjectPage = ({ project, darkMode, initialSection }) => {
       
       {isWIP && (
         <div className="absolute top-40 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
-          <span className="inline-block text-white bg-black dark:text-black dark:bg-white text-4xl font-bold px-6 py-3 rounded transform -rotate-11">
+          <span className="inline-block text-white bg-bg-element dark:text-black text-4xl font-bold px-6 py-3 rounded transform -rotate-11">
             Under Construction
           </span>
         </div>

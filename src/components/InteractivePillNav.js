@@ -153,7 +153,7 @@ const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
         style={{ maxWidth: '778px' }}
       >
         <div 
-          className="p-1 border border-gray-300 dark:border-gray-700 rounded-full bg-transparent shadow-lg"
+          className="p-1 border border-gray-300 dark:border-gray-700 rounded-full bg-bg-base shadow-lg"
         >
           <div className="relative rounded-full overflow-hidden">
             <ul ref={scrollContainerRef} className="relative flex items-center justify-start whitespace-nowrap overflow-x-auto no-scrollbar" role="tablist">
@@ -184,7 +184,7 @@ const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
                     onClick={() => handleItemClick(item)}
                     role="tab"
                     aria-selected={isSelected}
-                    className={`block w-full cursor-pointer px-4 py-1.5 rounded-full transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-base font-semibold text-sm sm:text-base ${
+                    className={`block w-full cursor-pointer px-4 py-1.5 rounded-full transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-base font-semibold text-base ${
                       isSelected ? 'text-white dark:text-black' : 'text-gray-500 hover:text-black dark:hover:text-white'
                     }`}
                   >
@@ -195,8 +195,8 @@ const InteractivePillNav = ({ menuItems, selected, setSelected }) => {
                 </li>
               )})}
             </ul>
-            <div className={`absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-white to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
-            <div className={`absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-white to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
+            <div className={`absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-bg-base to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
+            <div className={`absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-bg-base to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
           </div>
         </div>
       </div>

@@ -657,7 +657,7 @@ const PortfolioApp = ({ darkMode, toggleDarkMode }) => {
                 )}
                 <button
                 onClick={aToggleDarkMode}
-                className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-transparent text-icon-interactive hover:text-icon-base transform hover:scale-105 active:scale-95 shadow-md`}
+                className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-bg-muted border border-text-muted dark:border-gray-700 bg-bg-base text-icon-interactive hover:text-icon-base transform hover:scale-105 active:scale-95 shadow-md`}
                 aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
                 >
                 <span className={isThemeToggleClicked ? 'animate-click-bounce' : ''}>
