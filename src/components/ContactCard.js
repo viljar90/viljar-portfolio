@@ -15,14 +15,6 @@ const MailIcon = ({ className }) => (
     </svg>
 );
 
-/*
-const PhoneIcon = ({ className }) => (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-    </svg>
-);
-*/
-
 const LinkedInIcon = ({ className }) => (
      <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
@@ -114,20 +106,20 @@ function ContactCard({ name, email, phone, imageUrl, pixarUrl, linkedinUrl }) {
                                 Flip Me!
                             </h2>
                             <div className={`avatar-container ${!hasInteracted ? 'animate-bob-loop' : ''}`}>
-                                <div className="flip-card-inner" style={flipStyle}>
+                               <div className="flip-card-inner" style={flipStyle}>
                                     <div className="flip-card-front">
                                         <img
-                                            className="avatar"
-                                            src={pixarUrl}
-                                            alt={`${name}'s Pixar-style`}
+                                            className="avatar-image"
+                                            src={imageUrl} 
+                                            alt={`${name}'s profile`}
                                             onError={handleImageError}
                                         />
                                     </div>
                                     <div className="flip-card-back">
                                         <img
-                                            className="avatar"
-                                            src={imageUrl}
-                                            alt={`${name}'s profile`}
+                                            className="avatar-image"
+                                            src={pixarUrl} 
+                                            alt={`${name}'s Pixar-style`}
                                             onError={handleImageError}
                                         />
                                     </div>
@@ -136,13 +128,24 @@ function ContactCard({ name, email, phone, imageUrl, pixarUrl, linkedinUrl }) {
                         </div>
                     </div>
 
-                    {/* Contact Details Section */}
                     <div className="details-section">
-                        <a href={`mailto:${email}`} className="contact-link">
+                        <button 
+                            className="contact-link" 
+                            onClick={(e) => {
+                                e.stopPropagation(); // Stop the card from flipping
+                                window.location.href = `mailto:${email}`; // Manually trigger the email client
+                            }}
+                        >
                             <MailIcon className="contact-icon" />
                             <span>{email}</span>
-                        </a>
-                        <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="contact-link">
+                        </button>
+                        <a 
+                            href={linkedinUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="contact-link" 
+                            onClick={(e) => e.stopPropagation()}
+                        >
                             <LinkedInIcon className="contact-icon" />
                             <span>LinkedIn Profile</span>
                         </a>

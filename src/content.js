@@ -948,5 +948,5 @@ export const ME_CONTENT = {
   pixarUrl: PixarProfilePicture,
   email: "vito@netlight.com",
   phone: "+47 45 45 29 52",
-  linkedinUrl: "www.linkedin.com/in/viljar-tornøe-872b2b15b"
+  linkedinUrl: "https://www.linkedin.com/in/viljar-tornøe-872b2b15b"
 };

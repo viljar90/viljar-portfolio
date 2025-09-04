@@ -213,7 +213,21 @@
         background-color: #334155; /* slate-700 */
     }
 
-    .contact-link span {
-        font-size: 0.875rem; /* 14px */
+    .contact-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem; /* 12px */
+        font-size: 1rem; /* 16px */
+        color: #4b5563; /* gray-600 */
+        text-decoration: none;
+        transition: color 0.2s ease-in-out;
+        
+        /* --- ADD THESE LINES TO RESET BUTTON STYLES --- */
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        font-family: inherit; /* Ensure font is consistent */
+        text-align: left;
     }
 }
