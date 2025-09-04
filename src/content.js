@@ -66,7 +66,7 @@ export const WHY_DESIGN_CONTENT = {
 export const WHY_DESIGN_GAME_CONTENT = [
     {
         slug: 'best-buy',
-        caseTitle: "Best Buy: The Expensive Button",
+        caseTitle: "Best Buy: Expensive Button",
         parts: [
             {
                 type: 'singleChoice',
@@ -94,7 +94,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
     },
     {
         slug: 'helseplattformen',
-        caseTitle: "Helseplattformen: The Rejected System",
+        caseTitle: "Helseplattformen: Slowed to Death",
         parts: [
              {
                 type: 'singleChoice',
@@ -150,7 +150,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
     },
     {
         slug: 'nav',
-        caseTitle: "NAV Case: Hidden Calculations",
+        caseTitle: "NAV: Hidden Calculations",
         parts: [
              {
                 type: 'singleChoice',
@@ -178,7 +178,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
     },
     {
         slug: 'police',
-        caseTitle: "Norwegian Police Case: PEN Scandal",
+        caseTitle: "Norwegian Police: PEN Scandal",
         parts: [
             {
                 type: 'singleChoice',
@@ -206,7 +206,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
     },
      {
         slug: 'lidl',
-        caseTitle: "Lidl Case: Mismatched System",
+        caseTitle: "Lidl: Mismatched System",
         parts: [
             {
                 type: 'singleChoice',
@@ -234,7 +234,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
     },
     {
         slug: 'us-census',
-        caseTitle: "US Census Case: Ignoring users",
+        caseTitle: "US Census: Ignoring users",
         parts: [
             {
                 type: 'singleChoice',
@@ -262,7 +262,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
     },
     {
         slug: 'walmart',
-        caseTitle: "Walmart Case: Expensive Question",
+        caseTitle: "Walmart: Expensive Question",
         parts: [
             {
                 type: 'singleChoice',
@@ -290,7 +290,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
     },
     {
         slug: 'us-navy',
-        caseTitle: "USS McCain Case: Deadly Design",
+        caseTitle: "USS McCain: Deadly Design",
         parts: [
             {
                 type: 'singleChoice',
@@ -318,7 +318,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
     },
     {
         slug: 'foxmeyer',
-        caseTitle: "FoxMeyer Case: Internal Rebellion",
+        caseTitle: "FoxMeyer: Internal Rebellion",
         parts: [
             {
                 type: 'singleChoice',
@@ -346,7 +346,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
     },
     {
         slug: 'e-helse-direktoratet',
-        caseTitle: "E-helse Direktoratet Case: Akson",
+        caseTitle: "E-helse Direktoratet: Akson",
         parts: [
             {
                 type: 'singleChoice',

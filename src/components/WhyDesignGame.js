@@ -76,7 +76,7 @@ const WhyDesignGame = ({
             const isSelected = isSelectAll ? gameSelectedAnswers.includes(option.text) : false;
             const wasSelected = isCompleted && state.selected && state.selected.includes(option.text);
 
-            let cardClasses = 'option-card rounded-lg border-2 cursor-pointer bg-bg-base dark:bg-bg-muted ';
+            let cardClasses = 'option-card rounded-lg border cursor-pointer bg-bg-base';
             let isDisabled = false;
 
             if (isSelectAll) {
@@ -85,7 +85,8 @@ const WhyDesignGame = ({
                 if(option.isCorrect) {
                     cardClasses += 'correct border-green-500 bg-green-50 dark:bg-green-900/50 ';
                 } else if (state && state.selected && state.selected.includes(option.text)) {
-                    cardClasses += 'incorrect border-red-500 bg-red-50 dark:bg-red-900/50 ';
+                    // --- FIX: Added animate-shake ---
+                    cardClasses += 'incorrect border-red-500 bg-red-50 dark:bg-red-900/50 animate-shake ';
                 } else {
                     cardClasses += 'border-border-interactive opacity-70 ';
                 }
@@ -98,7 +99,8 @@ const WhyDesignGame = ({
               if (isCompleted) {
                 cardClasses += option.isCorrect ? 'correct border-green-500 bg-green-50 dark:bg-green-900/50 ' : 'incorrect border-red-500 bg-red-50 dark:bg-red-900/50 opacity-70 ';
               } else if (isRevealed) {
-                cardClasses += 'incorrect border-red-500 bg-red-50 dark:bg-red-900/50 ';
+                // --- FIX: Added animate-shake ---
+                cardClasses += 'incorrect border-red-500 bg-red-50 dark:bg-red-900/50 animate-shake ';
               } else {
                 cardClasses += 'border-border-interactive hover:border-primary dark:hover:border-secondary hover:bg-primary/10 dark:hover:bg-secondary/10 ';
               }
@@ -111,7 +113,7 @@ const WhyDesignGame = ({
               <button
                 key={option.text}
                 onClick={() => handleGameOptionClick(option)}
-                className={`relative w-full text-left p-4 rounded-lg border-2 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-slate-800 flex items-start ${cardClasses}`}
+                className={`relative w-full text-left p-4 rounded-lg border transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary dark:focus-visible:ring-offset-slate-800 flex items-start ${cardClasses}`}
                 disabled={isDisabled}
               >
                 <div className="w-full">
@@ -153,7 +155,7 @@ const WhyDesignGame = ({
                      const isCompleted = gameQuestionStates[`${caseIndex}-0`]?.completed && gameQuestionStates[`${caseIndex}-1`]?.completed;
                      return (
                         <button key={bonusCase.caseTitle} onClick={() => startBonusCase(caseIndex)}
-                            className={`relative bonus-card py-4 px-4 rounded-full border-2 bg-bg-base dark:bg-bg-muted text-center transition-all flex items-center justify-center space-x-2 ${isCompleted ? 'completed border-green-500' : 'border-border-interactive hover:border-black dark:hover:border-secondary'}`}>
+                            className={`relative bonus-card py-4 px-4 rounded-full border bg-bg-base dark:bg-bg-muted text-center transition-all flex items-center justify-center space-x-2 ${isCompleted ? 'completed border-green-500' : 'border-border-interactive hover:border-black dark:hover:border-secondary'}`}>
                             <h3 className="text-sm sm:text-base font-bold text-text-base">{bonusCase.caseTitle}</h3>
                             {isCompleted && <BonusCheckmarkIcon />}
                         </button>
