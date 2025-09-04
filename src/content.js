@@ -44,7 +44,7 @@ export const CONTENT = {
 
 export const DESIGN_VIEWS = {
   WHY_DESIGN: 'Why Design',
-  WHAT_DESIGN: 'What Design',
+  WHAT_DESIGN: 'What I Do',
 };
 
 export const WHY_DESIGN_CONTENT = {
@@ -397,26 +397,26 @@ export const WHAT_DESIGN_NAV_ITEMS = [
 
 export const DESIGN_CONTENT = {
   [DESIGN_STAGE_KEYS.ABOUT_DESIGN]: {
-  navText: "What Design",
+  navText: "Design",
   steps: [
     {
-      title: "What is Design",
+      title: "Design",
       mainText: "A beautiful interface is often mistaken as the goal of design."
     },
     {
-      title: "What is Design",
+      title: "Design",
       mainText: "It's simply the strategic result of a problem solved correctly."
     },
     {
-      title: "What is Design",
+      title: "Design",
       mainText: "Design is about making solutions fit humans, not trying to make humans fit solutions."
     },
     {
-      title: "The Winning Combination",
+      title: "Combination",
       mainText: "Solving real customer needs in an aesthetic and functional form isn't just a goal..."
     },
     {
-      title: "The Winning Combination",
+      title: "Winning Combination",
       mainText: "...it's the winning strategy of every market leader."
     },
     {

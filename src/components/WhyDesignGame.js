@@ -178,7 +178,7 @@ const WhyDesignGame = ({
         </p>
         <div className="flex justify-center gap-4">
           <SecondaryButton onClick={resetGame}>Start over</SecondaryButton>
-          <PrimaryButton onClick={onSwitchView}>What Design</PrimaryButton>
+          <PrimaryButton onClick={onSwitchView}>What I Do</PrimaryButton>
         </div>
       </div>
     );

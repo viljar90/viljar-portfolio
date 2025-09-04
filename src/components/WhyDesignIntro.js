@@ -27,9 +27,9 @@ const WhyDesignIntro = ({
             {showPlayButton && (
                 <div className="mt-12 w-full flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                     <SecondaryButton
-                        onClick={() => onSwitchView('What Design')}
+                        onClick={() => onSwitchView('What I Do')}
                     >
-                        What Design
+                        What I Do
                     </SecondaryButton>
 
                     <div className="h-8 w-px bg-gray-400 dark:bg-gray-600 hidden sm:block"></div>
