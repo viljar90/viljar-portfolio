@@ -646,6 +646,8 @@ const PortfolioApp = ({ darkMode, toggleDarkMode }) => {
                     menuItems={Object.values(DESIGN_VIEWS)}
                     selected={design.designView}
                     setSelected={design.setDesignView}
+                    variant="auto"
+                    showToggle={false}
                 />
                 )}
                 {currentChapter === 'work' && (

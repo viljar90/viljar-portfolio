@@ -26,6 +26,7 @@ module.exports = {
         accent: 'var(--color-accent)',
         error: 'var(--color-error)',
         'text-base': 'var(--color-text-base)',
+        'text-inverted': 'var(--color-text-inverted)',
         'text-muted': 'var(--color-text-muted)',
         'text-interactive-muted': 'var(--color-text-interactive-muted)',
         'border-interactive': 'var(--color-border-interactive)',

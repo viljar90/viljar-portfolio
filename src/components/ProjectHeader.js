@@ -9,7 +9,8 @@ const ProjectHeader = ({ project, darkMode, toggleDarkMode }) => {
   const handleProjectSwitch = (selectedNavText) => {
     const project = PROJECTS.find(p => p.navText === selectedNavText);
     if (project) {
-      window.location.hash = `work/project/${project.id}`;
+      // --- FIX: Now correctly navigates to the 'problem' section of the selected project ---
+      window.location.hash = `work/project/${project.id}/problem`;
     }
   };
 
@@ -27,24 +28,24 @@ const ProjectHeader = ({ project, darkMode, toggleDarkMode }) => {
 
   return (
     <div className="fixed top-4 left-0 right-0 w-full px-4 z-50 flex items-center h-12">
-      {/* Back button with flex-shrink-0 to prevent squishing */}
       <div className="flex-shrink-0">
         <BackButton href={backPath} />
       </div>
       
-      {/* Minimum spacing after back button */}
       <div className="w-4 sm:w-6 md:w-8 flex-shrink-0" />
       
-      {/* Spacer to push the right group to the right */}
       <div className="flex-1 min-w-0" />
       
-      {/* Group the pill nav and toggle button together */}
       <div className="flex items-center space-x-4 min-w-0 max-w-full">
         <div className="min-w-0 max-w-full">
+          {/* --- THIS IS THE FIX --- */}
+          {/* The component now uses the 'auto' variant to fit its content, and the toggle is hidden. */}
           <InteractivePillNav
             menuItems={PROJECTS.map(p => p.navText)}
             selected={project.navText}
             setSelected={handleProjectSwitch}
+            variant="auto"
+            showToggle={false}
           />
         </div>
         <button

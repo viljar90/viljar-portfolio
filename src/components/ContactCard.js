@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import './ContactCard.css'; // We'll create this file next
+import './ContactCard.css'; 
 
 // Helper function to handle image loading errors
 const handleImageError = (e) => {
