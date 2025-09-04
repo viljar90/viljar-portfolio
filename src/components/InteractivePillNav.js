@@ -254,8 +254,9 @@ const InteractivePillNav = ({
                 )})}
               </ul>
               
-              <div className={`absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-gray-100 dark:from-gray-800 to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
-              <div className={`absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-gray-100 dark:from-gray-800 to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none`}></div>
+              {/* --- FIX: Added z-20 to both gradient divs --- */}
+              <div className={`absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-bg-base to-transparent transition-opacity duration-300 ${showLeftFade ? 'opacity-100' : 'opacity-0'} pointer-events-none z-20`}></div>
+              <div className={`absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-bg-base to-transparent transition-opacity duration-300 ${showRightFade ? 'opacity-100' : 'opacity-0'} pointer-events-none z-20`}></div>
             </div>
             </div>
         </div>
