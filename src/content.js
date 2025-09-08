@@ -936,7 +936,7 @@ export const PROJECTPAGES = [
                   />
                 </div>
               </div>
-              <p className="md:w-2/3 md:order-first">The GenAI landscape changes almost daily. New models are released all the time. The best model for a specific task can change overnight, and older models gets phased out. Knowing what models are best for a company's domain context is impossible without being able to experiment. Aligning a GenAI strategy across the company would also be impossible if every team and worker used seperate tools to better acheive their goals.</p>
+              <p className="md:w-2/3 md:order-first">The GenAI landscape changes almost daily. New models are released all the time. The best model for a specific task can change overnight, and older models gets phased out. Knowing what models are best for a company's domain context is impossible without experimentation. Aligning a GenAI strategy across the company would also be impossible if every team and worker used seperate tools to better acheive their goals.</p>
             </div>
           </Accordion>
 
@@ -964,7 +964,7 @@ export const PROJECTPAGES = [
                   />
                 </div>
               </div>
-              <p className="md:w-2/3 md:order-first">Committing to a single AI provider like OpenAI or Google and building solutions around a single vendor is a strategic risk. It makes the a company vulnerable to potetial price hikes, changes in terms of service, or discontinuation of a key models the company comes to rely on introducing integration issues across the board. A flexible archtecture combined with a multi-provider solution was the strategy we created to mitigate this risk.</p>
+              <p className="md:w-2/3 md:order-first">Committing to a single AI provider like OpenAI or Google and building solutions around a single vendor is a strategic risk. It makes the a company vulnerable to potetial price hikes, changes in terms of service, or discontinuation of a key models the company comes to rely on – introducing integration issues across the board. A flexible archtecture combined with a multi-provider solution was the strategy we created to mitigate this risk.</p>
             </div>
           </Accordion>
         </>

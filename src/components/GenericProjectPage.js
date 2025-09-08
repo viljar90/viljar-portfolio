@@ -67,7 +67,8 @@ const GenericProjectPage = ({ project, darkMode, initialSection }) => {
   const { isWIP } = project;
 
   return (
-    <div className="project-page-container w-full min-h-screen flex flex-col items-center justify-start px-4 sm:px-8 md:px-16 lg:px-24 pt-[40vh] pb-16 relative">
+    // The main container is now just for positioning and background.
+    <div className="project-page-container w-full h-screen relative">
       
       {isWIP && (
         <div className="absolute top-40 right-4 sm:right-8 md:right-16 lg:right-24 -translate-y-1/2 z-20 pointer-events-none">
@@ -94,17 +95,24 @@ const GenericProjectPage = ({ project, darkMode, initialSection }) => {
       </button>
       */}
 
-      <div 
-        key={activeSection}
-        className="content-area w-full max-w-4xl flex-grow flex flex-col text-left mb-24 animate-fadeIn"
-      >
-        <h2 className="text-4xl sm:text-5xl font-bold text-primary dark:text-secondary mb-6">
-          {activeSectionData.title}
-        </h2>
-        <div className="text-lg sm:text-xl text-text-muted dark:text-slate-300 leading-relaxed whitespace-pre-line">
-          {content}
+      {/* --- THIS IS THE FIX --- */}
+      {/* A new, dedicated container for all scrollable content. */}
+      {/* It scrolls independently, leaving the nav and banner unaffected. */}
+      <div className="w-full h-full overflow-y-auto">
+        <div 
+          key={activeSection}
+          // The responsive top padding is applied here to create the initial space.
+          className="content-area w-full max-w-4xl mx-auto text-left px-4 sm:px-8 md:px-16 lg:px-24 pt-[40vh] pb-32 animate-fadeIn"
+        >
+          <h2 className="text-4xl sm:text-5xl font-bold text-primary dark:text-secondary mb-6">
+            {activeSectionData.title}
+          </h2>
+          <div className="text-lg sm:text-xl text-text-muted dark:text-slate-300 leading-relaxed whitespace-pre-line">
+            {content}
+          </div>
         </div>
       </div>
+
 
       <ProjectBottomNav
         sections={sections}

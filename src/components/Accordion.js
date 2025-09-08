@@ -36,8 +36,8 @@ const Accordion = ({ title, children, startOpen = false }) => {
     const { left, top, width, height } = cardRef.current.getBoundingClientRect();
     const x = e.clientX - left - width / 2;
     const y = e.clientY - top - height / 2;
-    const rotateX = (y / height) * -2;
-    const rotateY = (x / width) * 2;
+    const rotateX = (y / height) * -4;
+    const rotateY = (x / width) * 4;
     setCardStyle({
       transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
     });

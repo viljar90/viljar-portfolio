@@ -32,7 +32,7 @@ const ProjectHeader = ({ project, darkMode, toggleDarkMode }) => {
         <BackButton href={backPath} />
       </div>
       
-      <div className="w-16 sm:w-24 md:w-32 flex-shrink-0" />
+      <div className="w-8 sm:w-24 md:w-32 flex-shrink-0" />
       
       <div className="flex-1 min-w-0" />
       
