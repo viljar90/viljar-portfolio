@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { PuzzleIcon, ChartIcon, MagicIcon, PieChartIcon, VideoEditorIcon } from './components/uiElements';
+import Accordion from './components/Accordion';
 import ProfilePicture from './assets/profile.png';
 import PixarProfilePicture from './assets/pixar-profile.png';
 
@@ -418,7 +419,7 @@ export const DESIGN_CONTENT = {
     {
       title: "Winning Combination",
       mainText: "...it's the winning strategy of every market leader."
-    },
+    }/*,
     {
       title: "The Real Cost",
       mainText: "Ignoring design is an expensive mistake to make..."
@@ -438,7 +439,7 @@ export const DESIGN_CONTENT = {
     {
       title: "The Value",
       mainText: "Good design isn't just another cost. It's the insurance policy for your investment."
-    }
+    }*/
   ],
   /*
   steps: [
@@ -575,7 +576,7 @@ export const DESIGN_CONTENT = {
     /*
     steps: [
       { title: "Product Designer", mainText: "is kind of like the the visionary architect of a product." },
-      { title: "Product Designer", mainText: "Imagine a company has a prime plot of land and a new business opportunity or challange." },
+      { title: "Product Designer", mainText: "Imagine a company has a prime plot of land and a new business opportunity or challenge." },
       { title: "Product Designer", mainText: "They need build a new commercial building." },
       { title: "Product Designer", mainText: "Maybe a new store for their products?" },
       { title: "Product Designer", mainText: "Or a high-tech warehouse?"},
@@ -858,13 +859,6 @@ export const PROJECTS = [
     icon: <MagicIcon />,
     url: '#work/project/aiPlatform?from=overview',
     isWIP: true,
-    details: {
-      problem: "A large Norwegian company needed to leverage generative AI without being locked into a single provider, while also ensuring the security of their internal data.",
-      role: "As the lead product designer in a cross-functional team, I was responsible for the entire design process, from initial user research and concept development to creating high-fidelity, interactive prototypes and conducting usability testing.",
-      solution: "The solution was 'FortelVia,' a secure, internal platform that acts as a gateway to multiple leading AI models. It allows employees to experiment safely and provides a centralized point for managing access and ensuring compliance.",
-      impact: "The platform successfully decoupled the company from any single AI vendor, providing crucial flexibility. It established a secure environment for AI experimentation, which led to the development of three new internal tools within the first six months.",
-      reflections: "This project underscored the importance of a modular architecture in a rapidly evolving field like AI. If I were to do it again, I would push for even earlier integration with the security team to streamline the compliance process from day one."
-    }
   },
   {
     id: 'design-system',
@@ -875,13 +869,6 @@ export const PROJECTS = [
     icon: <PuzzleIcon />,
     url: '#work/project/design-system?from=overview',
     isWIP: true,
-    details: {
-        problem: "Product teams were working in silos, leading to inconsistent user experiences across the product portfolio and duplicated design and development efforts, which slowed down time-to-market.",
-        role: "I co-led the UX strategy and component design, working closely with developers to translate design concepts into reusable code. My role involved establishing a governance model, documenting usage guidelines, and advocating for adoption across the organization.",
-        solution: "We developed a comprehensive design system with a shared library of reusable components, clear design guidelines, and robust documentation. This created a single source of truth for both designers and developers.",
-        impact: "The design system reduced design and development time for new features by an estimated 30%. It also significantly improved UI consistency and quality across all digital products.",
-        reflections: "The biggest challenge was not building the system, but fostering its adoption. In the future, I'd involve more teams in the initial component selection process to create a stronger sense of shared ownership from the start."
-    }
   },
   {
     id: 'dataCatalogue',
@@ -892,13 +879,6 @@ export const PROJECTS = [
     icon: <ChartIcon />,
     url: '#work/project/dataCatalogue?from=overview',
     isWIP: true,
-    details: {
-        problem: "Valuable data was fragmented across the organization, making it difficult for employees to find, trust, and utilize it effectively. This hindered the company's ability to become truly data-driven.",
-        role: "I led the user research to understand the pain points of data consumers and producers. Based on these insights, I designed the information architecture, wireframes, and final UI for a centralized data catalogue.",
-        solution: "The data catalogue provides a single, searchable interface for all company data, complete with clear documentation, data lineage, and quality metrics. It's designed to be intuitive for both technical and non-technical users.",
-        impact: "The platform increased data discovery by 60% in the first quarter after launch and significantly improved employee trust in the available data, as measured by internal surveys.",
-        reflections: "Early on, we underestimated the complexity of data lineage. A deeper initial collaboration with data engineers would have allowed us to present this information even more intuitively from the first version."
-    }
   },
   {
     id: 'aiDashboard',
@@ -909,13 +889,6 @@ export const PROJECTS = [
     icon: <PieChartIcon />,
     url: '#work/project/aiDashboard?from=overview',
     isWIP: true,
-    details: {
-        problem: "With millions of customer interactions, NAV's product teams lacked a clear, data-driven way to identify and prioritize the most pressing user needs for digitalization.",
-        role: "My role was to translate complex AI-driven data into an accessible and actionable dashboard. I conducted user interviews with product managers, designed the data visualizations, and created an interactive prototype that served as the blueprint for development.",
-        solution: "The AI Insights Dashboard uses natural language processing to analyze customer service logs and surfaces the most common user struggles in real-time. Its intuitive interface allows product teams to filter by theme, urgency, and volume.",
-        impact: "The dashboard enabled product teams to shift from a reactive to a proactive approach, leading to a 25% faster identification of high-impact digitalization opportunities.",
-        reflections: "Initially, some visualizations were too complex. Iterating on the design based on user feedback was key to finding the right balance between data richness and clarity. Simpler is almost always better."
-    }
   },
   {
     id: 'aiVideoProduction',
@@ -926,13 +899,128 @@ export const PROJECTS = [
     icon: <VideoEditorIcon />,
     url: '#work/project/aiVideoProduction?from=overview',
     isWIP: true,
-    details: {
-        problem: "A major TV network was struggling with a slow and manual post-production workflow. Editors spent countless hours logging footage and searching for specific clips, which delayed content delivery.",
-        role: "As the lead product designer, I conducted in-depth interviews and observation sessions with video editors to map their workflow. I then led the ideation and prototyping of an AI-powered solution, culminating in a proof-of-concept that secured stakeholder buy-in.",
-        solution: "MAI (Media AI) is a tool that uses AI to automatically analyze video footage, generating rich metadata such as speaker identification, topic detection, and scene descriptions. This makes the entire library searchable and dramatically accelerates the editing process.",
-        impact: "The proof-of-concept demonstrated that MAI could reduce the time spent on logging and searching for footage by up to 70%, allowing editors to focus on the creative aspects of their work.",
-        reflections: "The biggest learning was the importance of a human-in-the-loop design. While the AI is powerful, we quickly realized that giving editors the ability to easily review and correct AI-generated metadata was crucial for building trust and ensuring accuracy."
-    }
+  },
+];
+
+
+export const PROJECTPAGES = [
+  {
+    id: 'aiPlatform',
+    problem: (
+        <>
+          <p className="mb-12">Everyone wants to leverage GenAI to improve their business processes or products. As the larget electricity grid provider in Norway, Elvia wanted to find a way to kickoff AI initiaties internally. But having workers use existing AI services poses many challenges and opens the company up to significant risks.</p>
+          
+        <Accordion title="Slow Development">
+            <div className="flex flex-col md:flex-row items-start gap-6">
+              <div className="w-full md:w-1/4 mx-auto max-w-sm md:order-last">
+                <div className="rounded-lg overflow-hidden">
+                  <img 
+                    src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjRwbjh6NjNpaHRodmUxZ2F2M3Rnc3J0dWYzZTBmcDV0anAzZ2l4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1xkMJIvxeKiDS/giphy.gif" 
+                    alt="Cartoon snail on a computer" 
+                    className="w-full h-auto transform scale-125"
+                  />
+                </div>
+              </div>
+              <p className="md:w-2/3 md:order-first">Many of the development initiatives at Elvia took a long time before a product was realeased and started delivering value. Could we use this product as a pilot to challenge the slow development cycles at Elvia? Could we leverage GenAI to decrese the time develop the product?</p>
+            </div>
+          </Accordion>
+
+          <Accordion title="Rapidly Evolving Market">
+            <div className="flex flex-col md:flex-row items-start gap-6">
+              <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+                <div className="rounded-lg overflow-hidden">
+                  <img 
+                    src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXl1M2c3aTg4c2x6eWc3d3hidnp2cGxtdXhlZDF6Z3AzZXY3eDJzaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JWybLzXs7Hn0JKhSji/giphy.gif" 
+                    alt="Cartoon character working intensely on a computer" 
+                    className="w-full h-auto transform scale-125"
+                  />
+                </div>
+              </div>
+              <p className="md:w-2/3 md:order-first">The GenAI landscape changes almost daily. New models are released all the time. The best model for a specific task can change overnight, and older models gets phased out. Knowing what models are best for a company's domain context is impossible without being able to experiment. Aligning a GenAI strategy across the company would also be impossible if every team and worker used seperate tools to better acheive their goals.</p>
+            </div>
+          </Accordion>
+
+          <Accordion title="Data Security & Compliance">
+            <div className="flex flex-col md:flex-row items-start gap-6">
+              <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+                <img 
+                  src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHZlZGtreWc1ZDlwNHgyY2xnZ2p1MWQzZmtrMzI0dWxjeGkwMnU3eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sGa613aLoPzQB3YfSw/giphy.gif" 
+                  alt="Padlock security animation" 
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+              <p className="md:w-2/3 md:order-first">Employees were eager to use AI, but sending internal documents or customer data to external services posed a massive security and GDPR compliance risk. Putting the compliance responsibility individually on the workers with limited understanding of this technology would not be safe or sustainable. The company needed a secure, internal "sandbox" where employees could experiment with AI without exposing confidential information.</p>
+            </div>
+          </Accordion>
+          
+          <Accordion title="Vendor Lock-in">
+            <div className="flex flex-col md:flex-row items-start gap-6">
+              <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+                <div className="rounded-lg overflow-hidden">
+                   <img 
+                    src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdDkxbDRkcXBjaWh2M2l1cXVjb3c2ZnFwZ3BpbWEwa281dm1rb2dndyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/K9sJRNHyQp3iw/giphy.gif" 
+                    alt="Chain breaking apart animation" 
+                    className="w-full h-auto transform scale-125"
+                  />
+                </div>
+              </div>
+              <p className="md:w-2/3 md:order-first">Committing to a single AI provider like OpenAI or Google and building solutions around a single vendor is a strategic risk. It makes the a company vulnerable to potetial price hikes, changes in terms of service, or discontinuation of a key models the company comes to rely on introducing integration issues across the board. A flexible archtecture combined with a multi-provider solution was the strategy we created to mitigate this risk.</p>
+            </div>
+          </Accordion>
+        </>
+      ),
+    role: (
+        <>
+          <p className="mb-12">I wore many design hats at different phases during the developement of the product. From strategy and concept development to the final high-fidelity prototypes.</p>
+          <Accordion title="Product Design">
+            <p>What seperates any IT system from a digital product is in the execution. We already knew generative AI is useful and the chat format works. For this pilot project my MP and I agreed on a MVP stratagy to build, show value fast to gauge Elvia workers would actually adopt an internal AI chatbot. In this early phase I focused on concept development and communication strategy. We needed a vision that would work well as an MVP and be scalable if the MVP proved successful.  </p>
+          </Accordion>
+          <Accordion title="UX Design">
+            <p>My process was rooted in deep user understanding. I conducted user interviews and workshops to gather insights, which informed the creation of user personas, journey maps, and wireframes. I also ran iterative usability testing sessions to validate design decisions and refine the user experience.</p>
+          </Accordion>
+          <Accordion title="UI Design">
+            <p>I was responsible for creating a clean, intuitive, and accessible user interface. This included developing a consistent visual language, designing pixel-perfect high-fidelity mockups and interactive prototypes in Figma, and creating a component library to ensure consistency and streamline development.</p>
+          </Accordion>
+          <Accordion title="Methodology">
+            <p>We operated within an Agile UX framework, working in tight-knit sprints with developers and product managers. This iterative approach allowed for continuous feedback loops, ensuring that design solutions were not only desirable for users but also technically feasible and viable for the business. I championed this collaborative process to bridge the gap between design and engineering.</p>
+          </Accordion>
+        </>
+      ),
+    solution: "The solution was 'FortelVia,' a secure, internal platform that acts as a gateway to multiple leading AI models. It allows employees to experiment safely and provides a centralized point for managing access and ensuring compliance.",
+    impact: "The platform successfully decoupled the company from any single AI vendor, providing crucial flexibility. It established a secure environment for AI experimentation, which led to the development of three new internal tools within the first six months.",
+    reflections: "This project underscored the importance of a modular architecture in a rapidly evolving field like AI. If I were to do it again, I would push for even earlier integration with the security team to streamline the compliance process from day one."
+  },
+  {
+    id: 'design-system',
+    problem: "Product teams were working in silos, leading to inconsistent user experiences across the product portfolio and duplicated design and development efforts, which slowed down time-to-market.",
+    role: "I co-led the UX strategy and component design, working closely with developers to translate design concepts into reusable code. My role involved establishing a governance model, documenting usage guidelines, and advocating for adoption across the organization.",
+    solution: "We developed a comprehensive design system with a shared library of reusable components, clear design guidelines, and robust documentation. This created a single source of truth for both designers and developers.",
+    impact: "The design system reduced design and development time for new features by an estimated 30%. It also significantly improved UI consistency and quality across all digital products.",
+    reflections: "The biggest challenge was not building the system, but fostering its adoption. In the future, I'd involve more teams in the initial component selection process to create a stronger sense of shared ownership from the start."
+  },
+  {
+    id: 'dataCatalogue',
+    problem: "Valuable data was fragmented across the organization, making it difficult for employees to find, trust, and utilize it effectively. This hindered the company's ability to become truly data-driven.",
+    role: "I led the user research to understand the pain points of data consumers and producers. Based on these insights, I designed the information architecture, wireframes, and final UI for a centralized data catalogue.",
+    solution: "The data catalogue provides a single, searchable interface for all company data, complete with clear documentation, data lineage, and quality metrics. It's designed to be intuitive for both technical and non-technical users.",
+    impact: "The platform increased data discovery by 60% in the first quarter after launch and significantly improved employee trust in the available data, as measured by internal surveys.",
+    reflections: "Early on, we underestimated the complexity of data lineage. A deeper initial collaboration with data engineers would have allowed us to present this information even more intuitively from the first version."
+  },
+  {
+    id: 'aiDashboard',
+    problem: "With millions of customer interactions, NAV's product teams lacked a clear, data-driven way to identify and prioritize the most pressing user needs for digitalization.",
+    role: "My role was to translate complex AI-driven data into an accessible and actionable dashboard. I conducted user interviews with product managers, designed the data visualizations, and created an interactive prototype that served as the blueprint for development.",
+    solution: "The AI Insights Dashboard uses natural language processing to analyze customer service logs and surfaces the most common user struggles in real-time. Its intuitive interface allows product teams to filter by theme, urgency, and volume.",
+    impact: "The dashboard enabled product teams to shift from a reactive to a proactive approach, leading to a 25% faster identification of high-impact digitalization opportunities.",
+    reflections: "Initially, some visualizations were too complex. Iterating on the design based on user feedback was key to finding the right balance between data richness and clarity. Simpler is almost always better."
+  },
+  {
+    id: 'aiVideoProduction',
+    problem: "A major TV network was struggling with a slow and manual post-production workflow. Editors spent countless hours logging footage and searching for specific clips, which delayed content delivery.",
+    role: "As the lead product designer, I conducted in-depth interviews and observation sessions with video editors to map their workflow. I then led the ideation and prototyping of an AI-powered solution, culminating in a proof-of-concept that secured stakeholder buy-in.",
+    solution: "MAI (Media AI) is a tool that uses AI to automatically analyze video footage, generating rich metadata such as speaker identification, topic detection, and scene descriptions. This makes the entire library searchable and dramatically accelerates the editing process.",
+    impact: "The proof-of-concept demonstrated that MAI could reduce the time spent on logging and searching for footage by up to 70%, allowing editors to focus on the creative aspects of their work.",
+    reflections: "The biggest learning was the importance of a human-in-the-loop design. While the AI is powerful, we quickly realized that giving editors the ability to easily review and correct AI-generated metadata was crucial for building trust and ensuring accuracy."
   },
 ];
 

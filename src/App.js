@@ -10,6 +10,7 @@ import {
   DESIGN_STAGE_KEYS,
   DESIGN_VIEWS,
   PROJECTS,
+  PROJECTPAGES,
   WHY_DESIGN_GAME_CONTENT
 } from './content';
 import ChapterManager from './components/ChapterManager';
@@ -40,11 +41,22 @@ function App() {
       const [chapter, subChapter, projectId, sectionId] = parts;
 
       if (chapter === 'work' && subChapter === 'project' && projectId) {
-        const projectData = PROJECTS.find(p => p.id === projectId);
-        setActiveProjectInfo({
-          project: projectData || null,
-          initialSection: sectionId || 'problem'
-        });
+        // Find the summary data from PROJECTS
+        const projectCardData = PROJECTS.find(p => p.id === projectId);
+        // Find the detailed page data from PROJECTPAGES
+        const projectPageData = PROJECTPAGES.find(p => p.id === projectId);
+
+        // If both are found, merge them into a single object
+        if (projectCardData && projectPageData) {
+          const projectData = { ...projectCardData, details: projectPageData };
+          setActiveProjectInfo({
+            project: projectData,
+            initialSection: sectionId || 'problem'
+          });
+        } else {
+           // If data is missing, reset
+           setActiveProjectInfo({ project: null, initialSection: null });
+        }
       } else {
         setActiveProjectInfo({ project: null, initialSection: null });
       }
