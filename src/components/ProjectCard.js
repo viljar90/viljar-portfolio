@@ -40,8 +40,8 @@ const ProjectCard = ({ project }) => {
   if (project.url) {
     return (
       // --- THIS IS THE FIX ---
-      // The href is now constructed dynamically to include the specific project ID for the overview.
-      <a href={`#work/project/${project.id}/problem?from=work/overview/${project.id}`} target="_blank" rel="noopener noreferrer" className="block">
+      // The href now correctly points to the 'impact' section by default.
+      <a href={`#work/project/${project.id}/impact?from=work/overview/${project.id}`} target="_blank" rel="noopener noreferrer" className="block">
         {cardContent}
       </a>
     );
@@ -53,7 +53,7 @@ const ProjectCard = ({ project }) => {
 
 ProjectCard.propTypes = {
   project: PropTypes.shape({
-    id: PropTypes.string.isRequired, // Ensure id is part of the project object
+    id: PropTypes.string.isRequired,
     cardTitle: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,

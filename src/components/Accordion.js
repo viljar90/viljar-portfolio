@@ -9,8 +9,8 @@ const Accordion = ({ title, children, startOpen = false }) => {
   const [cardStyle, setCardStyle] = useState({});
   const cardRef = useRef(null);
   
-  // --- NEW (PART 1): State to track user interaction ---
-  const [hasInteracted, setHasInteracted] = useState(false);
+  // State to track if the accordion has ever been opened by the user
+  const [hasBeenOpened, setHasBeenOpened] = useState(startOpen);
 
   useEffect(() => {
     if (startOpen && contentRef.current) {
@@ -19,19 +19,25 @@ const Accordion = ({ title, children, startOpen = false }) => {
   }, [startOpen]);
 
   const toggleAccordion = () => {
-    // --- NEW (PART 2): Set interacted on click ---
-    if (!hasInteracted) setHasInteracted(true);
-    setIsOpen(!isOpen);
+    const newIsOpen = !isOpen;
+    setIsOpen(newIsOpen);
+    
+    // --- THIS IS THE FIX ---
+    // The "hasBeenOpened" state is now set to true only when the accordion is opened.
+    // It will remain true even if the accordion is subsequently closed.
+    if (newIsOpen && !hasBeenOpened) {
+      setHasBeenOpened(true);
+    }
+
     if (contentRef.current) {
-      contentRef.current.style.maxHeight = isOpen
-        ? '0px'
-        : `${contentRef.current.scrollHeight}px`;
+      contentRef.current.style.maxHeight = newIsOpen
+        ? `${contentRef.current.scrollHeight}px`
+        : '0px';
     }
   };
 
   const handleMouseMove = (e) => {
-    // --- NEW (PART 3): Set interacted on mouse move ---
-    if (!hasInteracted) setHasInteracted(true);
+    // The parallax effect on hover is preserved, but it no longer stops the animation.
     if (!cardRef.current) return;
     const { left, top, width, height } = cardRef.current.getBoundingClientRect();
     const x = e.clientX - left - width / 2;
@@ -50,13 +56,14 @@ const Accordion = ({ title, children, startOpen = false }) => {
   };
 
   return (
-    // --- NEW (PART 4): Add conditional animation class ---
+    // --- THIS IS THE FIX ---
+    // The animation now depends on `hasBeenOpened` instead of the more general `hasInteracted`.
     <div 
       ref={cardRef}
       style={cardStyle}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`bg-bg-base dark:border dark:border-gray-700 rounded-xl shadow-lg w-full mb-6 transition-transform duration-200 ease-out ${!hasInteracted ? 'animate-nudge-loop' : ''}`}
+      className={`bg-bg-base dark:border dark:border-gray-700 rounded-xl shadow-lg w-full mb-6 transition-transform duration-200 ease-out ${!hasBeenOpened ? 'animate-nudge-loop' : ''}`}
     >
       <button
         onClick={toggleAccordion}

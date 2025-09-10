@@ -5,7 +5,7 @@ import ProjectBottomNav from './ProjectBottomNav';
 import { PrevArrowIcon, NextArrowIcon } from './uiElements';
 
 const GenericProjectPage = ({ project, darkMode, initialSection }) => {
-  const [activeSection, setActiveSection] = useState('problem');
+  const [activeSection, setActiveSection] = useState('impact');
 
   useEffect(() => {
     const sections = [
@@ -17,7 +17,7 @@ const GenericProjectPage = ({ project, darkMode, initialSection }) => {
       { id: 'reflections', title: 'Reflections' },
     ];
     const isValidSection = sections.some(s => s.id === initialSection);
-    setActiveSection(isValidSection ? initialSection : 'problem');
+    setActiveSection(isValidSection ? initialSection : 'impact');
   }, [initialSection]);
 
   useEffect(() => {

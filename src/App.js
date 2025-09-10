@@ -51,7 +51,7 @@ function App() {
           const projectData = { ...projectCardData, details: projectPageData };
           setActiveProjectInfo({
             project: projectData,
-            initialSection: sectionId || 'problem'
+            initialSection: sectionId || 'impact'
           });
         } else {
            // If data is missing, reset

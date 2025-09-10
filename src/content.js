@@ -914,9 +914,9 @@ export const PROJECTPAGES = [
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
           <MetricBox title="Adoption Rate" value="45%" subtext="within first six months" />
           <MetricBox title="User Engagement" value="10,000+" subtext="questions processed" />
-          <MetricBox title="Sustained Growth" value="+5%" subtext="month-over-month" />
+          <MetricBox title="Sustained Growth" value="+5%" subtext="monthly" />
         </div>
-        <p>This success created a buzz around AI at Elvia, giving workers the confidence and assurance they needed. The platform generated such a strong pipeline of new ideas and use cases from employees that prioritization became the team's next major (and welcome) challenge.</p>
+        <p>The product success created a buzz around AI at Elvia, giving workers the confidence and assurance they needed. The platform generated such a strong pipeline of new ideas and use cases from employees that prioritization became the team's next major (and welcome) challenge.</p>
       </>
     ),
     problem: (
@@ -977,7 +977,7 @@ export const PROJECTPAGES = [
                   />
                 </div>
               </div>
-              <p className="md:w-2/3 md:order-first">Committing to a single AI provider and building solutions around it is a strategic risk in the long term. It makes the a company vulnerable to potetial price hikes, changes in terms of service, or discontinuation of a key models the company comes to rely on – introducing integration issues across the board. A flexible archtecture combined with a multi-provider solution was the strategy we created to mitigate this risk.</p>
+              <p className="md:w-2/3 md:order-first">Committing to a single AI provider and building solutions around it is a strategic risk in the long term. It makes the a company vulnerable to potetial price hikes, changes in terms of service, or discontinuation of a key models the company comes to rely on – introducing integration issues across the board.</p>
             </div>
           </Accordion>
         </>

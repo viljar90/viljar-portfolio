@@ -55,7 +55,7 @@ const QuizResultCard = ({ quiz, onReplayQuestion, quizAnswers }) => {
         {/* --- THIS IS THE FIX --- */}
         {/* The href now includes the full saved state of the quiz. */}
         <a 
-          href={`#work/project/${quiz.id}/problem?from=work/quiz/${quiz.slug}&state=${savedState}`}
+          href={`#work/project/${quiz.id}/impact?from=work/quiz/${quiz.slug}&state=${savedState}`}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-2 text-lg font-semibold text-primary dark:text-sky-400 hover:text-secondary dark:hover:text-sky-300 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary flex items-center space-x-2"
