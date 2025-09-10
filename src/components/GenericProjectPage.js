@@ -9,10 +9,11 @@ const GenericProjectPage = ({ project, darkMode, initialSection }) => {
 
   useEffect(() => {
     const sections = [
+      { id: 'impact', title: 'Impact' },
       { id: 'problem', title: 'The Problem' },
       { id: 'role', title: 'My Role' },
+      { id: 'designProcess', title: 'Design Process' },
       { id: 'solution', title: 'The Solution' },
-      { id: 'impact', title: 'Impact' },
       { id: 'reflections', title: 'Reflections' },
     ];
     const isValidSection = sections.some(s => s.id === initialSection);
@@ -39,10 +40,11 @@ const GenericProjectPage = ({ project, darkMode, initialSection }) => {
   }, [activeSection, project.id]);
 
   const sections = useMemo(() => [
+    { id: 'impact', title: 'Impact' },
     { id: 'problem', title: 'The Problem' },
     { id: 'role', title: 'My Role' },
+    { id: 'designProcess', title: 'Design Process' },
     { id: 'solution', title: 'The Solution' },
-    { id: 'impact', title: 'Impact' },
     { id: 'reflections', title: 'Reflections' },
   ], []);
 

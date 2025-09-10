@@ -3,8 +3,10 @@
 import React from 'react';
 import { PuzzleIcon, ChartIcon, MagicIcon, PieChartIcon, VideoEditorIcon } from './components/uiElements';
 import Accordion from './components/Accordion';
+import MetricBox from './components/MetricBox';
 import ProfilePicture from './assets/profile.png';
 import PixarProfilePicture from './assets/pixar-profile.png';
+import LeanUXImage from './assets/aiplatform/lean_ux_en.webp'; 
 
 export const MAIN_STAGES = { INSULTS: 'Insults', INTRO: 'Intro', HOME: 'Home' };
 
@@ -83,7 +85,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
             {
                 type: 'selectAll',
                 context: "Simply adding a 'Continue As Guest' button led to a 45% increase in purchasing customers for Best Buy.",
-                question: "Guess which design lessons the original design ignore?",
+                question: "Guess which design lessons the original design ignored?",
                 options: [
                     { text: "User Control and Freedom", isCorrect: true, rationale: "The design removed the user's freedom to simply purchase an item, offering no easy 'emergency exit.' Good design empowers users, it doesn't trap them." },
                     { text: "Visibility of System Status", isCorrect: false, rationale: "While important, this wasn't the primary failure. The system was clear about what it wanted (registration); the problem was that the requirement itself was flawed." },
@@ -906,9 +908,20 @@ export const PROJECTS = [
 export const PROJECTPAGES = [
   {
     id: 'aiPlatform',
+    impact: (
+      <>
+        <p className="mb-8">The platform's launch had a significant and measurable impact on the organization, validating our approach and sparking widespread interest in AI.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+          <MetricBox title="Adoption Rate" value="45%" subtext="within first six months" />
+          <MetricBox title="User Engagement" value="10,000+" subtext="questions processed" />
+          <MetricBox title="Sustained Growth" value="+5%" subtext="month-over-month" />
+        </div>
+        <p>This success created a buzz around AI at Elvia, giving workers the confidence and assurance they needed. The platform generated such a strong pipeline of new ideas and use cases from employees that prioritization became the team's next major (and welcome) challenge.</p>
+      </>
+    ),
     problem: (
         <>
-          <p className="mb-12">Everyone wants to leverage GenAI to improve their business processes or products. As the larget electricity grid provider in Norway, Elvia wanted to find a way to kickoff AI initiaties internally. But having workers use existing AI services poses many challenges and opens the company up to significant risks.</p>
+          <p className="mb-12">Everyone wants to leverage GenAI to improve their business processes or products. As the larget electricity grid provider in Norway, Elvia wanted to find a way to kickoff AI initiaties internally. But leaving workers to their own devices using AI poses many challenges and opens the company up to significant risks.</p>
           
         <Accordion title="Slow Development">
             <div className="flex flex-col md:flex-row items-start gap-6">
@@ -921,7 +934,7 @@ export const PROJECTPAGES = [
                   />
                 </div>
               </div>
-              <p className="md:w-2/3 md:order-first">Many of the development initiatives at Elvia took a long time before a product was realeased and started delivering value. Could we use this product as a pilot to challenge the slow development cycles at Elvia? Could we leverage GenAI to decrese the time develop the product?</p>
+              <p className="md:w-2/3 md:order-first">Many development teams used a project based delivery model, taking a long time before systems were completed and released. What could we learn by using GenAI deliberatly in developing the product? Could we use this product as a pilot to challenge slow development cycles at Elvia?</p>
             </div>
           </Accordion>
 
@@ -936,7 +949,7 @@ export const PROJECTPAGES = [
                   />
                 </div>
               </div>
-              <p className="md:w-2/3 md:order-first">The GenAI landscape changes almost daily. New models are released all the time. The best model for a specific task can change overnight, and older models gets phased out. Knowing what models are best for a company's domain context is impossible without experimentation. Aligning a GenAI strategy across the company would also be impossible if every team and worker used seperate tools to better acheive their goals.</p>
+              <p className="md:w-2/3 md:order-first">The GenAI landscape changes almost daily. New models are released all the time. The best model for a specific task can change overnight, and older models gets phased out. Knowing what models are best for a company's domain context is impossible without experimentation. Aligning a GenAI strategy across the company would be impossible if every team and worker used seperate tools to better acheive their goals.</p>
             </div>
           </Accordion>
 
@@ -949,7 +962,7 @@ export const PROJECTPAGES = [
                   className="w-full h-auto rounded-lg"
                 />
               </div>
-              <p className="md:w-2/3 md:order-first">Employees were eager to use AI, but sending internal documents or customer data to external services posed a massive security and GDPR compliance risk. Putting the compliance responsibility individually on the workers with limited understanding of this technology would not be safe or sustainable. The company needed a secure, internal "sandbox" where employees could experiment with AI without exposing confidential information.</p>
+              <p className="md:w-2/3 md:order-first">We know the potential to use AI at Elvia, but sending internal documents or customer data to external services posed a massive security and GDPR compliance risk. If employees used third pary services, Elvia would be putting the compliance responsibility individually on the workers with very limited understanding of this technology which would not be safe nor sustainable.</p>
             </div>
           </Accordion>
           
@@ -964,7 +977,7 @@ export const PROJECTPAGES = [
                   />
                 </div>
               </div>
-              <p className="md:w-2/3 md:order-first">Committing to a single AI provider like OpenAI or Google and building solutions around a single vendor is a strategic risk. It makes the a company vulnerable to potetial price hikes, changes in terms of service, or discontinuation of a key models the company comes to rely on – introducing integration issues across the board. A flexible archtecture combined with a multi-provider solution was the strategy we created to mitigate this risk.</p>
+              <p className="md:w-2/3 md:order-first">Committing to a single AI provider and building solutions around it is a strategic risk in the long term. It makes the a company vulnerable to potetial price hikes, changes in terms of service, or discontinuation of a key models the company comes to rely on – introducing integration issues across the board. A flexible archtecture combined with a multi-provider solution was the strategy we created to mitigate this risk.</p>
             </div>
           </Accordion>
         </>
@@ -973,7 +986,7 @@ export const PROJECTPAGES = [
         <>
           <p className="mb-12">I wore many design hats at different phases during the developement of the product. From strategy and concept development to the final high-fidelity prototypes.</p>
           <Accordion title="Product Design">
-            <p>What seperates any IT system from a digital product is in the execution. We already knew generative AI is useful and the chat format works. For this pilot project my MP and I agreed on a MVP stratagy to build, show value fast to gauge Elvia workers would actually adopt an internal AI chatbot. In this early phase I focused on concept development and communication strategy. We needed a vision that would work well as an MVP and be scalable if the MVP proved successful.  </p>
+            <p>What seperates an IT system from a digital product is in its execution. We already knew generative AI is useful and the chat format works. For this pilot project my PM and I agreed on a MVP strategy to show value fast and gauge if Elvia workers would adopt an internal AI chatbot. We needed a vision that would work well as an MVP and could scale if the MVP proved successful. Therefore in this early phase I focused on concept development and communication strategy that would be easy to build a solid first version, but could be expanded for the broader vision.</p>
           </Accordion>
           <Accordion title="UX Design">
             <p>My process was rooted in deep user understanding. I conducted user interviews and workshops to gather insights, which informed the creation of user personas, journey maps, and wireframes. I also ran iterative usability testing sessions to validate design decisions and refine the user experience.</p>
@@ -981,13 +994,42 @@ export const PROJECTPAGES = [
           <Accordion title="UI Design">
             <p>I was responsible for creating a clean, intuitive, and accessible user interface. This included developing a consistent visual language, designing pixel-perfect high-fidelity mockups and interactive prototypes in Figma, and creating a component library to ensure consistency and streamline development.</p>
           </Accordion>
-          <Accordion title="Methodology">
-            <p>We operated within an Agile UX framework, working in tight-knit sprints with developers and product managers. This iterative approach allowed for continuous feedback loops, ensuring that design solutions were not only desirable for users but also technically feasible and viable for the business. I championed this collaborative process to bridge the gap between design and engineering.</p>
+          <Accordion title="Vibe Coder">
+            <p>For some features i used AI to help develop parts of the front-end. One of our front-end developers was moved to another project, leaving us shorthanded. In collaboration with our remaining front-ender we could push the envelope, making more ambitius design and code that previously we would not have prioritized due to complexity.</p>
           </Accordion>
         </>
       ),
-    solution: "The solution was 'FortelVia,' a secure, internal platform that acts as a gateway to multiple leading AI models. It allows employees to experiment safely and provides a centralized point for managing access and ensuring compliance.",
-    impact: "The platform successfully decoupled the company from any single AI vendor, providing crucial flexibility. It established a secure environment for AI experimentation, which led to the development of three new internal tools within the first six months.",
+      designProcess: (
+        <>
+          <p className="mb-12">To tackle this project's unique challenges, we adopted a dynamic and evidence-driven design process. Here’s a look at our methodology, the techniques we used, and what we discovered along the way.</p>
+          <Accordion title="Methodology - Lean UX">
+            <img 
+              src={LeanUXImage} 
+              alt="Lean UX Cycle Diagram" 
+              className="w-full h-auto rounded-lg mb-4"
+            />
+            <p>Speed was one of the main success metrics, and with no need for an extended product discovery or user research phase, Lean UX was the obvious choice. My confidence in AI and access to high-performing AI services gave me a strong starting point. Lean UX delivers fast results when risk is low and uncertainty is limited.</p>
+          </Accordion>
+          <Accordion title="Methods">
+            <p>We employed a mix of techniques to gather insights and validate our designs:</p>
+            <ul className="list-disc list-inside mt-4 space-y-2">
+              <li><b>AI-Powered Analysis:</b> Used internal AI tools to analyze existing documentation and identify initial user pain points and opportunities.</li>
+              <li><b>Stakeholder Workshops:</b> Ran collaborative sessions to align on business goals, define success metrics, and map out technical constraints.</li>
+              <li><b>User Interviews:</b> Conducted interviews with potential users to understand their current workflows and attitudes towards AI.</li>
+              <li><b>Iterative Usability Testing:</b> Tested low and high-fidelity prototypes with users to continuously refine the experience.</li>
+            </ul>
+          </Accordion>
+          <Accordion title="Key Findings">
+            <p>Our research and testing uncovered several critical insights that directly shaped the product:</p>
+            <ul className="list-disc list-inside mt-4 space-y-2">
+              <li>Finding #1: Users were concerned about...</li>
+              <li>Finding #2: The most requested feature was...</li>
+              <li>Finding #3: A surprising discovery was that...</li>
+            </ul>
+          </Accordion>
+        </>
+      ),
+    solution: "Think of platforms like ChatGPT, Gemini or Anthropic. FortelVIA is very similar, but with some key differances. The solution is model agnostic so any model from any provider can easily be integrated into the same interface. Moreover, the using enterprice agreements, none of users data were shared with the third-party providers. Our long term vision was a secure solution where users and product teams can create specialized agents they in turn could use, again and again in their workflows or products. To make it intuitive I made the deliberate choice of antropomorphazing the AI models as as assistants based on historical geniuses, with distinct personalities and skillsets. This made it easy for users to understand the strengths and weaknesses of each model, and making complicated technological termonology more approachable and easy to understand.", /* The company needed a secure, internal "sandbox" where employees could experiment with AI without exposing confidential information.*/
     reflections: "This project underscored the importance of a modular architecture in a rapidly evolving field like AI. If I were to do it again, I would push for even earlier integration with the security team to streamline the compliance process from day one."
   },
   {
