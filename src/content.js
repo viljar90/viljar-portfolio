@@ -910,36 +910,35 @@ export const PROJECTPAGES = [
     id: 'aiPlatform',
     impact: (
       <>
-        <p className="mb-8">The platform's launch had a significant and measurable impact on the organization, validating our approach and sparking widespread interest in AI.</p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
           <MetricBox title="Adoption Rate" value="45%" subtext="within first six months" />
           <MetricBox title="User Engagement" value="10,000+" subtext="problems solved" />
           <MetricBox title="Sustained Growth" value="+5%" subtext="monthly" />
         </div>
-        <p>The product success created a buzz around AI at Elvia, giving workers the confidence and assurance they needed. The platform generated such a strong pipeline of new ideas and use cases from employees that prioritization became the team's next major (and welcome) challenge.</p>
+        <p>The platform's launch had a significant and measurable impact on the organization, validating our approach and sparking widespread interest in AI. The product success gave workers the confidence and assurance they needed to adopt the technology. The platform generated such a strong pipeline of new ideas and use cases from employees that prioritization became the team's next major challenge.</p>
       </>
     ),
     problem: (
         <>
-          <p className="mb-12">Everyone wants to leverage GenAI to improve their business processes or products. As the larget electricity grid provider in Norway, Elvia wanted to find a way to kickoff AI initiaties internally. But leaving workers to their own devices using AI poses many challenges and opens the company up to significant risks.</p>
-          
-        <Accordion title="Slow Development">
-            <div className="flex flex-col md:flex-row items-start gap-6">
-              <div className="w-full md:w-1/4 mx-auto max-w-sm md:order-last">
-                <div className="rounded-lg overflow-hidden">
-                  <img 
-                    src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjRwbjh6NjNpaHRodmUxZ2F2M3Rnc3J0dWYzZTBmcDV0anAzZ2l4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1xkMJIvxeKiDS/giphy.gif" 
-                    alt="Cartoon snail on a computer" 
-                    className="w-full h-auto transform scale-125"
-                  />
-                </div>
+          <p className="mb-12">With a GenAI, the interesting problems isn't for the users, it is for the business. Everyone wants to leverage GenAI to improve their business processes or products, but how to do this? As the larget electricity grid provider in Norway, Elvia wanted to find a way to kickoff AI initiaties internally.</p>
+
+          <Accordion title="Data Security & Compliance">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+
+              <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+                <img 
+                  src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHZlZGtreWc1ZDlwNHgyY2xnZ2p1MWQzZmtrMzI0dWxjeGkwMnU3eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sGa613aLoPzQB3YfSw/giphy.gif" 
+                  alt="Padlock security animation" 
+                  className="w-full h-auto rounded-lg"
+                />
               </div>
-              <p className="md:w-2/3 md:order-first">Many development teams used a project based delivery model, taking a long time before systems were completed and released. What could we learn by using GenAI deliberatly in developing the product? Could we use this product as a pilot to challenge slow development cycles at Elvia?</p>
+              <p className="md:w-2/3 md:order-first">Using external AI services for internal documents or customer data poses a massive risk to both security and GDPR compliance. Relying on employees to navigate these complexities on their own is an unsustainable and unsafe model, as it places the burden of compliance on teams and individuals s ill-equipped to handle it.</p>
             </div>
           </Accordion>
 
           <Accordion title="Rapidly Evolving Market">
-            <div className="flex flex-col md:flex-row items-start gap-6">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+
               <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
                 <div className="rounded-lg overflow-hidden">
                   <img 
@@ -949,25 +948,13 @@ export const PROJECTPAGES = [
                   />
                 </div>
               </div>
-              <p className="md:w-2/3 md:order-first">The GenAI landscape changes almost daily. New models are released all the time. The best model for a specific task can change overnight, and older models gets phased out. Knowing what models are best for a company's domain context is impossible without experimentation. Aligning a GenAI strategy across the company would be impossible if every team and worker used seperate tools to better acheive their goals.</p>
-            </div>
-          </Accordion>
-
-          <Accordion title="Data Security & Compliance">
-            <div className="flex flex-col md:flex-row items-start gap-6">
-              <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
-                <img 
-                  src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHZlZGtreWc1ZDlwNHgyY2xnZ2p1MWQzZmtrMzI0dWxjeGkwMnU3eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sGa613aLoPzQB3YfSw/giphy.gif" 
-                  alt="Padlock security animation" 
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
-              <p className="md:w-2/3 md:order-first">We know the potential to use AI at Elvia, but sending internal documents or customer data to external services posed a massive security and GDPR compliance risk. If employees used third pary services, Elvia would be putting the compliance responsibility individually on the workers with very limited understanding of this technology which would not be safe nor sustainable.</p>
+              <p className="md:w-2/3 md:order-first">The GenAI landscape changes daily. New models are released all the time and older models gets phased out. Knowing what models are best for a company's domain context is impossible without experimentation. Aligning a GenAI strategy across the company is impossible if every team and worker uses seperate tools.</p>
             </div>
           </Accordion>
           
           <Accordion title="Vendor Lock-in">
-            <div className="flex flex-col md:flex-row items-start gap-6">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+
               <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
                 <div className="rounded-lg overflow-hidden">
                    <img 
@@ -978,6 +965,22 @@ export const PROJECTPAGES = [
                 </div>
               </div>
               <p className="md:w-2/3 md:order-first">Committing to a single AI provider and building solutions around it is a strategic risk in the long term. It makes the a company vulnerable to potetial price hikes, changes in terms of service, or discontinuation of a key models the company comes to rely on – introducing integration issues across the board.</p>
+            </div>
+          </Accordion>
+
+          <Accordion title="Slow Development">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+
+              <div className="w-full md:w-1/4 mx-auto max-w-sm md:order-last">
+                <div className="rounded-lg overflow-hidden">
+                  <img 
+                    src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjRwbjh6NjNpaHRodmUxZ2F2M3Rnc3J0dWYzZTBmcDV0anAzZ2l4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1xkMJIvxeKiDS/giphy.gif" 
+                    alt="Cartoon snail on a computer" 
+                    className="w-full h-auto transform scale-125"
+                  />
+                </div>
+              </div>
+              <p className="md:w-2/3 md:order-first">Many development teams used a project based delivery model, taking a long time before systems were completed and released. What could we learn by using GenAI deliberatly in developing the product? Could we use this product as a pilot to challenge slow development cycles at Elvia?</p>
             </div>
           </Accordion>
         </>
@@ -1029,7 +1032,17 @@ export const PROJECTPAGES = [
           </Accordion>
         </>
       ),
-    solution: "Think of platforms like ChatGPT, Gemini or Anthropic. FortelVIA is very similar, but with some key differances. The solution is model agnostic so any model from any provider can easily be integrated into the same interface. Moreover, the using enterprice agreements, none of users data were shared with the third-party providers. Our long term vision was a secure solution where users and product teams can create specialized agents they in turn could use, again and again in their workflows or products. To make it intuitive I made the deliberate choice of antropomorphazing the AI models as as assistants based on historical geniuses, with distinct personalities and skillsets. This made it easy for users to understand the strengths and weaknesses of each model, and making complicated technological termonology more approachable and easy to understand.", /* The company needed a secure, internal "sandbox" where employees could experiment with AI without exposing confidential information.*/
+    solution: (
+        <>
+          <p className="mb-12">FortelVIA is a platform where you can chat with the best AI models on the market, presented as historical geniuses. This human-centric design anchors complex technology in familiar, anthropomorphic terms, making the experience uniquely intuitive and engaging.</p>
+          <Accordion title="Product comparison">
+            <p>Think of platforms like ChatGPT, Gemini or Anthropic. FortelVIA is very similar, but with some key differances. The solution is model agnostic so any model from any provider can easily be integrated into the same interface. Moreover, the using enterprice agreements, none of users data were shared with the third-party providers. Our long term vision was a secure solution where users and product teams can create specialized agents they in turn could use, again and again in their workflows or products. To make it intuitive I made the deliberate choice of antropomorphazing the AI models as as assistants based on historical geniuses, with distinct personalities and skillsets. This made it easy for users to understand the strengths and weaknesses of each model, and making complicated technological termonology more approachable and easy to understand.</p>
+          </Accordion>
+          <Accordion title="Sandbox">
+            <p>The company needed a secure, internal "sandbox" where employees could experiment with AI without exposing confidential information.</p>
+          </Accordion>
+        </>
+      ),
     reflections: "This project underscored the importance of a modular architecture in a rapidly evolving field like AI. If I were to do it again, I would push for even earlier integration with the security team to streamline the compliance process from day one."
   },
   {

@@ -9,7 +9,6 @@ const Accordion = ({ title, children, startOpen = false }) => {
   const [cardStyle, setCardStyle] = useState({});
   const cardRef = useRef(null);
   
-  // State to track if the accordion has ever been opened by the user
   const [hasBeenOpened, setHasBeenOpened] = useState(startOpen);
 
   useEffect(() => {
@@ -22,9 +21,6 @@ const Accordion = ({ title, children, startOpen = false }) => {
     const newIsOpen = !isOpen;
     setIsOpen(newIsOpen);
     
-    // --- THIS IS THE FIX ---
-    // The "hasBeenOpened" state is now set to true only when the accordion is opened.
-    // It will remain true even if the accordion is subsequently closed.
     if (newIsOpen && !hasBeenOpened) {
       setHasBeenOpened(true);
     }
@@ -37,7 +33,6 @@ const Accordion = ({ title, children, startOpen = false }) => {
   };
 
   const handleMouseMove = (e) => {
-    // The parallax effect on hover is preserved, but it no longer stops the animation.
     if (!cardRef.current) return;
     const { left, top, width, height } = cardRef.current.getBoundingClientRect();
     const x = e.clientX - left - width / 2;
@@ -56,36 +51,44 @@ const Accordion = ({ title, children, startOpen = false }) => {
   };
 
   return (
-    // --- THIS IS THE FIX ---
-    // The animation now depends on `hasBeenOpened` instead of the more general `hasInteracted`.
+    // --- CHANGE #1: This is the new outer div. ---
+    // It handles the parallax effect, mouse events, and overall layout spacing.
     <div 
       ref={cardRef}
       style={cardStyle}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`bg-bg-base dark:border dark:border-gray-700 rounded-xl shadow-lg w-full mb-6 transition-transform duration-200 ease-out ${!hasBeenOpened ? 'animate-nudge-loop' : ''}`}
+      className="w-full mb-6 transition-transform duration-200 ease-out"
     >
-      <button
-        onClick={toggleAccordion}
-        className="w-full flex justify-between items-center p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-secondary rounded-xl"
-        aria-expanded={isOpen}
+      {/* --- CHANGE #2: This is the original div, now nested inside. --- */}
+      {/* It handles the background, border, shadow, and the looping animation. */}
+      <div 
+        className={`bg-bg-base dark:border dark:border-gray-700 rounded-xl shadow-lg ${
+          !hasBeenOpened ? 'animate-nudge-loop' : ''
+        }`}
       >
-        <h2 className="text-2xl sm:text-3xl font-bold text-primary dark:text-secondary text-left">
-          {title}
-        </h2>
-        <ArrowDownIcon
-          className={`w-6 h-6 text-text-muted transition-transform duration-300 ${
-            isOpen ? 'transform rotate-180' : ''
-          }`}
-        />
-      </button>
-      <div
-        ref={contentRef}
-        className="overflow-hidden transition-max-height duration-500 ease-in-out"
-        style={{ maxHeight: startOpen ? undefined : '0px' }}
-      >
-        <div className="px-6 pb-6 text-lg sm:text-xl text-text-muted dark:text-slate-300 leading-relaxed whitespace-pre-line text-left">
-          {children}
+        <button
+          onClick={toggleAccordion}
+          className="w-full flex justify-between items-center p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-secondary rounded-xl"
+          aria-expanded={isOpen}
+        >
+          <h2 className="text-2xl sm:text-3xl font-bold text-primary dark:text-secondary text-left">
+            {title}
+          </h2>
+          <ArrowDownIcon
+            className={`w-6 h-6 text-text-muted transition-transform duration-300 ${
+              isOpen ? 'transform rotate-180' : ''
+            }`}
+          />
+        </button>
+        <div
+          ref={contentRef}
+          className="overflow-hidden transition-max-height duration-500 ease-in-out"
+          style={{ maxHeight: startOpen ? undefined : '0px' }}
+        >
+          <div className="px-6 pb-6 text-lg sm:text-xl text-text-muted dark:text-slate-300 leading-relaxed whitespace-pre-line text-left">
+            {children}
+          </div>
         </div>
       </div>
     </div>
