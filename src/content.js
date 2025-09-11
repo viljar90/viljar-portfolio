@@ -770,7 +770,7 @@ export const QUIZZES = [
     id: 'design-system',
     slug: 'question-2',
     title: 'Design System',
-    question: "Your product teams are struggling with inefficient frontend development and a misaligned product portfolio.\nWhat's the most effective first step to solve this?",
+    question: "Your product teams are struggling with inefficient frontend development and inconsistent design in the product portfolio.\nWhat's the most effective first step to solve this?",
     options: [
         { text: 'Hire an agile coach', isCorrect: false, feedback: "While helpful, an agile coach addresses process, not the core issues of design and development inconsistency." },
         { text: 'Create a design system', isCorrect: true },
@@ -913,7 +913,7 @@ export const PROJECTPAGES = [
         <p className="mb-8">The platform's launch had a significant and measurable impact on the organization, validating our approach and sparking widespread interest in AI.</p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
           <MetricBox title="Adoption Rate" value="45%" subtext="within first six months" />
-          <MetricBox title="User Engagement" value="10,000+" subtext="questions processed" />
+          <MetricBox title="User Engagement" value="10,000+" subtext="problems solved" />
           <MetricBox title="Sustained Growth" value="+5%" subtext="monthly" />
         </div>
         <p>The product success created a buzz around AI at Elvia, giving workers the confidence and assurance they needed. The platform generated such a strong pipeline of new ideas and use cases from employees that prioritization became the team's next major (and welcome) challenge.</p>
