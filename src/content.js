@@ -1079,12 +1079,12 @@ export const PROJECTPAGES = [
     impact: (
       <>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-          <MetricBox title="Design & Frontend" value="-30%" subtext="for new features" />
-          <MetricBox title="Design Consistency" value="65%" subtext="across all products" />
-          <MetricBox title="Time to Market" value="+20%" subtext="faster deployment" />
+          <MetricBox title="Design & Frontend" value="-40%" subtext="for new features" />
+          <MetricBox title="Design Consistency" value="70%" subtext="across all products" />
+          <MetricBox title="Time to Market" value="+30%" subtext="faster deployment" />
         </div>
         <p>
-          The design system reduced design and development time for new features by an estimated 30%. It also significantly improved UI consistency and quality across all digital products, leading to a more cohesive user experience and faster time to market. Check out:&nbsp;
+          The design system reduced design and development significantly. It also greatly improved UI consistency and quality across all digital products, leading to a more cohesive user experience and faster time to market. Check out:&nbsp;
           <a 
             href="https://design.elvia.io" 
             target="_blank" 
@@ -1114,7 +1114,7 @@ export const PROJECTPAGES = [
             </div>
           </Accordion>
 
-          <Accordion title="Duplicate and Redundant Work">
+          <Accordion title="Duplicate & Redundant Work">
             <div className="flex flex-col md:flex-row items-center gap-6">
 
               <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
@@ -1124,12 +1124,60 @@ export const PROJECTPAGES = [
                   className="w-full h-auto rounded-lg"
                 />
               </div>
-              <p className="md:w-2/3 md:order-first">Teams were designing and developong the same components from scratch for different projects, wasting valuable time and resources. This redundancy made it difficult to maintain and update products efficiently.</p>
+              <p className="md:w-2/3 md:order-first">Teams were designing and developong the similar components from scratch for different projects, wasting valuable time and resources. This redundancy made it difficult to maintain and update products efficiently.</p>
             </div>
           </Accordion>
 
           <Accordion title="Slow Time-to-Market">
-            <p>The lack of reusable components and clear guidelines meant that every new feature required a lengthy design and development cycle, delaying the launch of new products and updates.</p>
+            <div className="flex flex-col md:flex-row items-center gap-6">
+
+              <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+                <img 
+                  src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2Q4NXBvZ291YTJ3OWphNzEwOGZveTV2MmRkYms3bjhmd3h4c2lubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LqBvylC85KoLHONEEv/giphy.gif" 
+                  alt="Slow snail incoming..." 
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+              <p className="md:w-2/3 md:order-first">The lack of reusable components and clear guidelines meant that every new feature required a lengthy design and development cycle, delaying the launch of new products and updates.</p>
+            </div>
+          </Accordion>
+
+          <Accordion title="Accessibility Issues">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+                <img 
+                  src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2w1MGlwcGNrNnBoZXhwY3BoNnNxenR2NGQ4ZW4wMGV0ZjBydXg3NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0ozmBje9bTxfPlKO7m/giphy.gif" 
+                  alt="Accessibility for everyone..." 
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+
+              {/* --- THE FIX IS ON THIS LINE --- */}
+              <p className="md:w-2/3 md:order-first">
+                Accessibility needs are often overlooked in digital development. The{' '}
+                <DefinitionPopover
+                  acronym="WCAG"
+                  title="Web Content Accessibility Guidelines"
+                >
+                  WCAG is a globally recognized set of recommendations for making web content, digital services, and applications accessible to all people, including those with various disabilities.
+                </DefinitionPopover>{' '}
+                is a field in its own right and is often overlooked or not made a top priority in busy development cycles. And at Elvia this was no exception.
+              </p>
+            </div>
+          </Accordion>
+
+          <Accordion title="Hidden branding">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+
+              <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+                <img 
+                  src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWltZzNkZHlhcTZheXc5a3M2eHFtdHB4OGRyNXk3ZXZhbmZybHNuaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aWxbEGCqkiZFK/giphy.gif" 
+                  alt="Classified information" 
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+              <p className="md:w-2/3 md:order-first">Elvia invested in a new brand, but very few people knew where to find the brand guidelines. The agency who developed the brand created a website that to document the brand, but charged an exobant amount of money each year just to host the site.</p>
+            </div>
           </Accordion>
         </>
       ),
