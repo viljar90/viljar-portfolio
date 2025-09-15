@@ -3,6 +3,7 @@
 import React from 'react';
 import { PuzzleIcon, ChartIcon, MagicIcon, PieChartIcon, VideoEditorIcon } from './components/uiElements';
 import Accordion from './components/Accordion';
+import DefinitionPopover from './components/DefinitionPopover';
 import MetricBox from './components/MetricBox';
 import ProfilePicture from './assets/profile.png';
 import PixarProfilePicture from './assets/pixar-profile.png';
@@ -915,20 +916,20 @@ export const PROJECTPAGES = [
           <MetricBox title="User Engagement" value="10,000+" subtext="problems solved" />
           <MetricBox title="Sustained Growth" value="+5%" subtext="monthly" />
         </div>
-        <p>The platform's launch had a significant and measurable impact on the organization, validating our approach and sparking widespread interest in AI. The product success gave workers the confidence and assurance they needed to adopt the technology. The platform generated such a strong pipeline of new ideas and use cases from employees that prioritization became the team's next major challenge.</p>
+        <p>The platform's launch had a significant and measurable impact on the Elvia, validating our approach and sparking widespread interest in AI. The product success gave workers the confidence and assurance they needed to adopt the technology. The platform generated such a strong pipeline of new ideas and use cases from employees that prioritization became the team's next major challenge.</p>
       </>
     ),
     problem: (
         <>
           <p className="mb-12">With a GenAI, the interesting problems isn't for the users, it is for the business. Everyone wants to leverage GenAI to improve their business processes or products, but how to do this? As the larget electricity grid provider in Norway, Elvia wanted to find a way to kickoff AI initiaties internally.</p>
 
-          <Accordion title="Data Security & Compliance">
+          <Accordion title="Data Security & User Compliance">
             <div className="flex flex-col md:flex-row items-center gap-6">
 
               <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
                 <img 
                   src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHZlZGtreWc1ZDlwNHgyY2xnZ2p1MWQzZmtrMzI0dWxjeGkwMnU3eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sGa613aLoPzQB3YfSw/giphy.gif" 
-                  alt="Padlock security animation" 
+                  alt="Man peeking at anothers phone" 
                   className="w-full h-auto rounded-lg"
                 />
               </div>
@@ -959,7 +960,7 @@ export const PROJECTPAGES = [
                 <div className="rounded-lg overflow-hidden">
                    <img 
                     src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdDkxbDRkcXBjaWh2M2l1cXVjb3c2ZnFwZ3BpbWEwa281dm1rb2dndyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/K9sJRNHyQp3iw/giphy.gif" 
-                    alt="Chain breaking apart animation" 
+                    alt="Read the fine print before signing" 
                     className="w-full h-auto transform scale-125"
                   />
                 </div>
@@ -975,7 +976,7 @@ export const PROJECTPAGES = [
                 <div className="rounded-lg overflow-hidden">
                   <img 
                     src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjRwbjh6NjNpaHRodmUxZ2F2M3Rnc3J0dWYzZTBmcDV0anAzZ2l4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1xkMJIvxeKiDS/giphy.gif" 
-                    alt="Cartoon snail on a computer" 
+                    alt="Sloth working slow" 
                     className="w-full h-auto transform scale-125"
                   />
                 </div>
@@ -985,11 +986,39 @@ export const PROJECTPAGES = [
           </Accordion>
         </>
       ),
+    
+    solution: (
+        <>
+          <p className="mb-12">FortelVia is a platform where you can chat with the best AI models on the market, presented as historical geniuses. This human-centric design anchors complex technology in familiar, anthropomorphic terms, making the experience uniquely intuitive and engaging.</p>
+
+          <Accordion title="MVP - FortelVia Beta">
+            <p>
+              To quickly validate user interest with minimal investment, we developed an {' '}
+              <DefinitionPopover
+                acronym="MVP"
+                title="Minimum Viable Product"
+              >
+                an early, basic version of a product that meets the minimum necessary requirements for use but can be adapted and improved in the future, especially after customer feedback.
+              </DefinitionPopover>.
+              This strategy allowed us to fast guage user engagement on the core functionality before committing to a full-featured product.
+            </p>
+          </Accordion>
+          
+          <Accordion title="Product comparison">
+            <p>Think of platforms like ChatGPT, Gemini or Anthropic. FortelVIA is very similar, but with some key differances. The solution is model agnostic so any model from any provider can easily be integrated into the same interface. Moreover, the using enterprice agreements, none of users data were shared with the third-party providers. Our long term vision was a secure solution where users and product teams can create specialized agents they in turn could use, again and again in their workflows or products. To make it intuitive I made the deliberate choice of antropomorphazing the AI models as as assistants based on historical geniuses, with distinct personalities and skillsets. This made it easy for users to understand the strengths and weaknesses of each model, and making complicated technological termonology more approachable and easy to understand.</p>
+          </Accordion>
+
+          <Accordion title="Sandbox">
+            <p>The company needed a secure, internal "sandbox" where employees could experiment with AI without exposing confidential information.</p>
+          </Accordion>
+        </>
+      ),
+
     role: (
         <>
           <p className="mb-12">I wore many design hats at different phases during the developement of the product. From strategy and concept development to the final high-fidelity prototypes.</p>
           <Accordion title="Product Design">
-            <p>What seperates an IT system from a digital product is in its execution. We already knew generative AI is useful and the chat format works. For this pilot project my PM and I agreed on a MVP strategy to show value fast and gauge if Elvia workers would adopt an internal AI chatbot. We needed a vision that would work well as an MVP and could scale if the MVP proved successful. Therefore in this early phase I focused on concept development and communication strategy that would be easy to build a solid first version, but could be expanded for the broader vision.</p>
+            <p>In the product role my focus was on both the short- and long term vision in regards to the product and the business goals. Through this I developed the creative concept and communication stratagy that would make the prodcut a sucess and would scale if the PoC was a success.</p>
           </Accordion>
           <Accordion title="UX Design">
             <p>My process was rooted in deep user understanding. I conducted user interviews and workshops to gather insights, which informed the creation of user personas, journey maps, and wireframes. I also ran iterative usability testing sessions to validate design decisions and refine the user experience.</p>
@@ -1013,15 +1042,26 @@ export const PROJECTPAGES = [
             />
             <p>Speed was one of the main success metrics, and with no need for an extended product discovery or user research phase, Lean UX was the obvious choice. My confidence in AI and access to high-performing AI services gave me a strong starting point. Lean UX delivers fast results when risk is low and uncertainty is limited.</p>
           </Accordion>
+
           <Accordion title="Methods">
             <p>We employed a mix of techniques to gather insights and validate our designs:</p>
-            <ul className="list-disc list-inside mt-4 space-y-2">
-              <li><b>AI-Powered Analysis:</b> Used internal AI tools to analyze existing documentation and identify initial user pain points and opportunities.</li>
-              <li><b>Stakeholder Workshops:</b> Ran collaborative sessions to align on business goals, define success metrics, and map out technical constraints.</li>
-              <li><b>User Interviews:</b> Conducted interviews with potential users to understand their current workflows and attitudes towards AI.</li>
-              <li><b>Iterative Usability Testing:</b> Tested low and high-fidelity prototypes with users to continuously refine the experience.</li>
+            {/* The change is in the className of this ul tag */}
+            <ul className="list-disc list-outside pl-5 mt-4 space-y-2">
+              <li>
+                <b>AI-Powered Analysis:</b> Used internal AI tools to analyze existing documentation and identify initial user pain points and opportunities.
+              </li>
+              <li>
+                <b>Stakeholder Workshops:</b> Ran collaborative sessions to align on business goals, define success metrics, and map out technical constraints.
+              </li>
+              <li>
+                <b>User Interviews:</b> Conducted interviews with potential users to understand their current workflows and attitudes towards AI.
+              </li>
+              <li>
+                <b>Iterative Usability Testing:</b> Tested low and high-fidelity prototypes with users to continuously refine the experience.
+              </li>
             </ul>
           </Accordion>
+
           <Accordion title="Key Findings">
             <p>Our research and testing uncovered several critical insights that directly shaped the product:</p>
             <ul className="list-disc list-inside mt-4 space-y-2">
@@ -1032,25 +1072,116 @@ export const PROJECTPAGES = [
           </Accordion>
         </>
       ),
-    solution: (
-        <>
-          <p className="mb-12">FortelVIA is a platform where you can chat with the best AI models on the market, presented as historical geniuses. This human-centric design anchors complex technology in familiar, anthropomorphic terms, making the experience uniquely intuitive and engaging.</p>
-          <Accordion title="Product comparison">
-            <p>Think of platforms like ChatGPT, Gemini or Anthropic. FortelVIA is very similar, but with some key differances. The solution is model agnostic so any model from any provider can easily be integrated into the same interface. Moreover, the using enterprice agreements, none of users data were shared with the third-party providers. Our long term vision was a secure solution where users and product teams can create specialized agents they in turn could use, again and again in their workflows or products. To make it intuitive I made the deliberate choice of antropomorphazing the AI models as as assistants based on historical geniuses, with distinct personalities and skillsets. This made it easy for users to understand the strengths and weaknesses of each model, and making complicated technological termonology more approachable and easy to understand.</p>
-          </Accordion>
-          <Accordion title="Sandbox">
-            <p>The company needed a secure, internal "sandbox" where employees could experiment with AI without exposing confidential information.</p>
-          </Accordion>
-        </>
-      ),
     reflections: "This project underscored the importance of a modular architecture in a rapidly evolving field like AI. If I were to do it again, I would push for even earlier integration with the security team to streamline the compliance process from day one."
   },
   {
     id: 'design-system',
-    problem: "Product teams were working in silos, leading to inconsistent user experiences across the product portfolio and duplicated design and development efforts, which slowed down time-to-market.",
-    role: "I co-led the UX strategy and component design, working closely with developers to translate design concepts into reusable code. My role involved establishing a governance model, documenting usage guidelines, and advocating for adoption across the organization.",
-    solution: "We developed a comprehensive design system with a shared library of reusable components, clear design guidelines, and robust documentation. This created a single source of truth for both designers and developers.",
-    impact: "The design system reduced design and development time for new features by an estimated 30%. It also significantly improved UI consistency and quality across all digital products.",
+    impact: (
+      <>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+          <MetricBox title="Design & Frontend" value="-30%" subtext="for new features" />
+          <MetricBox title="Design Consistency" value="65%" subtext="across all products" />
+          <MetricBox title="Time to Market" value="+20%" subtext="faster deployment" />
+        </div>
+        <p>
+          The design system reduced design and development time for new features by an estimated 30%. It also significantly improved UI consistency and quality across all digital products, leading to a more cohesive user experience and faster time to market. Check out:&nbsp;
+          <a 
+            href="https://design.elvia.io" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="font-semibold text-primary dark:text-secondary hover:underline"
+          >
+            The Elvia Design System
+          </a>
+        </p>
+      </>
+    ),
+    problem: (
+        <>
+          <p className="mb-12">After a big merger Elvia needed to develop all new common work interfaces to join the two companies. But teams were working in silos, leading to inconsistent user experiences across the product portfolio and duplicated design and development efforts.</p>
+
+          <Accordion title="Inconsistent User Experience">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+
+              <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+                <img 
+                  src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnNpcDE3d3V3d2RlNzZqOTR6Y2Vja3ZjcXFkbnE3Nzc3aGgwZndxayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/citBl9yPwnUOs/giphy.gif" 
+                  alt="Cartoon character struggeling to navigate the interface" 
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+              <p className="md:w-2/3 md:order-first">Without a centralized design language, each product had a different look and feel. This fragmented the user journey, and forced users to constantly relearn interfaces — creating significant costs in training and support.</p>
+            </div>
+          </Accordion>
+
+          <Accordion title="Duplicate and Redundant Work">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+
+              <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+                <img 
+                  src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnAyaHA2NjUxYTk2ZzV4ZXpxNXZ1ZWV4NDA0bXVwMzdlc3kweDR1OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BDIv0n0pGYIT2YwnVx/giphy.gif" 
+                  alt="Identical but not the same" 
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+              <p className="md:w-2/3 md:order-first">Teams were designing and developong the same components from scratch for different projects, wasting valuable time and resources. This redundancy made it difficult to maintain and update products efficiently.</p>
+            </div>
+          </Accordion>
+
+          <Accordion title="Slow Time-to-Market">
+            <p>The lack of reusable components and clear guidelines meant that every new feature required a lengthy design and development cycle, delaying the launch of new products and updates.</p>
+          </Accordion>
+        </>
+      ),
+    role: (
+        <>
+          <p className="mb-12">I co-led the UX strategy and component design, working closely with developers to translate design concepts into reusable code. My role involved establishing a governance model, documenting usage guidelines, and advocating for adoption across the organization.</p>
+          <Accordion title="UX Strategy & Governance">
+            <p>I helped define the principles and standards that would guide the design system, ensuring it aligned with both user needs and business goals. This included creating a contribution and maintenance model to keep the system alive and relevant.</p>
+          </Accordion>
+          <Accordion title="Component Design & Documentation">
+            <p>I designed and documented a wide range of reusable components, from basic elements like buttons and inputs to more complex patterns. Each component was designed with accessibility, usability, and brand consistency in mind.</p>
+          </Accordion>
+        </>
+      ),
+      designProcess: (
+        <>
+          <p className="mb-12">Our process was centered around collaboration and iteration, ensuring the design system met the needs of all teams.</p>
+          <Accordion title="Methodology - Atomic Design">
+            <p>We adopted the Atomic Design methodology to break down interfaces into their fundamental components, making them easier to build, test, and reuse. This approach allowed us to create a flexible and scalable system that could adapt to the needs of different products.</p>
+          </Accordion>
+
+          <Accordion title="Methods">
+            <p>We employed a mix of techniques to gather insights and validate our designs:</p>
+            {/* The change is in the className of this ul tag */}
+            <ul className="list-disc list-outside pl-5 mt-4 space-y-2">
+              <li>
+                <b>AI-Powered Analysis:</b> Used internal AI tools to analyze existing documentation and identify initial user pain points and opportunities.
+              </li>
+              <li>
+                <b>Stakeholder Workshops:</b> Ran collaborative sessions to align on business goals, define success metrics, and map out technical constraints.
+              </li>
+              <li>
+                <b>User Interviews:</b> Conducted interviews with potential users to understand their current workflows and attitudes towards AI.
+              </li>
+              <li>
+                <b>Iterative Usability Testing:</b> Tested low and high-fidelity prototypes with users to continuously refine the experience.
+              </li>
+            </ul>
+          </Accordion>
+        </>
+      ),
+    solution: (
+        <>
+          <p className="mb-12">We developed a comprehensive design system with a shared library of reusable components, clear design guidelines, and robust documentation. This created a single source of truth for both designers and developers.</p>
+          <Accordion title="Component Library">
+            <p>We created a library of reusable components in Figma and React, allowing teams to quickly build consistent and high-quality interfaces.</p>
+          </Accordion>
+          <Accordion title="Documentation & Guidelines">
+            <p>We developed clear and comprehensive documentation with usage guidelines, best practices, and code examples to ensure that the design system was easy to understand and use.</p>
+          </Accordion>
+        </>
+      ),
     reflections: "The biggest challenge was not building the system, but fostering its adoption. In the future, I'd involve more teams in the initial component selection process to create a stronger sense of shared ownership from the start."
   },
   {

@@ -4,9 +4,16 @@ import PropTypes from 'prop-types';
 import CountUp from 'react-countup';
 
 const MetricBox = ({ title, value, subtext, children, className = '' }) => {
-  // --- THIS IS THE CORRECTED LOGIC (Lines 8-12) ---
-  const prefix = String(value).startsWith('+') ? '+' : '';
-  const valueWithoutPrefix = prefix ? String(value).substring(1) : String(value);
+  // --- THIS IS THE CORRECTED LOGIC ---
+  const stringValue = String(value);
+  let prefix = '';
+  if (stringValue.startsWith('+')) {
+    prefix = '+';
+  } else if (stringValue.startsWith('-')) {
+    prefix = '-';
+  }
+  
+  const valueWithoutPrefix = prefix ? stringValue.substring(1) : stringValue;
   const number = parseFloat(valueWithoutPrefix.replace(/[^0-9.]/g, ''));
   const suffix = valueWithoutPrefix.replace(/[0-9,.]/g, '').trim();
 

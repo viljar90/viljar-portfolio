@@ -1,15 +1,39 @@
-// src/components/Accordion.js
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { ArrowDownIcon } from './uiElements';
 
 const Accordion = ({ title, children, startOpen = false }) => {
   const [isOpen, setIsOpen] = useState(startOpen);
   const contentRef = useRef(null);
-  const [cardStyle, setCardStyle] = useState({});
+  const innerContentRef = useRef(null); // --- ADD THIS --- Ref for the inner content
   const cardRef = useRef(null);
-  
+  const [cardStyle, setCardStyle] = useState({});
   const [hasBeenOpened, setHasBeenOpened] = useState(startOpen);
+
+  // This function will be called by the ResizeObserver
+  const updateMaxHeight = useCallback(() => {
+    if (isOpen && contentRef.current) {
+      contentRef.current.style.maxHeight = `${contentRef.current.scrollHeight}px`;
+    }
+  }, [isOpen]);
+
+  // This effect sets up the ResizeObserver to watch for content changes
+  useEffect(() => {
+    const observer = new ResizeObserver(updateMaxHeight);
+    const element = innerContentRef.current;
+
+    if (element) {
+      observer.observe(element);
+    }
+
+    // Cleanup function to stop observing when the component unmounts
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
+  }, [updateMaxHeight]);
+
 
   useEffect(() => {
     if (startOpen && contentRef.current) {
@@ -51,8 +75,6 @@ const Accordion = ({ title, children, startOpen = false }) => {
   };
 
   return (
-    // --- CHANGE #1: This is the new outer div. ---
-    // It handles the parallax effect, mouse events, and overall layout spacing.
     <div 
       ref={cardRef}
       style={cardStyle}
@@ -60,8 +82,6 @@ const Accordion = ({ title, children, startOpen = false }) => {
       onMouseLeave={handleMouseLeave}
       className="w-full mb-6 transition-transform duration-200 ease-out"
     >
-      {/* --- CHANGE #2: This is the original div, now nested inside. --- */}
-      {/* It handles the background, border, shadow, and the looping animation. */}
       <div 
         className={`bg-bg-base dark:border dark:border-gray-700 rounded-xl shadow-lg ${
           !hasBeenOpened ? 'animate-nudge-loop' : ''
@@ -86,7 +106,8 @@ const Accordion = ({ title, children, startOpen = false }) => {
           className="overflow-hidden transition-max-height duration-500 ease-in-out"
           style={{ maxHeight: startOpen ? undefined : '0px' }}
         >
-          <div className="px-6 pb-6 text-lg sm:text-xl text-text-muted dark:text-slate-300 leading-relaxed whitespace-pre-line text-left">
+          {/* --- ADD THE NEW REF HERE --- */}
+          <div ref={innerContentRef} className="px-6 pb-6 text-lg sm:text-xl text-text-muted dark:text-slate-300 leading-relaxed whitespace-pre-line text-left">
             {children}
           </div>
         </div>
