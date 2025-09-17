@@ -1319,11 +1319,19 @@ export const PROJECTPAGES = [
         <p className="mb-12">The data catalogue provides a single, searchable interface for all company data, complete with clear documentation, ownership, and quality indicators. It's designed to be intuitive for both technical and non-technical users.</p>
   
         <Accordion title="Unified Catalogue">
-          <p>One searchable place for datasets, owners, access, and quality. Users can find what they need through business-friendly search terms and filters, eliminating the need to navigate multiple systems.</p>
+          <p>One searchable place for datasets, kafka topics, data owners, access, and quality. Users can find what they need through business-friendly search terms and filters, eliminating the need to navigate multiple systems.</p>
         </Accordion>
         
-        <Accordion title="Trust by Design">
-          <p>Clear ownership, SLA/freshness indicators, and automated data quality checks (where possible) provided the data with a grade, helping users quickly assess data reliability. Trust signals are prominently displayed to reduce uncertainty.</p>
+        <Accordion title="Trust by Design">          <p>
+            Clear ownership,{' '}
+            <DefinitionPopover
+              acronym="SLA"
+              title="Service Level Agreement"
+            >
+              An agreement that defines expected service levels, like uptime and freshness targets for data.
+            </DefinitionPopover>{' '}
+            , and automated data quality checks (where possible) provided the data with a grade, helping users quickly assess data reliability. Trust signals are prominently displayed to reduce uncertainty.
+          </p>
         </Accordion>
   
         <Accordion title="Documentation">
@@ -1372,7 +1380,7 @@ export const PROJECTPAGES = [
               <b>Deep Research:</b> Significant time spent understanding the data landscape and user workflows as a non-developer, translating technical complexity into user-friendly solutions.
             </li>
             <li>
-              <b>Content Modelling:</b> Structured the information architecture around dataset > fields > ownership > policies.
+              <b>Content Modelling:</b> Structured the information architecture around dataset {'>'} fields {'>'} ownership {'>'} policies.
             </li>
             <li>
               <b>Usability Testing:</b> Tested search, filters, and dataset detail page with real users to continuously refine the experience.
