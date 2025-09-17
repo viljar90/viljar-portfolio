@@ -1323,7 +1323,7 @@ export const PROJECTPAGES = [
         </Accordion>
         
         <Accordion title="Trust by Design">          <p>
-            Clear ownership,{' '}
+            Clear data ownership,{' '}
             <DefinitionPopover
               acronym="SLA"
               title="Service Level Agreement"
@@ -1363,8 +1363,8 @@ export const PROJECTPAGES = [
     designProcess: (
       <>
         <p className="mb-12">Our process was centered around understanding the complex data landscape and user needs through extensive research and iterative design.</p>
-        <Accordion title="Methodology - Dual-track">
-          <p>We adopted a dual-track approach with Discovery and Delivery running in parallel. Discovery focused on problem framing, job stories, and value mapping, while Delivery involved iterative prototypes, usability testing, and rollout by team cohorts.</p>
+        <Accordion title="Methodology - Design First Approach">
+          <p>As the data domain is complex, we decided on a design first approach. This allowed get a deep understanding of the data domain in the context of Elvia and user needs instead of rushing to build a solution built on a shaky foundation. This also allowed us to iterate on the design based on user feedback and stakeholder input. It saves in cost bevause when development starts, we have a ready-validated design and we don't develop based on assumptions on how the design might end up.</p>
         </Accordion>
   
         <Accordion title="Methods">
