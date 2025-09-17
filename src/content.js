@@ -1248,7 +1248,7 @@ export const PROJECTPAGES = [
       <>
         <p className="mb-12">Valuable data was fragmented across the organization, making it difficult for employees to find, trust, and utilize it effectively. This hindered the company's ability to become truly data-driven.</p>
   
-        <Accordion title="Data is Hard to Find">
+        <Accordion title="Hard to Find or Discover Data">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
               <img 
@@ -1265,7 +1265,7 @@ export const PROJECTPAGES = [
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
               <img 
-                src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnNpcDE3d3V3d2RlNzZqOTR6Y2Vja3ZjcXFkbnE3Nzc3aGgwZndxayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/citBl9yPwnUOs/giphy.gif" 
+                src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW15MHV6bnU4aXdhbDA0YXkzOHpzYjNpMnJlc214bDBzc2EycnBqbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ANbD1CCdA3iI8/giphy.gif" 
                 alt="Person questioning data reliability" 
                 className="w-full h-auto rounded-lg"
               />
@@ -1278,7 +1278,7 @@ export const PROJECTPAGES = [
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
               <img 
-                src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjRwbjh6NjNpaHRodmUxZ2F2M3Rnc3J0dWYzZTBmcDV0anAzZ2l4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1xkMJIvxeKiDS/giphy.gif" 
+                src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnc1bDVzY3FibnZsOXZ4djR3MzZiN2FsMmI1dHlrZjJpazN6ZHk4cyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/12eSZ21FAlxfpK/giphy.gif" 
                 alt="Experts answering repeated questions" 
                 className="w-full h-auto rounded-lg"
               />
@@ -1291,7 +1291,7 @@ export const PROJECTPAGES = [
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
               <img 
-                src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2Q4NXBvZ291YTJ3OWphNzEwOGZveTV2MmRkYms3bjhmd3h4c2lubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LqBvylC85KoLHONEEv/giphy.gif" 
+                src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGMxMjFpOGQ2cHkxbjhxOG5qanVneW9oZTBoZWRjNzMzdno1ejI0dSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3o7btO8WLQFyw2q0Qo/giphy.gif" 
                 alt="New employee struggling to find information" 
                 className="w-full h-auto rounded-lg"
               />
@@ -1304,7 +1304,7 @@ export const PROJECTPAGES = [
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
               <img 
-                src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWltZzNkZHlhcTZheXc5a3M2eHFtdHB4OGRyNXk3ZXZhbmZybHNuaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aWxbEGCqkiZFK/giphy.gif" 
+                src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWE3cXNmbWptZ2NnaTRpc2p2aGVmOTE2NHNxZTVndG1kOHM5cDJpMSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/lubyxjNyY7RaebH6r3/giphy.gif" 
                 alt="Security and compliance concerns" 
                 className="w-full h-auto rounded-lg"
               />
