@@ -1234,11 +1234,163 @@ export const PROJECTPAGES = [
   },
   {
     id: 'dataCatalogue',
-    problem: "Valuable data was fragmented across the organization, making it difficult for employees to find, trust, and utilize it effectively. This hindered the company's ability to become truly data-driven.",
-    role: "I led the user research to understand the pain points of data consumers and producers. Based on these insights, I designed the information architecture, wireframes, and final UI for a centralized data catalogue.",
-    solution: "The data catalogue provides a single, searchable interface for all company data, complete with clear documentation, data lineage, and quality metrics. It's designed to be intuitive for both technical and non-technical users.",
-    impact: "The platform increased data discovery by 60% in the first quarter after launch and significantly improved employee trust in the available data, as measured by internal surveys.",
-    reflections: "Early on, we underestimated the complexity of data lineage. A deeper initial collaboration with data engineers would have allowed us to present this information even more intuitively from the first version."
+    impact: (
+      <>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+          <MetricBox title="Adoption Rate" value="80%" subtext="of target teams within 3 months" />
+          <MetricBox title="Data Discovery" value="+60%" subtext="increase in successful searches" />
+          <MetricBox title="Time Saved" value="-35%" subtext="time to find the right dataset" />
+        </div>
+        <p>The data catalogue transformed how teams discover and trust organizational data. The high adoption rate validated our user-centric approach, while the improved discovery metrics showed we successfully addressed the core pain points of data fragmentation and accessibility.</p>
+      </>
+    ),
+    problem: (
+      <>
+        <p className="mb-12">Valuable data was fragmented across the organization, making it difficult for employees to find, trust, and utilize it effectively. This hindered the company's ability to become truly data-driven.</p>
+  
+        <Accordion title="Data is Hard to Find">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+              <img 
+                src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2w1MGlwcGNrNnBoZXhwY3BoNnNxenR2NGQ4ZW4wMGV0ZjBydXg3NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0ozmBje9bTxfPlKO7m/giphy.gif" 
+                alt="Person searching through scattered documents" 
+                className="w-full h-auto rounded-lg"
+              />
+            </div>
+            <p className="md:w-2/3 md:order-first">Multiple sources, inconsistent naming, and scattered documentation made finding the right data a time-consuming treasure hunt. Teams spent hours searching through different systems and asking colleagues for help.</p>
+          </div>
+        </Accordion>
+  
+        <Accordion title="Low Trust in Data">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+              <img 
+                src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnNpcDE3d3V3d2RlNzZqOTR6Y2Vja3ZjcXFkbnE3Nzc3aGgwZndxayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/citBl9yPwnUOs/giphy.gif" 
+                alt="Person questioning data reliability" 
+                className="w-full h-auto rounded-lg"
+              />
+            </div>
+            <p className="md:w-2/3 md:order-first">Missing owners, unclear freshness, and unknown quality/provenance made teams hesitant to use available data. Without trust signals, every dataset required extensive validation before use.</p>
+          </div>
+        </Accordion>
+  
+        <Accordion title="Siloed Knowledge">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+              <img 
+                src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjRwbjh6NjNpaHRodmUxZ2F2M3Rnc3J0dWYzZTBmcDV0anAzZ2l4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1xkMJIvxeKiDS/giphy.gif" 
+                alt="Experts answering repeated questions" 
+                className="w-full h-auto rounded-lg"
+              />
+            </div>
+            <p className="md:w-2/3 md:order-first">Experts were constantly answering the same questions repeatedly in Slack and Teams. This created bottlenecks and prevented knowledge from being shared systematically across the organization.</p>
+          </div>
+        </Accordion>
+  
+        <Accordion title="Slow Onboarding">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+              <img 
+                src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2Q4NXBvZ291YTJ3OWphNzEwOGZveTV2MmRkYms3bjhmd3h4c2lubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LqBvylC85KoLHONEEv/giphy.gif" 
+                alt="New employee struggling to find information" 
+                className="w-full h-auto rounded-lg"
+              />
+            </div>
+            <p className="md:w-2/3 md:order-first">New analysts spent weeks figuring out where data lives and what it means. The lack of centralized documentation and clear ownership made onboarding unnecessarily complex and time-consuming.</p>
+          </div>
+        </Accordion>
+  
+        <Accordion title="Compliance Risk">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
+              <img 
+                src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWltZzNkZHlhcTZheXc5a3M2eHFtdHB4OGRyNXk3ZXZhbmZybHNuaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aWxbEGCqkiZFK/giphy.gif" 
+                alt="Security and compliance concerns" 
+                className="w-full h-auto rounded-lg"
+              />
+            </div>
+            <p className="md:w-2/3 md:order-first">Sensitive datasets existed without clear access policies and ownership, creating compliance risks. Teams couldn't easily understand who should have access to what data, leading to potential security gaps.</p>
+          </div>
+        </Accordion>
+      </>
+    ),
+    solution: (
+      <>
+        <p className="mb-12">The data catalogue provides a single, searchable interface for all company data, complete with clear documentation, ownership, and quality indicators. It's designed to be intuitive for both technical and non-technical users.</p>
+  
+        <Accordion title="Unified Catalogue">
+          <p>One searchable place for datasets, owners, access, and quality. Users can find what they need through business-friendly search terms and filters, eliminating the need to navigate multiple systems.</p>
+        </Accordion>
+        
+        <Accordion title="Trust by Design">
+          <p>Clear ownership, SLA/freshness indicators, and automated data quality checks (where possible) help users quickly assess data reliability. Trust signals are prominently displayed to reduce uncertainty.</p>
+        </Accordion>
+  
+        <Accordion title="Human + Automated Documentation">
+          <p>Lightweight templates for human-written context combined with automated schema pull from sources. This approach balances comprehensive documentation with maintainability.</p>
+        </Accordion>
+  
+        <Accordion title="Access Clarity">
+          <p>Request access directly from the dataset page with policy hints and turnaround expectations. This streamlines the access request process and sets clear expectations for users.</p>
+        </Accordion>
+      </>
+    ),
+    role: (
+      <>
+        <p className="mb-12">I led the user research to understand the pain points of data consumers and producers. Based on these insights, I designed the information architecture, wireframes, and final UI for a centralized data catalogue.</p>
+        <Accordion title="Product Design">
+          <p>Defined success metrics, MVP scope, and prioritization with stakeholders (Data Platform, Security, BI). Focused on creating a solution that addressed both user needs and organizational requirements.</p>
+        </Accordion>
+        <Accordion title="UX Research">
+          <p>Conducted extensive user interviews with analysts and data consumers. Created journey maps for "Find, Trust, Use" data flow and spent significant time researching the data landscape to understand user workflows.</p>
+        </Accordion>
+        <Accordion title="UX/UI Design">
+          <p>Designed information architecture, search UX, card/tile layout, dataset page, owner pages, and request flows. Ensured the interface was intuitive for both technical and non-technical users.</p>
+        </Accordion>
+        <Accordion title="Design Ops">
+          <p>Leveraged component reuse with the Design System, creating patterns for cards, tabs, badges, and indicators. This ensured consistency and accelerated development.</p>
+        </Accordion>
+      </>
+    ),
+    designProcess: (
+      <>
+        <p className="mb-12">Our process was centered around understanding the complex data landscape and user needs through extensive research and iterative design.</p>
+        <Accordion title="Methodology - Dual-track">
+          <p>We adopted a dual-track approach with Discovery and Delivery running in parallel. Discovery focused on problem framing, job stories, and value mapping, while Delivery involved iterative prototypes, usability testing, and rollout by team cohorts.</p>
+        </Accordion>
+  
+        <Accordion title="Methods">
+          <p>We employed a mix of techniques to gather insights and validate our designs:</p>
+          <ul className="list-disc list-outside pl-5 mt-4 space-y-2">
+            <li>
+              <b>Stakeholder Workshops:</b> Collaborative sessions with Data Platform, Security, and BI teams to align on goals and constraints.
+            </li>
+            <li>
+              <b>Extensive User Interviews:</b> Deep conversations with analysts and data consumers to understand their daily workflows and pain points.
+            </li>
+            <li>
+              <b>Deep Research:</b> Significant time spent understanding the data landscape and user workflows as a non-developer, translating technical complexity into user-friendly solutions.
+            </li>
+            <li>
+              <b>Content Modelling:</b> Structured the information architecture around dataset > fields > ownership > policies.
+            </li>
+            <li>
+              <b>Usability Testing:</b> Tested search, filters, and dataset detail page with real users to continuously refine the experience.
+            </li>
+          </ul>
+        </Accordion>
+  
+        <Accordion title="Key Findings">
+          <p>Our research uncovered several critical insights that directly shaped the product:</p>
+          <ul className="list-disc list-inside mt-4 space-y-2">
+            <li>"Owner and last updated" are the most critical trust signals for users.</li>
+            <li>People search by business terms, not technical names—synonyms matter significantly.</li>
+            <li>Top queries cluster around a few themes—curated Collections accelerate value delivery.</li>
+          </ul>
+        </Accordion>
+      </>
+    ),
+    reflections: "Early on, we underestimated the complexity of data lineage. A deeper initial collaboration with data engineers would have allowed us to present this information even more intuitively from the first version. The biggest learning was the importance of spending time as a non-developer to truly understand the data landscape and translate technical complexity into user-friendly solutions."
   },
   {
     id: 'aiDashboard',
