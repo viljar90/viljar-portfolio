@@ -1323,11 +1323,11 @@ export const PROJECTPAGES = [
         </Accordion>
         
         <Accordion title="Trust by Design">
-          <p>Clear ownership, SLA/freshness indicators, and automated data quality checks (where possible) help users quickly assess data reliability. Trust signals are prominently displayed to reduce uncertainty.</p>
+          <p>Clear ownership, SLA/freshness indicators, and automated data quality checks (where possible) provided the data with a grade, helping users quickly assess data reliability. Trust signals are prominently displayed to reduce uncertainty.</p>
         </Accordion>
   
-        <Accordion title="Human + Automated Documentation">
-          <p>Lightweight templates for human-written context combined with automated schema pull from sources. This approach balances comprehensive documentation with maintainability.</p>
+        <Accordion title="Documentation">
+          <p>A multi-layered approach to documentation. Most important documentation could be found in the data catalogue, but the teams could add links to their confluence pages, Ardoq, CLI or other information they deemed relevant.</p>
         </Accordion>
   
         <Accordion title="Access Clarity">
