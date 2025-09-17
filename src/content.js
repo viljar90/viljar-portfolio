@@ -114,10 +114,10 @@ export const WHY_DESIGN_GAME_CONTENT = [
             {
                 type: 'selectAll',
                 context: "84% of doctors felt that 'Helseplattformen' could endanger patients because it was too complicated and not adapted to clinical workflows.",
-                question: "Which of these key design points should have been concidered?",
+                question: "Which of these key design points should have been considered?",
                 options: [
                     { text: "Dunning-Kruger effect", isCorrect: false, rationale: "The Dunning-Kruger effect is a cognitive bias where people with low ability at a task overestimate their competence, while those with high ability can underestimate their own. Not relevant to this question." },
-                    { text: "Match Between System and the Real World", isCorrect: true, rationale: "The system failed to speak the users' language or align with the workflows of Norwegian clinical practice, making even simple tasks difficult. Qualitative insights and contextual user testing were clearly neglegted." },
+                    { text: "Match Between System and the Real World", isCorrect: true, rationale: "The system failed to speak the users' language or align with the workflows of Norwegian clinical practice, making even simple tasks difficult. Qualitative insights and contextual user testing were clearly neglected." },
                     { text: "Aesthetic and Minimalist Design", isCorrect: true, rationale: "This principle states that interfaces should be clean and not make tasks more complicated than necessary. Any information a user sees related to any given task should be thought of as on a need-to-know-now basis." },
                     { text: "Flexibility and Efficiency of Use", isCorrect: true, rationale: "The new system's poor usability is a critical issue, with tasks taking up to five times as long. The cost in wasted staff hours is unsustainable for a health sector already under pressure." }
                 ]
@@ -231,7 +231,7 @@ export const WHY_DESIGN_GAME_CONTENT = [
                     { text: "Match Between System and the Real World", isCorrect: true, rationale: "A tool must serve the business and user's reality. The system's logic was fundamentally opposed to Lidl's business model, making it a bad fit from the start." },
                     { text: "Sunk Cost Effect", isCorrect: true, rationale: "As costs mounts, this psychological bias makes it harder for leadership to abandon a failing project, because of the the money already 'sunk' into it. This is why design and testing is so important." },
                     { text: "Occam's Razor", isCorrect: false, rationale: "This principle suggests simpler solutions are better. While a better-fitting system would have been a 'simpler' solution in hindsight, the core failure was the mismatch, not just a failure to choose the simplest path." },
-                    { text: "Status Quo Bias", isCorrect: false, rationale: "Status quo bias means a preferance for things to stay the the way they are, even if they are bad. In this case this bias was underestimated, and some core things should could not be changed." }
+                    { text: "Status Quo Bias", isCorrect: false, rationale: "Status quo bias means a preference for things to stay the way they are, even if they are bad. In this case this bias was underestimated, and some core things could not be changed." }
                 ]
             }
         ]
@@ -760,7 +760,7 @@ export const QUIZZES = [
     resultText: "A well designed internal platform that can connect to multiple AI providers offers many benefits.",
     summaryPoints: [
         "Reduces risk by avoiding vendor lock-in",
-        "Modular architecture makes it future-proof as technlogies evolve",
+        "Modular architecture makes it future-proof as technologies evolve",
         "Secures your company data and GDPR compliance",
         "Guide in best practices and a safe space to experiment with AI",
     ],
@@ -792,7 +792,7 @@ export const QUIZZES = [
     id: 'dataCatalogue',
     slug: 'question-3',
     title: 'Data Catalogue',
-    question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented – working data-driven is diffucult.\nHow do you empower your employees to discover and trust your data?",
+    question: "Your organization has valuable data, but it's siloed, hard to find, and undocumented – working data-driven is difficult.\nHow do you empower your employees to discover and trust your data?",
     options: [
         { text: 'Invest in more data science', isCorrect: false, feedback: "More data scientists won't help if they can't find or trust the data they need to work with." },
         { text: 'Launch a company-wide data literacy program', isCorrect: false, feedback: "A literacy program is great to make people more comfortable with using data, but alone it's insufficient if people still can't access or trust the data." },
@@ -814,7 +814,7 @@ export const QUIZZES = [
     title: 'AI Dashboard',
     question: "Your product teams are unsure which services to improve digitally in a huge organization with vast amounts of data.\nHow can they best prioritize what digital service to focus on next?",
     options: [
-        { text: 'Have product teams consistantly read through customer service records', isCorrect: false, feedback: "This isn't scalable and is prone to individual bias, making it hard to see the bigger picture." },
+        { text: 'Have product teams consistently read through customer service records', isCorrect: false, feedback: "This isn't scalable and is prone to individual bias, making it hard to see the bigger picture." },
         { text: 'Use AI to analyze records and present findings in an interactive dashboard', isCorrect: true },
         { text: 'Hire UX designers to work with customer service and users to gain qualitative data', isCorrect: false, feedback: "This is a very good second step, but in a huge organization it will be difficult to get the full picture with qualitative insights alone." },
         { text: 'Hire more customer service staff to handle requests', isCorrect: false, feedback: "This is a reactive solution that doesn't address the root cause of user struggles." },
@@ -921,7 +921,7 @@ export const PROJECTPAGES = [
     ),
     problem: (
         <>
-          <p className="mb-12">With a GenAI, the interesting problems isn't for the users, it is for the business. Everyone wants to leverage GenAI to improve their business processes or products, but how to do this? As the larget electricity grid provider in Norway, Elvia wanted to find a way to kickoff AI initiaties internally.</p>
+          <p className="mb-12">With GenAI, the interesting problems isn't for the users, it is for the business. Everyone wants to leverage GenAI to improve their business processes or products, but how to do this? As the largest electricity grid provider in Norway, Elvia wanted to find a way to kickoff AI initiatives internally.</p>
 
           <Accordion title="Data Security & User Compliance">
             <div className="flex flex-col md:flex-row items-center gap-6">
@@ -933,7 +933,7 @@ export const PROJECTPAGES = [
                   className="w-full h-auto rounded-lg"
                 />
               </div>
-              <p className="md:w-2/3 md:order-first">Using external AI services for internal documents or customer data poses a massive risk to both security and GDPR compliance. Relying on employees to navigate these complexities on their own is an unsustainable and unsafe model, as it places the burden of compliance on teams and individuals s ill-equipped to handle it.</p>
+              <p className="md:w-2/3 md:order-first">Using external AI services for internal documents or customer data poses a massive risk to both security and GDPR compliance. Relying on employees to navigate these complexities on their own is an unsustainable and unsafe model, as it places the burden of compliance on teams and individuals ill-equipped to handle it.</p>
             </div>
           </Accordion>
 
@@ -965,7 +965,7 @@ export const PROJECTPAGES = [
                   />
                 </div>
               </div>
-              <p className="md:w-2/3 md:order-first">Committing to a single AI provider and building solutions around it is a strategic risk in the long term. It makes the a company vulnerable to potetial price hikes, changes in terms of service, or discontinuation of a key models the company comes to rely on – introducing integration issues across the board.</p>
+              <p className="md:w-2/3 md:order-first">Committing to a single AI provider and building solutions around it is a strategic risk in the long term. It makes the company vulnerable to potential price hikes, changes in terms of service, or discontinuation of key models the company comes to rely on – introducing integration issues across the board.</p>
             </div>
           </Accordion>
 
@@ -981,7 +981,7 @@ export const PROJECTPAGES = [
                   />
                 </div>
               </div>
-              <p className="md:w-2/3 md:order-first">Many development teams used a project based delivery model, taking a long time before systems were completed and released. What could we learn by using GenAI deliberatly in developing the product? Could we use this product as a pilot to challenge slow development cycles at Elvia?</p>
+              <p className="md:w-2/3 md:order-first">Many development teams used a project based delivery model, taking a long time before systems were completed and released. What could we learn by using GenAI deliberately in developing the product? Could we use this product as a pilot to challenge slow development cycles at Elvia?</p>
             </div>
           </Accordion>
         </>
@@ -1000,12 +1000,12 @@ export const PROJECTPAGES = [
               >
                 an early, basic version of a product that meets the minimum necessary requirements for use but can be adapted and improved in the future, especially after customer feedback.
               </DefinitionPopover>.
-              This strategy allowed us to fast guage user engagement on the core functionality before committing to a full-featured product.
+              This strategy allowed us to fast gauge user engagement on the core functionality before committing to a full-featured product.
             </p>
           </Accordion>
           
           <Accordion title="Product comparison">
-            <p>Think of platforms like ChatGPT, Gemini or Anthropic. FortelVIA is very similar, but with some key differances. The solution is model agnostic so any model from any provider can easily be integrated into the same interface. Moreover, the using enterprice agreements, none of users data were shared with the third-party providers. Our long term vision was a secure solution where users and product teams can create specialized agents they in turn could use, again and again in their workflows or products. To make it intuitive I made the deliberate choice of antropomorphazing the AI models as as assistants based on historical geniuses, with distinct personalities and skillsets. This made it easy for users to understand the strengths and weaknesses of each model, and making complicated technological termonology more approachable and easy to understand.</p>
+              <p>Think of platforms like ChatGPT, Gemini or Anthropic. FortelVIA is very similar, but with some key differences. The solution is model agnostic so any model from any provider can easily be integrated into the same interface. Moreover, using enterprise agreements, none of users data were shared with the third-party providers. Our long term vision was a secure solution where users and product teams can create specialized agents they in turn could use, again and again in their workflows or products. To make it intuitive I made the deliberate choice of anthropomorphizing the AI models as assistants based on historical geniuses, with distinct personalities and skillsets. This made it easy for users to understand the strengths and weaknesses of each model, and making complicated technological terminology more approachable and easy to understand.</p>
           </Accordion>
 
           <Accordion title="Sandbox">
@@ -1016,9 +1016,9 @@ export const PROJECTPAGES = [
 
     role: (
         <>
-          <p className="mb-12">I wore many design hats at different phases during the developement of the product. From strategy and concept development to the final high-fidelity prototypes.</p>
+          <p className="mb-12">I wore many design hats at different phases during the development of the product. From strategy and concept development to the final high-fidelity prototypes.</p>
           <Accordion title="Product Design">
-            <p>In the product role my focus was on both the short- and long term vision in regards to the product and the business goals. Through this I developed the creative concept and communication stratagy that would make the prodcut a sucess and would scale if the PoC was a success.</p>
+            <p>In the product role my focus was on both the short- and long term vision in regards to the product and the business goals. Through this I developed the creative concept and communication strategy that would make the product a success and would scale if the PoC was a success.</p>
           </Accordion>
           <Accordion title="UX Design">
             <p>My process was rooted in deep user understanding. I conducted user interviews and workshops to gather insights, which informed the creation of user personas, journey maps, and wireframes. I also ran iterative usability testing sessions to validate design decisions and refine the user experience.</p>
@@ -1027,7 +1027,7 @@ export const PROJECTPAGES = [
             <p>I was responsible for creating a clean, intuitive, and accessible user interface. This included developing a consistent visual language, designing pixel-perfect high-fidelity mockups and interactive prototypes in Figma, and creating a component library to ensure consistency and streamline development.</p>
           </Accordion>
           <Accordion title="Vibe Coder">
-            <p>For some features i used AI to help develop parts of the front-end. One of our front-end developers was moved to another project, leaving us shorthanded. In collaboration with our remaining front-ender we could push the envelope, making more ambitius design and code that previously we would not have prioritized due to complexity.</p>
+            <p>For some features I used AI to help develop parts of the front-end. One of our front-end developers was moved to another project, leaving us shorthanded. In collaboration with our remaining front-ender we could push the envelope, making more ambitious design and code that previously we would not have prioritized due to complexity.</p>
           </Accordion>
         </>
       ),
@@ -1124,7 +1124,7 @@ export const PROJECTPAGES = [
                   className="w-full h-auto rounded-lg"
                 />
               </div>
-              <p className="md:w-2/3 md:order-first">Teams were designing and developong the similar components from scratch for different projects, wasting valuable time and resources. This redundancy made it difficult to maintain and update products efficiently.</p>
+              <p className="md:w-2/3 md:order-first">Teams were designing and developing the similar components from scratch for different projects, wasting valuable time and resources. This redundancy made it difficult to maintain and update products efficiently.</p>
             </div>
           </Accordion>
 
@@ -1161,7 +1161,7 @@ export const PROJECTPAGES = [
                 >
                   WCAG is a globally recognized set of recommendations for making web content, digital services, and applications accessible to all people, including those with various disabilities.
                 </DefinitionPopover>{' '}
-                is a field in its own right and is often overlooked or not made a top priority in busy development cycles. And at Elvia this was no exception.
+                is a field in its own right and too often not made a top priority in busy development cycles. And at Elvia this was no exception.
               </p>
             </div>
           </Accordion>
@@ -1176,7 +1176,7 @@ export const PROJECTPAGES = [
                   className="w-full h-auto rounded-lg"
                 />
               </div>
-              <p className="md:w-2/3 md:order-first">Elvia invested in a new brand, but very few people knew where to find the brand guidelines. The agency who developed the brand created a website that to document the brand, but charged an exobant amount of money each year just to host the site.</p>
+              <p className="md:w-2/3 md:order-first">Elvia invested in a new brand, but very few people knew where to find the brand guidelines. The agency who developed the brand created a website to document the brand, but charged an exorbitant amount of money each year just to host the site.</p>
             </div>
           </Accordion>
         </>
