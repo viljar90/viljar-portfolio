@@ -416,11 +416,11 @@ export const DESIGN_CONTENT = {
       mainText: "Design is about making solutions fit humans, not trying to make humans fit solutions."
     },
     {
-      title: "Combination",
+      title: "Not form over function",
       mainText: "Solving real customer needs in an aesthetic and functional form isn't just a goal..."
     },
     {
-      title: "Winning Combination",
+      title: "Form serves function",
       mainText: "...it's the winning strategy of every market leader."
     }/*,
     {
@@ -1237,9 +1237,9 @@ export const PROJECTPAGES = [
     impact: (
       <>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-          <MetricBox title="Adoption Rate" value="80%" subtext="of target teams within 3 months" />
-          <MetricBox title="Data Discovery" value="+60%" subtext="increase in successful searches" />
-          <MetricBox title="Time Saved" value="-35%" subtext="time to find the right dataset" />
+          <MetricBox title="Adoption Rate" value="70%" subtext="of target teams" />
+          <MetricBox title="Data Discovery" value="+60%" subtext="successful searches" />
+          <MetricBox title="Time Saved" value="-85%" subtext="finding the right dataset" />
         </div>
         <p>The data catalogue transformed how teams discover and trust organizational data. The high adoption rate validated our user-centric approach, while the improved discovery metrics showed we successfully addressed the core pain points of data fragmentation and accessibility.</p>
       </>
@@ -1252,8 +1252,8 @@ export const PROJECTPAGES = [
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="w-full md:w-1/3 mx-auto max-w-sm md:order-last">
               <img 
-                src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2w1MGlwcGNrNnBoZXhwY3BoNnNxenR2NGQ4ZW4wMGV0ZjBydXg3NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0ozmBje9bTxfPlKO7m/giphy.gif" 
-                alt="Person searching through scattered documents" 
+                src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGY3bmg0MWR2NmM0Y2FpOGk1Y3k3YXkzZmZrMDk4eTc4dTZ5aXZvciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ImHfnm01jqvostvlLP/giphy.gif" 
+                alt="Nobody looking at the data" 
                 className="w-full h-auto rounded-lg"
               />
             </div>
